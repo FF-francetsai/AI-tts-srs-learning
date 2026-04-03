@@ -30,12 +30,13 @@
                 </div>
                 <div class="header-quick-actions">
                     <button id="toggleTheme" class="control-btn" title="切換深色 / 淺色主題">🌓</button>
-                    <button class="icon-btn highlight" id="syncCloudBtn" title="同步雲端最新數據 (Google Sheets)" onclick="App.syncFromCloud()">
+                    <button class="icon-btn highlight" id="syncCloudBtn" title="同步雲端最新數據 (Google Sheets)"
+                        onclick="App.syncFromCloud()">
                         <i class="fas fa-rotate" id="syncBtn"></i>
                     </button>
                 </div>
             </div>
-            
+
             <div class="header-controls" id="headerControls">
                 <!-- TTS 控制面板 -->
                 <div class="tts-engine-panel">
@@ -53,7 +54,7 @@
                             <option value="male">♂ 男聲</option>
                         </select>
                     </div>
-                
+
                     <div class="control-row sliders">
                         <div class="slider-group">
                             <span class="ctrl-label">語速</span>
@@ -78,9 +79,13 @@
                 </div>
 
                 <div class="mode-controls">
-                    <button id="srsToggle" class="control-btn" title="每日複習模式">
+                     <button id="srsToggle" class="control-btn" title="每日複習模式">
                         <i class="fas fa-graduation-cap"></i>
                         <span class="btn-text">每日複習</span>
+                    </button>
+                    <button id="headerWrongQuizBtn" class="control-btn secondary" title="錯題補救測驗">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span class="btn-text">錯題補救</span>
                     </button>
                     <div class="font-controls">
                         <button id="fontDown" class="control-btn">A-</button>
@@ -131,7 +136,9 @@
                     <div id="quizOptions" class="quiz-options"></div>
                     <div id="quizFeedback" class="quiz-feedback hidden">
                         <div id="quizExplain" class="quiz-explain"></div>
-                        <button id="nextQuestionBtn" class="control-btn next-btn hidden" style="margin: 20px auto; display: block; background: var(--accent-color); color: white;">下一題 <i class="fas fa-arrow-right"></i></button>
+                        <button id="nextQuestionBtn" class="control-btn next-btn hidden"
+                            style="margin: 20px auto; display: block; background: var(--accent-color); color: white;">下一題
+                            <i class="fas fa-arrow-right"></i></button>
                         <div id="srsActions" class="srs-actions hidden">
                             <p class="srs-prompt">這題對您來說難度如何？</p>
                             <div class="srs-btns">

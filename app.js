@@ -13,11 +13,11 @@ const SyncManager = {
     // 取得 CSV 原始資料
     fetchCSV: async (gid) => {
         const url = `https://docs.google.com/spreadsheets/d/${SyncManager.SHEET_ID}/export?format=csv&gid=${gid}`;
-        
+
         // 環境偵測：本地檔案、開發伺服器、線上 HTTPS
         const isLocalFile = window.location.protocol === 'file:';
         const isHttps = window.location.protocol === 'https:';
-        
+
         try {
             console.log(`[Sync] 正在從 GID ${gid} 請求資料...`);
             const response = await fetch(url, {
@@ -26,7 +26,7 @@ const SyncManager = {
                 mode: 'cors',
                 cache: 'no-cache'
             });
-            
+
             if (!response.ok) {
                 if (response.status === 404) throw new Error("試算表 ID 錯誤或檔案未公開。");
                 throw new Error(`HTTP 狀態碼: ${response.status}`);
@@ -35,7 +35,7 @@ const SyncManager = {
         } catch (err) {
             console.error("Sync Error Details:", err);
             let msg = "同步失敗：無法存取 Google 雲端資料。";
-            
+
             if (isLocalFile) {
                 msg += "\n\n【本地端限制】偵測到您目前以 file:// 開啟，瀏覽器會阻擋 CORS 請求。\n請改用 Live Server 或部署至 GitHub Pages。";
             } else if (isHttps && err.message.includes('fetch')) {
@@ -189,31 +189,44 @@ const SyncManager = {
 const SRSManager = {
     getStats: () => JSON.parse(localStorage.getItem('study_stats') || '{}'),
     saveStats: (stats) => localStorage.setItem('study_stats', JSON.stringify(stats)),
-    
+
+    getWrongTopics: () => {
+        const stats = SRSManager.getStats();
+        // 篩選出曾經答錯（grade < 2）或 wrongCount > 0 的題目
+        return Object.keys(stats).filter(id => stats[id].wrongCount > 0 || stats[id].lastResult === 'wrong');
+    },
+
     // 計算下次複習時間 (SM-2 簡化邏輯)
     updateCard: (id, grade) => {
         const stats = SRSManager.getStats();
-        let card = stats[id] || { interval: 0, repetition: 0, efactor: 2.5, dueDate: Date.now() };
+        let card = stats[id] || { interval: 0, repetition: 0, efactor: 2.5, dueDate: Date.now(), wrongCount: 0, lastResult: 'none' };
 
         if (grade >= 2) { // Good or Easy
             if (card.repetition === 0) card.interval = 1;
             else if (card.repetition === 1) card.interval = 4;
             else card.interval = Math.round(card.interval * card.efactor);
             card.repetition++;
+            card.lastResult = 'correct';
         } else { // Again or Hard
             card.repetition = 0;
             card.interval = 1;
+            card.wrongCount = (card.wrongCount || 0) + 1;
+            card.lastResult = 'wrong';
         }
 
         // 調整易記係數 (Ease Factor)
         card.efactor = Math.max(1.3, card.efactor + (0.1 - (3 - grade) * (0.08 + (3 - grade) * 0.02)));
-        
+
         // 設定下次複習日期 (以天為單位)
         const days = grade === 0 ? 0 : card.interval; // Again 設為今天
         card.dueDate = Date.now() + days * 24 * 60 * 60 * 1000;
-        
+
         stats[id] = card;
         SRSManager.saveStats(stats);
+        
+        // 每次更新進度後檢查成就
+        AchievementManager.checkProgress();
+        
         return card;
     },
 
@@ -224,41 +237,117 @@ const SRSManager = {
     }
 };
 
+// --- 1.2 成就系統管理員 (AchievementManager) ---
+const AchievementManager = {
+    ACHIEVEMENTS: [
+        { id: 'newbie', icon: '🐣', title: '初試啼聲', desc: '完成第 1 個術語學習', goal: 1 },
+        { id: 'apprentice', icon: '🤺', title: '略有小成', desc: '熟練度達到 10%', goal: 63 },
+        { id: 'expert', icon: '🛡️', title: '領域專家', desc: '熟練度達到 50%', goal: 315 },
+        { id: 'master', icon: '👑', title: 'AI 大師', desc: '熟練度達到 80%', goal: 504 },
+        { id: 'perfect', icon: '💎', title: '圓滿境界', desc: '掌握所有 631 個術語', goal: 631 }
+    ],
+
+    getUnlocked: () => JSON.parse(localStorage.getItem('unlocked_achievements') || '[]'),
+    
+    checkProgress: () => {
+        const stats = SRSManager.getStats();
+        const learnedCount = Object.keys(stats).length;
+        const unlocked = AchievementManager.getUnlocked();
+        let newlyUnlocked = false;
+
+        AchievementManager.ACHIEVEMENTS.forEach(ach => {
+            if (!unlocked.includes(ach.id) && learnedCount >= ach.goal) {
+                unlocked.push(ach.id);
+                newlyUnlocked = true;
+                // 彈出慶祝 (這裡可用漂亮的 Toast 或 Alert)
+                console.log(`[Achievement] 解鎖成就: ${ach.title}`);
+            }
+        });
+
+        if (newlyUnlocked) {
+            localStorage.setItem('unlocked_achievements', JSON.stringify(unlocked));
+        }
+    },
+
+    renderWall: () => {
+        const unlocked = AchievementManager.getUnlocked();
+        return `<div class="achievement-wall">
+            ${AchievementManager.ACHIEVEMENTS.map(ach => {
+                const isLocked = !unlocked.includes(ach.id);
+                return `
+                    <div class="achievement-item ${isLocked ? 'locked' : 'unlocked'}" title="${ach.desc}">
+                        <div class="ach-icon">${ach.icon}</div>
+                        <div class="ach-title">${ach.title}</div>
+                    </div>
+                `;
+            }).join('')}
+        </div>`;
+    }
+};
+
 // --- 2. 測驗引擎 ---
 const QuizManager = {
     currentQuizList: [],
     currentIndex: 0,
-    
+
     initQuiz: (topicId) => {
         const questions = quizBank[topicId] || [];
         if (questions.length === 0) return false;
-        
+
         // ✅ 修正：改為洗牌所有題目，而不是只抽一題
         QuizManager.currentQuizList = [...questions].sort(() => Math.random() - 0.5);
         QuizManager.currentIndex = 0;
         return true;
     },
 
-    renderCurrent: () => {
-        const q = QuizManager.currentQuizList[QuizManager.currentIndex];
-        const container = document.getElementById('quizContainer');
-        const qEl = document.getElementById('quizQuestion');
-        const optEl = document.getElementById('quizOptions');
-        const feedback = document.getElementById('quizFeedback');
-        const nextBtn = document.getElementById('nextQuestionBtn');
-        const srsActions = document.getElementById('srsActions');
+    initWrongQuiz: () => {
+        const wrongIds = SRSManager.getWrongTopics();
+        if (wrongIds.length === 0) return false;
 
-        // 顯示題號進度
-        qEl.textContent = `(Q${QuizManager.currentIndex + 1}/${QuizManager.currentQuizList.length}) ${q.q}`;
-        optEl.innerHTML = '';
+        let allWrongQuestions = [];
+        wrongIds.forEach(id => {
+            const qs = quizBank[id] || [];
+            allWrongQuestions = allWrongQuestions.concat(qs);
+        });
+
+        if (allWrongQuestions.length === 0) return false;
+
+        // 從錯題庫中隨機抽出 10 題進行補救
+        QuizManager.currentQuizList = allWrongQuestions.sort(() => Math.random() - 0.5).slice(0, 10);
+        QuizManager.currentIndex = 0;
+        return true;
+    },
+
+    renderCurrent: (isModal = false) => {
+        const q = QuizManager.currentQuizList[QuizManager.currentIndex];
         
+        // 根據環境選擇容器與元素
+        const container = document.getElementById(isModal ? 'quizContainerInModal' : 'quizContainer');
+        const qEl = document.getElementById(isModal ? 'modalQuizQuestion' : isModal ? 'modalQuizQuestion' : 'quizQuestion');
+        // 修正：如果 qEl 沒抓到，嘗試抓 modalQuizQuestion (為了相容性)
+        const actualQEl = qEl || document.getElementById('modalQuizQuestion');
+        const actualOptEl = document.getElementById(isModal ? 'modalQuizOptions' : 'quizOptions');
+        const feedback = document.getElementById(isModal ? 'modalQuizFeedback' : 'quizFeedback');
+        const nextBtn = document.getElementById(isModal ? 'modalNextQuestionBtn' : 'nextQuestionBtn');
+        const srsActions = document.getElementById(isModal ? 'modalSrsActions' : 'srsActions');
+
+        if (!q || !container || !actualQEl || !actualOptEl) return;
+
+        // 顯示題號進度 (使用 .q 屬性)
+        actualQEl.textContent = `(Q${QuizManager.currentIndex + 1}/${QuizManager.currentQuizList.length}) ${q.q}`;
+        actualOptEl.innerHTML = '';
+
         feedback.classList.add('hidden');
-        nextBtn.classList.add('hidden');
+        if (nextBtn) nextBtn.classList.add('hidden');
         srsActions.classList.add('hidden');
         container.classList.remove('hidden');
 
         // ✅ 每次渲染新題目時，確保詳細解析還是隱藏狀態
-        const detailSection = document.getElementById('topicContent').querySelector('.details-section');
+        const modalDetail = document.getElementById('modalTopicDetailExplain');
+        if (modalDetail) modalDetail.classList.add('hidden');
+        
+        const topicContent = document.getElementById('topicContent');
+        const detailSection = topicContent ? topicContent.querySelector('.details-section') : null;
         if (detailSection) detailSection.style.display = 'none';
 
         const labels = ['A', 'B', 'C', 'D'];
@@ -267,47 +356,62 @@ const QuizManager = {
             const btn = document.createElement('div');
             btn.className = 'quiz-opt';
             btn.textContent = `${labels[idx]}. ${opt}`;
-            btn.onclick = () => QuizManager.checkAnswer(labels[idx], q.ans, q.explain);
-            optEl.appendChild(btn);
+            btn.onclick = () => QuizManager.checkAnswer(labels[idx], q.ans, q.explain, isModal);
+            actualOptEl.appendChild(btn);
         });
     },
 
-    checkAnswer: (selected, correct, explain) => {
-        const opts = document.querySelectorAll('.quiz-opt');
+    // ✅ 補完缺失的函式：專供 Modal 渲染
+    renderCurrentInModal: () => {
+        QuizManager.renderCurrent(true);
+    },
+
+    checkAnswer: (selected, correct, explain, isModal = false) => {
+        const optContainerId = isModal ? 'modalQuizOptions' : 'quizOptions';
+        const opts = document.getElementById(optContainerId).querySelectorAll('.quiz-opt');
+        
         opts.forEach(opt => {
             if (opt.textContent.startsWith(correct)) opt.classList.add('correct');
             else if (opt.textContent.startsWith(selected)) opt.classList.add('wrong');
             opt.onclick = null; // 禁止重複點擊
         });
-        
-        const feedback = document.getElementById('quizFeedback');
-        const explainEl = document.getElementById('quizExplain');
-        const nextBtn = document.getElementById('nextQuestionBtn');
-        const srsActions = document.getElementById('srsActions');
-        
+
+        const feedback = document.getElementById(isModal ? 'modalQuizFeedback' : 'quizFeedback');
+        const explainEl = document.getElementById(isModal ? 'modalQuizExplain' : 'quizExplain');
+        const nextBtn = document.getElementById(isModal ? 'modalNextQuestionBtn' : 'nextQuestionBtn');
+        const srsActions = document.getElementById(isModal ? 'modalSrsActions' : 'srsActions');
+
         explainEl.innerHTML = `<strong>解析：</strong><br>${explain}`;
         feedback.classList.remove('hidden');
 
         // 判斷是否還有下一題
         if (QuizManager.currentIndex < QuizManager.currentQuizList.length - 1) {
-            nextBtn.classList.remove('hidden');
-            nextBtn.onclick = () => {
-                QuizManager.currentIndex++;
-                QuizManager.renderCurrent();
-            };
+            if (nextBtn) {
+                nextBtn.classList.remove('hidden');
+                nextBtn.onclick = () => {
+                    QuizManager.currentIndex++;
+                    QuizManager.renderCurrent(isModal);
+                };
+            }
         } else {
             // 最後一題才顯示 SRS 評分按鈕
-            srsActions.classList.remove('hidden');
+            if (srsActions) srsActions.classList.remove('hidden');
+
+            // ✅ 最後一題回答完，才顯示主題核心解析
+            const modalDetail = document.getElementById('modalTopicDetailExplain');
+            if (modalDetail) {
+                modalDetail.classList.remove('hidden');
+                setTimeout(() => modalDetail.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
+            }
+
+            const topicContent = document.getElementById('topicContent');
+            const detailSection = topicContent ? topicContent.querySelector('.details-section') : null;
+            if (detailSection) {
+                detailSection.style.display = 'block';
+                setTimeout(() => detailSection.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
+            }
         }
-        
-        // ✅ Bug B 修正：答題後才顯示「詳細解析」區塊
-        const topicContent = document.getElementById('topicContent');
-        const detailSection = topicContent ? topicContent.querySelector('.details-section') : null;
-        if (detailSection) {
-            detailSection.style.display = 'block';
-            setTimeout(() => detailSection.scrollIntoView({ behavior: 'smooth', block: 'start' }), 600);
-        }
-        
+
         feedback.scrollIntoView({ behavior: 'smooth' });
     }
 };
@@ -341,26 +445,26 @@ const App = {
     syncFromCloud: async () => {
         const btn = document.getElementById('syncBtn');
         if (btn) btn.classList.add('fa-spin');
-        
+
         try {
             console.log("開始同步雲端數據...");
             const rawPro = await SyncManager.fetchCSV(SyncManager.PRO_QUIZ_GID);
             const rawBank = await SyncManager.fetchCSV(SyncManager.QUIZ_BANK_GID);
-            
+
             const proRows = SyncManager.parseCSV(rawPro);
             const bankRows = SyncManager.parseCSV(rawBank);
-            
+
             const result = SyncManager.transformData(proRows, bankRows);
             SyncManager.save(result.lessonData, result.quizBank);
-            
+
             // 更新全域變數並重新初始化 UI
             window.lessonData = result.lessonData;
             window.quizBank = result.quizBank;
-            
+
             App.renderSidebar(window.lessonData);
             App.updateProgress();
             App.renderHomeScreen();
-            
+
             alert('雲端同步成功！資料已更新至最新版本。');
         } catch (err) {
             console.error(err);
@@ -374,21 +478,21 @@ const App = {
     renderSidebar: (data) => {
         const nav = document.getElementById('sidebarNav');
         nav.innerHTML = '';
-        
+
         data.forEach(unit => {
             const unitDiv = document.createElement('div');
             unitDiv.className = 'unit-item';
             unitDiv.innerHTML = `<div class="unit-title">${unit.title} <i class="fas fa-chevron-down"></i></div>`;
-            
+
             const subList = document.createElement('div');
             subList.className = 'sub-unit-list';
-            
+
             unit.sub_units.forEach(sub => {
                 const subHeader = document.createElement('div');
                 subHeader.className = 'sub-unit-header';
                 subHeader.textContent = sub.title;
                 subList.appendChild(subHeader);
-                
+
                 sub.topics.forEach(topic => {
                     const link = document.createElement('div');
                     link.className = 'topic-link';
@@ -415,7 +519,7 @@ const App = {
     loadTopic: (topic) => {
         App.currentTopic = topic;
         App.renderDetail(topic);
-        
+
         // 自動語音朗讀 (如果勾選)
         const autoPlay = document.getElementById('autoPlayToggle');
         if (autoPlay && autoPlay.checked) {
@@ -481,31 +585,44 @@ const App = {
                                         ` : '').join('')}
                                     </div>
                                 </div>
-                                <button class="control-btn quiz-start-btn" id="startQuizInModal"><i class="fas fa-vial"></i> 開始測驗</button>
+                                <div class="srs-actions" style="margin-top: 20px;">
+                                    <div class="srs-btns-grid">
+                                        <button class="srs-btn again" data-grade="0">忘了 (Again)</button>
+                                        <button class="srs-btn hard" data-grade="1">困難 (Hard)</button>
+                                        <button class="srs-btn good" data-grade="2">答對 (Good)</button>
+                                        <button class="srs-btn easy" data-grade="3">秒答 (Easy)</button>
+                                    </div>
+                                </div>
+                                <button class="control-btn quiz-start-btn" id="startQuizInModal" style="margin-top:20px; width:100%;"><i class="fas fa-vial"></i> 開始測驗</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div id="quizContainerInModal" class="hidden glass-panel" style="margin-top: 20px; padding: 20px;">
-                    <div id="quizQuestion" class="quiz-q"></div>
-                    <div id="quizOptions" class="quiz-opts"></div>
-                    <div id="quizFeedback" class="quiz-feedback hidden">
-                        <div id="quizExplain" class="quiz-explain"></div>
-                        <button id="nextQuestionBtn" class="control-btn hidden">下一題 <i class="fas fa-arrow-right"></i></button>
-                        <div id="srsActions" class="srs-btns-grid hidden">
-                            <button class="srs-btn srs-again" data-grade="0">忘光 (Again)</button>
-                            <button class="srs-btn srs-hard" data-grade="1">吃力 (Hard)</button>
-                            <button class="srs-btn srs-good" data-grade="2">答對 (Good)</button>
-                            <button class="srs-btn srs-easy" data-grade="3">秒答 (Easy)</button>
+                <div id="quizContainerInModal" class="hidden glass-panel" style="margin-top: 20px; padding: 25px; border: 1px solid var(--accent-color);">
+                    <div id="modalQuizQuestion" class="quiz-q" style="font-size: 1.15rem; font-weight: 700; margin-bottom: 20px; color: var(--text-main);"></div>
+                    <div id="modalQuizOptions" class="quiz-options"></div>
+                    <div id="modalQuizFeedback" class="quiz-feedback hidden" style="margin-top: 25px;">
+                        <!-- 題目專屬解析 -->
+                        <div id="modalQuizExplain" class="quiz-explain" style="border-left: 4px solid var(--accent-color); padding-left: 15px; margin-bottom: 20px;"></div>
+                        
+                        <!-- 主題整體詳細解析 -->
+                        <div id="modalTopicDetailExplain" class="quiz-explain" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                            <h4 style="margin-bottom: 8px; color: var(--accent-color); font-size: 0.9rem;"><i class="fas fa-book-open"></i> 主題核心解析</h4>
+                             <div class="detail-text" style="font-size: 0.95rem; color: var(--text-main); line-height: 1.6;">${topic.detail_explain}</div>
+                        </div>
+
+                        <button id="modalNextQuestionBtn" class="control-btn hidden" style="width: 100%; margin-bottom: 15px;">下一題 <i class="fas fa-arrow-right"></i></button>
+                        
+                        <div id="modalSrsActions" class="srs-btns-grid hidden">
+                            <button class="srs-btn again" data-grade="0">忘了 (Again)</button>
+                            <button class="srs-btn hard" data-grade="1">困難 (Hard)</button>
+                            <button class="srs-btn good" data-grade="2">答對 (Good)</button>
+                            <button class="srs-btn easy" data-grade="3">秒答 (Easy)</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="details-section glass-panel" style="margin-top:20px; padding:20px; display:none;">
-                    <h3>詳細解析</h3>
-                    <p>${topic.detail_explain}</p>
-                </div>
             </div>
         `;
 
@@ -518,7 +635,6 @@ const App = {
             startBtn.onclick = (e) => {
                 e.stopPropagation();
                 if (QuizManager.initQuiz(topic.id)) {
-                    document.getElementById('quizContainerInModal').classList.remove('hidden');
                     QuizManager.renderCurrentInModal();
                 } else {
                     alert('此主題暫無測驗題目');
@@ -529,7 +645,7 @@ const App = {
         // 綁定內部 SRS 評分
         modal.querySelectorAll('.srs-btn').forEach(btn => {
             btn.onclick = (e) => {
-                const grade = parseInt(e.target.dataset.grade);
+                const grade = parseInt(e.target.closest('.srs-btn').dataset.grade);
                 SRSManager.updateCard(topic.id, grade);
                 App.updateProgress();
                 App.closeDetail();
@@ -554,7 +670,7 @@ const App = {
         const reviewedCount = Object.keys(stats).length;
         const totalCount = 631; // 題目總數
         const progress = Math.round((reviewedCount / totalCount) * 100);
-        
+
         const text = document.getElementById('progressText');
         const bar = document.getElementById('progressBar');
         if (text) text.textContent = `進度: ${progress}% (${reviewedCount}/${totalCount})`;
@@ -618,14 +734,14 @@ const App = {
                 const filteredSubUnits = unit.sub_units.map(sub => {
                     const filteredTopics = sub.topics.filter(t => {
                         return t.id.toLowerCase().includes(val) ||
-                               t.title.toLowerCase().includes(val) ||
-                               t.eng_name.toLowerCase().includes(val) ||
-                               t.eng_abbr.toLowerCase().includes(val) ||
-                               t.def.toLowerCase().includes(val) ||
-                               t.category.toLowerCase().includes(val) ||
-                               t.principle.toLowerCase().includes(val) ||
-                               (t.key_purpose && t.key_purpose.toLowerCase().includes(val)) ||
-                               (t.common_apps && t.common_apps.toLowerCase().includes(val));
+                            t.title.toLowerCase().includes(val) ||
+                            t.eng_name.toLowerCase().includes(val) ||
+                            t.eng_abbr.toLowerCase().includes(val) ||
+                            t.def.toLowerCase().includes(val) ||
+                            t.category.toLowerCase().includes(val) ||
+                            t.principle.toLowerCase().includes(val) ||
+                            (t.key_purpose && t.key_purpose.toLowerCase().includes(val)) ||
+                            (t.common_apps && t.common_apps.toLowerCase().includes(val));
                     });
                     return { ...sub, topics: filteredTopics };
                 }).filter(sub => sub.topics.length > 0);
@@ -643,9 +759,9 @@ const App = {
                 const tid = App.currentTopic.id;
                 SRSManager.updateCard(tid, grade);
                 App.updateProgress();
-                
+
                 document.getElementById('quizContainer').classList.add('hidden');
-                
+
                 // ✅ 模式優化：如果是 SRS 模式，評分後自動載入下一個待複習的主題
                 if (App.isSRSMode) {
                     const dueIds = SRSManager.getDueTopics();
@@ -666,12 +782,12 @@ const App = {
             };
         });
 
-        // SRS 複習切換
+         // SRS 複習切換
         document.getElementById('srsToggle').onclick = () => {
             App.isSRSMode = !App.isSRSMode;
             document.getElementById('srsToggle').classList.toggle('active', App.isSRSMode);
             const dueIds = SRSManager.getDueTopics();
-            
+
             if (App.isSRSMode) {
                 const filtered = lessonData.map(unit => ({
                     ...unit,
@@ -682,10 +798,49 @@ const App = {
                 })).filter(unit => unit.sub_units.length > 0);
                 App.renderSidebar(filtered);
                 if (dueIds.length === 0) alert('今日暫無待複習項目！');
+                if (dueIds.length === 0) alert('今日暫無待複習項目！');
             } else {
                 App.renderSidebar(lessonData);
             }
         };
+
+        // 錯題補救快捷按鈕 (Header)
+        const headerWrongBtn = document.getElementById('headerWrongQuizBtn');
+        if (headerWrongBtn) {
+            headerWrongBtn.onclick = () => {
+                if (QuizManager.initWrongQuiz()) {
+                    // 渲染測驗介面到內容區
+                    const container = document.getElementById('topicContent');
+                    container.innerHTML = `
+                        <div class="quiz-header" style="margin-bottom: 30px;">
+                            <h1>⚠️ 錯題補救挑戰 (快捷模式)</h1>
+                            <p>針對不熟悉的主題進行強化訓練。</p>
+                        </div>
+                        <div id="quizContainer" class="glass-panel" style="padding: 30px;">
+                            <div id="quizQuestion" class="quiz-q"></div>
+                            <div id="quizOptions" class="quiz-options"></div>
+                            <div id="quizFeedback" class="quiz-feedback hidden">
+                                <div id="quizExplain" class="quiz-explain"></div>
+                                <button id="nextQuestionBtn" class="control-btn hidden">下一題 <i class="fas fa-arrow-right"></i></button>
+                                <div id="srsActions" class="srs-btns-grid hidden">
+                                    <button class="srs-btn again" data-grade="0">忘了 (Again)</button>
+                                    <button class="srs-btn hard" data-grade="1">困難 (Hard)</button>
+                                    <button class="srs-btn good" data-grade="2">答對 (Good)</button>
+                                    <button class="srs-btn easy" data-grade="3">秒答 (Easy)</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    QuizManager.renderCurrent(false);
+                    // 隱藏側邊欄 (行動端)
+                    if (window.innerWidth <= 768) {
+                        document.querySelector('.sidebar').classList.remove('active');
+                    }
+                } else {
+                    alert('目前沒有錯題紀錄！');
+                }
+            };
+        }
 
         // 語音朗讀（readFull 已移至學習卡喇叭，這裡保留邖層再 抓一次）
         const readBtn = document.getElementById('readFull');
@@ -718,14 +873,14 @@ const App = {
         const pitchVal = document.getElementById('ttsPitchVal');
 
         if (rateSlider && rateVal) {
-            rateSlider.oninput = (e) => { 
-                rateVal.textContent = e.target.value; 
+            rateSlider.oninput = (e) => {
+                rateVal.textContent = e.target.value;
             };
             rateSlider.onchange = () => App.speakZh("語速測試", 1.0);
         }
         if (pitchSlider && pitchVal) {
-            pitchSlider.oninput = (e) => { 
-                pitchVal.textContent = e.target.value; 
+            pitchSlider.oninput = (e) => {
+                pitchVal.textContent = e.target.value;
             };
             // 音調測試僅在系統引擎下有效
             pitchSlider.onchange = () => {
@@ -756,7 +911,7 @@ const App = {
         const utter = new SpeechSynthesisUtterance(text);
         const rateSlider = document.getElementById('ttsRateSlider');
         utter.rate = speedOverride || (rateSlider ? parseFloat(rateSlider.value) : 1.0);
-        
+
         const voices = App.synth.getVoices();
         const engine = document.getElementById('ttsEngineSelect').value;
         const gender = document.getElementById('ttsGenderSelect').value;
@@ -913,12 +1068,37 @@ const App = {
                 </div>
             </div>
 
-            <div class="home-actions">
+            <div class="home-actions" style="gap: 15px; flex-wrap: wrap;">
                 <button class="home-action-btn" id="randomStartBtn">
                     <i class="fas fa-random"></i> 隨機開始學習
                 </button>
+                <button class="home-action-btn secondary" id="wrongQuizBtn">
+                    <i class="fas fa-exclamation-triangle"></i> 錯題補救測驗 (${SRSManager.getWrongTopics().length})
+                </button>
+            </div>
+
+            <div class="topology-section glass-panel" style="margin-top: 30px; padding: 20px;">
+                <h3 style="margin-bottom: 20px; color: var(--accent-color);"><i class="fas fa-project-diagram"></i> 學習拓撲地圖</h3>
+                <div id="topologyMapContainer" class="mermaid" style="background: rgba(0,0,0,0.2); border-radius: 12px; padding: 15px;">
+                    ${App.renderTopologyMap()}
+                </div>
+            </div>
+
+            <div class="achievement-section glass-panel" style="margin-top: 30px; padding: 20px;">
+                <h3 style="margin-bottom: 20px; color: var(--accent-color);"><i class="fas fa-trophy"></i> 學習成就牆</h3>
+                ${AchievementManager.renderWall()}
             </div>
         `;
+
+        // 重新渲染 Mermaid
+        setTimeout(() => {
+            const container = document.getElementById('topologyMapContainer');
+            if (container) {
+                // 清除舊的渲染內容
+                container.removeAttribute('data-processed');
+                mermaid.init(undefined, container);
+            }
+        }, 100);
 
         // 綁定區域 badge 點擊
         container.querySelectorAll('.zone-badge').forEach(badge => {
@@ -931,6 +1111,73 @@ const App = {
         if (randomBtn) randomBtn.onclick = () => {
             App.loadTopic(allTopics[Math.floor(Math.random() * allTopics.length)]);
         };
+
+        // 錯題補救按鈕
+        const wrongBtn = document.getElementById('wrongQuizBtn');
+        if (wrongBtn) wrongBtn.onclick = () => {
+            if (QuizManager.initWrongQuiz()) {
+                // 進入測驗模式 UI
+                document.getElementById('topicContent').innerHTML = `
+                    <div class="quiz-header" style="margin-bottom: 30px;">
+                        <h1>⚠️ 錯題補救挑戰</h1>
+                        <p>正在針對您答錯或不熟悉的題目進行專屬強化測驗。</p>
+                    </div>
+                    <div id="quizContainer" class="glass-panel" style="padding: 30px;">
+                        <div id="quizQuestion" class="quiz-q"></div>
+                        <div id="quizOptions" class="quiz-options"></div>
+                        <div id="quizFeedback" class="quiz-feedback hidden">
+                            <div id="quizExplain" class="quiz-explain"></div>
+                            <button id="nextQuestionBtn" class="control-btn hidden">下一題 <i class="fas fa-arrow-right"></i></button>
+                            <div id="srsActions" class="srs-btns-grid hidden">
+                                <button class="srs-btn again" data-grade="0">忘了 (Again)</button>
+                                <button class="srs-btn hard" data-grade="1">困難 (Hard)</button>
+                                <button class="srs-btn good" data-grade="2">答對 (Good)</button>
+                                <button class="srs-btn easy" data-grade="3">秒答 (Easy)</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                QuizManager.renderCurrent(false);
+            } else {
+                alert('目前沒有錯題紀錄，太厲害了！繼續保持！');
+            }
+        };
+    },
+
+    // ✅ 實作：拓撲圖渲染邏輯 (子單元層級)
+    renderTopologyMap: () => {
+        const stats = SRSManager.getStats();
+        let mermaidCode = 'graph LR\n';
+        
+        // 定義樣式
+        mermaidCode += 'classDef done fill:#22c55e,stroke:#16a34a,color:#fff\n';
+        mermaidCode += 'classDef doing fill:#f59e0b,stroke:#d97706,color:#fff\n';
+        mermaidCode += 'classDef todo fill:rgba(255,255,255,0.1),stroke:rgba(255,255,255,0.2),color:rgba(255,255,255,0.5)\n';
+
+        window.lessonData.forEach((unit, uIdx) => {
+            const uId = `U${uIdx}`;
+            mermaidCode += `${uId}("${unit.title}")\n`;
+
+            unit.sub_units.forEach((sub, sIdx) => {
+                const sId = `U${uIdx}S${sIdx}`;
+                
+                // 計算子單元進度
+                const total = sub.topics.length;
+                const learned = sub.topics.filter(t => stats[t.id]).length;
+                const percent = Math.round((learned / total) * 100);
+                
+                mermaidCode += `${uId} --> ${sId}("${sub.title}<br>${percent}%")\n`;
+                
+                // 套用樣式
+                if (percent >= 100) mermaidCode += `class ${sId} done\n`;
+                else if (percent > 0) mermaidCode += `class ${sId} doing\n`;
+                else mermaidCode += `class ${sId} todo\n`;
+            });
+            // 單元節點樣式
+            mermaidCode += `class ${uId} done\n`;
+        });
+
+        return mermaidCode;
     },
 
     // 取得語速與語調設定
@@ -959,10 +1206,10 @@ const App = {
     _pickVoice: (langPrefix, gender, engine) => {
         const voices = window.speechSynthesis.getVoices();
         const isFemale = gender === 'female';
-        
+
         // 更精確的 Windows / Chrome 語音關鍵字
         const femaleKw = ['female', 'woman', 'zira', 'yating', 'hanhan', 'huihui', 'xiaoxiao', 'samantha', 'victoria', '女'];
-        const maleKw   = ['male', 'man', 'zhiwei', 'yunyang', 'david', 'mark', 'daniel', '男', 'yunxi'];
+        const maleKw = ['male', 'man', 'zhiwei', 'yunyang', 'david', 'mark', 'daniel', '男', 'yunxi'];
         const targetKws = isFemale ? femaleKw : maleKw;
 
         const matchesGender = (v) => {
@@ -970,12 +1217,12 @@ const App = {
             const l = v.lang.toLowerCase();
             // 1. 優先比對明確的男女聲關鍵字
             if (targetKws.some(kw => n.includes(kw))) return true;
-            
+
             // 2. 特殊處理：Google 語音與一些系統預設
             if (langPrefix === 'zh') {
                 // Windows 常用廣東話/國語男聲補強
                 if (!isFemale && (n.includes('can') || n.includes('yue') || n.includes('hant'))) {
-                   if (n.includes('szewai') || n.includes('zhiwei') || n.includes('yunyang')) return true;
+                    if (n.includes('szewai') || n.includes('zhiwei') || n.includes('yunyang')) return true;
                 }
                 if (n.includes('google')) return isFemale; // Google 國語通常是女聲
             }
@@ -1013,11 +1260,11 @@ const App = {
         const engine = App._getTTSEngine();
         const voice = App._pickVoice('en', App._getTTSGender(), engine);
         if (voice) utter.voice = voice;
-        
+
         // 設定語速與語調（Google 語音不支援 pitch 自訂，此處僅對系統語音有效）
         utter.rate = overrideRate || App._getTTSRate();
         utter.pitch = engine === 'browser' ? App._getTTSPitch() : 1.0;
-        
+
         App.synth.speak(utter);
     },
 
@@ -1029,11 +1276,11 @@ const App = {
         const engine = App._getTTSEngine();
         const voice = App._pickVoice('zh', App._getTTSGender(), engine);
         if (voice) utter.voice = voice;
-        
+
         // 設定語速與語調
         utter.rate = overrideRate || App._getTTSRate();
         utter.pitch = engine === 'browser' ? App._getTTSPitch() : 1.0;
-        
+
         App.synth.speak(utter);
     }
 };
