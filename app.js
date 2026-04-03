@@ -370,6 +370,7 @@ const App = {
         }
     },
 
+    // 渲染側邊欄
     renderSidebar: (data) => {
         const nav = document.getElementById('sidebarNav');
         nav.innerHTML = '';
@@ -385,9 +386,6 @@ const App = {
             unit.sub_units.forEach(sub => {
                 const subHeader = document.createElement('div');
                 subHeader.className = 'sub-unit-header';
-                subHeader.style.padding = '5px 10px';
-                subHeader.style.fontWeight = 'bold';
-                subHeader.style.fontSize = '0.85rem';
                 subHeader.textContent = sub.title;
                 subList.appendChild(subHeader);
                 
@@ -395,7 +393,14 @@ const App = {
                     const link = document.createElement('div');
                     link.className = 'topic-link';
                     link.innerHTML = `<i class="fas fa-file-alt"></i> ${topic.id}. ${topic.title}`;
-                    link.onclick = () => App.loadTopic(topic);
+                    link.onclick = (e) => {
+                        e.stopPropagation();
+                        App.loadTopic(topic);
+                        // 行動端點擊後自動收合
+                        if (window.innerWidth <= 768) {
+                            document.querySelector('.sidebar').classList.remove('active');
+                        }
+                    };
                     subList.appendChild(link);
                 });
             });
@@ -406,107 +411,141 @@ const App = {
         });
     },
 
+    // 載入主題並顯示為 Modal
     loadTopic: (topic) => {
         App.currentTopic = topic;
-        const container = document.getElementById('topicContent');
-        const quizBox = document.getElementById('quizContainer');
-        quizBox.classList.add('hidden'); // 切換主題時先隱藏測驗
+        App.renderDetail(topic);
+        
+        // 自動語音朗讀 (如果勾選)
+        const autoPlay = document.getElementById('autoPlayToggle');
+        if (autoPlay && autoPlay.checked) {
+            App.speakZh(topic.title);
+        }
+    },
 
-        container.innerHTML = `
-            <div class="topic-header">
-                <h1>#${topic.id} ${topic.title}</h1>
-                <div class="topic-meta">
-                    <span class="meta-badge meta-eng"><i class="fas fa-language"></i> ${topic.eng_name} &nbsp;(${topic.eng_abbr})</span>
-                    <span class="meta-badge meta-cat"><i class="fas fa-tag"></i> ${topic.category}</span>
-                    <span class="meta-badge meta-prin"><i class="fas fa-layer-group"></i> ${topic.principle}</span>
-                </div>
-            </div>
+    // 渲染詳細學習卡 (以 Modal 顯示)
+    renderDetail: (topic) => {
+        // 先移除舊的 Modal
+        const oldModal = document.querySelector('.detail-modal');
+        if (oldModal) oldModal.remove();
 
-            <div class="card-3d">
-                <div class="card-inner" id="flashcard">
-                    <div class="card-front">
-                        <div class="term-title">#${topic.id} ${topic.title} <span style="font-size:1.2rem; color:var(--text-dim);">(${topic.eng_abbr})</span></div>
-                        <div class="term-eng-row" style="margin-top: 10px;">
-                            <span class="term-eng" style="font-size: 1.1rem; opacity: 0.9;">${topic.eng_name}</span>
-                            <button class="tts-icon-btn" title="英文發音" onclick="event.stopPropagation(); App.speakEng('${topic.eng_name.replace(/'/g, "\\'")}')"
-                            ><i class="fas fa-volume-up"></i></button>
-                        </div>
-                        <p style="margin-top:30px; color:var(--text-dim); font-size: 0.9rem;">點擊翻轉查看詳細解析</p>
+        const modal = document.createElement('div');
+        modal.className = 'detail-modal';
+        modal.innerHTML = `
+            <div class="detail-overlay" onclick="App.closeDetail()"></div>
+            <div class="detail-content glass-panel">
+                <button class="close-detail-btn" onclick="App.closeDetail()" title="關閉"><i class="fas fa-times"></i></button>
+                
+                <div class="topic-header">
+                    <h1>#${topic.id} ${topic.title}</h1>
+                    <div class="topic-meta">
+                        <span class="meta-badge meta-eng"><i class="fas fa-language"></i> ${topic.eng_name} (${topic.eng_abbr})</span>
+                        <span class="meta-badge meta-cat"><i class="fas fa-tag"></i> ${topic.category}</span>
                     </div>
-                    <div class="card-back">
-                        <div class="card-back-scroll">
-                            <div class="info-group">
-                                <div class="info-label">核心目標</div>
-                                <div class="info-value">${topic.key_goal || '請見詳細解析'}</div>
+                </div>
+
+                <div class="card-3d">
+                    <div class="card-inner" onclick="this.classList.toggle('flipped')">
+                        <div class="card-front">
+                            <div class="term-title">#${topic.id} ${topic.title}</div>
+                            <div class="term-eng-row" style="margin-top: 15px;">
+                                <span class="term-eng">${topic.eng_name}</span>
+                                <button class="tts-icon-btn" onclick="event.stopPropagation(); App.speakEng('${topic.eng_name.replace(/'/g, "\\'")}')">
+                                    <i class="fas fa-volume-up"></i>
+                                </button>
                             </div>
-                            <div class="info-group">
-                                <div class="info-label">核心原理</div>
-                                <div class="info-value">${topic.key_principle || '請見詳細解析'}</div>
-                            </div>
-                            <div class="info-group">
-                                <div class="info-label">定義</div>
-                                <div class="info-value">${topic.def}</div>
-                            </div>
-                            <div class="info-group">
-                                <div class="info-label">關鍵用途</div>
-                                <div class="info-value primary-text">${topic.key_purpose || '請見詳細解析'}</div>
-                            </div>
-                            <div class="info-group">
-                                <div class="info-label">常見應用</div>
-                                <div class="info-value">${topic.common_apps || '請見詳細解析'}</div>
-                            </div>
-                            
-                            <div class="info-group">
-                                <div class="info-label">企業導入場景應用</div>
-                                <div class="scenario-grid">
-                                    ${Object.entries(topic.scenarios).map(([key, val]) => val ? `
-                                        <div class="scenario-item">
-                                            <span class="scenario-tag">${App._getScenarioLabel(key)}</span>
-                                            <span class="scenario-val">${val}</span>
-                                        </div>
-                                    ` : '').join('')}
+                            <p style="margin-top:40px; opacity:0.6; font-size:0.9rem;">點擊翻轉查看詳細解析</p>
+                        </div>
+                        <div class="card-back">
+                            <div class="card-back-scroll">
+                                <div class="info-group">
+                                    <div class="info-label">核心目標</div>
+                                    <div class="info-value">${topic.key_goal || '請見詳細解析'}</div>
                                 </div>
+                                <div class="info-group">
+                                    <div class="info-label">用途</div>
+                                    <div class="info-value primary-text">${topic.key_purpose || '請見詳細解析'}</div>
+                                </div>
+                                <div class="info-group">
+                                    <div class="info-label">定義</div>
+                                    <div class="info-value">${topic.def}</div>
+                                </div>
+                                <div class="info-group">
+                                    <div class="info-label">企業導入場景</div>
+                                    <div class="scenario-grid">
+                                        ${Object.entries(topic.scenarios).map(([key, val]) => val ? `
+                                            <div class="scenario-item">
+                                                <span class="scenario-tag">${App._getScenarioLabel(key)}</span>
+                                                <span class="scenario-val">${val}</span>
+                                            </div>
+                                        ` : '').join('')}
+                                    </div>
+                                </div>
+                                <button class="control-btn quiz-start-btn" id="startQuizInModal"><i class="fas fa-vial"></i> 開始測驗</button>
                             </div>
-
-                            <button class="control-btn quiz-start-btn" id="startQuizBtn"><i class="fas fa-vial"></i> 開始測驗</button>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- ✅ Bug B 修正：詳細解析預設隱藏，答題後才顯示 -->
-            <div class="details-section glass-panel" style="margin-top:20px; padding:20px; display:none;">
-                <div class="detail-reveal-badge">💡 解析已解鎖</div>
-                <h3>詳細解析</h3>
-                <p>${topic.detail_explain}</p>
+                <div id="quizContainerInModal" class="hidden glass-panel" style="margin-top: 20px; padding: 20px;">
+                    <div id="quizQuestion" class="quiz-q"></div>
+                    <div id="quizOptions" class="quiz-opts"></div>
+                    <div id="quizFeedback" class="quiz-feedback hidden">
+                        <div id="quizExplain" class="quiz-explain"></div>
+                        <button id="nextQuestionBtn" class="control-btn hidden">下一題 <i class="fas fa-arrow-right"></i></button>
+                        <div id="srsActions" class="srs-btns-grid hidden">
+                            <button class="srs-btn srs-again" data-grade="0">忘光 (Again)</button>
+                            <button class="srs-btn srs-hard" data-grade="1">吃力 (Hard)</button>
+                            <button class="srs-btn srs-good" data-grade="2">答對 (Good)</button>
+                            <button class="srs-btn srs-easy" data-grade="3">秒答 (Easy)</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="details-section glass-panel" style="margin-top:20px; padding:20px; display:none;">
+                    <h3>詳細解析</h3>
+                    <p>${topic.detail_explain}</p>
+                </div>
             </div>
         `;
 
-        // 移除原有的 Mermaid 相關邏輯，改為直接操作
-        document.getElementById('flashcard').onclick = (e) => {
-            if (e.target.id === 'startQuizBtn' || e.target.closest('#startQuizBtn')) return;
-            e.currentTarget.classList.toggle('flipped');
-        };
+        document.body.appendChild(modal);
+        document.body.style.overflow = 'hidden';
 
-        // 綁定測驗開啟
-        document.getElementById('startQuizBtn').onclick = () => {
-            if (QuizManager.initQuiz(topic.id)) {
-                QuizManager.renderCurrent();
-            } else {
-                alert('此主題暫無測驗題目');
-            }
-        };
-
-        // 自動語音朗讀名詞 (如果勾選，加 null-check 防止 element 不存在時靜默 JS 錯誤)
-        const autoPlayToggle = document.getElementById('autoPlayToggle');
-        if (autoPlayToggle && autoPlayToggle.checked) {
-            App.speak(`${topic.title}. ${topic.eng_name}.`);
+        // 綁定測驗
+        const startBtn = document.getElementById('startQuizInModal');
+        if (startBtn) {
+            startBtn.onclick = (e) => {
+                e.stopPropagation();
+                if (QuizManager.initQuiz(topic.id)) {
+                    document.getElementById('quizContainerInModal').classList.remove('hidden');
+                    QuizManager.renderCurrentInModal();
+                } else {
+                    alert('此主題暫無測驗題目');
+                }
+            };
         }
 
-        // 高亮側邊欄
-        document.querySelectorAll('.topic-link').forEach(l => {
-            l.classList.toggle('active', l.textContent.includes(topic.title));
+        // 綁定內部 SRS 評分
+        modal.querySelectorAll('.srs-btn').forEach(btn => {
+            btn.onclick = (e) => {
+                const grade = parseInt(e.target.dataset.grade);
+                SRSManager.updateCard(topic.id, grade);
+                App.updateProgress();
+                App.closeDetail();
+            };
         });
+    },
+
+    closeDetail: () => {
+        const modal = document.querySelector('.detail-modal');
+        if (modal) {
+            modal.style.opacity = '0';
+            setTimeout(() => {
+                modal.remove();
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
     },
 
     // ✅ 新增：更新進度條邏輯
@@ -523,11 +562,33 @@ const App = {
     },
 
     bindEvents: () => {
+        // 漢堡選單 (行動端)
+        const menuBtn = document.getElementById('menuBtn');
+        const sidebar = document.querySelector('.sidebar');
+        if (menuBtn && sidebar) {
+            menuBtn.onclick = (e) => {
+                e.stopPropagation();
+                sidebar.classList.toggle('active');
+            };
+        }
+
+        // 點擊 Modal 以外的地方關閉 Sidebar
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768 && sidebar.classList.contains('active')) {
+                if (!sidebar.contains(e.target) && e.target !== menuBtn) {
+                    sidebar.classList.remove('active');
+                }
+            }
+        });
+
         // Logo 點擊 → 返回知識地圖主頁
         const logo = document.querySelector('.logo');
         if (logo) {
             logo.style.cursor = 'pointer';
-            logo.onclick = () => App.renderHomeScreen();
+            logo.onclick = () => {
+                App.renderHomeScreen();
+                if (window.innerWidth <= 768) sidebar.classList.remove('active');
+            };
         }
 
         // 主題色
@@ -689,11 +750,44 @@ const App = {
         return labels[key] || key;
     },
 
-    // 通用 speak（自動判斷語速 slider + 語言）
-    speak: (text) => {
+    // ✅ 核心修正：指定 Google TTS 聲音
+    speakZh: (text, speedOverride = null) => {
         App.synth.cancel();
         const utter = new SpeechSynthesisUtterance(text);
-        utter.rate = 1.0;
+        const rateSlider = document.getElementById('ttsRateSlider');
+        utter.rate = speedOverride || (rateSlider ? parseFloat(rateSlider.value) : 1.0);
+        
+        const voices = App.synth.getVoices();
+        const engine = document.getElementById('ttsEngineSelect').value;
+        const gender = document.getElementById('ttsGenderSelect').value;
+
+        if (engine === 'google') {
+            // 強制匹配 Google 聲音
+            // Google 國語 (台灣) - Standard-A (女), Standard-B (男)
+            const targetName = gender === 'female' ? 'Google 國語（臺灣）' : 'Google 國語（臺灣）';
+            // 注意：Chrome 顯示名稱可能略有不同，我們根據 index 或 genderhint 匹配
+            const googleVoices = voices.filter(v => v.name.includes('Google') && v.lang.includes('zh-TW'));
+            if (googleVoices.length > 0) {
+                // 語音引擎排序通常是 A 在前 B 在後，或者我們直接匹配特定 String
+                const targetVoice = googleVoices.find(v => v.name.includes(gender === 'female' ? '-A' : '-B')) || googleVoices[0];
+                utter.voice = targetVoice;
+            }
+        } else {
+            // 系統引擎：根據 gender hint
+            const zhVoice = voices.find(v => v.lang.includes('zh-TW') && (gender === 'female' ? !v.name.includes('Male') : v.name.includes('Male')));
+            if (zhVoice) utter.voice = zhVoice;
+        }
+
+        App.synth.speak(utter);
+    },
+
+    speakEng: (text) => {
+        App.synth.cancel();
+        const utter = new SpeechSynthesisUtterance(text);
+        const voices = App.synth.getVoices();
+        const engVoice = voices.find(v => v.lang.startsWith('en-'));
+        if (engVoice) utter.voice = engVoice;
+        utter.rate = 0.9;
         App.synth.speak(utter);
     },
 

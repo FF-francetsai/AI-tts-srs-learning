@@ -52,101 +52,166 @@ body {
 
 /* Header */
 .main-header {
-    padding: 10px 20px;
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.header-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
-.logo { display:flex; align-items:center; gap:10px; font-weight:700; font-size:1.2rem; color:var(--accent-color); }
-
-.header-controls { display:flex; align-items:center; gap:15px; }
-
-/* TTS Sliders & Labels */
-.tts-divider { width: 1px; height: 20px; background: var(--border-color); margin: 0 5px; }
-.tts-engine-panel { display: flex; align-items: center; gap: 8px; }
-.tts-engine-select {
-    background: rgba(255,255,255,0.05); border: 1px solid var(--border-color);
-    color: var(--text-main); border-radius: 6px; padding: 3px 6px; font-size: 0.85rem; outline: none;
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 10px;
+    border-radius: 12px;
 }
-.slider-group { 
+
+.menu-toggle {
+    display: none;
+    font-size: 1.2rem;
+    z-index: 1001;
+}
+
+.logo { 
     display: flex; 
-    flex-direction: column;
-    align-items: flex-start; 
-    gap: 2px; 
-    margin-left: 10px;
-    padding: 0 5px;
+    align-items: center; 
+    gap: 10px; 
+    font-weight: 700; 
+    font-size: 1.1rem; 
+    color: var(--accent-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-.ctrl-label { 
-    font-size: 0.65rem; 
-    color: var(--text-dim); 
-    white-space: nowrap; 
+
+.header-quick-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* TTS 控制面板 */
+.tts-engine-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px 12px;
+    background: rgba(56, 189, 248, 0.08);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    border-radius: 12px;
+    flex: 1;
+    min-width: 280px;
+}
+
+.control-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.control-row.sliders {
+    justify-content: flex-start;
+}
+
+.tts-divider { width: 1px; height: 16px; background: var(--border-color); }
+
+.tts-engine-select {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-size: 0.85rem;
+    outline: none;
+}
+
+.slider-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ctrl-label {
+    font-size: 0.7rem;
+    color: var(--text-dim);
     font-weight: 600;
 }
+
 .slider-container {
     display: flex;
     align-items: center;
     gap: 8px;
 }
-.slider-val { 
-    font-size: 0.75rem; 
-    color: var(--accent-color); 
-    min-width: 25px; 
-    text-align: left; 
-    font-family: 'Inter', monospace;
+
+.slider-val {
+    font-size: 0.75rem;
+    color: var(--accent-color);
+    min-width: 22px;
     font-weight: 700;
 }
+
 input[type="range"] {
-    -webkit-appearance: none; 
-    appearance: none;
-    width: 80px; 
-    height: 4px; 
-    background: rgba(255,255,255,0.1);
-    border-radius: 10px; 
-    outline: none; 
-    cursor: pointer;
-    transition: background 0.2s;
-}
-input[type="range"]:hover {
-    background: rgba(255,255,255,0.2);
-}
-input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none; 
-    width: 12px; 
-    height: 12px; 
-    background: var(--accent-color);
-    border-radius: 50%; 
-    cursor: pointer; 
-    box-shadow: 0 0 8px rgba(56, 189, 248, 0.5);
-    border: 2px solid white;
+    -webkit-appearance: none;
+    width: 70px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
 }
 
 .search-box {
     position: relative;
-    background: rgba(0,0,0,0.05);
+    background: rgba(0, 0, 0, 0.1);
     border-radius: 20px;
-    padding: 5px 15px;
+    padding: 6px 15px;
     display: flex;
     align-items: center;
     gap: 8px;
-    width: 250px;
+    flex: 2;
+    min-width: 200px;
 }
+
 .search-box input {
-    background: transparent; border: none; outline: none; color: inherit; width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: inherit;
+    width: 100%;
+    font-size: 0.9rem;
+}
+
+.mode-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .control-btn {
-    background: rgba(255,255,255,0.1);
-    border: none;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-color);
     color: var(--text-main);
     padding: 8px 12px;
     border-radius: 10px;
     cursor: pointer;
+    font-size: 0.9rem;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
+    transition: 0.2s;
 }
-.control-btn:hover { background: var(--accent-color); color: white; }
+
+.control-btn:hover {
+    background: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
 
 /* Main Content Layout */
 .main-layout {
@@ -756,48 +821,127 @@ body.light-theme .primary-text {
     box-shadow: 0 4px 14px rgba(56,189,248,0.35);
 }
 
-/* 底部操作按鈕列 */
-.home-actions {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin: 20px 0 8px;
-}
-.home-action-btn {
-    padding: 11px 26px;
-    border-radius: 12px;
-    border: none;
-    cursor: pointer;
-    font-size: 0.93rem;
-    font-weight: 700;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: linear-gradient(135deg, #38bdf8, #818cf8);
-    color: #fff;
-    transition: all 0.25s ease;
-    box-shadow: 0 4px 18px rgba(56,189,248,0.3);
-    letter-spacing: 0.02em;
-}
-.home-action-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 7px 24px rgba(56,189,248,0.5);
+/* ====================================
+   ✅ 行動端響應式優化 (Mobile First)
+   ==================================== */
+
+@media (max-width: 768px) {
+    body { overflow-y: auto; height: auto; }
+    .app-container { height: auto; min-height: 100vh; padding: 5px; }
+
+    .menu-toggle { display: block; }
+    
+    .logo span { font-size: 0.95rem; max-width: 200px; }
+
+    .header-controls {
+        flex-direction: column;
+        align-items: stretch;
+        display: none; /* 預設隱藏詳細設定，可透過 JS 切換 */
+    }
+    .header-controls.active { display: flex; animation: fadeInDown 0.3s ease; }
+
+    .tts-engine-panel { min-width: 100%; }
+    .control-row.sliders { overflow-x: auto; padding-bottom: 5px; }
+
+    .main-layout { grid-template-columns: 1fr; display: block; }
+    
+    /* 側邊欄改為固定抽屜式 */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 280px;
+        height: 100vh;
+        z-index: 1000;
+        transform: translateX(-100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 10px 0 30px rgba(0,0,0,0.3);
+    }
+    .sidebar.active { transform: translateX(0); }
+
+    .content-area { padding: 10px; }
+
+    .card-3d { height: 500px; }
+    .term-title { font-size: 1.8rem; }
+    .card-front, .card-back { padding: 20px; }
+
+    .stat-item { gap: 0; }
+    .stat-num { font-size: 1.2rem; }
+
+    .srs-btns { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* ============================================================ 
-   新功能：Sync Button 樣式 
-   ============================================================ */
-.icon-btn {
-    background: rgba(255, 255, 255, 0.1);
+/* ====================================
+   ✅ Detail Modal (學習卡) 全螢幕樣式
+   ==================================== */
+.detail-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.detail-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(8px);
+}
+
+.detail-content {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    z-index: 2001;
+    padding: 40px 30px 30px;
+    animation: zoomIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.close-detail-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
     border: none;
+    background: rgba(255, 255, 255, 0.1);
     color: var(--text-main);
-    padding: 8px 12px;
-    border-radius: 10px;
+    font-size: 1.2rem;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 8px;
+    justify-content: center;
     transition: 0.2s;
+}
+
+.close-detail-btn:hover {
+    background: var(--srs-again);
+    color: white;
+    transform: rotate(90deg);
+}
+
+@keyframes zoomIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* 輔助類別 */
+#pitchControlGroup.disabled {
+    opacity: 0.4;
+    pointer-events: none;
+    filter: grayscale(1);
 }
 .icon-btn:hover {
     background: rgba(255, 255, 255, 0.2);

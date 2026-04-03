@@ -20,67 +20,71 @@
     <div id="app" class="app-container">
         <!-- Header -->
         <header class="glass-panel main-header">
-            <div class="logo">
-                <i class="fas fa-brain"></i>
-                <span>iPas AI 應用規畫師 AI SRS 智慧學習平台</span>
+            <div class="header-top">
+                <button id="menuBtn" class="icon-btn menu-toggle" title="切換導航選單">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="logo">
+                    <i class="fas fa-brain"></i>
+                    <span>iPas AI 應用規畫師 AI SRS 智慧學習平台</span>
+                </div>
+                <div class="header-quick-actions">
+                    <button id="toggleTheme" class="control-btn" title="切換深色 / 淺色主題">🌓</button>
+                    <button class="icon-btn highlight" id="syncCloudBtn" title="同步雲端最新數據 (Google Sheets)" onclick="App.syncFromCloud()">
+                        <i class="fas fa-rotate" id="syncBtn"></i>
+                    </button>
+                </div>
             </div>
-            <div class="header-controls">
-                <!-- TTS 控制面板：引擎 + 男女聲 + 語速 -->
+            
+            <div class="header-controls" id="headerControls">
+                <!-- TTS 控制面板 -->
                 <div class="tts-engine-panel">
-                    <i class="fas fa-volume-up" style="color:var(--accent-color); font-size:0.9rem;"></i>
-                    <span class="tts-label">發音引擎</span>
-                    <select id="ttsEngineSelect" class="tts-engine-select" title="選擇 TTS 引擎">
-                        <option value="browser">💻 系統預設</option>
-                        <option value="google" selected>🌐 Google 真人</option>
-                        <option value="azure">☁️ Azure 真人 (預留)</option>
-                        <option value="openai">🤖 OpenAI 真人 (預留)</option>
-                    </select>
-                    <span class="tts-divider"></span>
-                    <i class="fas fa-user" style="color:var(--text-dim); font-size:0.8rem;"></i>
-                    <select id="ttsGenderSelect" class="tts-engine-select" title="選擇性別聲線（男/女）">
-                        <option value="female" selected>♀ 女聲</option>
-                        <option value="male">♂ 男聲</option>
-                    </select>
-                    <span class="tts-divider"></span>
-                    <!-- 恢復語速與音調滑桿 -->
-                    <div class="slider-group">
-                        <span class="ctrl-label">語速</span>
-                        <div class="slider-container">
-                            <input type="range" id="ttsRateSlider" min="0.1" max="2.0" step="0.1" value="0.5" title="調整語速 (0.1 - 2.0)">
-                            <span class="slider-val" id="ttsRateVal">0.5</span>
-                        </div>
+                    <div class="control-row">
+                        <i class="fas fa-volume-up" style="color:var(--accent-color); font-size:0.9rem;"></i>
+                        <span class="tts-label">發音引擎</span>
+                        <select id="ttsEngineSelect" class="tts-engine-select" title="選擇 TTS 引擎">
+                            <option value="browser">💻 系統預設</option>
+                            <option value="google" selected>🌐 Google 真人</option>
+                        </select>
+                        <span class="tts-divider"></span>
+                        <i class="fas fa-user" style="color:var(--text-dim); font-size:0.8rem;"></i>
+                        <select id="ttsGenderSelect" class="tts-engine-select" title="選擇性別聲線">
+                            <option value="female" selected>♀ 女聲</option>
+                            <option value="male">♂ 男聲</option>
+                        </select>
                     </div>
-                    <div class="slider-group">
-                        <span class="ctrl-label">音調 <small style="font-size:0.6rem; opacity:0.7;">(僅限系統)</small></span>
-                        <div class="slider-container">
-                            <input type="range" id="ttsPitchSlider" min="0.5" max="2.0" step="0.1" value="1.0" title="調整音調 (0.5 - 2.0)">
-                            <span class="slider-val" id="ttsPitchVal">1.0</span>
+                
+                    <div class="control-row sliders">
+                        <div class="slider-group">
+                            <span class="ctrl-label">語速</span>
+                            <div class="slider-container">
+                                <input type="range" id="ttsRateSlider" min="0.1" max="2.0" step="0.1" value="0.5">
+                                <span class="slider-val" id="ttsRateVal">0.5</span>
+                            </div>
+                        </div>
+                        <div id="pitchControlGroup" class="slider-group">
+                            <span class="ctrl-label">音調 <small>(系統)</small></span>
+                            <div class="slider-container">
+                                <input type="range" id="ttsPitchSlider" min="0.5" max="2.0" step="0.1" value="1.0">
+                                <span class="slider-val" id="ttsPitchVal">1.0</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <button class="icon-btn highlight" id="syncCloudBtn" title="同步雲端最新數據 (Google Sheets)" onclick="App.syncFromCloud()">
-                    <i class="fas fa-rotate" id="syncBtn"></i>
-                    <span class="btn-text">同步資料</span>
-                </button>
+
                 <div class="search-box">
                     <i class="fas fa-search"></i>
-                    <input type="text" id="topicSearch" placeholder="搜尋編號、術語、英文縮寫或關鍵字...">
+                    <input type="text" id="topicSearch" placeholder="搜尋術語、關鍵字...">
                 </div>
-                <!-- SRS 複習模式切換 -->
-                <div class="btn-with-label">
-                    <span class="ctrl-label">複習模式</span>
-                    <button id="srsToggle" class="control-btn" title="開啟後只顯示今日待複習的學習卡">
+
+                <div class="mode-controls">
+                    <button id="srsToggle" class="control-btn" title="每日複習模式">
                         <i class="fas fa-graduation-cap"></i>
                         <span class="btn-text">每日複習</span>
                     </button>
-                </div>
-                <button id="toggleTheme" class="control-btn" title="切換深色 / 淺色主題">🌓</button>
-                <!-- 字體大小控制 -->
-                <div class="btn-with-label">
-                    <span class="ctrl-label">字體大小</span>
                     <div class="font-controls">
-                        <button id="fontDown" class="control-btn" title="縮小字體">A-</button>
-                        <button id="fontUp" class="control-btn" title="放大字體">A+</button>
+                        <button id="fontDown" class="control-btn">A-</button>
+                        <button id="fontUp" class="control-btn">A+</button>
                     </div>
                 </div>
             </div>
@@ -105,6 +109,17 @@
             <section class="content-area">
                 <div id="topicContent" class="topic-container">
                     <!-- Dynamic Content -->
+                </div>
+
+                <!-- 增加：詳細資訊 Modal (學習卡) -->
+                <div id="detailModal" class="detail-modal hidden">
+                    <div class="detail-overlay" onclick="App.closeDetail()"></div>
+                    <div class="detail-content glass-panel">
+                        <button class="close-detail-btn" onclick="App.closeDetail()" title="關閉">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <div id="detailBody"></div>
+                    </div>
                 </div>
 
                 <!-- Quiz Area (Hidden by default) -->
