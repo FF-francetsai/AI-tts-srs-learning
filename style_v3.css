@@ -1,0 +1,182 @@
+@import url("style.css");
+
+/* ============================================================
+   V3 Infinite Mindmap Canvas embedded styles
+   ============================================================ */
+
+.panzoom-area {
+    position: relative;
+    flex: 1;
+    overflow: auto;
+    cursor: grab;
+    background-color: var(--primary-bg);
+    background-size: 40px 40px;
+    background-image: 
+        linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
+    border-radius: 12px;
+    margin-top: 20px;
+    border: 1px solid var(--border-color);
+    min-height: 500px;
+}
+.panzoom-area:active { cursor: grabbing; }
+
+/* In dark mode, slightly lighter background for panzoom area */
+body.dark-theme .panzoom-area {
+    background-color: var(--primary-bg);
+    background-image: 
+        linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+}
+
+.mindmap-canvas {
+    position: absolute;
+    /* Large fixed size to allow infinite scrolling effect */
+    top: -500px;
+    left: -500px;
+    width: 3000px;
+    height: 3000px;
+}
+
+.mindmap-lines {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Learning Card Node (mnode) */
+.mnode {
+    position: absolute;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    backdrop-filter: var(--glass-blur);
+    border-radius: 12px;
+    padding: 15px 20px;
+    min-width: 220px;
+    max-width: 300px;
+    z-index: 2;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    transform: scale(0.8);
+    animation: nodeEnter 0.4s forwards;
+    cursor: auto /* Stop grabbing propagation */
+}
+
+@keyframes nodeEnter {
+    to { opacity: 1; transform: scale(1); }
+}
+
+.mnode-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px solid rgba(0,0,0,0.05);
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+}
+
+/* For dark mode */
+body.dark-theme .mnode-header {
+    border-bottom-color: rgba(255,255,255,0.1);
+}
+
+.mnode-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--accent-color);
+}
+
+.mnode-tools i {
+    cursor: pointer;
+    color: var(--text-dim);
+    margin-left: 8px;
+    transition: 0.2s;
+}
+.mnode-tools i:hover { color: var(--accent-color); }
+
+.mnode-content {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--text-main);
+}
+
+.mnode-actions {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+/* 節點展開按鈕 */
+.expand-btn {
+    background: var(--primary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    color: var(--text-dim);
+    transition: 0.2s;
+}
+.expand-btn:hover { background: var(--accent-color); color: #fff; border-color: var(--accent-color); }
+.expand-btn.expanded { transform: rotate(45deg); }
+
+/* ============================================================
+   V3 3-Column Layout Overrides
+   ============================================================ */
+.main-layout {
+    grid-template-columns: 320px 450px 1fr;
+}
+
+@media (max-width: 1024px) {
+    .main-layout {
+        grid-template-columns: 320px 1fr;
+    }
+    .right-panel {
+        display: none;
+    }
+    .right-panel.active {
+        display: flex;
+        position: absolute;
+        top: 0; right: 0; bottom: 0; width: 450px;
+        z-index: 100;
+        background: var(--card-bg);
+        border-left: 1px solid var(--border-color);
+    }
+    .mobile-hide-btn {
+        display: block !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-layout {
+        grid-template-columns: 1fr;
+    }
+    .sidebar {
+        display: none;
+        position: absolute;
+        top: 60px; left: 0; bottom: 0; width: 320px;
+        z-index: 100;
+        background: var(--card-bg);
+        border-right: 1px solid var(--border-color);
+    }
+    .sidebar.active {
+        display: flex;
+    }
+    .right-panel.active {
+        width: 100%;
+        border-left: none;
+    }
+    .mobile-only {
+        display: block !important;
+    }
+}
+
+.mobile-only {
+    display: none;
+}
+.mobile-hide-btn {
+    display: none;
+}
+
