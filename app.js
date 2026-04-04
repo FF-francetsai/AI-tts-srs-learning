@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AI SRS 智慧學習平台 - 核心邏輯
  * 整合：Mermaid 心智圖、Web Speech TTS、Anki 風格 SRS 系統、5800+ 題庫、Google Sheets 即時同步
  */
@@ -1068,7 +1068,7 @@ const App = {
                 </div>
             </div>
 
-            <div class="home-actions" style="gap: 15px; flex-wrap: wrap;">
+            <div class="home-actions">
                 <button class="home-action-btn" id="randomStartBtn">
                     <i class="fas fa-random"></i> 隨機開始學習
                 </button>

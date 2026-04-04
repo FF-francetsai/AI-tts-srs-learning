@@ -1,4 +1,4 @@
-:root {
+﻿:root {
     /* Color Palette - Modern Deep Blue & Glass */
     --primary-bg: #0f172a;
     --card-bg: rgba(30, 41, 59, 0.7);
@@ -1403,17 +1403,50 @@ body.light-theme .primary-text {
    ✅ 2D - 錯誤補救與進度地圖追加樣式
    ==================================== */
 
+/* ====================================
+   首頁 2D - 隨機開始與錯題補救板塊樣式
+   ==================================== */
+
+.home-actions {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.home-action-btn {
+    flex: 1;
+    min-width: 250px;
+    padding: 18px 25px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--accent-color), #6366f1);
+    color: white;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(14, 165, 233, 0.2);
+}
+
+.home-action-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(14, 165, 233, 0.4);
+    filter: brightness(1.1);
+}
+
 .home-action-btn.secondary {
-    background: rgba(248, 113, 113, 0.15);
-    border: 1px solid rgba(248, 113, 113, 0.3);
-    color: #f87171;
+    background: linear-gradient(135deg, #f87171, #ef4444);
+    box-shadow: 0 4px 15px rgba(248, 113, 113, 0.3);
 }
 
 .home-action-btn.secondary:hover {
-    background: #f87171;
-    color: white;
+    box-shadow: 0 8px 25px rgba(248, 113, 113, 0.4);
 }
-
 /* 成就牆 Achievement Wall */
 .achievement-wall {
     display: grid;
@@ -1497,3 +1530,4 @@ body.light-theme .primary-text {
     background: #10b981;
     color: white;
 }
+
