@@ -1,3 +1,4 @@
+<FILE filename="app.js" size="59162 bytes">
 /**
  * AI SRS 智慧學習平台 - 核心邏輯
  * 整合：Mermaid 心智圖、Web Speech TTS、Anki 風格 SRS 系統、5800+ 題庫、Google Sheets 即時同步
@@ -323,18 +324,16 @@ const QuizManager = {
         
         // 根據環境選擇容器與元素
         const container = document.getElementById(isModal ? 'quizContainerInModal' : 'quizContainer');
-        const qEl = document.getElementById(isModal ? 'modalQuizQuestion' : isModal ? 'modalQuizQuestion' : 'quizQuestion');
-        // 修正：如果 qEl 沒抓到，嘗試抓 modalQuizQuestion (為了相容性)
-        const actualQEl = qEl || document.getElementById('modalQuizQuestion');
+        const qEl = document.getElementById(isModal ? 'modalQuizQuestion' : 'quizQuestion');
         const actualOptEl = document.getElementById(isModal ? 'modalQuizOptions' : 'quizOptions');
         const feedback = document.getElementById(isModal ? 'modalQuizFeedback' : 'quizFeedback');
         const nextBtn = document.getElementById(isModal ? 'modalNextQuestionBtn' : 'nextQuestionBtn');
         const srsActions = document.getElementById(isModal ? 'modalSrsActions' : 'srsActions');
 
-        if (!q || !container || !actualQEl || !actualOptEl) return;
+        if (!q || !container || !qEl || !actualOptEl) return;
 
         // 顯示題號進度 (使用 .q 屬性)
-        actualQEl.textContent = `(Q${QuizManager.currentIndex + 1}/${QuizManager.currentQuizList.length}) ${q.q}`;
+        qEl.textContent = `(Q${QuizManager.currentIndex + 1}/${QuizManager.currentQuizList.length}) ${q.q}`;
         actualOptEl.innerHTML = '';
 
         feedback.classList.add('hidden');
@@ -797,7 +796,6 @@ const App = {
                     })).filter(sub => sub.topics.length > 0)
                 })).filter(unit => unit.sub_units.length > 0);
                 App.renderSidebar(filtered);
-                if (dueIds.length === 0) alert('今日暫無待複習項目！');
                 if (dueIds.length === 0) alert('今日暫無待複習項目！');
             } else {
                 App.renderSidebar(lessonData);
@@ -1286,3 +1284,4 @@ const App = {
 };
 
 window.onload = App.init;
+</FILE>
