@@ -541,7 +541,7 @@ const App = {
                 <button class="close-detail-btn" onclick="App.closeDetail()" title="關閉"><i class="fas fa-times"></i></button>
                 
                 <div class="topic-header">
-                    <h1><span style="color:var(--accent-color); opacity:0.7; margin-right:10px;">#${topic.id}</span>${topic.title}</h1>
+                    <h1><span style="color:var(--accent-color); opacity:0.6; margin-right:12px; font-family:monospace;">#${topic.id}</span>${topic.title}</h1>
                     <div class="topic-meta">
                         <span class="meta-badge meta-eng"><i class="fas fa-language"></i> ${topic.eng_name} (${topic.eng_abbr})</span>
                         <span class="meta-badge meta-cat"><i class="fas fa-tag"></i> ${topic.category}</span>
@@ -551,7 +551,10 @@ const App = {
                 <div class="card-3d">
                     <div class="card-inner" onclick="this.classList.toggle('flipped')">
                         <div class="card-front">
-                            <div class="term-title"><span style="font-size:1.5rem; vertical-align:middle; opacity:0.5; margin-right:15px;">#${topic.id}</span>${topic.title}</div>
+                            <div class="term-title">
+                                <span style="font-family:monospace; color:var(--accent-color); opacity:0.4; margin-right:10px;">#${topic.id}</span>
+                                ${topic.title}
+                            </div>
                             <div class="term-eng-row" style="margin-top: 15px;">
                                 <span class="term-eng">${topic.eng_name}</span>
                                 <button class="tts-icon-btn" onclick="event.stopPropagation(); App.speakEng('${topic.eng_name.replace(/'/g, "\\'")}')">
@@ -1020,9 +1023,11 @@ const App = {
                 <h1>🗺️ AI 知識地圖</h1>
                 <p class="home-sub">探索 <strong>AI ⊃ ML ⊃ 類神經網路 ⊃ 深度學習</strong> 的巢狀知識體系，點擊任意主題開始學習</p>
                 <div class="hero-stats">
-                    <div class="stat-item"><span class="stat-num">${allTopics.length}</span><span class="stat-lbl">個術語</span></div>
-                    <div class="stat-item"><span class="stat-num">${learned}</span><span class="stat-lbl">已掌握</span></div>
-                    <div class="stat-item"><span class="stat-num">${Math.round(learned / allTopics.length * 100)}%</span><span class="stat-lbl">完成度</span></div>
+                    <span class="stat-item"><i class="fas fa-book"></i> ${allTopics.length} 個術語</span>
+                    <span class="stat-divider">|</span>
+                    <span class="stat-item"><i class="fas fa-check-circle"></i> ${learned} 已掌握</span>
+                    <span class="stat-divider">|</span>
+                    <span class="stat-item"><i class="fas fa-chart-line"></i> ${Math.round(learned / allTopics.length * 100)}% 完成度</span>
                 </div>
             </div>
 
