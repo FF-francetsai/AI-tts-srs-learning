@@ -334,8 +334,9 @@ const App = {
             <div class="detail-content glass-panel">
                 <button class="close-detail-btn" onclick="App.closeDetail()" title="關閉"><i class="fas fa-times"></i></button>
                 <div class="topic-header">
-                    <h1>#${topic.id} ${topic.title}</h1>
+                    <h1>${topic.title}</h1>
                     <div class="topic-meta">
+                        <span class="meta-badge meta-id" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3);"><i class="fas fa-hashtag"></i> ${topic.id}</span>
                         <span class="meta-badge meta-eng"><i class="fas fa-language"></i> ${topic.eng_name} (${topic.eng_abbr})</span>
                         <span class="meta-badge meta-cat"><i class="fas fa-tag"></i> ${topic.category}</span>
                     </div>
@@ -343,7 +344,7 @@ const App = {
                 <div class="card-3d">
                     <div class="card-inner" onclick="this.classList.toggle('flipped')">
                         <div class="card-front">
-                            <div class="term-title">#${topic.id} ${topic.title}</div>
+                            <div class="term-title">${topic.title}</div>
                             <div class="term-eng-row" style="margin-top: 15px;">
                                 <span class="term-eng">${topic.eng_name}</span>
                                 <button class="tts-icon-btn" onclick="event.stopPropagation(); App.speakEng('${topic.eng_name.replace(/'/g, "\\'")}')">
@@ -437,7 +438,6 @@ const App = {
             menuBtn.onclick = (e) => { e.stopPropagation(); sidebar.classList.toggle('active'); };
         }
 
-        // 新增綁定手機版控制列展開/收合
         const toggleControlsBtn = document.getElementById('toggleControlsBtn');
         const headerControls = document.getElementById('headerControls');
         if (toggleControlsBtn && headerControls) {
