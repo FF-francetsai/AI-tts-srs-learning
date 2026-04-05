@@ -6,68 +6,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>iPas AI 應用規畫師 AI SRS 智慧學習平台</title>
     <!-- Google Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+TC:wght@300;500;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Mermaid.js -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="light-theme">
-    <div id="app" class="app-container">
+<body>
+    <div class="app-container">
         <!-- Header -->
-        <header class="glass-panel main-header">
+        <header class="main-header glass-panel">
             <div class="header-top">
-                <button id="menuBtn" class="icon-btn menu-toggle" title="切換導航選單">
-                    <i class="fas fa-bars"></i>
-                </button>
                 <div class="logo">
                     <i class="fas fa-brain"></i>
-                    <span>iPas AI 應用規畫師 AI SRS 智慧學習平台</span>
+                    <span>iPas AI 應用規畫師 <small>AI SRS 智慧學習平台</small></span>
                 </div>
                 <div class="header-quick-actions">
-                    <button id="toggleTheme" class="control-btn" title="切換深色 / 淺色主題">🌓</button>
-                    <button class="icon-btn highlight" id="syncCloudBtn" title="同步雲端最新數據 (Google Sheets)"
-                        onclick="App.syncFromCloud()">
-                        <i class="fas fa-rotate" id="syncBtn"></i>
-                    </button>
+                    <button class="control-btn" id="toggleTheme" title="切換主題"><i class="fas fa-moon"></i></button>
+                    <button class="control-btn" id="fontUp" title="放大字體"><i class="fas fa-plus"></i></button>
+                    <button class="control-btn" id="fontDown" title="縮小字體"><i class="fas fa-minus"></i></button>
+                    <button class="control-btn" id="menuToggle" title="選單"><i class="fas fa-bars"></i></button>
                 </div>
             </div>
-
-            <div class="header-controls" id="headerControls">
-                <!-- TTS 控制面板 -->
+            
+            <div class="header-controls">
+                <!-- TTS Engine Panel -->
                 <div class="tts-engine-panel">
                     <div class="control-row">
-                        <i class="fas fa-volume-up" style="color:var(--accent-color); font-size:0.9rem;"></i>
-                        <span class="tts-label">發音引擎</span>
-                        <select id="ttsEngineSelect" class="tts-engine-select" title="選擇 TTS 引擎">
-                            <option value="browser">💻 系統預設</option>
-                            <option value="google" selected>🌐 Google 真人</option>
+                        <span class="tts-label"><i class="fas fa-microchip"></i> 語音引擎</span>
+                        <select id="ttsEngineSelect" class="tts-engine-select">
+                            <option value="google">Google Cloud (高品質)</option>
+                            <option value="browser">Browser Native (離線)</option>
                         </select>
-                        <span class="tts-divider"></span>
-                        <i class="fas fa-user" style="color:var(--text-dim); font-size:0.8rem;"></i>
-                        <select id="ttsGenderSelect" class="tts-engine-select" title="選擇性別聲線">
-                            <option value="female" selected>♀ 女聲</option>
-                            <option value="male">♂ 男聲</option>
+                        <div class="tts-divider"></div>
+                        <select id="ttsGenderSelect" class="tts-engine-select">
+                            <option value="female">女聲 (Female)</option>
+                            <option value="male">男聲 (Male)</option>
                         </select>
                     </div>
-
                     <div class="control-row sliders">
                         <div class="slider-group">
                             <span class="ctrl-label">語速</span>
                             <div class="slider-container">
-                                <input type="range" id="ttsRateSlider" min="0.1" max="2.0" step="0.1" value="0.5">
-                                <span class="slider-val" id="ttsRateVal">0.5</span>
+                                <input type="range" id="ttsRateSlider" min="0.5" max="2" step="0.1" value="0.8">
+                                <span id="ttsRateLabel" class="slider-val">0.8x</span>
                             </div>
                         </div>
-                        <div id="pitchControlGroup" class="slider-group">
-                            <span class="ctrl-label">音調 <small>(系統)</small></span>
+                        <div class="slider-group" id="pitchControlGroup">
+                            <span class="ctrl-label">語調</span>
                             <div class="slider-container">
-                                <input type="range" id="ttsPitchSlider" min="0.5" max="2.0" step="0.1" value="1.0">
-                                <span class="slider-val" id="ttsPitchVal">1.0</span>
+                                <input type="range" id="ttsPitchSlider" min="0.5" max="2" step="0.1" value="1.0">
+                                <span id="ttsPitchLabel" class="slider-val">1.0x</span>
                             </div>
                         </div>
                     </div>
@@ -75,39 +66,31 @@
 
                 <div class="search-box">
                     <i class="fas fa-search"></i>
-                    <input type="text" id="topicSearch" placeholder="搜尋術語、關鍵字...">
+                    <input type="text" id="topicSearch" placeholder="搜尋主題或關鍵字...">
                 </div>
-
+                
                 <div class="mode-controls">
-                     <button id="srsToggle" class="control-btn" title="每日複習模式">
-                        <i class="fas fa-graduation-cap"></i>
-                        <span class="btn-text">每日複習</span>
-                    </button>
-                    <button id="headerWrongQuizBtn" class="control-btn secondary" title="錯題補救測驗">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <span class="btn-text">錯題補救</span>
-                    </button>
-                    <div class="font-controls">
-                        <button id="fontDown" class="control-btn">A-</button>
-                        <button id="fontUp" class="control-btn">A+</button>
-                    </div>
+                    <button class="control-btn" id="srsToggle"><i class="fas fa-calendar-check"></i> 複習模式</button>
                 </div>
             </div>
         </header>
 
+        <!-- Main Layout -->
         <main class="main-layout">
-            <!-- Sidebar -->
+            <!-- Sidebar Navigation -->
             <aside class="sidebar glass-panel">
                 <div class="sidebar-header">
-                    <h3><i class="fas fa-brain"></i> iPas 學習導航</h3>
-                    <div id="progressIndicator" class="progress-mini">
-                        <span id="progressText">進度: 0%</span>
+                    <h3>iPas 學習導航</h3>
+                    <div class="progress-mini">
+                        <div id="progressText">熟練度: 0%</div>
                         <div class="progress-bar-bg">
                             <div id="progressBar" class="progress-bar-fill"></div>
                         </div>
                     </div>
                 </div>
-                <nav id="sidebarNav" class="nav-container"></nav>
+                <nav class="nav-container" id="sidebarNav">
+                    <!-- Dynamic Units -->
+                </nav>
             </aside>
 
             <!-- Content Area -->
@@ -116,38 +99,64 @@
                     <!-- Dynamic Content -->
                 </div>
 
+                <!-- 增加：詳細資訊 Modal (學習卡) -->
+                <div id="detailModal" class="detail-modal hidden">
+                    <div class="detail-overlay" onclick="App.closeDetail()"></div>
+                    <div class="detail-content glass-panel">
+                        <button class="close-detail-btn" onclick="App.closeDetail()" title="關閉">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <div id="detailBody"></div>
+                    </div>
+                </div>
+
                 <!-- Quiz Area (Hidden by default) -->
                 <div id="quizContainer" class="quiz-container glass-panel hidden">
                     <div class="quiz-header">
                         <span class="quiz-badge">Challenge</span>
                         <h3 id="quizQuestion">題目載入中...</h3>
+                        <div id="quizNumber">Q1/10</div>
                     </div>
-                    <div id="quizOptions" class="quiz-options"></div>
-                    <div id="quizFeedback" class="quiz-feedback hidden">
-                        <div id="quizExplain" class="quiz-explain"></div>
-                        <button id="nextQuestionBtn" class="control-btn next-btn hidden"
-                            style="margin: 20px auto; display: block; background: var(--accent-color); color: white;">下一題
-                            <i class="fas fa-arrow-right"></i></button>
-                        <div id="srsActions" class="srs-actions hidden">
+                    <div class="quiz-options" id="quizOptions"></div>
+                    
+                    <div class="quiz-feedback hidden" id="quizFeedback">
+                        <div class="feedback-head">
+                            <i class="fas fa-lightbulb"></i> 核心解析
+                        </div>
+                        <div class="quiz-explain" id="quizExplain"></div>
+                        
+                        <div class="srs-actions" id="srsActions">
                             <p class="srs-prompt">這題對您來說難度如何？</p>
                             <div class="srs-btns">
-                                <button class="srs-btn again" data-grade="0">Again (1d)</button>
-                                <button class="srs-btn hard" data-grade="1">Hard (2d)</button>
-                                <button class="srs-btn good" data-grade="2">Good (4d)</button>
-                                <button class="srs-btn easy" data-grade="3">Easy (7d)</button>
+                                <button class="srs-btn again" data-grade="0">
+                                    <span>忘了</span>
+                                    <small>Again (1d)</small>
+                                </button>
+                                <button class="srs-btn hard" data-grade="1">
+                                    <span>困難</span>
+                                    <small>Hard (2d)</small>
+                                </button>
+                                <button class="srs-btn good" data-grade="2">
+                                    <span>答對</span>
+                                    <small>Good (4d)</small>
+                                </button>
+                                <button class="srs-btn easy" data-grade="3">
+                                    <span>秒答</span>
+                                    <small>Easy (7d)</small>
+                                </button>
                             </div>
                         </div>
+                        <button class="control-btn" id="nextQuestionBtn" style="margin-top: 20px; width: 100%;">
+                            下一題 <i class="fas fa-arrow-right"></i>
+                        </button>
                     </div>
                 </div>
             </section>
         </main>
 
-        <!-- Footer -->
-        <footer class="glass-panel main-footer">
-            <div class="footer-info">
-                <span>Power by AntiGravity &amp; SRS Memory System</span>
-            </div>
-            <div class="tts-voice-hint" style="font-size:0.75rem; color:var(--text-dim);">
+        <!-- Footer Meta -->
+        <footer class="main-footer">
+            <div class="tts-info">
                 <i class="fas fa-info-circle"></i> 點擊學習卡上的喇叭圖示以指定引擎發音
             </div>
         </footer>
