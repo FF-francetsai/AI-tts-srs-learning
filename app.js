@@ -218,14 +218,14 @@ const SRSManager = {
 const AchievementManager = {
     ACHIEVEMENTS: [
         { id: 'newbie', icon: '🐣', title: '初試啼聲', desc: '完成第 1 個術語學習', goal: 1 },
-        { id: 'apprentice', icon: '🤺', title: '略有小成', desc: '熟練度達到 10%', goal: 63 },
-        { id: 'expert', icon: '🛡️', title: '領域專家', desc: '熟練度達到 50%', goal: 315 },
-        { id: 'master', icon: '👑', title: 'AI 大師', desc: '熟練度達到 80%', goal: 504 },
-        { id: 'perfect', icon: '💎', title: '圓滿境界', desc: '掌握所有 631 個術語', goal: 631 }
+        { id: 'apprentice', icon: '🤺', title: '略有小成', desc: '熟練度達到 10%', goal: 64 },
+        { id: 'expert', icon: '🛡️', title: '領域專家', desc: '熟練度達到 50%', goal: 323 },
+        { id: 'master', icon: '👑', title: 'AI 大師', desc: '熟練度達到 80%', goal: 517 },
+        { id: 'perfect', icon: '💎', title: '圓滿境界', desc: '掌握所有 646 個術語', goal: 646 }
     ],
 
     getUnlocked: () => JSON.parse(localStorage.getItem('unlocked_achievements') || '[]'),
-    
+
     checkProgress: () => {
         const stats = SRSManager.getStats();
         const learnedCount = Object.keys(stats).length;
@@ -248,14 +248,14 @@ const AchievementManager = {
         const unlocked = AchievementManager.getUnlocked();
         return `<div class="achievement-wall">
             ${AchievementManager.ACHIEVEMENTS.map(ach => {
-                const isLocked = !unlocked.includes(ach.id);
-                return `
+            const isLocked = !unlocked.includes(ach.id);
+            return `
                     <div class="achievement-item ${isLocked ? 'locked' : 'unlocked'}" title="${ach.desc}">
                         <div class="ach-icon">${ach.icon}</div>
                         <div class="ach-title">${ach.title}</div>
                     </div>
                 `;
-            }).join('')}
+        }).join('')}
         </div>`;
     }
 };
@@ -291,7 +291,7 @@ const QuizManager = {
 
     renderCurrent: (isModal = false) => {
         const q = QuizManager.currentQuizList[QuizManager.currentIndex];
-        
+
         const container = document.getElementById(isModal ? 'quizContainerInModal' : 'quizContainer');
         const qEl = document.getElementById(isModal ? 'modalQuizQuestion' : isModal ? 'modalQuizQuestion' : 'quizQuestion');
         const actualQEl = qEl || document.getElementById('modalQuizQuestion');
@@ -312,7 +312,7 @@ const QuizManager = {
 
         const modalDetail = document.getElementById('modalTopicDetailExplain');
         if (modalDetail) modalDetail.classList.add('hidden');
-        
+
         const topicContent = document.getElementById('topicContent');
         const detailSection = topicContent ? topicContent.querySelector('.details-section') : null;
         if (detailSection) detailSection.style.display = 'none';
@@ -335,7 +335,7 @@ const QuizManager = {
     checkAnswer: (selected, correct, explain, isModal = false) => {
         const optContainerId = isModal ? 'modalQuizOptions' : 'quizOptions';
         const opts = document.getElementById(optContainerId).querySelectorAll('.quiz-opt');
-        
+
         opts.forEach(opt => {
             if (opt.textContent.startsWith(correct)) opt.classList.add('correct');
             else if (opt.textContent.startsWith(selected)) opt.classList.add('wrong');
@@ -601,7 +601,7 @@ const App = {
     updateProgressBar: () => {
         const stats = SRSManager.getStats();
         const reviewedCount = Object.keys(stats).length;
-        const totalCount = 631;
+        const totalCount = 646; // ✅ 修正：總筆數 646
         const progress = Math.round((reviewedCount / totalCount) * 100);
 
         const text = document.getElementById('progressText');
@@ -831,7 +831,6 @@ const App = {
         const gender = document.getElementById('ttsGenderSelect').value;
 
         if (engine === 'google') {
-            const targetName = gender === 'female' ? 'Google 國語（臺灣）' : 'Google 國語（臺灣）';
             const googleVoices = voices.filter(v => v.name.includes('Google') && v.lang.includes('zh-TW'));
             if (googleVoices.length > 0) {
                 const targetVoice = googleVoices.find(v => v.name.includes(gender === 'female' ? '-A' : '-B')) || googleVoices[0];
@@ -858,7 +857,7 @@ const App = {
     updateProgress: () => {
         const stats = SRSManager.getStats();
         const reviewed = Object.keys(stats).length;
-        const total = 631;
+        const total = 646; // ✅ 修正：總筆數 646
         const percent = Math.round((reviewed / total) * 100);
         document.getElementById('progressText').textContent = `熟練度: ${percent}% (${reviewed}/${total})`;
         document.getElementById('progressBar').style.width = `${percent}%`;
@@ -916,10 +915,11 @@ const App = {
                 .map(t => `<span class="zone-badge" data-tid="${t.id}" title="${t.eng_name}">${t.title}</span>`)
                 .join('') || '<span class="zone-badge-empty">暫無指定主題</span>';
 
+        // ✅ 修正：導覽文字對應下方顏色
         container.innerHTML = `
             <div class="home-hero">
                 <h1>🗺️ AI 知識地圖</h1>
-                <p class="home-sub">探索 <strong>AI ⊃ ML ⊃ 類神經網路 ⊃ 深度學習</strong> 的巢狀知識體系，點擊任意主題開始學習</p>
+                <p class="home-sub">探索 <span class="text-ai">AI</span> ⊃ <span class="text-ml">ML</span> ⊃ <span class="text-nn">類神經網路</span> ⊃ <span class="text-dl">深度學習</span> 的巢狀知識體系，點擊任意主題開始學習</p>
                 <div class="hero-stats">
                     <div class="stat-item"><span class="stat-num">${allTopics.length}</span><span class="stat-lbl">個術語</span></div>
                     <div class="stat-item"><span class="stat-num">${learned}</span><span class="stat-lbl">已掌握</span></div>
@@ -1042,30 +1042,24 @@ const App = {
     renderTopologyMap: () => {
         const stats = SRSManager.getStats();
         let mermaidCode = 'graph LR\n';
-        
+
         mermaidCode += 'classDef done fill:#22c55e,stroke:#16a34a,color:#fff\n';
         mermaidCode += 'classDef doing fill:#f59e0b,stroke:#d97706,color:#fff\n';
         mermaidCode += 'classDef todo fill:rgba(255,255,255,0.1),stroke:rgba(255,255,255,0.2),color:rgba(255,255,255,0.5)\n';
 
         window.lessonData.forEach((unit, uIdx) => {
             const uId = `U${uIdx}`;
-            
-            // ✅ 防呆機制：過濾標題中的換行符號避免 Mermaid 解析錯誤
             const safeUnitTitle = unit.title.replace(/[\n\r]/g, ' ').replace(/"/g, '');
             mermaidCode += `${uId}("${safeUnitTitle}")\n`;
 
             unit.sub_units.forEach((sub, sIdx) => {
                 const sId = `U${uIdx}S${sIdx}`;
-                
                 const total = sub.topics.length;
                 const learned = sub.topics.filter(t => stats[t.id]).length;
                 const percent = Math.round((learned / total) * 100);
-                
-                // ✅ 防呆機制：過濾標題中的換行符號
                 const safeSubTitle = sub.title.replace(/[\n\r]/g, ' ').replace(/"/g, '');
-                
                 mermaidCode += `${uId} --> ${sId}("${safeSubTitle}<br>${percent}%")\n`;
-                
+
                 if (percent >= 100) mermaidCode += `class ${sId} done\n`;
                 else if (percent > 0) mermaidCode += `class ${sId} doing\n`;
                 else mermaidCode += `class ${sId} todo\n`;
@@ -1129,9 +1123,28 @@ const App = {
         }
     },
 
-    speak: (text, overrideRate = null) => {
-        const isEng = /[a-zA-Z]/.test(text.substring(0, 5));
-        isEng ? App.speakEng(text, overrideRate) : App.speakZh(text, overrideRate);
+    speakZh: (text, speedOverride = null) => {
+        App.synth.cancel();
+        const utter = new SpeechSynthesisUtterance(text);
+        const rateSlider = document.getElementById('ttsRateSlider');
+        utter.rate = speedOverride || (rateSlider ? parseFloat(rateSlider.value) : 1.0);
+
+        const voices = App.synth.getVoices();
+        const engine = document.getElementById('ttsEngineSelect').value;
+        const gender = document.getElementById('ttsGenderSelect').value;
+
+        if (engine === 'google') {
+            const googleVoices = voices.filter(v => v.name.includes('Google') && v.lang.includes('zh-TW'));
+            if (googleVoices.length > 0) {
+                const targetVoice = googleVoices.find(v => v.name.includes(gender === 'female' ? '-A' : '-B')) || googleVoices[0];
+                utter.voice = targetVoice;
+            }
+        } else {
+            const zhVoice = voices.find(v => v.lang.includes('zh-TW') && (gender === 'female' ? !v.name.includes('Male') : v.name.includes('Male')));
+            if (zhVoice) utter.voice = zhVoice;
+        }
+
+        App.synth.speak(utter);
     },
 
     speakEng: (text, overrideRate = null) => {
@@ -1140,20 +1153,6 @@ const App = {
         utter.lang = 'en-US';
         const engine = App._getTTSEngine();
         const voice = App._pickVoice('en', App._getTTSGender(), engine);
-        if (voice) utter.voice = voice;
-
-        utter.rate = overrideRate || App._getTTSRate();
-        utter.pitch = engine === 'browser' ? App._getTTSPitch() : 1.0;
-
-        App.synth.speak(utter);
-    },
-
-    speakZh: (text, overrideRate = null) => {
-        App.synth.cancel();
-        const utter = new SpeechSynthesisUtterance(text);
-        utter.lang = 'zh-TW';
-        const engine = App._getTTSEngine();
-        const voice = App._pickVoice('zh', App._getTTSGender(), engine);
         if (voice) utter.voice = voice;
 
         utter.rate = overrideRate || App._getTTSRate();
