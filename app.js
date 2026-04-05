@@ -110,31 +110,32 @@ const App = {
                 <div class="topic-header">
                     <h1><span class="topic-no">#${topic.id}</span>${topic.title}</h1>
                     <div class="topic-meta">
-                        <span class="meta-badge">英：${topic.eng_name}</span>
-                        <span class="meta-badge">類：${topic.category}</span>
+                        <span class="meta-badge"><i class="fas fa-language"></i> ${topic.eng_name}</span>
+                        <span class="meta-badge"><i class="fas fa-tag"></i> ${topic.category}</span>
                     </div>
                 </div>
                 <div class="card-3d">
                     <div class="card-inner" onclick="this.classList.toggle('flipped')">
                         <div class="card-front">
                             <div class="term-title"><span class="term-no-front">#${topic.id}</span>${topic.title}</div>
-                            <div class="term-eng-row" style="margin-top:15px; display:flex; align-items:center; gap:10px;">
-                                <span style="font-size:1.2rem; color:var(--text-dim);">${topic.eng_name}</span>
+                            <div class="term-eng-row">
+                                <span>${topic.eng_name}</span>
                                 <button class="tts-icon-btn" onclick="event.stopPropagation(); App.speakEng('${topic.eng_name.replace(/'/g, "\\'")}')"><i class="fas fa-volume-up"></i></button>
                             </div>
-                            <p style="margin-top:40px; opacity:0.6;">點擊翻轉查看詳細解析</p>
+                            <p style="margin-top:40px; opacity:0.6; font-size:0.9rem;">點擊翻轉查看詳細解析</p>
                         </div>
                         <div class="card-back">
                             <div class="card-back-scroll">
                                 <div class="info-group"><div class="info-label">核心目標</div><div class="info-value">${topic.key_goal || '請見詳細解析'}</div></div>
                                 <div class="info-group"><div class="info-label">用途</div><div class="info-value primary-text">${topic.key_purpose || '請見詳細解析'}</div></div>
-                                <div class="info-group"><div class="info-label">定義</div><div class="info-value" style="font-size:0.95rem; line-height:1.6;">${topic.def}</div></div>
-                                <div class="srs-btns-grid" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; margin-top:20px;">
-                                    <button class="srs-btn again" data-grade="0" style="background:var(--srs-again); color:white; border:none; padding:10px; border-radius:8px; font-weight:700;">Again</button>
-                                    <button class="srs-btn hard" data-grade="1" style="background:var(--srs-hard); color:white; border:none; padding:10px; border-radius:8px; font-weight:700;">Hard</button>
-                                    <button class="srs-btn good" data-grade="2" style="background:var(--srs-good); color:white; border:none; padding:10px; border-radius:8px; font-weight:700;">Good</button>
-                                    <button class="srs-btn easy" data-grade="3" style="background:var(--srs-easy); color:white; border:none; padding:10px; border-radius:8px; font-weight:700;">Easy</button>
+                                <div class="info-group"><div class="info-label">定義</div><div class="info-value">${topic.def}</div></div>
+                                <div class="srs-btns-grid" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:12px; margin-top:20px;">
+                                    <button class="srs-btn again" data-grade="0" style="background:var(--srs-again); color:white; border:none; padding:12px; border-radius:12px; font-weight:800; cursor:pointer;">Again</button>
+                                    <button class="srs-btn hard" data-grade="1" style="background:var(--srs-hard); color:white; border:none; padding:12px; border-radius:12px; font-weight:800; cursor:pointer;">Hard</button>
+                                    <button class="srs-btn good" data-grade="2" style="background:var(--srs-good); color:white; border:none; padding:12px; border-radius:12px; font-weight:800; cursor:pointer;">Good</button>
+                                    <button class="srs-btn easy" data-grade="3" style="background:var(--srs-easy); color:white; border:none; padding:12px; border-radius:12px; font-weight:800; cursor:pointer;">Easy</button>
                                 </div>
+                                <button class="control-btn quiz-start-btn" id="startQuizInModal" style="margin-top:20px; width:100%; cursor:pointer;"><i class="fas fa-vial"></i> 開始測驗</button>
                             </div>
                         </div>
                     </div>
@@ -217,8 +218,8 @@ const App = {
     updateProgress: () => {
         const stats = SRSManager.getStats(); const reviewed = Object.keys(stats).length; const total = 631;
         const percent = Math.round((reviewed / total) * 100);
-        document.getElementById('progressText').textContent = `熟練度: ${percent}% (${reviewed}/${total})`;
-        document.getElementById('progressBar').style.width = `${percent}%`;
+        const text = document.getElementById('progressText'); if (text) text.textContent = `熟練度: ${percent}% (${reviewed}/${total})`;
+        const bar = document.getElementById('progressBar'); if (bar) bar.style.width = `${percent}%`;
     },
 
     bindEvents: () => {
