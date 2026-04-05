@@ -5,11 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>iPas AI 應用規畫師 AI SRS 智慧學習平台</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+TC:wght@300;500;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+TC:wght@300;500;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     
-    <link rel="stylesheet" href="style.css?v=4.4">
+    <link rel="stylesheet" href="style.css?v=4.6">
 </head>
 
 <body class="light-theme">
@@ -36,6 +38,7 @@
             </div>
 
             <div class="header-controls" id="headerControls">
+                
                 <div class="tts-engine-panel">
                     <div class="control-row">
                         <i class="fas fa-volume-up" style="color:var(--accent-color); font-size:0.9rem;"></i>
@@ -70,12 +73,18 @@
                     </div>
                 </div>
 
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="topicSearch" placeholder="搜尋術語、關鍵字...">
+                <div class="header-row search-font-row">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="topicSearch" placeholder="搜尋術語、關鍵字...">
+                    </div>
+                    <div class="font-controls">
+                        <button id="fontDown" class="control-btn">A-</button>
+                        <button id="fontUp" class="control-btn">A+</button>
+                    </div>
                 </div>
 
-                <div class="mode-controls">
+                <div class="header-row mode-action-row">
                      <button id="srsToggle" class="control-btn" title="每日複習模式">
                         <i class="fas fa-graduation-cap"></i>
                         <span class="btn-text">每日複習</span>
@@ -84,11 +93,8 @@
                         <i class="fas fa-exclamation-triangle"></i>
                         <span class="btn-text">錯題補救</span>
                     </button>
-                    <div class="font-controls">
-                        <button id="fontDown" class="control-btn">A-</button>
-                        <button id="fontUp" class="control-btn">A+</button>
-                    </div>
                 </div>
+
             </div>
         </header>
 
@@ -109,6 +115,16 @@
             <section class="content-area">
                 <div id="topicContent" class="topic-container">
                     </div>
+
+                <div id="detailModal" class="detail-modal hidden">
+                    <div class="detail-overlay" onclick="App.closeDetail()"></div>
+                    <div class="detail-content glass-panel">
+                        <button class="close-detail-btn" onclick="App.closeDetail()" title="關閉">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <div id="detailBody"></div>
+                    </div>
+                </div>
 
                 <div id="quizContainer" class="quiz-container glass-panel hidden">
                     <div class="quiz-header">
@@ -145,9 +161,9 @@
         </footer>
     </div>
 
-    <script src="data.js?v=4.5"></script>
-    <script src="quizzes.js?v=4.5"></script>
-    <script src="app.js?v=4.5"></script>
+    <script src="data.js?v=4.6"></script>
+    <script src="quizzes.js?v=4.6"></script>
+    <script src="app.js?v=4.6"></script>
 </body>
 
 </html>
