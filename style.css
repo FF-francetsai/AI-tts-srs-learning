@@ -139,16 +139,42 @@ body {
 .detail-content { position: relative; width: 95%; max-width: 800px; max-height: 90vh; overflow-y: auto; padding: 40px 30px; z-index: 2001; }
 
 .close-detail-btn {
-    position: absolute; top: 15px; right: 20px; /* 恢復右上角 */
-    width: 38px; height: 38px; border-radius: 50%; border: none;
-    background: rgba(255,255,255,0.1); color: white; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+    position: absolute;
+    top: 15px;
+    right: 20px !important;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    z-index: 2002;
 }
-.close-detail-btn:hover { background: #ef4444; transform: rotate(90deg); }
 
-/* ID Numbering Style */
-.topic-no { font-family: 'JetBrains Mono', monospace; color: var(--accent-color); opacity: 0.6; margin-right: 12px; font-weight: 400; }
-.term-no-front { font-family: 'JetBrains Mono', monospace; opacity: 0.4; margin-right: 15px; font-size: 1.5rem; }
+.close-detail-btn:hover {
+    background: #ef4444;
+    transform: rotate(90deg);
+}
+
+.topic-no {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent-color);
+    opacity: 0.6;
+    margin-right: 12px;
+    font-weight: 400;
+}
+
+.term-no-front {
+    font-family: 'JetBrains Mono', monospace;
+    opacity: 0.4;
+    margin-right: 15px;
+    font-size: 1.5rem;
+}
 
 /* Responsive Fixes */
 @media (max-width: 1024px) {
@@ -176,3 +202,4 @@ body {
 .card-front, .card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 24px; padding: 30px; display: flex; flex-direction: column; justify-content: center; align-items: center; background: var(--card-bg); border: 1px solid var(--border-color); }
 .card-back { transform: rotateY(180deg); padding: 0; align-items: stretch; }
 .card-back-scroll { height: 100%; overflow-y: auto; padding: 25px; display: flex; flex-direction: column; gap: 15px; }
+{ height: 100%; overflow-y: auto; padding: 25px; display: flex; flex-direction: column; gap: 15px; }
