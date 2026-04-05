@@ -3,18 +3,13 @@
  * 整合：Mermaid 心智圖、Web Speech TTS、Anki 風格 SRS 系統、5800+ 題庫、Google Sheets 即時同步
  */
 
-// --- 0. 資料同步管理員 (SyncManager) ---
 const SyncManager = {
-    // Google Sheets CSV 匯出網址
     SHEET_ID: '1HxfWzkcTiO49OjzzaGXL6PaXXblnAwaIzg7kabGLpK0',
     PRO_QUIZ_GID: '72198410',
     QUIZ_BANK_GID: '294084716',
 
-    // 取得 CSV 原始資料
     fetchCSV: async (gid) => {
         const url = `https://docs.google.com/spreadsheets/d/${SyncManager.SHEET_ID}/export?format=csv&gid=${gid}`;
-
-        // 環境偵測：本地檔案、開發伺服器、線上 HTTPS
         const isLocalFile = window.location.protocol === 'file:';
         const isHttps = window.location.protocol === 'https:';
 
@@ -22,7 +17,7 @@ const SyncManager = {
             console.log(`[Sync] 正在從 GID ${gid} 請求資料...`);
             const response = await fetch(url, {
                 method: 'GET',
-                credentials: 'omit', // 避開第三方 Cookie 限制
+                credentials: 'omit',
                 mode: 'cors',
                 cache: 'no-cache'
             });
@@ -35,7 +30,6 @@ const SyncManager = {
         } catch (err) {
             console.error("Sync Error Details:", err);
             let msg = "同步失敗：無法存取 Google 雲端資料。";
-
             if (isLocalFile) {
                 msg += "\n\n【本地端限制】偵測到您目前以 file:// 開啟，瀏覽器會阻擋 CORS 請求。\n請改用 Live Server 或部署至 GitHub Pages。";
             } else if (isHttps && err.message.includes('fetch')) {
@@ -47,7 +41,6 @@ const SyncManager = {
         }
     },
 
-    // 簡易 CSV 解析器 (支援引號與逗號)
     parseCSV: (text) => {
         const rows = [];
         let row = [];
@@ -88,7 +81,6 @@ const SyncManager = {
             rows.push(row);
         }
 
-        // 轉換為物件陣列
         const headers = rows[0];
         return rows.slice(1).map(r => {
             const obj = {};
@@ -97,9 +89,7 @@ const SyncManager = {
         });
     },
 
-    // 將 Raw Data 轉換為 App 格式 (移植自 Python 邏輯)
     transformData: (proQuizRows, quizBankRows) => {
-        // 1. 處理主題架構
         const topics = {};
         proQuizRows.forEach(row => {
             const no = row['編號'] || row['no'];
@@ -130,7 +120,6 @@ const SyncManager = {
             };
         });
 
-        // 2. 處理題庫
         const finalQuizBank = {};
         quizBankRows.forEach(row => {
             const no = row['no'];
@@ -147,7 +136,6 @@ const SyncManager = {
             });
         });
 
-        // 3. 建立層級架構
         const unitMap = {};
         Object.values(topics).forEach(t => {
             const sub = t.subject;
@@ -168,7 +156,6 @@ const SyncManager = {
         return { lessonData: finalLessonData, quizBank: finalQuizBank };
     },
 
-    // 儲存與載入
     save: (data, quizzes) => {
         localStorage.setItem('synced_lesson_data', JSON.stringify(data));
         localStorage.setItem('synced_quiz_bank', JSON.stringify(quizzes));
@@ -185,48 +172,39 @@ const SyncManager = {
     }
 };
 
-// --- 1. SRS 記憶引擎 (Leitner/SM-2 簡化版) ---
 const SRSManager = {
     getStats: () => JSON.parse(localStorage.getItem('study_stats') || '{}'),
     saveStats: (stats) => localStorage.setItem('study_stats', JSON.stringify(stats)),
 
     getWrongTopics: () => {
         const stats = SRSManager.getStats();
-        // 篩選出曾經答錯（grade < 2）或 wrongCount > 0 的題目
         return Object.keys(stats).filter(id => stats[id].wrongCount > 0 || stats[id].lastResult === 'wrong');
     },
 
-    // 計算下次複習時間 (SM-2 簡化邏輯)
     updateCard: (id, grade) => {
         const stats = SRSManager.getStats();
         let card = stats[id] || { interval: 0, repetition: 0, efactor: 2.5, dueDate: Date.now(), wrongCount: 0, lastResult: 'none' };
 
-        if (grade >= 2) { // Good or Easy
+        if (grade >= 2) {
             if (card.repetition === 0) card.interval = 1;
             else if (card.repetition === 1) card.interval = 4;
             else card.interval = Math.round(card.interval * card.efactor);
             card.repetition++;
             card.lastResult = 'correct';
-        } else { // Again or Hard
+        } else {
             card.repetition = 0;
             card.interval = 1;
             card.wrongCount = (card.wrongCount || 0) + 1;
             card.lastResult = 'wrong';
         }
 
-        // 調整易記係數 (Ease Factor)
         card.efactor = Math.max(1.3, card.efactor + (0.1 - (3 - grade) * (0.08 + (3 - grade) * 0.02)));
-
-        // 設定下次複習日期 (以天為單位)
-        const days = grade === 0 ? 0 : card.interval; // Again 設為今天
+        const days = grade === 0 ? 0 : card.interval;
         card.dueDate = Date.now() + days * 24 * 60 * 60 * 1000;
 
         stats[id] = card;
         SRSManager.saveStats(stats);
-        
-        // 每次更新進度後檢查成就
         AchievementManager.checkProgress();
-        
         return card;
     },
 
@@ -237,7 +215,6 @@ const SRSManager = {
     }
 };
 
-// --- 1.2 成就系統管理員 (AchievementManager) ---
 const AchievementManager = {
     ACHIEVEMENTS: [
         { id: 'newbie', icon: '🐣', title: '初試啼聲', desc: '完成第 1 個術語學習', goal: 1 },
@@ -259,8 +236,6 @@ const AchievementManager = {
             if (!unlocked.includes(ach.id) && learnedCount >= ach.goal) {
                 unlocked.push(ach.id);
                 newlyUnlocked = true;
-                // 彈出慶祝 (這裡可用漂亮的 Toast 或 Alert)
-                console.log(`[Achievement] 解鎖成就: ${ach.title}`);
             }
         });
 
@@ -285,7 +260,6 @@ const AchievementManager = {
     }
 };
 
-// --- 2. 測驗引擎 ---
 const QuizManager = {
     currentQuizList: [],
     currentIndex: 0,
@@ -294,7 +268,6 @@ const QuizManager = {
         const questions = quizBank[topicId] || [];
         if (questions.length === 0) return false;
 
-        // 洗牌所有題目
         QuizManager.currentQuizList = [...questions].sort(() => Math.random() - 0.5);
         QuizManager.currentIndex = 0;
         return true;
@@ -311,8 +284,6 @@ const QuizManager = {
         });
 
         if (allWrongQuestions.length === 0) return false;
-
-        // 從錯題庫中隨機抽出 10 題進行補救
         QuizManager.currentQuizList = allWrongQuestions.sort(() => Math.random() - 0.5).slice(0, 10);
         QuizManager.currentIndex = 0;
         return true;
@@ -321,10 +292,8 @@ const QuizManager = {
     renderCurrent: (isModal = false) => {
         const q = QuizManager.currentQuizList[QuizManager.currentIndex];
         
-        // 根據環境選擇容器與元素
         const container = document.getElementById(isModal ? 'quizContainerInModal' : 'quizContainer');
         const qEl = document.getElementById(isModal ? 'modalQuizQuestion' : isModal ? 'modalQuizQuestion' : 'quizQuestion');
-        // 嘗試抓 modalQuizQuestion (為了相容性)
         const actualQEl = qEl || document.getElementById('modalQuizQuestion');
         const actualOptEl = document.getElementById(isModal ? 'modalQuizOptions' : 'quizOptions');
         const feedback = document.getElementById(isModal ? 'modalQuizFeedback' : 'quizFeedback');
@@ -333,7 +302,6 @@ const QuizManager = {
 
         if (!q || !container || !actualQEl || !actualOptEl) return;
 
-        // 顯示題號進度 (使用 .q 屬性)
         actualQEl.textContent = `(Q${QuizManager.currentIndex + 1}/${QuizManager.currentQuizList.length}) ${q.q}`;
         actualOptEl.innerHTML = '';
 
@@ -342,7 +310,6 @@ const QuizManager = {
         srsActions.classList.add('hidden');
         container.classList.remove('hidden');
 
-        // 每次渲染新題目時，確保詳細解析還是隱藏狀態
         const modalDetail = document.getElementById('modalTopicDetailExplain');
         if (modalDetail) modalDetail.classList.add('hidden');
         
@@ -352,7 +319,7 @@ const QuizManager = {
 
         const labels = ['A', 'B', 'C', 'D'];
         q.opts.forEach((opt, idx) => {
-            if (!opt) return; // 略過空選項
+            if (!opt) return;
             const btn = document.createElement('div');
             btn.className = 'quiz-opt';
             btn.textContent = `${labels[idx]}. ${opt}`;
@@ -372,7 +339,7 @@ const QuizManager = {
         opts.forEach(opt => {
             if (opt.textContent.startsWith(correct)) opt.classList.add('correct');
             else if (opt.textContent.startsWith(selected)) opt.classList.add('wrong');
-            opt.onclick = null; // 禁止重複點擊
+            opt.onclick = null;
         });
 
         const feedback = document.getElementById(isModal ? 'modalQuizFeedback' : 'quizFeedback');
@@ -383,7 +350,6 @@ const QuizManager = {
         explainEl.innerHTML = `<strong>解析：</strong><br>${explain}`;
         feedback.classList.remove('hidden');
 
-        // 判斷是否還有下一題
         if (QuizManager.currentIndex < QuizManager.currentQuizList.length - 1) {
             if (nextBtn) {
                 nextBtn.classList.remove('hidden');
@@ -393,16 +359,12 @@ const QuizManager = {
                 };
             }
         } else {
-            // 最後一題才顯示 SRS 評分按鈕
             if (srsActions) srsActions.classList.remove('hidden');
-
-            // 最後一題回答完，才顯示主題核心解析
             const modalDetail = document.getElementById('modalTopicDetailExplain');
             if (modalDetail) {
                 modalDetail.classList.remove('hidden');
                 setTimeout(() => modalDetail.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
             }
-
             const topicContent = document.getElementById('topicContent');
             const detailSection = topicContent ? topicContent.querySelector('.details-section') : null;
             if (detailSection) {
@@ -410,12 +372,10 @@ const QuizManager = {
                 setTimeout(() => detailSection.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
             }
         }
-
         feedback.scrollIntoView({ behavior: 'smooth' });
     }
 };
 
-// --- 3. UI 控制中心 ---
 const App = {
     currentTopic: null,
     isSRSMode: false,
@@ -423,14 +383,11 @@ const App = {
     synth: window.speechSynthesis,
 
     init: () => {
-        // --- A. 嘗試從 LocalStorage 載入同步資料 ---
         const synced = SyncManager.load();
         if (synced) {
             window.lessonData = synced.lessonData;
             window.quizBank = synced.quizBank;
-            console.log("已從 LocalStorage 載入同步資料 (上次同步: " + localStorage.getItem('last_sync_time') + ")");
         }
-
         App.renderSidebar(window.lessonData);
         App.bindEvents();
         App.initTTS();
@@ -439,40 +396,32 @@ const App = {
         App.renderHomeScreen();
     },
 
-    // 手動觸發雲端同步
     syncFromCloud: async () => {
         const btn = document.getElementById('syncBtn');
         if (btn) btn.classList.add('fa-spin');
 
         try {
-            console.log("開始同步雲端數據...");
             const rawPro = await SyncManager.fetchCSV(SyncManager.PRO_QUIZ_GID);
             const rawBank = await SyncManager.fetchCSV(SyncManager.QUIZ_BANK_GID);
-
             const proRows = SyncManager.parseCSV(rawPro);
             const bankRows = SyncManager.parseCSV(rawBank);
-
             const result = SyncManager.transformData(proRows, bankRows);
             SyncManager.save(result.lessonData, result.quizBank);
 
-            // 更新全域變數並重新初始化 UI
             window.lessonData = result.lessonData;
             window.quizBank = result.quizBank;
 
             App.renderSidebar(window.lessonData);
             App.updateProgress();
             App.renderHomeScreen();
-
             alert('雲端同步成功！資料已更新至最新版本。');
         } catch (err) {
-            console.error(err);
             alert('同步失敗：' + err.message + '\n請檢查網路連線或試算表權限。');
         } finally {
             if (btn) btn.classList.remove('fa-spin');
         }
     },
 
-    // 渲染側邊欄
     renderSidebar: (data) => {
         const nav = document.getElementById('sidebarNav');
         nav.innerHTML = '';
@@ -498,8 +447,7 @@ const App = {
                     link.onclick = (e) => {
                         e.stopPropagation();
                         App.loadTopic(topic);
-                        // 行動端點擊後自動收合 (改為 1024 支援平板)
-                        if (window.innerWidth <= 1024) {
+                        if (window.innerWidth <= 1200) {
                             document.querySelector('.sidebar').classList.remove('active');
                         }
                     };
@@ -513,21 +461,16 @@ const App = {
         });
     },
 
-    // 載入主題並顯示為 Modal
     loadTopic: (topic) => {
         App.currentTopic = topic;
         App.renderDetail(topic);
-
-        // 自動語音朗讀 (如果勾選)
         const autoPlay = document.getElementById('autoPlayToggle');
         if (autoPlay && autoPlay.checked) {
             App.speakZh(topic.title);
         }
     },
 
-    // 渲染詳細學習卡 (以 Modal 顯示)
     renderDetail: (topic) => {
-        // 先移除舊的 Modal
         const oldModal = document.querySelector('.detail-modal');
         if (oldModal) oldModal.remove();
 
@@ -603,14 +546,11 @@ const App = {
                     <div id="modalQuizOptions" class="quiz-options"></div>
                     <div id="modalQuizFeedback" class="quiz-feedback hidden" style="margin-top: 25px;">
                         <div id="modalQuizExplain" class="quiz-explain" style="border-left: 4px solid var(--accent-color); padding-left: 15px; margin-bottom: 20px;"></div>
-                        
                         <div id="modalTopicDetailExplain" class="quiz-explain" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
                             <h4 style="margin-bottom: 8px; color: var(--accent-color); font-size: 0.9rem;"><i class="fas fa-book-open"></i> 主題核心解析</h4>
                              <div class="detail-text" style="font-size: 0.95rem; color: var(--text-main); line-height: 1.6;">${topic.detail_explain}</div>
                         </div>
-
                         <button id="modalNextQuestionBtn" class="control-btn hidden" style="width: 100%; margin-bottom: 15px;">下一題 <i class="fas fa-arrow-right"></i></button>
-                        
                         <div id="modalSrsActions" class="srs-btns-grid hidden">
                             <button class="srs-btn again" data-grade="0">忘了 (Again)</button>
                             <button class="srs-btn hard" data-grade="1">困難 (Hard)</button>
@@ -619,14 +559,12 @@ const App = {
                         </div>
                     </div>
                 </div>
-
             </div>
         `;
 
         document.body.appendChild(modal);
         document.body.style.overflow = 'hidden';
 
-        // 綁定測驗
         const startBtn = document.getElementById('startQuizInModal');
         if (startBtn) {
             startBtn.onclick = (e) => {
@@ -639,7 +577,6 @@ const App = {
             };
         }
 
-        // 綁定內部 SRS 評分
         modal.querySelectorAll('.srs-btn').forEach(btn => {
             btn.onclick = (e) => {
                 const grade = parseInt(e.target.closest('.srs-btn').dataset.grade);
@@ -664,7 +601,7 @@ const App = {
     updateProgressBar: () => {
         const stats = SRSManager.getStats();
         const reviewedCount = Object.keys(stats).length;
-        const totalCount = 631; // 題目總數
+        const totalCount = 631;
         const progress = Math.round((reviewedCount / totalCount) * 100);
 
         const text = document.getElementById('progressText');
@@ -674,7 +611,6 @@ const App = {
     },
 
     bindEvents: () => {
-        // 漢堡選單 (行動端)
         const menuBtn = document.getElementById('menuBtn');
         const sidebar = document.querySelector('.sidebar');
         if (menuBtn && sidebar) {
@@ -684,31 +620,27 @@ const App = {
             };
         }
 
-        // 點擊 Modal 以外的地方關閉 Sidebar (改為 1024 支援平板)
         document.addEventListener('click', (e) => {
-            if (window.innerWidth <= 1024 && sidebar.classList.contains('active')) {
+            if (window.innerWidth <= 1200 && sidebar.classList.contains('active')) {
                 if (!sidebar.contains(e.target) && e.target !== menuBtn) {
                     sidebar.classList.remove('active');
                 }
             }
         });
 
-        // Logo 點擊 → 返回知識地圖主頁 (改為 1024 支援平板)
         const logo = document.querySelector('.logo');
         if (logo) {
             logo.style.cursor = 'pointer';
             logo.onclick = () => {
                 App.renderHomeScreen();
-                if (window.innerWidth <= 1024) sidebar.classList.remove('active');
+                if (window.innerWidth <= 1200) sidebar.classList.remove('active');
             };
         }
 
-        // 主題色
         document.getElementById('toggleTheme').onclick = () => {
             document.body.classList.toggle('light-theme');
         };
 
-        // 字體縮放
         document.getElementById('fontUp').onclick = () => {
             App.fontSize += 2;
             document.querySelector('.content-area').style.fontSize = App.fontSize + 'px';
@@ -718,7 +650,6 @@ const App = {
             document.querySelector('.content-area').style.fontSize = App.fontSize + 'px';
         };
 
-        // 搜尋功能：優化支援編號、中英文、縮寫與關鍵字
         document.getElementById('topicSearch').oninput = (e) => {
             const val = e.target.value.toLowerCase().trim();
             if (!val) {
@@ -748,7 +679,6 @@ const App = {
             App.renderSidebar(filtered);
         };
 
-        // SRS 評分按鈕
         document.querySelectorAll('.srs-btn').forEach(btn => {
             btn.onclick = (e) => {
                 const grade = parseInt(e.target.dataset.grade);
@@ -777,7 +707,6 @@ const App = {
             };
         });
 
-         // SRS 複習切換
         document.getElementById('srsToggle').onclick = () => {
             App.isSRSMode = !App.isSRSMode;
             document.getElementById('srsToggle').classList.toggle('active', App.isSRSMode);
@@ -798,12 +727,10 @@ const App = {
             }
         };
 
-        // 錯題補救快捷按鈕 (Header)
         const headerWrongBtn = document.getElementById('headerWrongQuizBtn');
         if (headerWrongBtn) {
             headerWrongBtn.onclick = () => {
                 if (QuizManager.initWrongQuiz()) {
-                    // 渲染測驗介面到內容區
                     const container = document.getElementById('topicContent');
                     container.innerHTML = `
                         <div class="quiz-header" style="margin-bottom: 30px;">
@@ -826,8 +753,7 @@ const App = {
                         </div>
                     `;
                     QuizManager.renderCurrent(false);
-                    // 隱藏側邊欄 (行動端改為 1024 支援平板)
-                    if (window.innerWidth <= 1024) {
+                    if (window.innerWidth <= 1200) {
                         document.querySelector('.sidebar').classList.remove('active');
                     }
                 } else {
@@ -836,7 +762,6 @@ const App = {
             };
         }
 
-        // 展開與收合控制列按鈕 (Mobile/Tablet)
         const toggleControlsBtn = document.getElementById('toggleControlsBtn');
         const headerControls = document.getElementById('headerControls');
         if (toggleControlsBtn && headerControls) {
@@ -853,14 +778,12 @@ const App = {
             window.speechSynthesis.onvoiceschanged = preloadVoices;
         }
 
-        // 當引擎或性別改變時，立即發音預覽，並確保修正男聲
         document.getElementById('ttsEngineSelect').onchange = () => App.speakZh("切換語音引擎測試", 1.0);
         document.getElementById('ttsGenderSelect').onchange = () => {
             const gender = App._getTTSGender();
             App.speakZh(gender === 'female' ? "切換為女聲" : "切換為男聲", 1.0);
         };
 
-        // TTS 滑動條即時顯示值
         const rateSlider = document.getElementById('ttsRateSlider');
         const pitchSlider = document.getElementById('ttsPitchSlider');
         const rateVal = document.getElementById('ttsRateVal');
@@ -876,7 +799,6 @@ const App = {
             pitchSlider.oninput = (e) => {
                 pitchVal.textContent = e.target.value;
             };
-            // 音調測試僅在系統引擎下有效
             pitchSlider.onchange = () => {
                 if (App._getTTSEngine() === 'browser') {
                     App.speakZh("音調測試", 1.0);
@@ -885,7 +807,6 @@ const App = {
         }
     },
 
-    // 取得場景標籤
     _getScenarioLabel: (key) => {
         const labels = {
             weather: '氣象與防災',
@@ -899,93 +820,45 @@ const App = {
         return labels[key] || key;
     },
 
-    // 取得語速與語調設定
-    _getTTSRate: () => {
-        const slider = document.getElementById('ttsRateSlider');
-        return slider ? parseFloat(slider.value) : 0.5;
-    },
-    _getTTSPitch: () => {
-        const slider = document.getElementById('ttsPitchSlider');
-        return slider ? parseFloat(slider.value) : 1.0;
-    },
-    _getTTSEngine: () => {
-        const sel = document.getElementById('ttsEngineSelect');
-        return sel ? sel.value : 'browser';
-    },
-    _getTTSGender: () => {
-        const sel = document.getElementById('ttsGenderSelect');
-        return sel ? sel.value : 'female';
-    },
-
-    // 根據語言前綴 + 性別偏好，精確挑選語音
-    _pickVoice: (langPrefix, gender, engine) => {
-        const voices = window.speechSynthesis.getVoices();
-        const isFemale = gender === 'female';
-
-        const femaleKw = ['female', 'woman', 'zira', 'yating', 'hanhan', 'huihui', 'xiaoxiao', 'samantha', 'victoria', '女'];
-        const maleKw = ['male', 'man', 'zhiwei', 'yunyang', 'david', 'mark', 'daniel', '男', 'yunxi'];
-        const targetKws = isFemale ? femaleKw : maleKw;
-
-        const matchesGender = (v) => {
-            const n = v.name.toLowerCase();
-            if (targetKws.some(kw => n.includes(kw))) return true;
-
-            if (langPrefix === 'zh') {
-                if (!isFemale && (n.includes('can') || n.includes('yue') || n.includes('hant'))) {
-                    if (n.includes('szewai') || n.includes('zhiwei') || n.includes('yunyang')) return true;
-                }
-                if (n.includes('google')) return isFemale;
-            }
-            return false;
-        };
-
-        const isGoogle = (v) => v.name.includes('Google');
-
-        if (engine === 'google') {
-            return voices.find(v => v.lang.startsWith(langPrefix) && isGoogle(v) && matchesGender(v))
-                || voices.find(v => v.lang.startsWith(langPrefix) && isGoogle(v))
-                || voices.find(v => v.lang.startsWith(langPrefix) && matchesGender(v))
-                || voices.find(v => v.lang.startsWith(langPrefix));
-        } else {
-            return voices.find(v => v.lang.startsWith(langPrefix) && !isGoogle(v) && matchesGender(v))
-                || voices.find(v => v.lang.startsWith(langPrefix) && !isGoogle(v))
-                || voices.find(v => v.lang.startsWith(langPrefix) && matchesGender(v))
-                || voices.find(v => v.lang.startsWith(langPrefix));
-        }
-    },
-
     speakZh: (text, speedOverride = null) => {
         App.synth.cancel();
         const utter = new SpeechSynthesisUtterance(text);
-        utter.lang = 'zh-TW';
-        const engine = App._getTTSEngine();
-        const voice = App._pickVoice('zh', App._getTTSGender(), engine);
-        if (voice) utter.voice = voice;
+        const rateSlider = document.getElementById('ttsRateSlider');
+        utter.rate = speedOverride || (rateSlider ? parseFloat(rateSlider.value) : 1.0);
 
-        utter.rate = speedOverride || App._getTTSRate();
-        utter.pitch = engine === 'browser' ? App._getTTSPitch() : 1.0;
+        const voices = App.synth.getVoices();
+        const engine = document.getElementById('ttsEngineSelect').value;
+        const gender = document.getElementById('ttsGenderSelect').value;
+
+        if (engine === 'google') {
+            const targetName = gender === 'female' ? 'Google 國語（臺灣）' : 'Google 國語（臺灣）';
+            const googleVoices = voices.filter(v => v.name.includes('Google') && v.lang.includes('zh-TW'));
+            if (googleVoices.length > 0) {
+                const targetVoice = googleVoices.find(v => v.name.includes(gender === 'female' ? '-A' : '-B')) || googleVoices[0];
+                utter.voice = targetVoice;
+            }
+        } else {
+            const zhVoice = voices.find(v => v.lang.includes('zh-TW') && (gender === 'female' ? !v.name.includes('Male') : v.name.includes('Male')));
+            if (zhVoice) utter.voice = zhVoice;
+        }
 
         App.synth.speak(utter);
     },
 
-    speakEng: (text, overrideRate = null) => {
+    speakEng: (text) => {
         App.synth.cancel();
         const utter = new SpeechSynthesisUtterance(text);
-        utter.lang = 'en-US';
-        const engine = App._getTTSEngine();
-        const voice = App._pickVoice('en', App._getTTSGender(), engine);
-        if (voice) utter.voice = voice;
-
-        utter.rate = overrideRate || App._getTTSRate();
-        utter.pitch = engine === 'browser' ? App._getTTSPitch() : 1.0;
-
+        const voices = App.synth.getVoices();
+        const engVoice = voices.find(v => v.lang.startsWith('en-'));
+        if (engVoice) utter.voice = engVoice;
+        utter.rate = 0.9;
         App.synth.speak(utter);
     },
 
     updateProgress: () => {
         const stats = SRSManager.getStats();
         const reviewed = Object.keys(stats).length;
-        const total = 631; 
+        const total = 631;
         const percent = Math.round((reviewed / total) * 100);
         document.getElementById('progressText').textContent = `熟練度: ${percent}% (${reviewed}/${total})`;
         document.getElementById('progressBar').style.width = `${percent}%`;
@@ -1195,6 +1068,92 @@ const App = {
         });
 
         return mermaidCode;
+    },
+
+    _getTTSRate: () => {
+        const slider = document.getElementById('ttsRateSlider');
+        return slider ? parseFloat(slider.value) : 0.5;
+    },
+    _getTTSPitch: () => {
+        const slider = document.getElementById('ttsPitchSlider');
+        return slider ? parseFloat(slider.value) : 1.0;
+    },
+    _getTTSEngine: () => {
+        const sel = document.getElementById('ttsEngineSelect');
+        return sel ? sel.value : 'browser';
+    },
+    _getTTSGender: () => {
+        const sel = document.getElementById('ttsGenderSelect');
+        return sel ? sel.value : 'female';
+    },
+
+    _pickVoice: (langPrefix, gender, engine) => {
+        const voices = window.speechSynthesis.getVoices();
+        const isFemale = gender === 'female';
+
+        const femaleKw = ['female', 'woman', 'zira', 'yating', 'hanhan', 'huihui', 'xiaoxiao', 'samantha', 'victoria', '女'];
+        const maleKw = ['male', 'man', 'zhiwei', 'yunyang', 'david', 'mark', 'daniel', '男', 'yunxi'];
+        const targetKws = isFemale ? femaleKw : maleKw;
+
+        const matchesGender = (v) => {
+            const n = v.name.toLowerCase();
+            if (targetKws.some(kw => n.includes(kw))) return true;
+
+            if (langPrefix === 'zh') {
+                if (!isFemale && (n.includes('can') || n.includes('yue') || n.includes('hant'))) {
+                    if (n.includes('szewai') || n.includes('zhiwei') || n.includes('yunyang')) return true;
+                }
+                if (n.includes('google')) return isFemale;
+            }
+            return false;
+        };
+
+        const isGoogle = (v) => v.name.includes('Google');
+
+        if (engine === 'google') {
+            return voices.find(v => v.lang.startsWith(langPrefix) && isGoogle(v) && matchesGender(v))
+                || voices.find(v => v.lang.startsWith(langPrefix) && isGoogle(v))
+                || voices.find(v => v.lang.startsWith(langPrefix) && matchesGender(v))
+                || voices.find(v => v.lang.startsWith(langPrefix));
+        } else {
+            return voices.find(v => v.lang.startsWith(langPrefix) && !isGoogle(v) && matchesGender(v))
+                || voices.find(v => v.lang.startsWith(langPrefix) && !isGoogle(v))
+                || voices.find(v => v.lang.startsWith(langPrefix) && matchesGender(v))
+                || voices.find(v => v.lang.startsWith(langPrefix));
+        }
+    },
+
+    speak: (text, overrideRate = null) => {
+        const isEng = /[a-zA-Z]/.test(text.substring(0, 5));
+        isEng ? App.speakEng(text, overrideRate) : App.speakZh(text, overrideRate);
+    },
+
+    speakEng: (text, overrideRate = null) => {
+        App.synth.cancel();
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = 'en-US';
+        const engine = App._getTTSEngine();
+        const voice = App._pickVoice('en', App._getTTSGender(), engine);
+        if (voice) utter.voice = voice;
+
+        utter.rate = overrideRate || App._getTTSRate();
+        utter.pitch = engine === 'browser' ? App._getTTSPitch() : 1.0;
+
+        App.synth.speak(utter);
+    },
+
+    speakZh: (text, overrideRate = null) => {
+        App.synth.cancel();
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = 'zh-TW';
+        const engine = App._getTTSEngine();
+        const voice = App._pickVoice('zh', App._getTTSGender(), engine);
+        if (voice) utter.voice = voice;
+
+        utter.rate = overrideRate || App._getTTSRate();
+        utter.pitch = engine === 'browser' ? App._getTTSPitch() : 1.0;
+
+        App.synth.speak(utter);
     }
 };
 

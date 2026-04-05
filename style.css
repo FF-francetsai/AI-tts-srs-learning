@@ -133,11 +133,11 @@ body {
     gap: 8px;
 }
 
-/* 第一列：TTS 控制面板 */
+/* TTS 控制面板 */
 .tts-engine-panel {
     display: flex;
-    flex-direction: row; /* 強制水平由左至右 */
-    flex-wrap: wrap; /* 允許空間不足時換行 */
+    flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
     gap: 12px;
     padding: 8px 12px;
@@ -213,7 +213,7 @@ input[type="range"] {
     border-radius: 5px;
 }
 
-/* 第二列：搜尋框 */
+/* 搜尋框 */
 .search-box {
     position: relative;
     background: rgba(0, 0, 0, 0.1);
@@ -235,7 +235,7 @@ input[type="range"] {
     font-size: 0.9rem;
 }
 
-/* 第三列：按鈕群組 */
+/* 按鈕群組 */
 .control-btn {
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid var(--border-color);
@@ -684,9 +684,9 @@ body.light-theme .primary-text {
 }
 
 /* ====================================
-   ✅ 行動端與橫向 RWD 終極修復版 (支援至平板 1024px)
+   ✅ 行動端與橫向 RWD 終極修復版 (斷點拉高至 1200px)
    ==================================== */
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
     body {
         overflow-y: auto;
         height: auto;
@@ -776,7 +776,7 @@ body.light-theme .primary-text {
         transform: translateX(-100%);
         transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         box-shadow: 10px 0 30px rgba(0, 0, 0, 0.3);
-        display: flex; /* 覆蓋原有隱藏 */
+        display: flex;
     }
 
     .sidebar.active {
