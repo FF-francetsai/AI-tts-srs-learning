@@ -969,7 +969,7 @@ const App = {
                 </div>
             </div>
 
-            <div class="home-actions" style="gap: 15px; flex-wrap: wrap;">
+            <div class="home-actions">
                 <button class="home-action-btn" id="randomStartBtn">
                     <i class="fas fa-random"></i> 隨機開始學習
                 </button>
@@ -1049,7 +1049,10 @@ const App = {
 
         window.lessonData.forEach((unit, uIdx) => {
             const uId = `U${uIdx}`;
-            mermaidCode += `${uId}("${unit.title}")\n`;
+            
+            // ✅ 防呆機制：過濾標題中的換行符號避免 Mermaid 解析錯誤
+            const safeUnitTitle = unit.title.replace(/[\n\r]/g, ' ').replace(/"/g, '');
+            mermaidCode += `${uId}("${safeUnitTitle}")\n`;
 
             unit.sub_units.forEach((sub, sIdx) => {
                 const sId = `U${uIdx}S${sIdx}`;
@@ -1058,7 +1061,10 @@ const App = {
                 const learned = sub.topics.filter(t => stats[t.id]).length;
                 const percent = Math.round((learned / total) * 100);
                 
-                mermaidCode += `${uId} --> ${sId}("${sub.title}<br>${percent}%")\n`;
+                // ✅ 防呆機制：過濾標題中的換行符號
+                const safeSubTitle = sub.title.replace(/[\n\r]/g, ' ').replace(/"/g, '');
+                
+                mermaidCode += `${uId} --> ${sId}("${safeSubTitle}<br>${percent}%")\n`;
                 
                 if (percent >= 100) mermaidCode += `class ${sId} done\n`;
                 else if (percent > 0) mermaidCode += `class ${sId} doing\n`;

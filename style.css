@@ -711,7 +711,6 @@ body.light-theme .primary-text {
         max-width: 200px;
     }
 
-    /* 強制將三行排版在平板與手機上垂直堆疊 */
     .header-controls {
         flex-direction: column;
         align-items: stretch;
@@ -729,12 +728,10 @@ body.light-theme .primary-text {
         flex-wrap: nowrap;
     }
 
-    /* 搜尋列與字體列：靠兩側對齊 */
     .search-font-row {
         justify-content: space-between;
     }
 
-    /* 每日複習與錯題按鈕：使用 Grid 強制 1:1 分布 */
     .mode-action-row {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -747,7 +744,6 @@ body.light-theme .primary-text {
         margin: 0;
     }
 
-    /* 第一列 TTS 面板：強制水平鋪滿 */
     .tts-engine-panel {
         width: 100%;
         min-width: unset;
@@ -765,7 +761,6 @@ body.light-theme .primary-text {
         display: block;
     }
 
-    /* 側邊欄抽屜化 */
     .sidebar {
         position: fixed;
         top: 0;
@@ -812,6 +807,11 @@ body.light-theme .primary-text {
 
     .stat-num {
         font-size: 1.2rem;
+    }
+
+    /* 手機版：主頁按鈕強制上下排列 */
+    .home-actions {
+        flex-direction: column !important;
     }
 }
 
@@ -996,17 +996,6 @@ body.light-theme .primary-text {
     box-shadow: 0 6px 20px rgba(56, 189, 248, 0.5);
 }
 
-.home-action-btn.secondary {
-    background: rgba(248, 113, 113, 0.15);
-    border: 1px solid rgba(248, 113, 113, 0.3);
-    color: #f87171;
-}
-
-.home-action-btn.secondary:hover {
-    background: #f87171;
-    color: white;
-}
-
 /* Home Map & AI zones */
 .home-hero { text-align: center; padding: 24px 0 16px; }
 .home-hero h1 { font-size: 1.75rem; font-weight: 800; background: linear-gradient(135deg, #38bdf8, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0 0 8px;}
@@ -1043,6 +1032,54 @@ body.light-theme .primary-text {
 .nzone-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
 .zone-badge { padding: 4px 11px; border-radius: 20px; font-size: 0.76rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.15); color: var(--text-main); user-select: none;}
 .zone-badge:hover { transform: translateY(-2px) scale(1.03); background: var(--accent-color); color: #fff; border-color: var(--accent-color); box-shadow: 0 4px 14px rgba(56, 189, 248, 0.35); }
+
+/* ====================================
+   ✅ 修復：主頁按鈕樣式 (Home Actions)
+   ==================================== */
+.home-actions {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.home-action-btn {
+    flex: 1;
+    padding: 16px 20px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 14px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: linear-gradient(135deg, #0ea5e9, #6366f1);
+    color: white;
+    box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+}
+
+.home-action-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(14, 165, 233, 0.4);
+    filter: brightness(1.1);
+}
+
+.home-action-btn.secondary {
+    background: rgba(248, 113, 113, 0.15);
+    border: 1px solid rgba(248, 113, 113, 0.3);
+    color: #f87171;
+    box-shadow: none;
+}
+
+.home-action-btn.secondary:hover {
+    background: #ef4444;
+    color: white;
+    border-color: #ef4444;
+    box-shadow: 0 8px 25px rgba(239, 68, 68, 0.3);
+}
 
 .achievement-wall { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 15px; margin-top: 10px;}
 .achievement-item { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px 10px; border-radius: 16px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); text-align: center; filter: grayscale(100%); opacity: 0.6; }
