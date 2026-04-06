@@ -215,14 +215,19 @@ const SRSManager = {
     }
 };
 
+// ✅ 動態獲取成就門檻
 const AchievementManager = {
-    ACHIEVEMENTS: [
-        { id: 'newbie', icon: '🐣', title: '初試啼聲', desc: '完成第 1 個術語學習', goal: 1 },
-        { id: 'apprentice', icon: '🤺', title: '略有小成', desc: '熟練度達到 10%', goal: 64 },
-        { id: 'expert', icon: '🛡️', title: '領域專家', desc: '熟練度達到 50%', goal: 323 },
-        { id: 'master', icon: '👑', title: 'AI 大師', desc: '熟練度達到 80%', goal: 517 },
-        { id: 'perfect', icon: '💎', title: '圓滿境界', desc: '掌握所有 646 個術語', goal: 646 }
-    ],
+    getAchievements: () => {
+        // 動態計算當前資料庫的真實術語總數，預設為 646 作為備用
+        const total = window.lessonData ? window.lessonData.flatMap(u => u.sub_units.flatMap(s => s.topics)).length : 646;
+        return [
+            { id: 'newbie', icon: '🐣', title: '初試啼聲', desc: '完成第 1 個術語學習', goal: 1 },
+            { id: 'apprentice', icon: '🤺', title: '略有小成', desc: '熟練度達到 10%', goal: Math.ceil(total * 0.1) },
+            { id: 'expert', icon: '🛡️', title: '領域專家', desc: '熟練度達到 50%', goal: Math.ceil(total * 0.5) },
+            { id: 'master', icon: '👑', title: 'AI 大師', desc: '熟練度達到 80%', goal: Math.ceil(total * 0.8) },
+            { id: 'perfect', icon: '💎', title: '圓滿境界', desc: `掌握所有 ${total} 個術語`, goal: total }
+        ];
+    },
 
     getUnlocked: () => JSON.parse(localStorage.getItem('unlocked_achievements') || '[]'),
 
@@ -232,7 +237,7 @@ const AchievementManager = {
         const unlocked = AchievementManager.getUnlocked();
         let newlyUnlocked = false;
 
-        AchievementManager.ACHIEVEMENTS.forEach(ach => {
+        AchievementManager.getAchievements().forEach(ach => {
             if (!unlocked.includes(ach.id) && learnedCount >= ach.goal) {
                 unlocked.push(ach.id);
                 newlyUnlocked = true;
@@ -247,7 +252,7 @@ const AchievementManager = {
     renderWall: () => {
         const unlocked = AchievementManager.getUnlocked();
         return `<div class="achievement-wall">
-            ${AchievementManager.ACHIEVEMENTS.map(ach => {
+            ${AchievementManager.getAchievements().map(ach => {
             const isLocked = !unlocked.includes(ach.id);
             return `
                     <div class="achievement-item ${isLocked ? 'locked' : 'unlocked'}" title="${ach.desc}">
@@ -265,7 +270,7 @@ const QuizManager = {
     currentIndex: 0,
 
     initQuiz: (topicId) => {
-        const questions = quizBank[topicId] || [];
+        const questions = window.quizBank[topicId] || [];
         if (questions.length === 0) return false;
 
         QuizManager.currentQuizList = [...questions].sort(() => Math.random() - 0.5);
@@ -279,7 +284,7 @@ const QuizManager = {
 
         let allWrongQuestions = [];
         wrongIds.forEach(id => {
-            const qs = quizBank[id] || [];
+            const qs = window.quizBank[id] || [];
             allWrongQuestions = allWrongQuestions.concat(qs);
         });
 
@@ -382,21 +387,38 @@ const App = {
     fontSize: 16,
     synth: window.speechSynthesis,
 
-    init: () => {
+    // ✅ 無痕模式背景自動同步啟動邏輯
+    init: async () => {
         const synced = SyncManager.load();
+        
         if (synced) {
+            // 有歷史紀錄，直接載入
             window.lessonData = synced.lessonData;
             window.quizBank = synced.quizBank;
+            App.renderSidebar(window.lessonData);
+            App.bindEvents();
+            App.initTTS();
+            mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+            App.updateProgress();
+            App.renderHomeScreen();
+        } else {
+            // 無歷史紀錄 (例如無痕模式)，先拿 data.js 的資料墊檔做初次渲染
+            if (window.lessonData) {
+                App.renderSidebar(window.lessonData);
+                App.bindEvents();
+                App.initTTS();
+                mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+                App.updateProgress();
+                App.renderHomeScreen();
+            }
+            // 隨即在背景自動請求最新的雲端資料 (isAuto = true)
+            console.log("偵測為全新載入或無痕模式，啟動背景自動同步...");
+            await App.syncFromCloud(true);
         }
-        App.renderSidebar(window.lessonData);
-        App.bindEvents();
-        App.initTTS();
-        mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
-        App.updateProgress();
-        App.renderHomeScreen();
     },
 
-    syncFromCloud: async () => {
+    // ✅ 支援 isAuto 參數，隱藏成功通知
+    syncFromCloud: async (isAuto = false) => {
         const btn = document.getElementById('syncBtn');
         if (btn) btn.classList.add('fa-spin');
 
@@ -406,17 +428,28 @@ const App = {
             const proRows = SyncManager.parseCSV(rawPro);
             const bankRows = SyncManager.parseCSV(rawBank);
             const result = SyncManager.transformData(proRows, bankRows);
+            
+            // 將最新資料存入並替換
             SyncManager.save(result.lessonData, result.quizBank);
-
             window.lessonData = result.lessonData;
             window.quizBank = result.quizBank;
 
+            // 重新渲染全部畫面
             App.renderSidebar(window.lessonData);
             App.updateProgress();
             App.renderHomeScreen();
-            alert('雲端同步成功！資料已更新至最新版本。');
+            
+            if (!isAuto) {
+                alert('雲端同步成功！資料已更新至最新版本。');
+            } else {
+                console.log('背景自動同步完成！已獲取最新資料庫內容。');
+            }
         } catch (err) {
-            alert('同步失敗：' + err.message + '\n請檢查網路連線或試算表權限。');
+            if (!isAuto) {
+                alert('同步失敗：' + err.message + '\n請檢查網路連線或試算表權限。');
+            } else {
+                console.warn('背景自動同步失敗，將使用快取資料：', err.message);
+            }
         } finally {
             if (btn) btn.classList.remove('fa-spin');
         }
@@ -598,11 +631,12 @@ const App = {
         }
     },
 
+    // ✅ 動態獲取總筆數
     updateProgressBar: () => {
         const stats = SRSManager.getStats();
         const reviewedCount = Object.keys(stats).length;
-        const totalCount = 646; // ✅ 修正：總筆數 646
-        const progress = Math.round((reviewedCount / totalCount) * 100);
+        const totalCount = window.lessonData ? window.lessonData.flatMap(u => u.sub_units.flatMap(s => s.topics)).length : 0; 
+        const progress = totalCount === 0 ? 0 : Math.round((reviewedCount / totalCount) * 100);
 
         const text = document.getElementById('progressText');
         const bar = document.getElementById('progressBar');
@@ -652,12 +686,13 @@ const App = {
 
         document.getElementById('topicSearch').oninput = (e) => {
             const val = e.target.value.toLowerCase().trim();
+            const activeData = window.lessonData || [];
             if (!val) {
-                App.renderSidebar(lessonData);
+                App.renderSidebar(activeData);
                 return;
             }
 
-            const filtered = lessonData.map(unit => {
+            const filtered = activeData.map(unit => {
                 const filteredSubUnits = unit.sub_units.map(sub => {
                     const filteredTopics = sub.topics.filter(t => {
                         return t.id.toLowerCase().includes(val) ||
@@ -692,7 +727,8 @@ const App = {
                     const dueIds = SRSManager.getDueTopics();
                     const nextTid = dueIds.find(id => id !== tid);
                     if (nextTid) {
-                        const allTopics = lessonData.flatMap(u => u.sub_units.flatMap(s => s.topics));
+                        const activeData = window.lessonData || [];
+                        const allTopics = activeData.flatMap(u => u.sub_units.flatMap(s => s.topics));
                         const nextTopic = allTopics.find(t => t.id === nextTid);
                         if (nextTopic) {
                             App.loadTopic(nextTopic);
@@ -711,9 +747,10 @@ const App = {
             App.isSRSMode = !App.isSRSMode;
             document.getElementById('srsToggle').classList.toggle('active', App.isSRSMode);
             const dueIds = SRSManager.getDueTopics();
+            const activeData = window.lessonData || [];
 
             if (App.isSRSMode) {
-                const filtered = lessonData.map(unit => ({
+                const filtered = activeData.map(unit => ({
                     ...unit,
                     sub_units: unit.sub_units.map(sub => ({
                         ...sub,
@@ -723,7 +760,7 @@ const App = {
                 App.renderSidebar(filtered);
                 if (dueIds.length === 0) alert('今日暫無待複習項目！');
             } else {
-                App.renderSidebar(lessonData);
+                App.renderSidebar(activeData);
             }
         };
 
@@ -762,7 +799,6 @@ const App = {
             };
         }
 
-        // ✅ 強制綁定點擊事件並防止冒泡干擾
         const toggleControlsBtn = document.getElementById('toggleControlsBtn');
         const headerControls = document.getElementById('headerControls');
         if (toggleControlsBtn && headerControls) {
@@ -858,20 +894,23 @@ const App = {
         App.synth.speak(utter);
     },
 
+    // ✅ 改為動態取得總筆數
     updateProgress: () => {
         const stats = SRSManager.getStats();
         const reviewed = Object.keys(stats).length;
-        const total = 646; // ✅ 修正：總筆數 646
-        const percent = Math.round((reviewed / total) * 100);
+        const total = window.lessonData ? window.lessonData.flatMap(u => u.sub_units.flatMap(s => s.topics)).length : 0; 
+        const percent = total === 0 ? 0 : Math.round((reviewed / total) * 100);
         document.getElementById('progressText').textContent = `熟練度: ${percent}% (${reviewed}/${total})`;
-        document.getElementById('progressBar').style.width = `${percent}%`;
+        const bar = document.getElementById('progressBar');
+        if (bar) bar.style.width = `${percent}%`;
     },
 
     renderHomeScreen: () => {
         const container = document.getElementById('topicContent');
         document.getElementById('quizContainer').classList.add('hidden');
 
-        const allTopics = lessonData.flatMap(u => u.sub_units.flatMap(s => s.topics));
+        const activeData = window.lessonData || [];
+        const allTopics = activeData.flatMap(u => u.sub_units.flatMap(s => s.topics));
 
         const DL_CATS = new Set([
             '深度學習', '深度學習原理', '神經網路', '模型架構', '模型訓練',
@@ -913,6 +952,7 @@ const App = {
         };
 
         const learned = Object.keys(SRSManager.getStats()).length;
+        const totalLen = allTopics.length || 1; // 避免除以零
 
         const mkBadges = (id, max) =>
             (zoneTopics[id] || []).slice(0, max)
@@ -926,7 +966,7 @@ const App = {
                 <div class="hero-stats">
                     <div class="stat-item"><span class="stat-num">${allTopics.length}</span><span class="stat-lbl">個術語</span></div>
                     <div class="stat-item"><span class="stat-num">${learned}</span><span class="stat-lbl">已掌握</span></div>
-                    <div class="stat-item"><span class="stat-num">${Math.round(learned / allTopics.length * 100)}%</span><span class="stat-lbl">完成度</span></div>
+                    <div class="stat-item"><span class="stat-num">${Math.round(learned / totalLen * 100)}%</span><span class="stat-lbl">完成度</span></div>
                 </div>
             </div>
 
@@ -1009,7 +1049,11 @@ const App = {
 
         const randomBtn = document.getElementById('randomStartBtn');
         if (randomBtn) randomBtn.onclick = () => {
-            App.loadTopic(allTopics[Math.floor(Math.random() * allTopics.length)]);
+            if(allTopics.length > 0) {
+                App.loadTopic(allTopics[Math.floor(Math.random() * allTopics.length)]);
+            } else {
+                alert('資料庫尚無題庫！請等待同步。');
+            }
         };
 
         const wrongBtn = document.getElementById('wrongQuizBtn');
@@ -1050,7 +1094,8 @@ const App = {
         mermaidCode += 'classDef doing fill:#f59e0b,stroke:#d97706,color:#fff\n';
         mermaidCode += 'classDef todo fill:rgba(255,255,255,0.1),stroke:rgba(255,255,255,0.2),color:rgba(255,255,255,0.5)\n';
 
-        window.lessonData.forEach((unit, uIdx) => {
+        const activeData = window.lessonData || [];
+        activeData.forEach((unit, uIdx) => {
             const uId = `U${uIdx}`;
             const safeUnitTitle = unit.title.replace(/[\n\r]/g, ' ').replace(/"/g, '');
             mermaidCode += `${uId}("${safeUnitTitle}")\n`;
@@ -1059,7 +1104,7 @@ const App = {
                 const sId = `U${uIdx}S${sIdx}`;
                 const total = sub.topics.length;
                 const learned = sub.topics.filter(t => stats[t.id]).length;
-                const percent = Math.round((learned / total) * 100);
+                const percent = total === 0 ? 0 : Math.round((learned / total) * 100);
                 const safeSubTitle = sub.title.replace(/[\n\r]/g, ' ').replace(/"/g, '');
                 mermaidCode += `${uId} --> ${sId}("${safeSubTitle}<br>${percent}%")\n`;
 
@@ -1071,93 +1116,6 @@ const App = {
         });
 
         return mermaidCode;
-    },
-
-    _getTTSRate: () => {
-        const slider = document.getElementById('ttsRateSlider');
-        return slider ? parseFloat(slider.value) : 0.5;
-    },
-    _getTTSPitch: () => {
-        const slider = document.getElementById('ttsPitchSlider');
-        return slider ? parseFloat(slider.value) : 1.0;
-    },
-    _getTTSEngine: () => {
-        const sel = document.getElementById('ttsEngineSelect');
-        return sel ? sel.value : 'browser';
-    },
-    _getTTSGender: () => {
-        const sel = document.getElementById('ttsGenderSelect');
-        return sel ? sel.value : 'female';
-    },
-
-    _pickVoice: (langPrefix, gender, engine) => {
-        const voices = window.speechSynthesis.getVoices();
-        const isFemale = gender === 'female';
-
-        const femaleKw = ['female', 'woman', 'zira', 'yating', 'hanhan', 'huihui', 'xiaoxiao', 'samantha', 'victoria', '女'];
-        const maleKw = ['male', 'man', 'zhiwei', 'yunyang', 'david', 'mark', 'daniel', '男', 'yunxi'];
-        const targetKws = isFemale ? femaleKw : maleKw;
-
-        const matchesGender = (v) => {
-            const n = v.name.toLowerCase();
-            if (targetKws.some(kw => n.includes(kw))) return true;
-
-            if (langPrefix === 'zh') {
-                if (!isFemale && (n.includes('can') || n.includes('yue') || n.includes('hant'))) {
-                    if (n.includes('szewai') || n.includes('zhiwei') || n.includes('yunyang')) return true;
-                }
-                if (n.includes('google')) return isFemale;
-            }
-            return false;
-        };
-
-        const isGoogle = (v) => v.name.includes('Google');
-
-        if (engine === 'google') {
-            return voices.find(v => v.lang.startsWith(langPrefix) && isGoogle(v) && matchesGender(v))
-                || voices.find(v => v.lang.startsWith(langPrefix) && isGoogle(v))
-                || voices.find(v => v.lang.startsWith(langPrefix) && matchesGender(v))
-                || voices.find(v => v.lang.startsWith(langPrefix));
-        } else {
-            return voices.find(v => v.lang.startsWith(langPrefix) && !isGoogle(v) && matchesGender(v))
-                || voices.find(v => v.lang.startsWith(langPrefix) && !isGoogle(v))
-                || voices.find(v => v.lang.startsWith(langPrefix) && matchesGender(v))
-                || voices.find(v => v.lang.startsWith(langPrefix));
-        }
-    },
-
-    speakZh: (text, speedOverride = null) => {
-        App.synth.cancel();
-        const utter = new SpeechSynthesisUtterance(text);
-        const rateSlider = document.getElementById('ttsRateSlider');
-        utter.rate = speedOverride || (rateSlider ? parseFloat(rateSlider.value) : 1.0);
-
-        const voices = App.synth.getVoices();
-        const engine = document.getElementById('ttsEngineSelect').value;
-        const gender = document.getElementById('ttsGenderSelect').value;
-
-        if (engine === 'google') {
-            const googleVoices = voices.filter(v => v.name.includes('Google') && v.lang.includes('zh-TW'));
-            if (googleVoices.length > 0) {
-                const targetVoice = googleVoices.find(v => v.name.includes(gender === 'female' ? '-A' : '-B')) || googleVoices[0];
-                utter.voice = targetVoice;
-            }
-        } else {
-            const zhVoice = voices.find(v => v.lang.includes('zh-TW') && (gender === 'female' ? !v.name.includes('Male') : v.name.includes('Male')));
-            if (zhVoice) utter.voice = zhVoice;
-        }
-
-        App.synth.speak(utter);
-    },
-
-    speakEng: (text) => {
-        App.synth.cancel();
-        const utter = new SpeechSynthesisUtterance(text);
-        const voices = App.synth.getVoices();
-        const engVoice = voices.find(v => v.lang.startsWith('en-'));
-        if (engVoice) utter.voice = engVoice;
-        utter.rate = 0.9;
-        App.synth.speak(utter);
     }
 };
 
