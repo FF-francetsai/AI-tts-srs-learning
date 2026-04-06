@@ -728,8 +728,16 @@ body.light-theme .primary-text {
         display: block;
     }
 
+    /* 💡 強制提升齒輪按鈕的能見度與層級 */
     #toggleControlsBtn {
+        position: relative;
+        z-index: 1050;
         display: inline-flex !important;
+    }
+
+    #toggleControlsBtn.active {
+        background: var(--accent-color);
+        color: white;
     }
 
     .logo span {
@@ -737,16 +745,16 @@ body.light-theme .primary-text {
         max-width: 200px;
     }
 
-    /* 強制將三行排版在平板與手機上垂直堆疊 */
+    /* 強制將三行排版在平板與手機上垂直堆疊，並加入 !important 確保不被覆蓋 */
     .header-controls {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 10px;
-        display: none;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px !important;
+        display: none !important; 
     }
 
     .header-controls.active {
-        display: flex;
+        display: flex !important;
         animation: fadeInDown 0.3s ease;
     }
 
@@ -1094,7 +1102,7 @@ body.light-theme .primary-text {
     letter-spacing: 0.04em;
 }
 
-/* ✅ 新增：知識區塊文字對應色 */
+/* ✅ 知識區塊文字對應色 */
 .text-ai {
     color: #38bdf8;
     font-weight: bold;
