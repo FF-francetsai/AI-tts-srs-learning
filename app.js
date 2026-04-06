@@ -215,10 +215,8 @@ const SRSManager = {
     }
 };
 
-// ✅ 動態獲取成就門檻
 const AchievementManager = {
     getAchievements: () => {
-        // 動態計算當前資料庫的真實術語總數，預設為 646 作為備用
         const total = window.lessonData ? window.lessonData.flatMap(u => u.sub_units.flatMap(s => s.topics)).length : 646;
         return [
             { id: 'newbie', icon: '🐣', title: '初試啼聲', desc: '完成第 1 個術語學習', goal: 1 },
@@ -387,12 +385,10 @@ const App = {
     fontSize: 16,
     synth: window.speechSynthesis,
 
-    // ✅ 無痕模式背景自動同步啟動邏輯
     init: async () => {
         const synced = SyncManager.load();
         
         if (synced) {
-            // 有歷史紀錄，直接載入
             window.lessonData = synced.lessonData;
             window.quizBank = synced.quizBank;
             App.renderSidebar(window.lessonData);
@@ -402,7 +398,6 @@ const App = {
             App.updateProgress();
             App.renderHomeScreen();
         } else {
-            // 無歷史紀錄 (例如無痕模式)，先拿 data.js 的資料墊檔做初次渲染
             if (window.lessonData) {
                 App.renderSidebar(window.lessonData);
                 App.bindEvents();
@@ -411,13 +406,11 @@ const App = {
                 App.updateProgress();
                 App.renderHomeScreen();
             }
-            // 隨即在背景自動請求最新的雲端資料 (isAuto = true)
             console.log("偵測為全新載入或無痕模式，啟動背景自動同步...");
             await App.syncFromCloud(true);
         }
     },
 
-    // ✅ 支援 isAuto 參數，隱藏成功通知
     syncFromCloud: async (isAuto = false) => {
         const btn = document.getElementById('syncBtn');
         if (btn) btn.classList.add('fa-spin');
@@ -429,12 +422,10 @@ const App = {
             const bankRows = SyncManager.parseCSV(rawBank);
             const result = SyncManager.transformData(proRows, bankRows);
             
-            // 將最新資料存入並替換
             SyncManager.save(result.lessonData, result.quizBank);
             window.lessonData = result.lessonData;
             window.quizBank = result.quizBank;
 
-            // 重新渲染全部畫面
             App.renderSidebar(window.lessonData);
             App.updateProgress();
             App.renderHomeScreen();
@@ -631,17 +622,14 @@ const App = {
         }
     },
 
-    // ✅ 動態獲取總筆數
-    updateProgressBar: () => {
+    updateProgress: () => {
         const stats = SRSManager.getStats();
-        const reviewedCount = Object.keys(stats).length;
-        const totalCount = window.lessonData ? window.lessonData.flatMap(u => u.sub_units.flatMap(s => s.topics)).length : 0; 
-        const progress = totalCount === 0 ? 0 : Math.round((reviewedCount / totalCount) * 100);
-
-        const text = document.getElementById('progressText');
+        const reviewed = Object.keys(stats).length;
+        const total = window.lessonData ? window.lessonData.flatMap(u => u.sub_units.flatMap(s => s.topics)).length : 0; 
+        const percent = total === 0 ? 0 : Math.round((reviewed / total) * 100);
+        document.getElementById('progressText').textContent = `熟練度: ${percent}% (${reviewed}/${total})`;
         const bar = document.getElementById('progressBar');
-        if (text) text.textContent = `進度: ${progress}% (${reviewedCount}/${totalCount})`;
-        if (bar) bar.style.width = `${progress}%`;
+        if (bar) bar.style.width = `${percent}%`;
     },
 
     bindEvents: () => {
@@ -894,17 +882,6 @@ const App = {
         App.synth.speak(utter);
     },
 
-    // ✅ 改為動態取得總筆數
-    updateProgress: () => {
-        const stats = SRSManager.getStats();
-        const reviewed = Object.keys(stats).length;
-        const total = window.lessonData ? window.lessonData.flatMap(u => u.sub_units.flatMap(s => s.topics)).length : 0; 
-        const percent = total === 0 ? 0 : Math.round((reviewed / total) * 100);
-        document.getElementById('progressText').textContent = `熟練度: ${percent}% (${reviewed}/${total})`;
-        const bar = document.getElementById('progressBar');
-        if (bar) bar.style.width = `${percent}%`;
-    },
-
     renderHomeScreen: () => {
         const container = document.getElementById('topicContent');
         document.getElementById('quizContainer').classList.add('hidden');
@@ -952,7 +929,7 @@ const App = {
         };
 
         const learned = Object.keys(SRSManager.getStats()).length;
-        const totalLen = allTopics.length || 1; // 避免除以零
+        const totalLen = allTopics.length || 1;
 
         const mkBadges = (id, max) =>
             (zoneTopics[id] || []).slice(0, max)
@@ -1095,19 +1072,31 @@ const App = {
         mermaidCode += 'classDef todo fill:rgba(255,255,255,0.1),stroke:rgba(255,255,255,0.2),color:rgba(255,255,255,0.5)\n';
 
         const activeData = window.lessonData || [];
+        
+        // 🛡️ 終極防呆過濾器：無情拔除所有會讓 Mermaid 崩潰的特殊標點符號
+        const safeText = (text) => {
+            if (!text) return "未分類";
+            return text.replace(/[\n\r]/g, ' ') // 換行轉空白
+                       .replace(/["'()[\]{}<>\\/;:|]/g, '') // 移除括號、引號、斜線等致命符號
+                       .trim();
+        };
+
         activeData.forEach((unit, uIdx) => {
             const uId = `U${uIdx}`;
-            const safeUnitTitle = unit.title.replace(/[\n\r]/g, ' ').replace(/"/g, '');
-            mermaidCode += `${uId}("${safeUnitTitle}")\n`;
+            const safeUnitTitle = safeText(unit.title);
+            // 改用 [] 方形節點，大幅降低括號解析錯誤率
+            mermaidCode += `${uId}["${safeUnitTitle}"]\n`;
 
             unit.sub_units.forEach((sub, sIdx) => {
                 const sId = `U${uIdx}S${sIdx}`;
                 const total = sub.topics.length;
                 const learned = sub.topics.filter(t => stats[t.id]).length;
                 const percent = total === 0 ? 0 : Math.round((learned / total) * 100);
-                const safeSubTitle = sub.title.replace(/[\n\r]/g, ' ').replace(/"/g, '');
-                mermaidCode += `${uId} --> ${sId}("${safeSubTitle}<br>${percent}%")\n`;
+                
+                const safeSubTitle = safeText(sub.title);
+                mermaidCode += `${uId} --> ${sId}["${safeSubTitle}<br>${percent}%"]\n`;
 
+                // 根據進度上色
                 if (percent >= 100) mermaidCode += `class ${sId} done\n`;
                 else if (percent > 0) mermaidCode += `class ${sId} doing\n`;
                 else mermaidCode += `class ${sId} todo\n`;
