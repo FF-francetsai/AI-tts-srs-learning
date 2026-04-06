@@ -762,12 +762,16 @@ const App = {
             };
         }
 
+        // ✅ 強制綁定點擊事件並防止冒泡干擾
         const toggleControlsBtn = document.getElementById('toggleControlsBtn');
         const headerControls = document.getElementById('headerControls');
         if (toggleControlsBtn && headerControls) {
-            toggleControlsBtn.onclick = () => {
+            toggleControlsBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
                 headerControls.classList.toggle('active');
-            };
+                toggleControlsBtn.classList.toggle('active');
+            });
         }
     },
 
@@ -915,7 +919,6 @@ const App = {
                 .map(t => `<span class="zone-badge" data-tid="${t.id}" title="${t.eng_name}">${t.title}</span>`)
                 .join('') || '<span class="zone-badge-empty">暫無指定主題</span>';
 
-        // ✅ 修正：導覽文字對應下方顏色
         container.innerHTML = `
             <div class="home-hero">
                 <h1>🗺️ AI 知識地圖</h1>
@@ -1147,17 +1150,13 @@ const App = {
         App.synth.speak(utter);
     },
 
-    speakEng: (text, overrideRate = null) => {
+    speakEng: (text) => {
         App.synth.cancel();
         const utter = new SpeechSynthesisUtterance(text);
-        utter.lang = 'en-US';
-        const engine = App._getTTSEngine();
-        const voice = App._pickVoice('en', App._getTTSGender(), engine);
-        if (voice) utter.voice = voice;
-
-        utter.rate = overrideRate || App._getTTSRate();
-        utter.pitch = engine === 'browser' ? App._getTTSPitch() : 1.0;
-
+        const voices = App.synth.getVoices();
+        const engVoice = voices.find(v => v.lang.startsWith('en-'));
+        if (engVoice) utter.voice = engVoice;
+        utter.rate = 0.9;
         App.synth.speak(utter);
     }
 };
