@@ -936,6 +936,24 @@ const App = {
                 .map(t => `<span class="zone-badge" data-tid="${t.id}" title="${t.eng_name}">${t.title}</span>`)
                 .join('') || '<span class="zone-badge-empty">暫無指定主題</span>';
 
+        // ✅ 新增：在還沒有學習記錄 (learned === 0) 時，顯示美觀的佔位畫面，不渲染破圖的 Mermaid
+        let topologyContent = '';
+        if (learned === 0) {
+            topologyContent = `
+                <div style="text-align: center; padding: 40px 20px; background: rgba(0,0,0,0.05); border-radius: 12px; border: 1px dashed var(--border-color);">
+                    <i class="fas fa-seedling" style="font-size: 3.5rem; color: var(--text-dim); margin-bottom: 15px; opacity: 0.7;"></i>
+                    <h4 style="font-size: 1.2rem; color: var(--accent-color); margin-bottom: 8px;">知識拓撲尚未解鎖</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-dim); line-height: 1.6;">這是一張會隨著您的學習成長的技能樹！<br>請點擊上方「隨機開始學習」，當您掌握第一筆術語後，專屬地圖就會開始生長。</p>
+                </div>
+            `;
+        } else {
+            topologyContent = `
+                <div id="topologyMapContainer" class="mermaid" style="background: rgba(0,0,0,0.2); border-radius: 12px; padding: 15px;">
+                    ${App.renderTopologyMap()}
+                </div>
+            `;
+        }
+
         container.innerHTML = `
             <div class="home-hero">
                 <h1>🗺️ AI 知識地圖</h1>
@@ -1000,9 +1018,7 @@ const App = {
 
             <div class="topology-section glass-panel" style="margin-top: 30px; padding: 20px;">
                 <h3 style="margin-bottom: 20px; color: var(--accent-color);"><i class="fas fa-project-diagram"></i> 學習拓撲地圖</h3>
-                <div id="topologyMapContainer" class="mermaid" style="background: rgba(0,0,0,0.2); border-radius: 12px; padding: 15px;">
-                    ${App.renderTopologyMap()}
-                </div>
+                ${topologyContent}
             </div>
 
             <div class="achievement-section glass-panel" style="margin-top: 30px; padding: 20px;">
@@ -1012,10 +1028,17 @@ const App = {
         `;
 
         setTimeout(() => {
-            const container = document.getElementById('topologyMapContainer');
-            if (container) {
-                container.removeAttribute('data-processed');
-                mermaid.init(undefined, container);
+            if (learned > 0) {
+                const container = document.getElementById('topologyMapContainer');
+                if (container) {
+                    try {
+                        container.removeAttribute('data-processed');
+                        mermaid.init(undefined, container);
+                    } catch (e) {
+                        console.error('Mermaid render error:', e);
+                        container.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-dim);">地圖內容包含特殊字元，暫時無法渲染。</div>';
+                    }
+                }
             }
         }, 100);
 
@@ -1073,18 +1096,18 @@ const App = {
 
         const activeData = window.lessonData || [];
         
-        // 🛡️ 終極防呆過濾器：無情拔除所有會讓 Mermaid 崩潰的特殊標點符號
+        // ✅ 終極防呆過濾器：無情移除所有會讓 Mermaid 崩潰的隱藏標點與括號
         const safeText = (text) => {
             if (!text) return "未分類";
-            return text.replace(/[\n\r]/g, ' ') // 換行轉空白
-                       .replace(/["'()[\]{}<>\\/;:|]/g, '') // 移除括號、引號、斜線等致命符號
+            return text.replace(/[\n\r]/g, ' ')
+                       .replace(/["'()[\]{}<>\\/;:|]/g, '')
                        .trim();
         };
 
         activeData.forEach((unit, uIdx) => {
             const uId = `U${uIdx}`;
             const safeUnitTitle = safeText(unit.title);
-            // 改用 [] 方形節點，大幅降低括號解析錯誤率
+            // ✅ 改用 [" "] 標籤寫法，讓 Mermaid 解析更穩定
             mermaidCode += `${uId}["${safeUnitTitle}"]\n`;
 
             unit.sub_units.forEach((sub, sIdx) => {
@@ -1096,7 +1119,6 @@ const App = {
                 const safeSubTitle = safeText(sub.title);
                 mermaidCode += `${uId} --> ${sId}["${safeSubTitle}<br>${percent}%"]\n`;
 
-                // 根據進度上色
                 if (percent >= 100) mermaidCode += `class ${sId} done\n`;
                 else if (percent > 0) mermaidCode += `class ${sId} doing\n`;
                 else mermaidCode += `class ${sId} todo\n`;
