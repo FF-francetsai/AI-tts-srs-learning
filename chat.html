@@ -11,73 +11,110 @@
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       display: flex; flex-direction: column; height: 100vh; overflow: hidden;
     }
-    /* Topbar */
+
+    /* ── Topbar ── */
     .topbar {
-      height: 52px; padding: 0 20px; display: flex; align-items: center;
-      gap: 12px; border-bottom: 1px solid #1e2540;
-      background: rgba(11,15,25,0.95); flex-shrink: 0;
+      height: 52px; padding: 0 14px; display: flex; align-items: center;
+      gap: 10px; border-bottom: 1px solid #1e2540;
+      background: rgba(11,15,25,0.97); flex-shrink: 0; z-index: 10;
     }
-    .topbar a { color: #9ca3af; text-decoration: none; font-size: 13px; }
+    .topbar a { color: #9ca3af; text-decoration: none; font-size: 13px; white-space: nowrap; }
     .topbar a:hover { color: #7dd3fc; }
-    .topbar .title { color: #7dd3fc; font-weight: 600; font-size: 14px; }
-    .topbar .current-term { color: #fbbf24; font-size: 12px; margin-left: auto; }
-    /* Main layout */
-    .body-wrap { display: flex; flex: 1; overflow: hidden; }
-    /* Left panel */
+    .topbar .title { color: #7dd3fc; font-weight: 600; font-size: 14px; white-space: nowrap; }
+    .topbar .spacer { flex: 1; }
+    .topbar .current-term { color: #fbbf24; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; }
+    .btn-tts {
+      background: none; border: 1px solid rgba(125,211,252,0.3);
+      color: #7dd3fc; padding: 4px 10px; border-radius: 8px;
+      cursor: pointer; font-size: 16px; line-height: 1; flex-shrink: 0;
+      transition: background .15s;
+    }
+    .btn-tts.muted { color: #64748b; border-color: #1e2540; }
+    .btn-tts:hover { background: rgba(125,211,252,0.1); }
+
+    /* ── Main layout ── */
+    .body-wrap { display: flex; flex: 1; overflow: hidden; min-height: 0; }
+
+    /* ── Left panel ── */
     .term-panel {
-      width: 220px; flex-shrink: 0; padding: 16px;
+      width: 200px; flex-shrink: 0; padding: 14px;
       border-right: 1px solid #1e2540; overflow-y: auto;
       background: rgba(11,15,25,0.6);
     }
-    .term-panel h4 { color: #7dd3fc; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 10px; }
-    .term-panel .term-title { font-size: 15px; font-weight: 600; color: #cdd6f4; }
-    .term-panel .term-eng { font-size: 12px; color: #9ca3af; margin: 4px 0 8px; }
-    .term-panel .term-def { font-size: 12px; line-height: 1.6; color: #9ca3af; }
-    /* Chat area */
-    .chat-wrap { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-    .chat-messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
-    .bubble { max-width: 75%; padding: 10px 14px; border-radius: 10px; font-size: 13px; line-height: 1.6; }
+    .term-panel h4 { color: #7dd3fc; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 10px; }
+    .term-panel .term-title { font-size: 14px; font-weight: 600; color: #cdd6f4; }
+    .term-panel .term-eng { font-size: 11px; color: #9ca3af; margin: 4px 0 8px; }
+    .term-panel .term-def { font-size: 11px; line-height: 1.6; color: #9ca3af; }
+
+    /* ── Chat area ── */
+    .chat-wrap { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
+    .chat-messages {
+      flex: 1; overflow-y: auto; padding: 14px;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .bubble {
+      max-width: 80%; padding: 10px 14px; border-radius: 12px;
+      font-size: 13px; line-height: 1.65; word-break: break-word;
+    }
     .bubble.user { align-self: flex-end; background: #1e3a5f; border: 1px solid #2563eb; }
     .bubble.ai   { align-self: flex-start; background: rgba(11,15,25,0.85); border: 1px solid #1e2540; }
     .bubble.error { border-color: #ff7189; color: #ff7189; }
-    /* Input area */
+
+    /* ── Input area ── */
     .input-area {
-      padding: 12px 16px; border-top: 1px solid #1e2540;
-      background: rgba(11,15,25,0.95); display: flex; gap: 8px; align-items: center;
+      padding: 10px 14px; border-top: 1px solid #1e2540;
+      background: rgba(11,15,25,0.97); display: flex; gap: 8px; align-items: center;
     }
     .input-area input {
       flex: 1; background: #0b1725; color: #cdd6f4;
       border: 1px solid #1e2540; border-radius: 8px;
-      padding: 10px 14px; font-size: 13px; outline: none;
+      padding: 10px 14px; font-size: 13px; outline: none; min-width: 0;
     }
     .input-area input:focus { border-color: #7dd3fc; }
     .btn {
       background: #1e2540; border: 1px solid #31577e; color: #cdd6f4;
-      padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 13px;
-      transition: background .15s;
+      padding: 8px 14px; border-radius: 8px; cursor: pointer; font-size: 13px;
+      transition: background .15s; flex-shrink: 0; white-space: nowrap;
     }
     .btn:hover { background: #252b3a; }
     .btn.mic { background: #3b1414; border-color: #ff7189; }
     .btn.mic.voice-recording { background: #ff7189; color: #fff; animation: pulse 1s infinite; }
     .btn.send { background: #1e3a5f; border-color: #2563eb; }
     .btn.send:hover { background: #1a4a7a; }
-    /* Voice status indicator */
-    .voice-status { font-size: 11px; color: #9ca3af; }
-    /* Right summary panel */
-    .summary-panel {
-      width: 220px; flex-shrink: 0; padding: 16px;
-      border-left: 1px solid #1e2540; overflow-y: auto;
-      background: rgba(11,15,25,0.6);
-    }
-    .summary-panel h4 { color: #34d399; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 10px; }
-    .summary-panel .summary-text { font-size: 12px; line-height: 1.7; color: #9ca3af; }
-    .btn-summary { width: 100%; margin-top: 10px; }
+    .voice-status { font-size: 11px; color: #9ca3af; white-space: nowrap; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
-    /* Offline notice */
+
+    /* ── Right summary panel ── */
+    .summary-panel {
+      width: 200px; flex-shrink: 0; padding: 14px;
+      border-left: 1px solid #1e2540; overflow-y: auto;
+      background: rgba(11,15,25,0.6); display: flex; flex-direction: column;
+    }
+    .summary-panel h4 { color: #34d399; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 10px; }
+    .summary-panel .summary-text { font-size: 11px; line-height: 1.7; color: #9ca3af; flex: 1; }
+    .btn-summary { width: 100%; margin-top: 10px; }
+
+    /* ── Error notice ── */
     .offline-notice {
       background: rgba(255,113,137,.1); border: 1px solid #ff7189;
-      border-radius: 8px; padding: 10px 14px; font-size: 12px;
-      color: #ff7189; margin: 10px 0; display: none;
+      border-radius: 8px; padding: 8px 12px; font-size: 12px;
+      color: #ff7189; margin: 8px; display: none; flex-shrink: 0;
+    }
+
+    /* ── 手機響應式 ── */
+    @media (max-width: 680px) {
+      .term-panel { display: none; }
+      .summary-panel { display: none; }
+      .bubble { max-width: 92%; font-size: 14px; }
+      .topbar .current-term { display: none; }
+      /* 手機底部輸入欄更高，方便點擊 */
+      .input-area input { font-size: 15px; padding: 12px 14px; }
+      .btn.send { padding: 10px 16px; }
+    }
+    @media (max-height: 500px) and (orientation: landscape) {
+      /* 手機橫向時側欄縮小 */
+      .term-panel { width: 140px; padding: 8px; }
+      .summary-panel { width: 140px; padding: 8px; }
     }
   </style>
 </head>
@@ -85,65 +122,89 @@
   <div class="topbar">
     <a href="index.html">← 返回</a>
     <span class="title">AI 即時對話</span>
+    <span class="spacer"></span>
     <span class="current-term" id="current-term-label">術語：—</span>
+    <button class="btn-tts" id="tts-btn" title="語音播報 開/關">🔊</button>
   </div>
+
   <div class="body-wrap">
-    <!-- Left: term info -->
+    <!-- 左：術語說明 -->
     <div class="term-panel">
       <h4>當前術語</h4>
       <div class="term-title" id="tp-title">—</div>
       <div class="term-eng" id="tp-eng"></div>
       <div class="term-def" id="tp-def">從星圖或學習頁點擊術語進入對話</div>
     </div>
-    <!-- Center: chat -->
+
+    <!-- 中：對話 -->
     <div class="chat-wrap">
       <div class="offline-notice" id="offline-notice">
-        AI 服務暫時無法連線（雲端 + 本地皆失敗）。請稍後再試。
+        AI 服務暫時無法連線，請稍後再試。（WSL/虛擬機環境請確認網路可達外部服務）
       </div>
       <div class="chat-messages" id="chat-messages">
         <div class="bubble ai">你好！請問你想了解哪個 AI 術語？可以直接輸入或用語音說說看。</div>
       </div>
       <div class="input-area">
-        <button class="btn mic" id="mic-btn" data-voice-status title="語音輸入">🎤</button>
+        <button class="btn mic" id="mic-btn" data-voice-status title="語音輸入（需麥克風）">🎤</button>
         <span class="voice-status" id="voice-status">待機</span>
         <input id="chat-input" placeholder="輸入問題或術語..." autocomplete="off" />
         <button class="btn send" id="send-btn">送出 →</button>
       </div>
     </div>
-    <!-- Right: summary -->
+
+    <!-- 右：摘要 -->
     <div class="summary-panel">
       <h4>學習摘要</h4>
       <div class="summary-text" id="summary-content">對話結束後點下方按鈕生成摘要。</div>
       <button class="btn btn-summary" id="summarize-btn">生成摘要</button>
     </div>
   </div>
-  <script src="js/voice.js?v=6.1"></script>
-  <script src="js/chat.js?v=6.1"></script>
+
+  <script src="js/voice.js?v=6.2"></script>
+  <script src="js/chat.js?v=6.2"></script>
   <script>
     const chat = new AIChat();
     const voice = new VoiceInput();
     const history = [];
+    let ttsOn = true;
 
-    // Voice status feedback
-    const statusLabels = {'voice-idle':'待機','voice-recording':'錄音中…','voice-processing':'辨識中…','voice-done':'完成'};
+    // ── TTS 開關按鈕 ──
+    const ttsBtn = document.getElementById('tts-btn');
+    ttsBtn.addEventListener('click', () => {
+      ttsOn = !ttsOn;
+      chat.ttsEnabled = ttsOn;
+      ttsBtn.textContent = ttsOn ? '🔊' : '🔇';
+      ttsBtn.classList.toggle('muted', !ttsOn);
+      if (!ttsOn) chat.ttsStop();
+    });
+    // 預載語音（部分瀏覽器需要先觸發才有中文聲音）
+    window.speechSynthesis?.getVoices();
+
+    // ── 語音輸入狀態 ──
+    const statusLabels = {
+      'voice-recording': '錄音中…',
+      'voice-processing': '辨識中…',
+      'voice-done': '完成'
+    };
     const obs = new MutationObserver(() => {
       const micBtn = document.getElementById('mic-btn');
       const st = [...micBtn.classList].find(c => c.startsWith('voice-'));
       document.getElementById('voice-status').textContent = statusLabels[st] || '待機';
     });
-    obs.observe(document.getElementById('mic-btn'), {attributes:true, attributeFilter:['class']});
+    obs.observe(document.getElementById('mic-btn'), { attributes: true, attributeFilter: ['class'] });
 
     voice.onResult(res => {
       document.getElementById('chat-input').value = res.text;
+      document.getElementById('voice-status').textContent = '✓ ' + res.text.slice(0, 12);
     });
     voice.onError(e => {
-      document.getElementById('voice-status').textContent = '辨識失敗';
+      document.getElementById('voice-status').textContent = '⚠ ' + (e.message || '失敗').slice(0, 30);
     });
-
     document.getElementById('mic-btn').addEventListener('click', () => {
       if (voice.recording) voice.stop(); else voice.start();
     });
 
+    // ── 新增對話氣泡 ──
     function addBubble(role, text, isError) {
       const msgs = document.getElementById('chat-messages');
       const div = document.createElement('div');
@@ -154,32 +215,39 @@
       return div;
     }
 
+    // ── 送出訊息 ──
     async function sendMessage() {
       const input = document.getElementById('chat-input');
       const text = input.value.trim();
       if (!text) return;
       input.value = '';
       addBubble('user', text);
-      history.push({role:'user', content: text});
-      const aiBubble = addBubble('ai', '');
+      history.push({ role: 'user', content: text });
+
+      const aiBubble = addBubble('ai', '▋'); // 打字游標
       let aiText = '';
+
       chat.onStream(token => {
         const t = token.text || token.delta || token.content || '';
         aiText += t;
-        aiBubble.textContent = aiText;
+        aiBubble.textContent = aiText + '▋';
         document.getElementById('chat-messages').scrollTop = 9999;
       });
+
       try {
         await chat.ask(text, history.slice(-6));
-        if (!aiText) aiBubble.textContent = '（無回應）';
-        history.push({role:'assistant', content: aiText});
+        aiBubble.textContent = aiText || '（無回應）';
+        if (aiText) {
+          history.push({ role: 'assistant', content: aiText });
+          // 🔊 TTS 播報 AI 回應
+          if (ttsOn) chat.ttsSpeak(aiText);
+        }
       } catch(e) {
         aiBubble.textContent = e.message === 'AI_UNAVAILABLE'
-          ? '雲端與本地 AI 皆無法連線，請稍後再試。'
-          : '發生錯誤：' + e.message;
+          ? '⚠ 雲端 AI 暫時無法連線，請稍後再試。'
+          : '⚠ ' + e.message;
         aiBubble.classList.add('error');
-        if (e.message === 'AI_UNAVAILABLE')
-          document.getElementById('offline-notice').style.display = 'block';
+        document.getElementById('offline-notice').style.display = 'block';
       }
     }
 
@@ -188,6 +256,7 @@
       if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
     });
 
+    // ── 生成學習摘要 ──
     document.getElementById('summarize-btn').addEventListener('click', async () => {
       if (!history.length) return;
       const btn = document.getElementById('summarize-btn');
