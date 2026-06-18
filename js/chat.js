@@ -1,79 +1,137 @@
-// MODULE: chat
-// js/chat.js — 本地 AI 即時對話（streaming SSE + 摘要）
+// js/chat.js — AI 對話：雲端優先(Pollinations.ai) + 本地備援(mllm_app)
+// Cloud: POST https://text.pollinations.ai/openai (free, no key, CORS OK)
+// Local: POST http://localhost:8765/generate (mllm_app, available when PC is on)
 (function(global) {
-  if (!global.AIChat) {
-    class AIChat {
-      constructor() {
-        this.abortController = null;
-        this._onStream = null;
-        this.offline = false;
-      }
-      async ask(message, context) {
-        if (this.offline) throw new Error('LOCAL_AI_OFFLINE');
-        this.abortController = new AbortController();
-        const payload = {
-          messages: [...(context || []), {role:'user', content: message}],
-          stream: true,
-          max_tokens: 512
-        };
-        try {
-          const resp = await fetch('http://localhost:8765/generate', {
-            method: 'POST',
-            headers: {'Content-Type':'application/json'},
-            body: JSON.stringify(payload),
-            signal: this.abortController.signal
-          });
-          if (!resp.ok) throw new Error('Server error ' + resp.status);
-          const reader = resp.body.getReader();
-          const decoder = new TextDecoder();
-          let buffer = '';
-          while (true) {
-            const {done, value} = await reader.read();
-            if (done) break;
-            buffer += decoder.decode(value, {stream:true});
-            const parts = buffer.split('\n');
-            buffer = parts.pop();
-            for (let line of parts) {
-              if (!line.startsWith('data:')) continue;
-              const data = line.slice(5).trim();
-              if (data === '[DONE]') return;
-              try {
-                const parsed = JSON.parse(data);
-                if (this._onStream) this._onStream(parsed);
-              } catch {}
-            }
-          }
-        } catch(e) {
-          if (e.name === 'AbortError') return;
-          this.offline = true;
-          throw new Error('LOCAL_AI_OFFLINE');
-        }
-      }
-      async summarize(history) {
-        if (this.offline) throw new Error('LOCAL_AI_OFFLINE');
-        const summaryPrompt = '請用3-5點條列摘要以下對話的學習重點：\n' +
-          history.map(m => `${m.role}: ${m.content}`).join('\n');
-        try {
-          const resp = await fetch('http://localhost:8765/generate', {
-            method: 'POST',
-            headers: {'Content-Type':'application/json'},
-            body: JSON.stringify({
-              messages: [{role:'user', content: summaryPrompt}],
-              stream: false,
-              max_tokens: 256
-            })
-          });
-          if (!resp.ok) throw new Error('Server error');
-          const data = await resp.json();
-          return data.text || data.content || (typeof data === 'string' ? data : JSON.stringify(data));
-        } catch(e) {
-          this.offline = true;
-          throw new Error('LOCAL_AI_OFFLINE');
-        }
-      }
-      onStream(cb) { this._onStream = cb; }
-      abort() { if (this.abortController) this.abortController.abort(); }
+  if (global.AIChat) return;
+
+  const CLOUD_URL = 'https://text.pollinations.ai/openai';
+  const LOCAL_URL = 'http://localhost:8765/generate';
+  const CLOUD_MODEL = 'openai-large';
+
+  class AIChat {
+    constructor() {
+      this.abortController = null;
+      this._onStream = null;
     }
-    global.AIChat = AIChat;
+
+    async ask(message, context) {
+      this.abortController = new AbortController();
+      const messages = [...(context || []), { role: 'user', content: message }];
+
+      // Try cloud first (always available, no key required)
+      try {
+        await this._streamCloud(messages, this.abortController.signal);
+        return;
+      } catch (e) {
+        if (e.name === 'AbortError') return;
+      }
+
+      // Fallback: local mllm_app (only when PC is running)
+      try {
+        await this._streamLocal(messages, this.abortController.signal);
+      } catch (e) {
+        if (e.name === 'AbortError') return;
+        throw new Error('AI_UNAVAILABLE');
+      }
+    }
+
+    async _streamCloud(messages, signal) {
+      const resp = await fetch(CLOUD_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model: CLOUD_MODEL, messages, stream: true, max_tokens: 512 }),
+        signal
+      });
+      if (!resp.ok) throw new Error('Cloud ' + resp.status);
+
+      const reader = resp.body.getReader();
+      const dec = new TextDecoder();
+      let buf = '';
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buf += dec.decode(value, { stream: true });
+        const parts = buf.split('\n');
+        buf = parts.pop();
+        for (const line of parts) {
+          if (!line.startsWith('data:')) continue;
+          const raw = line.slice(5).trim();
+          if (raw === '[DONE]') return;
+          try {
+            const p = JSON.parse(raw);
+            const text = p?.choices?.[0]?.delta?.content || '';
+            if (text && this._onStream) this._onStream({ text });
+          } catch {}
+        }
+      }
+    }
+
+    async _streamLocal(messages, signal) {
+      const resp = await fetch(LOCAL_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages, stream: true, max_tokens: 512 }),
+        signal
+      });
+      if (!resp.ok) throw new Error('Local ' + resp.status);
+
+      const reader = resp.body.getReader();
+      const dec = new TextDecoder();
+      let buf = '';
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buf += dec.decode(value, { stream: true });
+        const parts = buf.split('\n');
+        buf = parts.pop();
+        for (const line of parts) {
+          if (!line.startsWith('data:')) continue;
+          const raw = line.slice(5).trim();
+          if (raw === '[DONE]') return;
+          try {
+            const p = JSON.parse(raw);
+            if (this._onStream) this._onStream(p);
+          } catch {}
+        }
+      }
+    }
+
+    async summarize(history) {
+      const prompt = '請用3-5點條列摘要以下對話的學習重點：\n' +
+        history.map(m => `${m.role}: ${m.content}`).join('\n');
+      const messages = [{ role: 'user', content: prompt }];
+
+      // Try cloud first
+      try {
+        const resp = await fetch(CLOUD_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ model: CLOUD_MODEL, messages, max_tokens: 256 })
+        });
+        if (resp.ok) {
+          const data = await resp.json();
+          return data?.choices?.[0]?.message?.content || JSON.stringify(data);
+        }
+      } catch {}
+
+      // Fallback local
+      try {
+        const resp = await fetch(LOCAL_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ messages, stream: false, max_tokens: 256 })
+        });
+        if (!resp.ok) throw new Error('local');
+        const data = await resp.json();
+        return data.text || data.content || JSON.stringify(data);
+      } catch {
+        throw new Error('AI_UNAVAILABLE');
+      }
+    }
+
+    onStream(cb) { this._onStream = cb; }
+    abort() { this.abortController?.abort(); }
   }
+
+  global.AIChat = AIChat;
 })(window);

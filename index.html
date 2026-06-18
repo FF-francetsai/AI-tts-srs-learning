@@ -3,76 +3,464 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iPas AI 應用規劃師</title>
-    <link rel="stylesheet" href="style.css">
+    <title>AI 學習導航 — V6.1</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.164.1/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.164.1/examples/jsm/"
+        }
+    }
+    </script>
+    <style>
+        /* ── 全局重設 ── */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'Noto Sans TC', sans-serif;
+            background: #0a0a1a;
+            color: #e0e0f0;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* ── Three.js 畫布 ── */
+        #bg-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ── 內容層 ── */
+        .content-layer {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* ── 主標題 ── */
+        .hero-title {
+            margin-top: 80px;
+            text-align: center;
+        }
+        .hero-title h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #a78bfa, #7dd3fc, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+        }
+        .hero-title p {
+            font-size: 1.15rem;
+            color: #8b8ba0;
+            letter-spacing: 0.05em;
+        }
+
+        /* ── 學習路徑導航 ── */
+        .domain-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 14px;
+            margin-top: 48px;
+            padding: 0 20px;
+        }
+        .domain-nav a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 22px;
+            border-radius: 28px;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border: 1.5px solid rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+        .domain-nav a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(167,139,250,0.25);
+        }
+        .domain-nav a[data-cat="ml"]     { color: #a78bfa; }
+        .domain-nav a[data-cat="ml"]:hover { background: rgba(167,139,250,0.15); border-color: #a78bfa; }
+        .domain-nav a[data-cat="dl"]     { color: #fbbf24; }
+        .domain-nav a[data-cat="dl"]:hover { background: rgba(251,191,36,0.15); border-color: #fbbf24; }
+        .domain-nav a[data-cat="nn"]     { color: #34d399; }
+        .domain-nav a[data-cat="nn"]:hover { background: rgba(52,211,153,0.15); border-color: #34d399; }
+        .domain-nav a[data-cat="conc"]   { color: #7dd3fc; }
+        .domain-nav a[data-cat="conc"]:hover { background: rgba(125,211,252,0.15); border-color: #7dd3fc; }
+        .domain-nav a[data-cat="app"]    { color: #f472b6; }
+        .domain-nav a[data-cat="app"]:hover { background: rgba(244,114,182,0.15); border-color: #f472b6; }
+        .domain-nav a[data-cat="practice"] { color: #c084fc; }
+        .domain-nav a[data-cat="practice"]:hover { background: rgba(192,132,252,0.15); border-color: #c084fc; }
+
+        /* ── 功能卡片 ── */
+        .feature-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            max-width: 1060px;
+            width: 90%;
+            margin-top: 56px;
+            padding-bottom: 60px;
+        }
+        .feature-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 32px 24px;
+            text-align: center;
+            backdrop-filter: blur(12px);
+            transition: all 0.35s cubic-bezier(.4,0,.2,1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            background: radial-gradient(circle at 50% 0%, rgba(167,139,250,0.2), transparent 70%);
+        }
+        .feature-card:hover::before { opacity: 1; }
+        .feature-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 32px rgba(167,139,250,0.25), 0 0 0 1px rgba(167,139,250,0.3);
+            border-color: rgba(167,139,250,0.35);
+        }
+        .feature-card .card-icon {
+            font-size: 2.4rem;
+            margin-bottom: 14px;
+            display: block;
+        }
+        .feature-card .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #e8e8f8;
+        }
+        .feature-card .card-desc {
+            font-size: 0.88rem;
+            color: #8b8ba0;
+            line-height: 1.5;
+        }
+
+        /* ── 頁尾 ── */
+        .site-footer {
+            margin-top: auto;
+            padding: 28px 20px;
+            text-align: center;
+            font-size: 0.82rem;
+            color: #555570;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            width: 100%;
+        }
+
+        /* ── 載入提示 ── */
+        #loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: #0a0a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            transition: opacity 0.6s ease;
+        }
+        #loading-overlay.hidden { opacity: 0; pointer-events: none; }
+        #loading-overlay .spinner {
+            width: 48px; height: 48px;
+            border: 3px solid rgba(167,139,250,0.2);
+            border-top-color: #a78bfa;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
 </head>
-<body style="background:#060b13; margin:0; overflow:hidden;">
-    <canvas id="particles-bg"></canvas>
-    <div class="header-bar">
-        <div class="hud glass-panel" id="progress-hud">
-            <span>📊 SRS進度</span>
-            <span id="srs-progress">載入中...</span>
+<body>
+
+    <!-- 載入動畫 -->
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Three.js 背景 -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- 內容層 -->
+    <div class="content-layer">
+
+        <!-- 主標題 -->
+        <div class="hero-title">
+            <h1>🧬 AI 學習導航</h1>
+            <p>從基礎到實戰，探索人工智慧的知識宇宙</p>
         </div>
+
+        <!-- 學習路徑導航 → 點擊跳轉至概念星圖並自動過濾 -->
+        <nav class="domain-nav">
+            <a href="atlas.html" data-cat="ml">🤖 機器學習</a>
+            <a href="atlas.html?cat=深度學習" data-cat="dl">🔥 深度學習</a>
+            <a href="atlas.html?cat=神經網路" data-cat="nn">🧩 神經網路</a>
+            <a href="atlas.html?cat=生成式 AI" data-cat="gen">✨ 生成式 AI</a>
+            <a href="atlas.html?cat=電腦視覺" data-cat="cv">👁️ 電腦視覺</a>
+            <a href="atlas.html?cat=NLP" data-cat="nlp">💬 NLP</a>
+            <a href="learn.html" data-cat="srs">📚 SRS 學習</a>
+        </nav>
+
+        <!-- 4 大功能卡片 -->
+        <div class="feature-cards">
+            <div class="feature-card" onclick="location.href='atlas.html'">
+                <span class="card-icon">✨</span>
+                <div class="card-title">互動詞庫</div>
+                <div class="card-desc">快速查詢與練習 AI 術語，加深理解</div>
+            </div>
+            <div class="feature-card" onclick="location.href='atlas.html'">
+                <span class="card-icon">🧠</span>
+                <div class="card-title">知識圖譜</div>
+                <div class="card-desc">視覺化學習路徑，探索概念間的關聯</div>
+            </div>
+            <div class="feature-card" onclick="location.href='learn.html'">
+                <span class="card-icon">📊</span>
+                <div class="card-title">SRS 複習進度</div>
+                <div class="card-desc">間隔重複記憶，TTS 語音朗讀，追蹤掌握程度</div>
+            </div>
+            <div class="feature-card" onclick="location.href='chat.html'">
+                <span class="card-icon">🤖</span>
+                <div class="card-title">AI 即時對話</div>
+                <div class="card-desc">雲端 AI 問答，語音輸入，深度解析術語</div>
+            </div>
+        </div>
+
+        <!-- 頁尾 -->
+        <footer class="site-footer">
+            &copy; 2025 AI TTS SRS Learning &nbsp;|&nbsp; V6.1 &nbsp;|&nbsp; Powered by Three.js &amp; D3.js
+        </footer>
+
     </div>
-    <div class="hero">
-        <h1>iPas AI 應用規劃師</h1>
-        <p id="typing-subtitle" class="subtitle"></p>
-    </div>
-    <div class="card-container">
-        <a href="learn.html" class="card glass-panel">
-            <div class="card-icon">📖</div>
-            <div class="card-title">SRS學習</div>
-            <div class="card-desc">間隔重複系統</div>
-        </a>
-        <a href="atlas.html" class="card glass-panel">
-            <div class="card-icon">🌟</div>
-            <div class="card-title">概念星圖</div>
-            <div class="card-desc">知識連結可視化</div>
-        </a>
-        <a href="chat.html" class="card glass-panel">
-            <div class="card-icon">💬</div>
-            <div class="card-title">AI對話</div>
-            <div class="card-desc">與AI討論概念</div>
-        </a>
-        <a href="quiz.html" class="card glass-panel">
-            <div class="card-icon">⚡</div>
-            <div class="card-title">測驗挑戰</div>
-            <div class="card-desc">檢驗學習成果</div>
-        </a>
-    </div>
+
+    <!-- Three.js 神經光粒子背景 -->
     <script type="module">
-        import { ParticleSystem } from './js/particles.js';
-        const canvas = document.getElementById('particles-bg');
-        canvas.style.position = 'fixed';
-        canvas.style.top = '0';
-        canvas.style.left = '0';
-        canvas.style.zIndex = '-1';
-        new ParticleSystem(canvas);
-    </script>
-    <script>
-        // typing effect
-        const text = "AI-powered Spaced Repetition & Knowledge Atlas";
-        let i = 0;
-        const el = document.getElementById('typing-subtitle');
-        function type() {
-            if (i < text.length) {
-                el.textContent += text.charAt(i);
-                i++;
-                setTimeout(type, 50);
+        import * as THREE from 'three';
+        import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+        import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+        import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+
+        // ── 基本設定 ──
+        const canvas = document.getElementById('bg-canvas');
+        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 50;
+
+        // ── 粒子系統 ──
+        const PARTICLE_COUNT = 2500;
+        const positions = new Float32Array(PARTICLE_COUNT * 3);
+        const colors = new Float32Array(PARTICLE_COUNT * 3);
+        const sizes = new Float32Array(PARTICLE_COUNT);
+
+        // 分類顏色 palette
+        const palette = [
+            new THREE.Color('#a78bfa'),  // 機器學習
+            new THREE.Color('#fbbf24'),  // 深度學習
+            new THREE.Color('#34d399'),  // 神經網路
+            new THREE.Color('#7dd3fc'),  // AI概念
+            new THREE.Color('#f472b6'),  // AI應用
+        ];
+
+        // 隨機分配粒子
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+            const i3 = i * 3;
+            positions[i3]     = (Math.random() - 0.5) * 100;
+            positions[i3 + 1] = (Math.random() - 0.5) * 100;
+            positions[i3 + 2] = (Math.random() - 0.5) * 60;
+
+            const c = palette[Math.floor(Math.random() * palette.length)];
+            colors[i3]     = c.r;
+            colors[i3 + 1] = c.g;
+            colors[i3 + 2] = c.b;
+
+            sizes[i] = Math.random() * 2.0 + 0.5;
+        }
+
+        const particleGeo = new THREE.BufferGeometry();
+        particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        particleGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        particleGeo.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+        // 自訂 ShaderMaterial 讓粒子有圓形 + 發光感
+        const particleMat = new THREE.ShaderMaterial({
+            uniforms: {
+                uTime: { value: 0 },
+                uPixelRatio: { value: renderer.getPixelRatio() }
+            },
+            vertexShader: `
+                attribute float size;
+                attribute vec3 color;
+                uniform float uTime;
+                uniform float uPixelRatio;
+                varying vec3 vColor;
+                varying float vAlpha;
+                void main() {
+                    vColor = color;
+                    vec3 pos = position;
+                    // 緩慢飄動
+                    pos.x += sin(uTime * 0.15 + position.y * 0.05) * 1.5;
+                    pos.y += cos(uTime * 0.12 + position.x * 0.04) * 1.2;
+                    pos.z += sin(uTime * 0.1  + position.z * 0.03) * 0.8;
+                    vec4 mvPos = modelViewMatrix * vec4(pos, 1.0);
+                    gl_PointSize = size * uPixelRatio * (40.0 / -mvPos.z);
+                    gl_PointSize = max(gl_PointSize, 1.0);
+                    gl_Position = projectionMatrix * mvPos;
+                    vAlpha = smoothstep(0.0, 0.3, size / 2.5);
+                }
+            `,
+            fragmentShader: `
+                varying vec3 vColor;
+                varying float vAlpha;
+                void main() {
+                    float d = length(gl_PointCoord - 0.5);
+                    if (d > 0.5) discard;
+                    float glow = 1.0 - smoothstep(0.0, 0.5, d);
+                    gl_FragColor = vec4(vColor, glow * vAlpha * 0.85);
+                }
+            `,
+            transparent: true,
+            depthWrite: false,
+            blending: THREE.AdditiveBlending
+        });
+
+        const particles = new THREE.Points(particleGeo, particleMat);
+        scene.add(particles);
+
+        // ── 連線（神經網路效果） ──
+        const LINE_COUNT = 300;
+        const linePositions = new Float32Array(LINE_COUNT * 6);
+        const lineColors = new Float32Array(LINE_COUNT * 6);
+        const lineGeo = new THREE.BufferGeometry();
+        lineGeo.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
+        lineGeo.setAttribute('color', new THREE.BufferAttribute(lineColors, 3));
+
+        const lineMat = new THREE.LineBasicMaterial({
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.2,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false
+        });
+
+        const lines = new THREE.LineSegments(lineGeo, lineMat);
+        scene.add(lines);
+
+        // 建立連線：距離近的粒子互相連結
+        function updateLines() {
+            const posArr = particleGeo.attributes.position.array;
+            const colArr = particleGeo.attributes.color.array;
+            let lineIdx = 0;
+            const maxDist = 12;
+
+            for (let i = 0; i < Math.min(PARTICLE_COUNT, 400) && lineIdx < LINE_COUNT; i++) {
+                for (let j = i + 1; j < Math.min(PARTICLE_COUNT, 400) && lineIdx < LINE_COUNT; j++) {
+                    const dx = posArr[i*3]   - posArr[j*3];
+                    const dy = posArr[i*3+1] - posArr[j*3+1];
+                    const dz = posArr[i*3+2] - posArr[j*3+2];
+                    const dist = Math.sqrt(dx*dx + dy*dy + dz*dz);
+                    if (dist < maxDist) {
+                        const li = lineIdx * 6;
+                        linePositions[li]   = posArr[i*3];
+                        linePositions[li+1] = posArr[i*3+1];
+                        linePositions[li+2] = posArr[i*3+2];
+                        linePositions[li+3] = posArr[j*3];
+                        linePositions[li+4] = posArr[j*3+1];
+                        linePositions[li+5] = posArr[j*3+2];
+
+                        lineColors[li]   = colArr[i*3];
+                        lineColors[li+1] = colArr[i*3+1];
+                        lineColors[li+2] = colArr[i*3+2];
+                        lineColors[li+3] = colArr[j*3];
+                        lineColors[li+4] = colArr[j*3+1];
+                        lineColors[li+5] = colArr[j*3+2];
+                        lineIdx++;
+                    }
+                }
             }
+            // 剩餘線段歸零
+            for (let k = lineIdx * 6; k < LINE_COUNT * 6; k++) {
+                linePositions[k] = 0;
+            }
+            lineGeo.attributes.position.needsUpdate = true;
+            lineGeo.attributes.color.needsUpdate = true;
         }
-        type();
-        // progress hud from localStorage
-        const prog = document.getElementById('srs-progress');
-        try {
-            const data = JSON.parse(localStorage.getItem('srsData') || '{}');
-            const total = data.total || 0;
-            const due = data.due || 0;
-            const pct = total > 0 ? Math.round((1 - due/total)*100) : 0;
-            prog.textContent = total + ' 卡片 | 待複習 ' + due + ' (' + pct + '%)';
-        } catch(e) {
-            prog.textContent = '暫無資料';
+
+        // ── Bloom 後處理 ──
+        const composer = new EffectComposer(renderer);
+        composer.addPass(new RenderPass(scene, camera));
+
+        const bloomPass = new UnrealBloomPass(
+            new THREE.Vector2(window.innerWidth, window.innerHeight),
+            1.2,   // strength
+            0.5,   // radius
+            0.3    // threshold
+        );
+        composer.addPass(bloomPass);
+
+        // ── 動畫迴圈 ──
+        let lastLineUpdate = 0;
+        const clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const elapsed = clock.getElapsedTime();
+
+            particleMat.uniforms.uTime.value = elapsed;
+
+            // 粒子整體緩慢旋轉
+            particles.rotation.y = elapsed * 0.02;
+            particles.rotation.x = Math.sin(elapsed * 0.01) * 0.1;
+            lines.rotation.y = elapsed * 0.02;
+            lines.rotation.x = Math.sin(elapsed * 0.01) * 0.1;
+
+            // 每 0.5 秒更新連線
+            if (elapsed - lastLineUpdate > 0.5) {
+                updateLines();
+                lastLineUpdate = elapsed;
+            }
+
+            composer.render();
         }
+
+        // ── 視窗縮放 ──
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            composer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // ── 隱藏載入動畫 ──
+        const overlay = document.getElementById('loading-overlay');
+        setTimeout(() => overlay.classList.add('hidden'), 800);
+
+        // ── 啟動 ──
+        updateLines();
+        animate();
     </script>
+
 </body>
 </html>

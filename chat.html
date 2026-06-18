@@ -98,7 +98,7 @@
     <!-- Center: chat -->
     <div class="chat-wrap">
       <div class="offline-notice" id="offline-notice">
-        本地 AI 服務未啟動。請先開啟 MLLM Studio（port 8765）再使用此功能。
+        AI 服務暫時無法連線（雲端 + 本地皆失敗）。請稍後再試。
       </div>
       <div class="chat-messages" id="chat-messages">
         <div class="bubble ai">你好！請問你想了解哪個 AI 術語？可以直接輸入或用語音說說看。</div>
@@ -174,11 +174,11 @@
         if (!aiText) aiBubble.textContent = '（無回應）';
         history.push({role:'assistant', content: aiText});
       } catch(e) {
-        aiBubble.textContent = e.message === 'LOCAL_AI_OFFLINE'
-          ? '本地 AI 服務未啟動，請先開啟 MLLM Studio。'
+        aiBubble.textContent = e.message === 'AI_UNAVAILABLE'
+          ? '雲端與本地 AI 皆無法連線，請稍後再試。'
           : '發生錯誤：' + e.message;
         aiBubble.classList.add('error');
-        if (e.message === 'LOCAL_AI_OFFLINE')
+        if (e.message === 'AI_UNAVAILABLE')
           document.getElementById('offline-notice').style.display = 'block';
       }
     }

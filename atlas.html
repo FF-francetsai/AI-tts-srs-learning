@@ -3,70 +3,196 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI 術語星圖 · Atlas</title>
+  <title>AI 概念星圖 · Atlas</title>
+  <link rel="stylesheet" href="style.css">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: #060b13; color: #cdd6f4; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; overflow: hidden; }
-    #atlas { display: block; width: 100vw; height: 100vh; }
+    body { background: #060b13; color: #cdd6f4;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      overflow: hidden; }
+
+    /* Topbar */
+    .v6-topbar {
+      position: fixed; top: 0; left: 0; right: 0; height: 44px; z-index: 200;
+      display: flex; align-items: center; gap: 12px; padding: 0 16px;
+      background: rgba(6,11,19,0.95); border-bottom: 1px solid rgba(125,211,252,0.15);
+      backdrop-filter: blur(12px);
+    }
+    .v6-topbar a { color: #9ca3af; text-decoration: none; font-size: 13px; }
+    .v6-topbar a:hover { color: #7dd3fc; }
+    .v6-topbar .tb-title { color: #7dd3fc; font-weight: 600; font-size: 14px; }
+    .search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; }
     #atlas-search {
-      position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
-      background: rgba(11,15,25,0.92); border: 1px solid #1e2540;
-      color: #cdd6f4; padding: 8px 16px; border-radius: 20px;
-      font-size: 13px; width: 220px; outline: none; backdrop-filter: blur(8px);
+      background: rgba(11,15,25,0.9); border: 1px solid rgba(125,211,252,0.25);
+      color: #cdd6f4; padding: 5px 12px; border-radius: 16px;
+      font-size: 12px; width: 180px; outline: none;
     }
     #atlas-search:focus { border-color: #7dd3fc; }
+    #atlas-reset {
+      background: none; border: 1px solid rgba(125,211,252,0.25);
+      color: #94a3b8; padding: 4px 10px; border-radius: 8px;
+      cursor: pointer; font-size: 12px;
+    }
+    #atlas-reset:hover { border-color: #7dd3fc; color: #7dd3fc; }
+
+    /* Domain nav */
+    .domain-nav {
+      position: fixed; top: 44px; left: 0; right: 0; z-index: 190;
+      display: flex; gap: 6px; padding: 8px 16px; overflow-x: auto;
+      background: rgba(6,11,19,0.92); border-bottom: 1px solid rgba(125,211,252,0.08);
+      scrollbar-width: none;
+    }
+    .domain-nav::-webkit-scrollbar { display: none; }
+    .domain-tab {
+      flex-shrink: 0; padding: 4px 14px; border-radius: 16px;
+      border: 1px solid rgba(125,211,252,0.2); background: none;
+      color: #94a3b8; font-size: 12px; cursor: pointer;
+      transition: all .2s; white-space: nowrap;
+    }
+    .domain-tab:hover { background: rgba(125,211,252,0.08); color: #7dd3fc; }
+    .domain-tab.active {
+      border-color: var(--tab-color, #7dd3fc);
+      color: var(--tab-color, #7dd3fc);
+      background: rgba(125,211,252,0.1);
+      box-shadow: 0 0 8px rgba(125,211,252,0.2);
+    }
+    .domain-tab[data-cat="ALL"]  { --tab-color: #7dd3fc; }
+    .domain-tab[data-cat="ML"]   { --tab-color: #a78bfa; }
+    .domain-tab[data-cat="DL"]   { --tab-color: #fbbf24; }
+    .domain-tab[data-cat="NN"]   { --tab-color: #34d399; }
+    .domain-tab[data-cat="AI"]   { --tab-color: #7dd3fc; }
+    .domain-tab[data-cat="APP"]  { --tab-color: #f472b6; }
+
+    /* Atlas container */
+    #atlas-container {
+      position: fixed; inset: 0; z-index: 10;
+      padding-top: 90px;
+    }
+    #atlas-container svg { width: 100%; height: 100%; }
+
+    /* Atlas panel */
     #atlas-panel {
-      position: fixed; top: 16px; right: 16px; width: 300px;
-      background: rgba(11,15,25,0.92); border: 1px solid #1e2540;
-      border-radius: 10px; padding: 16px; display: none;
-      backdrop-filter: blur(8px); font-size: 13px; line-height: 1.6;
+      position: fixed; right: -360px; top: 0; width: 340px; height: 100vh;
+      background: rgba(6,11,19,0.97); border-left: 1px solid rgba(125,211,252,0.2);
+      backdrop-filter: blur(16px); transition: right 0.3s ease;
+      padding: 20px; overflow-y: auto; z-index: 500;
     }
-    #atlas-panel h3 { color: #7dd3fc; margin-bottom: 6px; font-size: 15px; }
-    #atlas-panel em { color: #9ca3af; font-style: normal; }
-    #atlas-back {
-      position: fixed; top: 16px; left: 16px;
-      background: rgba(11,15,25,0.85); border: 1px solid #1e2540;
-      color: #cdd6f4; padding: 8px 14px; border-radius: 8px;
-      text-decoration: none; font-size: 13px; backdrop-filter: blur(8px);
+    #atlas-panel.show { right: 0; }
+    .panel-close {
+      position: absolute; top: 12px; right: 12px;
+      background: none; border: none; color: #94a3b8;
+      font-size: 20px; cursor: pointer; line-height: 1;
     }
-    #atlas-back:hover { border-color: #7dd3fc; color: #7dd3fc; }
-    #atlas-legend {
-      position: fixed; bottom: 16px; right: 16px;
-      background: rgba(11,15,25,0.85); border: 1px solid #1e2540;
-      border-radius: 8px; padding: 10px 14px; font-size: 11px; line-height: 2;
-      backdrop-filter: blur(8px);
+    .panel-close:hover { color: #e2e8f0; }
+    .panel-color-dot {
+      width: 12px; height: 12px; border-radius: 50%;
+      display: inline-block; margin-right: 6px; vertical-align: middle;
     }
-    .legend-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; }
+    .panel-title { font-size: 18px; font-weight: 700; color: #e2e8f0; margin: 10px 0 4px; }
+    .panel-eng { font-size: 12px; color: #94a3b8; margin-bottom: 12px; }
+    .panel-def { font-size: 13px; line-height: 1.7; color: #cbd5e1; }
+    .panel-cat { font-size: 11px; margin-top: 12px; font-weight: 600; text-transform: uppercase; }
+
+    /* Legend */
+    .atlas-legend {
+      position: fixed; bottom: 20px; left: 20px; z-index: 300;
+      background: rgba(6,11,19,0.88); border: 1px solid rgba(125,211,252,0.15);
+      border-radius: 10px; padding: 12px 16px; font-size: 11px;
+      backdrop-filter: blur(8px); display: flex; flex-direction: column; gap: 6px;
+    }
+    .atlas-legend-item { display: flex; align-items: center; gap: 8px; color: #94a3b8; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+    /* D3 dim/match classes */
+    .atlas-root .dim { opacity: 0.08 !important; transition: opacity .2s; }
+    .atlas-root .match { opacity: 1 !important; filter: brightness(1.5); }
   </style>
 </head>
 <body>
-  <a href="index.html" id="atlas-back">← 返回首頁</a>
-  <input id="atlas-search" placeholder="搜尋術語... (中/英)" autocomplete="off" />
+  <!-- Topbar -->
+  <header class="v6-topbar">
+    <a href="index.html">← 返回</a>
+    <span class="tb-title">AI 概念星圖</span>
+    <div class="search-box">
+      <input id="atlas-search" placeholder="搜尋術語..." autocomplete="off" />
+      <button id="atlas-reset">⟲ 重置</button>
+    </div>
+  </header>
+
+  <!-- Category tabs (matching real data.js categories) -->
+  <nav class="domain-nav">
+    <button class="domain-tab active" data-cat="ALL"  onclick="setFilter(null)">全部總覽</button>
+    <button class="domain-tab" data-cat="ML"  onclick="setFilter('機器學習')">機器學習</button>
+    <button class="domain-tab" data-cat="DL"  onclick="setFilter('深度學習')">深度學習</button>
+    <button class="domain-tab" data-cat="NN"  onclick="setFilter('神經網路')">神經網路</button>
+    <button class="domain-tab" data-cat="GEN" onclick="setFilter('生成式 AI')">生成式 AI</button>
+    <button class="domain-tab" data-cat="CV"  onclick="setFilter('電腦視覺')">電腦視覺</button>
+    <button class="domain-tab" data-cat="NLP" onclick="setFilter('NLP')">NLP</button>
+    <button class="domain-tab" data-cat="AGT" onclick="setFilter('AI 代理人')">AI 代理人</button>
+  </nav>
+
+  <!-- D3 SVG container -->
+  <div id="atlas-container"></div>
+
+  <!-- Node detail panel -->
   <div id="atlas-panel"></div>
-  <canvas id="atlas"></canvas>
-  <div id="atlas-legend">
-    <div><span class="legend-dot" style="background:#7dd3fc"></span>AI 基礎</div>
-    <div><span class="legend-dot" style="background:#a78bfa"></span>機器學習</div>
-    <div><span class="legend-dot" style="background:#34d399"></span>類神經網路</div>
-    <div><span class="legend-dot" style="background:#fbbf24"></span>深度學習</div>
+
+  <!-- Legend -->
+  <div class="atlas-legend">
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#a78bfa"></span>機器學習</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#fbbf24"></span>深度學習</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#34d399"></span>神經網路</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#7dd3fc"></span>生成式 AI</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#f472b6"></span>電腦視覺</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#fb923c"></span>NLP</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#c084fc"></span>AI 代理人</div>
   </div>
-  <script src="data.js"></script>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="data.js?v=5.4"></script>
   <script src="js/atlas.js"></script>
   <script>
-    const canvas = document.getElementById('atlas');
-    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-    resize();
-    window.addEventListener('resize', resize);
-    // Flatten lessonData topics into a flat array
-    const flatData = [];
+    // Flatten lessonData: structure is lessonData[].sub_units[].topics[]
+    // category is at TOPIC level (t.category), not section level
+    const topics = [];
     if (typeof lessonData !== 'undefined') {
-      lessonData.forEach(unit => {
-        if (unit.sub_units) unit.sub_units.forEach(sub => {
-          if (sub.topics) sub.topics.forEach(t => flatData.push(t));
+      lessonData.forEach(section => {
+        (section.sub_units || []).forEach(sub => {
+          (sub.topics || []).forEach(t => {
+            // Some categories have multi-line values like "AI概念\n\nNLP進階應用" — take first line
+            const rawCat = (t.category || '').split('\n')[0].trim() || 'AI 基礎';
+            topics.push({
+              id:       String(t.id || Math.random()),
+              title:    t.title    || '',
+              eng_name: t.eng_name || t.eng_abbr || '',
+              category: rawCat,
+              def:      t.def      || '',
+              key_goal: t.key_goal || ''
+            });
+          });
         });
       });
     }
-    const atlas = new TermAtlas(canvas, flatData.length ? flatData : null);
+
+    const atlas = new TermAtlas(document.getElementById('atlas-container'), topics);
+
+    // Map tab data-cat → filter string (partial match in atlas.js)
+    const CAT_MAP = {
+      'ML': '機器學習', 'DL': '深度學習', 'NN': '神經網路',
+      'GEN': '生成式 AI', 'CV': '電腦視覺', 'NLP': 'NLP', 'AGT': 'AI 代理人'
+    };
+
+    function setFilter(cat) {
+      atlas.filterByCategory(cat);
+      const activeKey = cat ? Object.entries(CAT_MAP).find(([,v]) => v === cat)?.[0] : 'ALL';
+      document.querySelectorAll('.domain-tab').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-cat') === (activeKey || 'ALL'));
+      });
+    }
+
+    // Auto-filter from URL parameter: atlas.html?cat=機器學習
+    const urlCat = new URLSearchParams(location.search).get('cat');
+    if (urlCat) setFilter(urlCat);
   </script>
 </body>
 </html>
