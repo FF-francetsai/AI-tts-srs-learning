@@ -384,7 +384,7 @@
       if (currentMode === 'star') {
         document.getElementById('atlas-search').value = '';
         starMap.search('');
-        starMap._rot = 0; starMap._applyRot();
+        starMap.resetView();
       } else {
         document.getElementById('atlas-search').value = '';
         atlas.flyToSearch('');
