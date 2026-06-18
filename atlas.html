@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 術語星圖 · Atlas</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #060b13; color: #cdd6f4; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; overflow: hidden; }
+    #atlas { display: block; width: 100vw; height: 100vh; }
+    #atlas-search {
+      position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+      background: rgba(11,15,25,0.92); border: 1px solid #1e2540;
+      color: #cdd6f4; padding: 8px 16px; border-radius: 20px;
+      font-size: 13px; width: 220px; outline: none; backdrop-filter: blur(8px);
+    }
+    #atlas-search:focus { border-color: #7dd3fc; }
+    #atlas-panel {
+      position: fixed; top: 16px; right: 16px; width: 300px;
+      background: rgba(11,15,25,0.92); border: 1px solid #1e2540;
+      border-radius: 10px; padding: 16px; display: none;
+      backdrop-filter: blur(8px); font-size: 13px; line-height: 1.6;
+    }
+    #atlas-panel h3 { color: #7dd3fc; margin-bottom: 6px; font-size: 15px; }
+    #atlas-panel em { color: #9ca3af; font-style: normal; }
+    #atlas-back {
+      position: fixed; top: 16px; left: 16px;
+      background: rgba(11,15,25,0.85); border: 1px solid #1e2540;
+      color: #cdd6f4; padding: 8px 14px; border-radius: 8px;
+      text-decoration: none; font-size: 13px; backdrop-filter: blur(8px);
+    }
+    #atlas-back:hover { border-color: #7dd3fc; color: #7dd3fc; }
+    #atlas-legend {
+      position: fixed; bottom: 16px; right: 16px;
+      background: rgba(11,15,25,0.85); border: 1px solid #1e2540;
+      border-radius: 8px; padding: 10px 14px; font-size: 11px; line-height: 2;
+      backdrop-filter: blur(8px);
+    }
+    .legend-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; }
+  </style>
+</head>
+<body>
+  <a href="index.html" id="atlas-back">← 返回首頁</a>
+  <input id="atlas-search" placeholder="搜尋術語... (中/英)" autocomplete="off" />
+  <div id="atlas-panel"></div>
+  <canvas id="atlas"></canvas>
+  <div id="atlas-legend">
+    <div><span class="legend-dot" style="background:#7dd3fc"></span>AI 基礎</div>
+    <div><span class="legend-dot" style="background:#a78bfa"></span>機器學習</div>
+    <div><span class="legend-dot" style="background:#34d399"></span>類神經網路</div>
+    <div><span class="legend-dot" style="background:#fbbf24"></span>深度學習</div>
+  </div>
+  <script src="data.js"></script>
+  <script src="js/atlas.js"></script>
+  <script>
+    const canvas = document.getElementById('atlas');
+    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    resize();
+    window.addEventListener('resize', resize);
+    // Flatten lessonData topics into a flat array
+    const flatData = [];
+    if (typeof lessonData !== 'undefined') {
+      lessonData.forEach(unit => {
+        if (unit.sub_units) unit.sub_units.forEach(sub => {
+          if (sub.topics) sub.topics.forEach(t => flatData.push(t));
+        });
+      });
+    }
+    const atlas = new TermAtlas(canvas, flatData.length ? flatData : null);
+  </script>
+</body>
+</html>
