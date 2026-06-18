@@ -140,7 +140,7 @@
   <!-- Topbar -->
   <header class="v6-topbar">
     <a href="index.html">← 返回</a>
-    <span class="tb-title" id="atlas-mode-title">🌌 天象星圖</span>
+    <span class="tb-title" id="atlas-mode-title">🌌 AI 知識圖譜</span>
     <div class="search-box">
       <input id="atlas-search" placeholder="搜尋術語..." autocomplete="off" />
       <button id="atlas-rotate-toggle" title="切換旋轉" style="background:none;border:1px solid rgba(125,211,252,0.25);color:#7dd3fc;padding:4px 10px;border-radius:8px;cursor:pointer;font-size:12px;">⏸ 暫停</button>
@@ -150,7 +150,7 @@
 
   <!-- 分類 tabs -->
   <nav class="domain-nav">
-    <button class="domain-tab active" data-cat="STAR" onclick="switchMode('star')">🌌 星圖</button>
+    <button class="domain-tab active" data-cat="STAR" onclick="switchMode('star')">🌌 AI 知識圖譜</button>
     <button class="domain-tab" data-cat="ALL"  onclick="switchMode('atlas'); setFilter(null)">🔮 全部 AI</button>
     <button class="domain-tab" data-cat="ML"  onclick="switchMode('atlas'); setFilter('機器學習')">🤖 機器學習</button>
     <button class="domain-tab" data-cat="DL"  onclick="setFilter('深度學習')">🔥 深度學習</button>
@@ -170,17 +170,15 @@
   <!-- 浮動 tooltip -->
   <div id="atlas-tooltip"></div>
 
-  <!-- 圖例：星圖模式 -->
+  <!-- 圖例：AI 知識圖譜（星象視圖）-->
   <div class="atlas-legend" id="legend-star">
-    <div class="atlas-legend-item"><span class="legend-dot" style="background:#4ade80"></span>東方青龍（春）</div>
-    <div class="atlas-legend-item"><span class="legend-dot" style="background:#f87171"></span>南方朱雀（夏）</div>
-    <div class="atlas-legend-item"><span class="legend-dot" style="background:#e2e8f0"></span>西方白虎（秋）</div>
-    <div class="atlas-legend-item"><span class="legend-dot" style="background:#60a5fa"></span>北方玄武（冬）</div>
-    <div style="height:6px"></div>
-    <div class="atlas-legend-item"><span class="legend-dot" style="background:#f97316"></span>火象星座</div>
-    <div class="atlas-legend-item"><span class="legend-dot" style="background:#4ade80"></span>土象星座</div>
-    <div class="atlas-legend-item"><span class="legend-dot" style="background:#7dd3fc"></span>風象星座</div>
-    <div class="atlas-legend-item"><span class="legend-dot" style="background:#818cf8"></span>水象星座</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#a78bfa"></span>機器學習</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#fbbf24"></span>深度學習</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#34d399"></span>神經網路</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#7dd3fc"></span>生成式 AI</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#f472b6"></span>電腦視覺</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#fb923c"></span>NLP</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#c084fc"></span>AI 代理人</div>
   </div>
 
   <!-- 圖例：AI 圖譜模式 -->
@@ -335,7 +333,7 @@
       if (mode === 'star') {
         starMap.show();
         atlas.svg.style('display', 'none');
-        title.textContent = '🌌 天象星圖';
+        title.textContent = '🌌 AI 知識圖譜';
         search.style.display = '';
         rotBtn.style.display = '';
         legendStar.style.display  = '';
