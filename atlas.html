@@ -140,17 +140,19 @@
   <!-- Topbar -->
   <header class="v6-topbar">
     <a href="index.html">← 返回</a>
-    <span class="tb-title">🔮 AI 知識圖譜</span>
+    <span class="tb-title" id="atlas-mode-title">🌌 天象星圖</span>
     <div class="search-box">
-      <input id="atlas-search" placeholder="搜尋術語..." autocomplete="off" />
+      <input id="atlas-search" placeholder="搜尋術語..." autocomplete="off" style="display:none" />
+      <button id="atlas-rotate-toggle" title="切換旋轉" style="background:none;border:1px solid rgba(125,211,252,0.25);color:#7dd3fc;padding:4px 10px;border-radius:8px;cursor:pointer;font-size:12px;">⏸ 暫停</button>
       <button id="atlas-reset">⟲ 重置</button>
     </div>
   </header>
 
   <!-- 分類 tabs -->
   <nav class="domain-nav">
-    <button class="domain-tab active" data-cat="ALL" onclick="setFilter(null)">全部總覽</button>
-    <button class="domain-tab" data-cat="ML"  onclick="setFilter('機器學習')">🤖 機器學習</button>
+    <button class="domain-tab active" data-cat="STAR" onclick="switchMode('star')">🌌 星圖</button>
+    <button class="domain-tab" data-cat="ALL"  onclick="switchMode('atlas'); setFilter(null)">🔮 全部 AI</button>
+    <button class="domain-tab" data-cat="ML"  onclick="switchMode('atlas'); setFilter('機器學習')">🤖 機器學習</button>
     <button class="domain-tab" data-cat="DL"  onclick="setFilter('深度學習')">🔥 深度學習</button>
     <button class="domain-tab" data-cat="NN"  onclick="setFilter('神經網路')">🧩 神經網路</button>
     <button class="domain-tab" data-cat="GEN" onclick="setFilter('生成式 AI')">✨ 生成式 AI</button>
@@ -168,8 +170,21 @@
   <!-- 浮動 tooltip -->
   <div id="atlas-tooltip"></div>
 
-  <!-- 圖例 -->
-  <div class="atlas-legend">
+  <!-- 圖例：星圖模式 -->
+  <div class="atlas-legend" id="legend-star">
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#4ade80"></span>東方青龍（春）</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#f87171"></span>南方朱雀（夏）</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#e2e8f0"></span>西方白虎（秋）</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#60a5fa"></span>北方玄武（冬）</div>
+    <div style="height:6px"></div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#f97316"></span>火象星座</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#4ade80"></span>土象星座</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#7dd3fc"></span>風象星座</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#818cf8"></span>水象星座</div>
+  </div>
+
+  <!-- 圖例：AI 圖譜模式 -->
+  <div class="atlas-legend" id="legend-atlas" style="display:none">
     <div class="atlas-legend-item"><span class="legend-dot" style="background:#a78bfa"></span>機器學習</div>
     <div class="atlas-legend-item"><span class="legend-dot" style="background:#fbbf24"></span>深度學習</div>
     <div class="atlas-legend-item"><span class="legend-dot" style="background:#34d399"></span>神經網路</div>
@@ -274,6 +289,7 @@
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="data.js?v=6.1"></script>
   <script src="js/atlas.js?v=6.1"></script>
+  <script src="js/starmap.js?v=1.0"></script>
   <script>
     // 扁平化 lessonData → topics（category 在 topic 層）
     const topics = [];
@@ -296,6 +312,44 @@
     }
 
     const atlas = new TermAtlas(document.getElementById('atlas-container'), topics);
+    // 初始隱藏 D3 atlas（預設顯示星圖）
+    atlas.svg.style('display', 'none');
+
+    const starMap = new StarMap(document.getElementById('atlas-container'));
+    starMap.show();
+
+    let currentMode = 'star';
+
+    function switchMode(mode) {
+      currentMode = mode;
+      const title = document.getElementById('atlas-mode-title');
+      const search = document.getElementById('atlas-search');
+      const rotBtn = document.getElementById('atlas-rotate-toggle');
+      const legendStar  = document.getElementById('legend-star');
+      const legendAtlas = document.getElementById('legend-atlas');
+
+      document.querySelectorAll('.domain-tab').forEach(b =>
+        b.classList.remove('active'));
+
+      if (mode === 'star') {
+        starMap.show();
+        atlas.svg.style('display', 'none');
+        title.textContent = '🌌 天象星圖';
+        search.style.display = 'none';
+        rotBtn.style.display = '';
+        legendStar.style.display  = '';
+        legendAtlas.style.display = 'none';
+        document.querySelector('[data-cat="STAR"]').classList.add('active');
+      } else {
+        starMap.hide();
+        atlas.svg.style('display', '');
+        title.textContent = '🔮 AI 知識圖譜';
+        search.style.display = '';
+        rotBtn.style.display = 'none';
+        legendStar.style.display  = 'none';
+        legendAtlas.style.display = '';
+      }
+    }
 
     const CAT_MAP = {
       'ML': '機器學習', 'DL': '深度學習', 'NN': '神經網路',
@@ -310,16 +364,27 @@
       });
     }
 
+    // 旋轉切換按鈕
+    document.getElementById('atlas-rotate-toggle').addEventListener('click', function() {
+      const rotating = starMap.toggleRotation();
+      this.textContent = rotating ? '⏸ 暫停' : '▶ 旋轉';
+    });
+
     // URL 自動篩選: atlas.html?cat=機器學習
     const urlCat = new URLSearchParams(location.search).get('cat');
-    if (urlCat) setFilter(urlCat);
+    if (urlCat) { switchMode('atlas'); setFilter(urlCat); }
 
-    // Reset 按鈕：清除搜尋 + 恢復全部分類
-    // (搜尋框 input 事件由 atlas.js 內部 _setupSearch 處理)
+    // Reset 按鈕
     document.getElementById('atlas-reset').addEventListener('click', () => {
-      document.getElementById('atlas-search').value = '';
-      atlas.flyToSearch('');
-      setFilter(null);
+      if (currentMode === 'star') {
+        switchMode('star');
+      } else {
+        document.getElementById('atlas-search').value = '';
+        atlas.flyToSearch('');
+        setFilter(null);
+        atlas.svg.transition().duration(600)
+          .call(atlas.zoom.transform, d3.zoomIdentity);
+      }
     });
 
     // 節點點擊後面板加入導覽按鈕
