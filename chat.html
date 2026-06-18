@@ -2,78 +2,119 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>AI 即時對話 · Chat</title>
   <style>
+    :root {
+      --topbar-h: 48px;
+      --bg: #060b13; --surface: rgba(11,15,25,0.97);
+      --border: #1e2540; --accent: #7dd3fc; --text: #cdd6f4; --muted: #9ca3af;
+    }
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── 基礎：手機優先，100dvh 正確計算瀏覽器 chrome ── */
+    html, body {
+      height: 100%;
+      /* dvh = dynamic viewport height，排除手機網址列 */
+      height: 100dvh;
+    }
     body {
-      background: #060b13; color: #cdd6f4;
+      background: var(--bg); color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      display: flex; flex-direction: column; height: 100vh; overflow: hidden;
+      display: flex; flex-direction: column; overflow: hidden;
     }
 
     /* ── Topbar ── */
     .topbar {
-      height: 52px; padding: 0 14px; display: flex; align-items: center;
-      gap: 10px; border-bottom: 1px solid #1e2540;
-      background: rgba(11,15,25,0.97); flex-shrink: 0; z-index: 10;
+      height: var(--topbar-h); padding: 0 14px;
+      display: flex; align-items: center; gap: 10px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(6,11,19,0.98);
+      flex-shrink: 0; z-index: 10;
     }
-    .topbar a { color: #9ca3af; text-decoration: none; font-size: 13px; white-space: nowrap; }
-    .topbar a:hover { color: #7dd3fc; }
-    .topbar .title { color: #7dd3fc; font-weight: 600; font-size: 14px; white-space: nowrap; }
+    .topbar a { color: var(--muted); text-decoration: none; font-size: 13px; }
+    .topbar a:hover { color: var(--accent); }
+    .topbar .title { color: var(--accent); font-weight: 600; font-size: 14px; }
     .topbar .spacer { flex: 1; }
-    .topbar .current-term { color: #fbbf24; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; }
+    .topbar .current-term {
+      color: #fbbf24; font-size: 12px;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 120px;
+    }
     .btn-tts {
       background: none; border: 1px solid rgba(125,211,252,0.3);
-      color: #7dd3fc; padding: 4px 10px; border-radius: 8px;
-      cursor: pointer; font-size: 16px; line-height: 1; flex-shrink: 0;
-      transition: background .15s;
+      color: var(--accent); padding: 4px 10px; border-radius: 8px;
+      cursor: pointer; font-size: 15px; line-height: 1; flex-shrink: 0;
     }
-    .btn-tts.muted { color: #64748b; border-color: #1e2540; }
-    .btn-tts:hover { background: rgba(125,211,252,0.1); }
+    .btn-tts.muted { color: #475569; border-color: var(--border); }
 
-    /* ── Main layout ── */
-    .body-wrap { display: flex; flex: 1; overflow: hidden; min-height: 0; }
+    /* ── Layout container ── */
+    .body-wrap {
+      display: flex; flex: 1; overflow: hidden; min-height: 0;
+    }
 
-    /* ── Left panel ── */
-    .term-panel {
-      width: 200px; flex-shrink: 0; padding: 14px;
-      border-right: 1px solid #1e2540; overflow-y: auto;
+    /* ── Side panels ── */
+    .side-panel {
+      flex-shrink: 0; padding: 14px; overflow-y: auto;
       background: rgba(11,15,25,0.6);
     }
-    .term-panel h4 { color: #7dd3fc; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 10px; }
-    .term-panel .term-title { font-size: 14px; font-weight: 600; color: #cdd6f4; }
-    .term-panel .term-eng { font-size: 11px; color: #9ca3af; margin: 4px 0 8px; }
-    .term-panel .term-def { font-size: 11px; line-height: 1.6; color: #9ca3af; }
+    .term-panel {
+      width: 200px; border-right: 1px solid var(--border);
+    }
+    .summary-panel {
+      width: 200px; border-left: 1px solid var(--border);
+      display: flex; flex-direction: column;
+    }
+    .side-panel h4 {
+      font-size: 11px; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 10px;
+    }
+    .term-panel h4 { color: var(--accent); }
+    .summary-panel h4 { color: #34d399; }
+    .term-title { font-size: 14px; font-weight: 600; color: var(--text); }
+    .term-eng { font-size: 11px; color: var(--muted); margin: 4px 0 8px; }
+    .term-def { font-size: 11px; line-height: 1.65; color: var(--muted); }
+    .summary-text { font-size: 11px; line-height: 1.7; color: var(--muted); flex: 1; }
+    .btn-summary { width: 100%; margin-top: 10px; }
 
     /* ── Chat area ── */
-    .chat-wrap { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
+    .chat-wrap {
+      flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0;
+    }
+    .offline-notice {
+      background: rgba(255,113,137,.1); border: 1px solid #ff7189;
+      border-radius: 8px; padding: 8px 12px; font-size: 12px;
+      color: #ff7189; margin: 8px; display: none; flex-shrink: 0;
+    }
     .chat-messages {
-      flex: 1; overflow-y: auto; padding: 14px;
-      display: flex; flex-direction: column; gap: 10px;
+      flex: 1; overflow-y: auto; padding: 12px;
+      display: flex; flex-direction: column; gap: 10px; min-height: 0;
     }
     .bubble {
       max-width: 80%; padding: 10px 14px; border-radius: 12px;
       font-size: 13px; line-height: 1.65; word-break: break-word;
     }
     .bubble.user { align-self: flex-end; background: #1e3a5f; border: 1px solid #2563eb; }
-    .bubble.ai   { align-self: flex-start; background: rgba(11,15,25,0.85); border: 1px solid #1e2540; }
+    .bubble.ai   { align-self: flex-start; background: rgba(11,15,25,0.85); border: 1px solid var(--border); }
     .bubble.error { border-color: #ff7189; color: #ff7189; }
 
-    /* ── Input area ── */
+    /* ── Input area（絕對不能被裁切）── */
     .input-area {
-      padding: 10px 14px; border-top: 1px solid #1e2540;
-      background: rgba(11,15,25,0.97); display: flex; gap: 8px; align-items: center;
+      padding: 10px 12px;
+      /* iPhone 安全區域 bottom padding */
+      padding-bottom: max(10px, env(safe-area-inset-bottom));
+      border-top: 1px solid var(--border);
+      background: rgba(6,11,19,0.98);
+      display: flex; gap: 7px; align-items: center;
+      flex-shrink: 0; /* 永遠不壓縮 */
     }
     .input-area input {
-      flex: 1; background: #0b1725; color: #cdd6f4;
-      border: 1px solid #1e2540; border-radius: 8px;
-      padding: 10px 14px; font-size: 13px; outline: none; min-width: 0;
+      flex: 1; background: #0b1725; color: var(--text);
+      border: 1px solid var(--border); border-radius: 8px;
+      padding: 9px 12px; font-size: 13px; outline: none; min-width: 0;
     }
-    .input-area input:focus { border-color: #7dd3fc; }
+    .input-area input:focus { border-color: var(--accent); }
     .btn {
-      background: #1e2540; border: 1px solid #31577e; color: #cdd6f4;
-      padding: 8px 14px; border-radius: 8px; cursor: pointer; font-size: 13px;
+      background: #1e2540; border: 1px solid #31577e; color: var(--text);
+      padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 13px;
       transition: background .15s; flex-shrink: 0; white-space: nowrap;
     }
     .btn:hover { background: #252b3a; }
@@ -81,40 +122,67 @@
     .btn.mic.voice-recording { background: #ff7189; color: #fff; animation: pulse 1s infinite; }
     .btn.send { background: #1e3a5f; border-color: #2563eb; }
     .btn.send:hover { background: #1a4a7a; }
-    .voice-status { font-size: 11px; color: #9ca3af; white-space: nowrap; }
+    .voice-status { font-size: 11px; color: var(--muted); white-space: nowrap; flex-shrink: 0; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
 
-    /* ── Right summary panel ── */
-    .summary-panel {
-      width: 200px; flex-shrink: 0; padding: 14px;
-      border-left: 1px solid #1e2540; overflow-y: auto;
-      background: rgba(11,15,25,0.6); display: flex; flex-direction: column;
-    }
-    .summary-panel h4 { color: #34d399; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 10px; }
-    .summary-panel .summary-text { font-size: 11px; line-height: 1.7; color: #9ca3af; flex: 1; }
-    .btn-summary { width: 100%; margin-top: 10px; }
+    /* ════════════════════════════════════════
+       響應式斷點
+       xs  < 480px  手機直向
+       sm  480-767px 手機橫向/小型平板直向
+       md  768-1023px 平板
+       lg  1024px+   筆電/桌機
+    ════════════════════════════════════════ */
 
-    /* ── Error notice ── */
-    .offline-notice {
-      background: rgba(255,113,137,.1); border: 1px solid #ff7189;
-      border-radius: 8px; padding: 8px 12px; font-size: 12px;
-      color: #ff7189; margin: 8px; display: none; flex-shrink: 0;
+    /* ── xs: 手機直向 ── */
+    @media (max-width: 479px) {
+      :root { --topbar-h: 44px; }
+      .term-panel, .summary-panel { display: none; }
+      .bubble { max-width: 94%; font-size: 14px; }
+      .topbar .current-term, .topbar .btn-tts { display: none; }
+      .input-area input { font-size: 16px; } /* 避免 iOS 自動縮放 */
+      .voice-status { display: none; } /* 空間不夠，狀態用 btn 顏色表示 */
     }
 
-    /* ── 手機響應式 ── */
-    @media (max-width: 680px) {
-      .term-panel { display: none; }
-      .summary-panel { display: none; }
-      .bubble { max-width: 92%; font-size: 14px; }
+    /* ── sm: 手機橫向 / 小型平板直向 ── */
+    @media (min-width: 480px) and (max-width: 767px) {
+      .term-panel, .summary-panel { display: none; }
+      .bubble { max-width: 88%; }
       .topbar .current-term { display: none; }
-      /* 手機底部輸入欄更高，方便點擊 */
-      .input-area input { font-size: 15px; padding: 12px 14px; }
-      .btn.send { padding: 10px 16px; }
     }
-    @media (max-height: 500px) and (orientation: landscape) {
-      /* 手機橫向時側欄縮小 */
-      .term-panel { width: 140px; padding: 8px; }
-      .summary-panel { width: 140px; padding: 8px; }
+
+    /* ── sm 補充：低矮橫向手機（iPhone SE 橫向 = 667px × 375px）── */
+    @media (max-height: 420px) {
+      :root { --topbar-h: 38px; }
+      .term-panel, .summary-panel { display: none; }
+      .chat-messages { padding: 6px; gap: 6px; }
+      .bubble { padding: 7px 10px; font-size: 13px; }
+      .input-area { padding: 6px 10px; }
+    }
+
+    /* ── md: 平板（768-1023px）── */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      /* 直向：隱藏側欄，聊天全寬 */
+      @media (orientation: portrait) {
+        .term-panel, .summary-panel { display: none; }
+      }
+      /* 橫向：左側欄顯示，右側欄隱藏 */
+      @media (orientation: landscape) {
+        .summary-panel { display: none; }
+        .term-panel { width: 180px; }
+      }
+    }
+
+    /* ── lg: 筆電/桌機 ── */
+    @media (min-width: 1024px) {
+      .term-panel  { width: 220px; }
+      .summary-panel { width: 220px; }
+      .bubble { max-width: 75%; }
+    }
+
+    /* ── xl: 大螢幕 ── */
+    @media (min-width: 1440px) {
+      .term-panel  { width: 260px; }
+      .summary-panel { width: 260px; }
     }
   </style>
 </head>
@@ -129,23 +197,23 @@
 
   <div class="body-wrap">
     <!-- 左：術語說明 -->
-    <div class="term-panel">
+    <div class="side-panel term-panel" id="term-panel">
       <h4>當前術語</h4>
       <div class="term-title" id="tp-title">—</div>
       <div class="term-eng" id="tp-eng"></div>
-      <div class="term-def" id="tp-def">從星圖或學習頁點擊術語進入對話</div>
+      <div class="term-def" id="tp-def">從星圖或詞庫點擊術語進入對話</div>
     </div>
 
-    <!-- 中：對話 -->
+    <!-- 中：對話區 -->
     <div class="chat-wrap">
       <div class="offline-notice" id="offline-notice">
-        AI 服務暫時無法連線，請稍後再試。（WSL/虛擬機環境請確認網路可達外部服務）
+        ⚠ 所有 AI 通道暫時無法連線，請稍後再試。
       </div>
       <div class="chat-messages" id="chat-messages">
-        <div class="bubble ai">你好！請問你想了解哪個 AI 術語？可以直接輸入或用語音說說看。</div>
+        <div class="bubble ai">你好！請問你想了解哪個 AI 術語？直接輸入或點麥克風說說看。</div>
       </div>
       <div class="input-area">
-        <button class="btn mic" id="mic-btn" data-voice-status title="語音輸入（需麥克風）">🎤</button>
+        <button class="btn mic" id="mic-btn" data-voice-status title="語音輸入">🎤</button>
         <span class="voice-status" id="voice-status">待機</span>
         <input id="chat-input" placeholder="輸入問題或術語..." autocomplete="off" />
         <button class="btn send" id="send-btn">送出 →</button>
@@ -153,22 +221,56 @@
     </div>
 
     <!-- 右：摘要 -->
-    <div class="summary-panel">
+    <div class="side-panel summary-panel" id="summary-panel">
       <h4>學習摘要</h4>
       <div class="summary-text" id="summary-content">對話結束後點下方按鈕生成摘要。</div>
       <button class="btn btn-summary" id="summarize-btn">生成摘要</button>
     </div>
   </div>
 
-  <script src="js/voice.js?v=6.2"></script>
-  <script src="js/chat.js?v=6.2"></script>
+  <script src="js/voice.js?v=6.3"></script>
+  <script src="js/chat.js?v=6.3"></script>
   <script>
+    // ── 動態響應式：依實際 window 大小即時調整 ──
+    function applyLayout() {
+      const W = window.innerWidth, H = window.innerHeight;
+      const tp = document.getElementById('term-panel');
+      const sp = document.getElementById('summary-panel');
+      const isPhone  = W < 768;
+      const isTablet = W >= 768 && W < 1024;
+      const isLandscape = W > H;
+
+      // 手機：完全隱藏兩側
+      if (isPhone) {
+        tp.style.display = 'none';
+        sp.style.display = 'none';
+      }
+      // 平板直向：隱藏兩側
+      else if (isTablet && !isLandscape) {
+        tp.style.display = 'none';
+        sp.style.display = 'none';
+      }
+      // 平板橫向：顯示左側，隱藏右側
+      else if (isTablet && isLandscape) {
+        tp.style.display = '';
+        sp.style.display = 'none';
+      }
+      // 桌機/筆電：完整三欄
+      else {
+        tp.style.display = '';
+        sp.style.display = '';
+      }
+    }
+    applyLayout();
+    window.addEventListener('resize', applyLayout);
+    screen.orientation?.addEventListener('change', () => setTimeout(applyLayout, 100));
+
+    // ── TTS 開關 ──
     const chat = new AIChat();
     const voice = new VoiceInput();
     const history = [];
     let ttsOn = true;
 
-    // ── TTS 開關按鈕 ──
     const ttsBtn = document.getElementById('tts-btn');
     ttsBtn.addEventListener('click', () => {
       ttsOn = !ttsOn;
@@ -177,34 +279,27 @@
       ttsBtn.classList.toggle('muted', !ttsOn);
       if (!ttsOn) chat.ttsStop();
     });
-    // 預載語音（部分瀏覽器需要先觸發才有中文聲音）
     window.speechSynthesis?.getVoices();
 
-    // ── 語音輸入狀態 ──
-    const statusLabels = {
-      'voice-recording': '錄音中…',
-      'voice-processing': '辨識中…',
-      'voice-done': '完成'
-    };
-    const obs = new MutationObserver(() => {
-      const micBtn = document.getElementById('mic-btn');
-      const st = [...micBtn.classList].find(c => c.startsWith('voice-'));
+    // ── 語音狀態顯示 ──
+    const statusLabels = { 'voice-recording': '錄音中…', 'voice-processing': '辨識中…', 'voice-done': '完成' };
+    new MutationObserver(() => {
+      const st = [...document.getElementById('mic-btn').classList].find(c => c.startsWith('voice-'));
       document.getElementById('voice-status').textContent = statusLabels[st] || '待機';
-    });
-    obs.observe(document.getElementById('mic-btn'), { attributes: true, attributeFilter: ['class'] });
+    }).observe(document.getElementById('mic-btn'), { attributes: true, attributeFilter: ['class'] });
 
     voice.onResult(res => {
       document.getElementById('chat-input').value = res.text;
-      document.getElementById('voice-status').textContent = '✓ ' + res.text.slice(0, 12);
+      document.getElementById('voice-status').textContent = '✓';
     });
     voice.onError(e => {
-      document.getElementById('voice-status').textContent = '⚠ ' + (e.message || '失敗').slice(0, 30);
+      document.getElementById('voice-status').textContent = '⚠';
     });
     document.getElementById('mic-btn').addEventListener('click', () => {
       if (voice.recording) voice.stop(); else voice.start();
     });
 
-    // ── 新增對話氣泡 ──
+    // ── 對話 ──
     function addBubble(role, text, isError) {
       const msgs = document.getElementById('chat-messages');
       const div = document.createElement('div');
@@ -215,16 +310,16 @@
       return div;
     }
 
-    // ── 送出訊息 ──
     async function sendMessage() {
       const input = document.getElementById('chat-input');
       const text = input.value.trim();
       if (!text) return;
       input.value = '';
+      document.getElementById('offline-notice').style.display = 'none';
       addBubble('user', text);
       history.push({ role: 'user', content: text });
 
-      const aiBubble = addBubble('ai', '▋'); // 打字游標
+      const aiBubble = addBubble('ai', '▋');
       let aiText = '';
 
       chat.onStream(token => {
@@ -239,13 +334,12 @@
         aiBubble.textContent = aiText || '（無回應）';
         if (aiText) {
           history.push({ role: 'assistant', content: aiText });
-          // 🔊 TTS 播報 AI 回應
           if (ttsOn) chat.ttsSpeak(aiText);
         }
       } catch(e) {
-        aiBubble.textContent = e.message === 'AI_UNAVAILABLE'
-          ? '⚠ 雲端 AI 暫時無法連線，請稍後再試。'
-          : '⚠ ' + e.message;
+        aiBubble.textContent = '⚠ ' + (e.message === 'AI_UNAVAILABLE'
+          ? '所有 AI 通道暫時無法連線，請稍後再試。'
+          : e.message);
         aiBubble.classList.add('error');
         document.getElementById('offline-notice').style.display = 'block';
       }
@@ -256,14 +350,13 @@
       if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
     });
 
-    // ── 生成學習摘要 ──
+    // ── 摘要 ──
     document.getElementById('summarize-btn').addEventListener('click', async () => {
       if (!history.length) return;
       const btn = document.getElementById('summarize-btn');
       btn.textContent = '生成中…'; btn.disabled = true;
       try {
-        const summary = await chat.summarize(history);
-        document.getElementById('summary-content').textContent = summary;
+        document.getElementById('summary-content').textContent = await chat.summarize(history);
       } catch(e) {
         document.getElementById('summary-content').textContent = '摘要失敗：' + e.message;
       }
