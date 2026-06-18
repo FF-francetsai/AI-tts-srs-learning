@@ -142,7 +142,7 @@
     <a href="index.html">← 返回</a>
     <span class="tb-title" id="atlas-mode-title">🌌 天象星圖</span>
     <div class="search-box">
-      <input id="atlas-search" placeholder="搜尋術語..." autocomplete="off" style="display:none" />
+      <input id="atlas-search" placeholder="搜尋術語..." autocomplete="off" />
       <button id="atlas-rotate-toggle" title="切換旋轉" style="background:none;border:1px solid rgba(125,211,252,0.25);color:#7dd3fc;padding:4px 10px;border-radius:8px;cursor:pointer;font-size:12px;">⏸ 暫停</button>
       <button id="atlas-reset">⟲ 重置</button>
     </div>
@@ -315,7 +315,8 @@
     // 初始隱藏 D3 atlas（預設顯示星圖）
     atlas.svg.style('display', 'none');
 
-    const starMap = new StarMap(document.getElementById('atlas-container'));
+    // 傳入同一份 topics，以 AI 術語作為星點
+    const starMap = new ConstellationAtlas(document.getElementById('atlas-container'), topics);
     starMap.show();
 
     let currentMode = 'star';
@@ -335,7 +336,7 @@
         starMap.show();
         atlas.svg.style('display', 'none');
         title.textContent = '🌌 天象星圖';
-        search.style.display = 'none';
+        search.style.display = '';
         rotBtn.style.display = '';
         legendStar.style.display  = '';
         legendAtlas.style.display = 'none';
@@ -374,10 +375,18 @@
     const urlCat = new URLSearchParams(location.search).get('cat');
     if (urlCat) { switchMode('atlas'); setFilter(urlCat); }
 
+    // 星圖模式下搜尋框
+    document.getElementById('atlas-search').addEventListener('input', e => {
+      if (currentMode === 'star') starMap.search(e.target.value.trim());
+      else atlas.flyToSearch(e.target.value.trim());
+    });
+
     // Reset 按鈕
     document.getElementById('atlas-reset').addEventListener('click', () => {
       if (currentMode === 'star') {
-        switchMode('star');
+        document.getElementById('atlas-search').value = '';
+        starMap.search('');
+        starMap._rot = 0; starMap._applyRot();
       } else {
         document.getElementById('atlas-search').value = '';
         atlas.flyToSearch('');
