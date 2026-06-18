@@ -12,12 +12,7 @@
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* ── 基礎：手機優先，100dvh 正確計算瀏覽器 chrome ── */
-    html, body {
-      height: 100%;
-      /* dvh = dynamic viewport height，排除手機網址列 */
-      height: 100dvh;
-    }
+    html, body { height: 100%; height: 100dvh; }
     body {
       background: var(--bg); color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -27,7 +22,7 @@
     /* ── Topbar ── */
     .topbar {
       height: var(--topbar-h); padding: 0 14px;
-      display: flex; align-items: center; gap: 10px;
+      display: flex; align-items: center; gap: 8px;
       border-bottom: 1px solid var(--border);
       background: rgba(6,11,19,0.98);
       flex-shrink: 0; z-index: 10;
@@ -38,47 +33,40 @@
     .topbar .spacer { flex: 1; }
     .topbar .current-term {
       color: #fbbf24; font-size: 12px;
-      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 120px;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100px;
     }
-    .btn-tts {
+    /* 供應商徽章 */
+    .provider-badge {
+      font-size: 11px; color: var(--muted);
+      background: rgba(125,211,252,0.08); border: 1px solid rgba(125,211,252,0.2);
+      border-radius: 6px; padding: 2px 7px; white-space: nowrap; flex-shrink: 0;
+    }
+    .btn-tts, .btn-settings {
       background: none; border: 1px solid rgba(125,211,252,0.3);
-      color: var(--accent); padding: 4px 10px; border-radius: 8px;
+      color: var(--accent); padding: 4px 8px; border-radius: 8px;
       cursor: pointer; font-size: 15px; line-height: 1; flex-shrink: 0;
     }
     .btn-tts.muted { color: #475569; border-color: var(--border); }
+    .btn-settings:hover { background: rgba(125,211,252,0.1); }
 
-    /* ── Layout container ── */
-    .body-wrap {
-      display: flex; flex: 1; overflow: hidden; min-height: 0;
-    }
+    /* ── Layout ── */
+    .body-wrap { display: flex; flex: 1; overflow: hidden; min-height: 0; }
 
     /* ── Side panels ── */
-    .side-panel {
-      flex-shrink: 0; padding: 14px; overflow-y: auto;
-      background: rgba(11,15,25,0.6);
-    }
-    .term-panel {
-      width: 200px; border-right: 1px solid var(--border);
-    }
-    .summary-panel {
-      width: 200px; border-left: 1px solid var(--border);
-      display: flex; flex-direction: column;
-    }
-    .side-panel h4 {
-      font-size: 11px; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 10px;
-    }
-    .term-panel h4 { color: var(--accent); }
+    .side-panel { flex-shrink: 0; padding: 14px; overflow-y: auto; background: rgba(11,15,25,0.6); }
+    .term-panel    { width: 200px; border-right: 1px solid var(--border); }
+    .summary-panel { width: 200px; border-left: 1px solid var(--border); display: flex; flex-direction: column; }
+    .side-panel h4 { font-size: 11px; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 10px; }
+    .term-panel h4    { color: var(--accent); }
     .summary-panel h4 { color: #34d399; }
     .term-title { font-size: 14px; font-weight: 600; color: var(--text); }
-    .term-eng { font-size: 11px; color: var(--muted); margin: 4px 0 8px; }
-    .term-def { font-size: 11px; line-height: 1.65; color: var(--muted); }
+    .term-eng   { font-size: 11px; color: var(--muted); margin: 4px 0 8px; }
+    .term-def   { font-size: 11px; line-height: 1.65; color: var(--muted); }
     .summary-text { font-size: 11px; line-height: 1.7; color: var(--muted); flex: 1; }
-    .btn-summary { width: 100%; margin-top: 10px; }
+    .btn-summary  { width: 100%; margin-top: 10px; }
 
     /* ── Chat area ── */
-    .chat-wrap {
-      flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0;
-    }
+    .chat-wrap { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
     .offline-notice {
       background: rgba(255,113,137,.1); border: 1px solid #ff7189;
       border-radius: 8px; padding: 8px 12px; font-size: 12px;
@@ -92,19 +80,17 @@
       max-width: 80%; padding: 10px 14px; border-radius: 12px;
       font-size: 13px; line-height: 1.65; word-break: break-word;
     }
-    .bubble.user { align-self: flex-end; background: #1e3a5f; border: 1px solid #2563eb; }
-    .bubble.ai   { align-self: flex-start; background: rgba(11,15,25,0.85); border: 1px solid var(--border); }
+    .bubble.user  { align-self: flex-end; background: #1e3a5f; border: 1px solid #2563eb; }
+    .bubble.ai    { align-self: flex-start; background: rgba(11,15,25,0.85); border: 1px solid var(--border); }
     .bubble.error { border-color: #ff7189; color: #ff7189; }
 
-    /* ── Input area（絕對不能被裁切）── */
+    /* ── Input area ── */
     .input-area {
       padding: 10px 12px;
-      /* iPhone 安全區域 bottom padding */
       padding-bottom: max(10px, env(safe-area-inset-bottom));
       border-top: 1px solid var(--border);
       background: rgba(6,11,19,0.98);
-      display: flex; gap: 7px; align-items: center;
-      flex-shrink: 0; /* 永遠不壓縮 */
+      display: flex; gap: 7px; align-items: center; flex-shrink: 0;
     }
     .input-area input {
       flex: 1; background: #0b1725; color: var(--text);
@@ -125,32 +111,87 @@
     .voice-status { font-size: 11px; color: var(--muted); white-space: nowrap; flex-shrink: 0; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
 
-    /* ════════════════════════════════════════
-       響應式斷點
-       xs  < 480px  手機直向
-       sm  480-767px 手機橫向/小型平板直向
-       md  768-1023px 平板
-       lg  1024px+   筆電/桌機
-    ════════════════════════════════════════ */
+    /* ══════════════════════════════════════════
+       設定面板覆層
+    ══════════════════════════════════════════ */
+    .settings-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,.75);
+      z-index: 200; display: none; align-items: center; justify-content: center;
+    }
+    .settings-overlay.open { display: flex; }
+    .settings-panel {
+      background: #0b1725; border: 1px solid var(--border);
+      border-radius: 14px; padding: 24px; width: min(440px, 92vw);
+      position: relative; max-height: 90dvh; overflow-y: auto;
+    }
+    .settings-panel h3 { color: var(--accent); font-size: 15px; margin-bottom: 6px; }
+    .settings-panel .desc { color: var(--muted); font-size: 12px; line-height: 1.6; margin-bottom: 14px; }
+    .settings-close {
+      position: absolute; top: 14px; right: 14px;
+      background: none; border: none; color: var(--muted);
+      font-size: 18px; cursor: pointer; line-height: 1;
+    }
+    .settings-close:hover { color: var(--text); }
+    .key-input {
+      width: 100%; background: var(--bg); color: var(--text);
+      border: 1px solid var(--border); border-radius: 8px;
+      padding: 10px 12px; font-size: 13px; outline: none;
+      font-family: monospace; transition: border-color .2s;
+    }
+    .key-input:focus { border-color: var(--accent); }
+    .detected-label {
+      font-size: 12px; min-height: 20px; margin: 8px 0 12px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .detected-label.ok   { color: #34d399; }
+    .detected-label.warn { color: #fbbf24; }
+    .settings-actions { display: flex; gap: 8px; }
+    .settings-actions .btn-save {
+      flex: 1; background: #1e3a5f; border: 1px solid #2563eb;
+      color: var(--text); padding: 9px; border-radius: 8px;
+      cursor: pointer; font-size: 13px; transition: background .15s;
+    }
+    .settings-actions .btn-save:hover { background: #1a4a7a; }
+    .settings-actions .btn-clear {
+      flex: 1; background: #3b1414; border: 1px solid #ff7189;
+      color: #ff7189; padding: 9px; border-radius: 8px;
+      cursor: pointer; font-size: 13px; transition: background .15s;
+    }
+    .settings-actions .btn-clear:hover { background: #4a1a1a; }
+    .key-sources {
+      margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border);
+    }
+    .key-sources h4 { color: var(--muted); font-size: 11px; margin-bottom: 8px; text-transform: uppercase; letter-spacing:.4px; }
+    .key-sources ul { list-style: none; font-size: 12px; color: var(--muted); line-height: 2; }
+    .key-sources a { color: var(--accent); text-decoration: none; }
+    .key-sources a:hover { text-decoration: underline; }
+    .key-sources .tag {
+      display: inline-block; background: rgba(125,211,252,.1);
+      border: 1px solid rgba(125,211,252,.2); border-radius: 4px;
+      padding: 1px 6px; font-size: 10px; margin-right: 4px;
+    }
+    .current-provider-row {
+      margin-top: 14px; padding: 10px 12px;
+      background: rgba(125,211,252,.05); border: 1px solid rgba(125,211,252,.15);
+      border-radius: 8px; font-size: 12px; color: var(--muted);
+    }
+    .current-provider-row strong { color: var(--text); }
 
-    /* ── xs: 手機直向 ── */
+    /* ── 響應式斷點 ── */
     @media (max-width: 479px) {
       :root { --topbar-h: 44px; }
       .term-panel, .summary-panel { display: none; }
       .bubble { max-width: 94%; font-size: 14px; }
-      .topbar .current-term, .topbar .btn-tts { display: none; }
-      .input-area input { font-size: 16px; } /* 避免 iOS 自動縮放 */
-      .voice-status { display: none; } /* 空間不夠，狀態用 btn 顏色表示 */
+      .topbar .current-term { display: none; }
+      .topbar .provider-badge { display: none; }
+      .input-area input { font-size: 16px; }
+      .voice-status { display: none; }
     }
-
-    /* ── sm: 手機橫向 / 小型平板直向 ── */
     @media (min-width: 480px) and (max-width: 767px) {
       .term-panel, .summary-panel { display: none; }
       .bubble { max-width: 88%; }
       .topbar .current-term { display: none; }
     }
-
-    /* ── sm 補充：低矮橫向手機（iPhone SE 橫向 = 667px × 375px）── */
     @media (max-height: 420px) {
       :root { --topbar-h: 38px; }
       .term-panel, .summary-panel { display: none; }
@@ -158,28 +199,15 @@
       .bubble { padding: 7px 10px; font-size: 13px; }
       .input-area { padding: 6px 10px; }
     }
-
-    /* ── md: 平板（768-1023px）── */
     @media (min-width: 768px) and (max-width: 1023px) {
-      /* 直向：隱藏側欄，聊天全寬 */
-      @media (orientation: portrait) {
-        .term-panel, .summary-panel { display: none; }
-      }
-      /* 橫向：左側欄顯示，右側欄隱藏 */
-      @media (orientation: landscape) {
-        .summary-panel { display: none; }
-        .term-panel { width: 180px; }
-      }
+      @media (orientation: portrait)  { .term-panel, .summary-panel { display: none; } }
+      @media (orientation: landscape) { .summary-panel { display: none; } .term-panel { width: 180px; } }
     }
-
-    /* ── lg: 筆電/桌機 ── */
     @media (min-width: 1024px) {
       .term-panel  { width: 220px; }
       .summary-panel { width: 220px; }
       .bubble { max-width: 75%; }
     }
-
-    /* ── xl: 大螢幕 ── */
     @media (min-width: 1440px) {
       .term-panel  { width: 260px; }
       .summary-panel { width: 260px; }
@@ -187,21 +215,91 @@
   </style>
 </head>
 <body>
+
+  <!-- ── Topbar ── -->
   <div class="topbar">
     <a href="index.html">← 返回</a>
     <span class="title">AI 即時對話</span>
     <span class="spacer"></span>
     <span class="current-term" id="current-term-label">術語：—</span>
-    <button class="btn-tts" id="tts-btn" title="語音播報 開/關">🔊</button>
+    <span class="provider-badge" id="provider-badge">🌸 Pollinations</span>
+    <button class="btn-tts"      id="tts-btn"      title="語音播報 開/關">🔊</button>
+    <button class="btn-settings" id="settings-btn"  title="AI 供應商設定">⚙</button>
   </div>
 
+  <!-- ── 設定覆層 ── -->
+  <div class="settings-overlay" id="settings-overlay" role="dialog" aria-modal="true" aria-label="AI 供應商設定">
+    <div class="settings-panel">
+      <button class="settings-close" id="settings-close" aria-label="關閉">✕</button>
+      <h3>⚙ AI 供應商設定</h3>
+      <p class="desc">
+        輸入你的個人 API Key，對話會優先使用你自己的 AI 服務。<br>
+        Key 僅存在你的瀏覽器 localStorage，不會傳送到任何第三方伺服器。
+      </p>
+
+      <input
+        class="key-input"
+        id="key-input"
+        type="password"
+        autocomplete="off"
+        spellcheck="false"
+        placeholder="貼上 API Key (sk-... / AIzaSy... / sk-ant-... / nvapi-... / hf_...)"
+      />
+
+      <div class="detected-label" id="detected-label">— 偵測到供應商後顯示 —</div>
+
+      <div class="settings-actions">
+        <button class="btn-save"  id="key-save">✓ 儲存並使用</button>
+        <button class="btn-clear" id="key-clear">✕ 清除 Key</button>
+      </div>
+
+      <!-- 目前使用中的供應商 -->
+      <div class="current-provider-row" id="current-provider-row">
+        目前供應商：<strong id="current-provider-name">—</strong>
+      </div>
+
+      <!-- 取得 API Key 說明 -->
+      <div class="key-sources">
+        <h4>如何取得 API Key（均提供免費額度）</h4>
+        <ul>
+          <li>
+            <span class="tag">sk-ant-</span>
+            <strong>Anthropic Claude</strong> →
+            <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com</a>
+          </li>
+          <li>
+            <span class="tag">sk-</span>
+            <strong>OpenAI ChatGPT</strong> →
+            <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">platform.openai.com</a>
+          </li>
+          <li>
+            <span class="tag">AIzaSy</span>
+            <strong>Google Gemini</strong> →
+            <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">aistudio.google.com</a>（免費）
+          </li>
+          <li>
+            <span class="tag">nvapi-</span>
+            <strong>NVIDIA NIM Build</strong> →
+            <a href="https://build.nvidia.com/" target="_blank" rel="noopener">build.nvidia.com</a>（工業級視覺 / 推論模型）
+          </li>
+          <li>
+            <span class="tag">hf_</span>
+            <strong>Hugging Face</strong> →
+            <a href="https://huggingface.co/settings/tokens" target="_blank" rel="noopener">huggingface.co/settings/tokens</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 主體 ── -->
   <div class="body-wrap">
     <!-- 左：術語說明 -->
     <div class="side-panel term-panel" id="term-panel">
       <h4>當前術語</h4>
       <div class="term-title" id="tp-title">—</div>
-      <div class="term-eng" id="tp-eng"></div>
-      <div class="term-def" id="tp-def">從星圖或詞庫點擊術語進入對話</div>
+      <div class="term-eng"   id="tp-eng"></div>
+      <div class="term-def"   id="tp-def">從星圖或詞庫點擊術語進入對話</div>
     </div>
 
     <!-- 中：對話區 -->
@@ -228,49 +326,46 @@
     </div>
   </div>
 
-  <script src="js/voice.js?v=6.4"></script>
-  <script src="js/chat.js?v=6.4"></script>
+  <!-- 供應商設定（無 API key，僅含 CF Worker URL） -->
+  <script src="js/providers.js?v=7.0"></script>
+  <script src="js/voice.js?v=7.0"></script>
+  <script src="js/chat.js?v=7.0"></script>
   <script>
-    // ── 動態響應式：依實際 window 大小即時調整 ──
+    // ── 動態響應式 ──────────────────────────────────────────────────
     function applyLayout() {
       const W = window.innerWidth, H = window.innerHeight;
       const tp = document.getElementById('term-panel');
       const sp = document.getElementById('summary-panel');
-      const isPhone  = W < 768;
-      const isTablet = W >= 768 && W < 1024;
+      const isPhone     = W < 768;
+      const isTablet    = W >= 768 && W < 1024;
       const isLandscape = W > H;
-
-      // 手機：完全隱藏兩側
-      if (isPhone) {
-        tp.style.display = 'none';
-        sp.style.display = 'none';
-      }
-      // 平板直向：隱藏兩側
-      else if (isTablet && !isLandscape) {
-        tp.style.display = 'none';
-        sp.style.display = 'none';
-      }
-      // 平板橫向：顯示左側，隱藏右側
-      else if (isTablet && isLandscape) {
-        tp.style.display = '';
-        sp.style.display = 'none';
-      }
-      // 桌機/筆電：完整三欄
-      else {
-        tp.style.display = '';
-        sp.style.display = '';
+      if (isPhone || (isTablet && !isLandscape)) {
+        tp.style.display = sp.style.display = 'none';
+      } else if (isTablet && isLandscape) {
+        tp.style.display = ''; sp.style.display = 'none';
+      } else {
+        tp.style.display = sp.style.display = '';
       }
     }
     applyLayout();
     window.addEventListener('resize', applyLayout);
     screen.orientation?.addEventListener('change', () => setTimeout(applyLayout, 100));
 
-    // ── TTS 開關 ──
-    const chat = new AIChat();
-    const voice = new VoiceInput();
+    // ── 初始化 AI / Voice ──────────────────────────────────────────
+    const chat    = new AIChat();
+    const voice   = new VoiceInput();
     const history = [];
-    let ttsOn = true;
+    let ttsOn     = true;
 
+    // 供應商徽章更新
+    function updateProviderBadge() {
+      const info = chat.getProviderInfo();
+      document.getElementById('provider-badge').textContent = `${info.icon} ${info.name}`;
+      document.getElementById('current-provider-name').textContent = `${info.icon} ${info.name}`;
+    }
+    updateProviderBadge();
+
+    // ── TTS 開關 ───────────────────────────────────────────────────
     const ttsBtn = document.getElementById('tts-btn');
     ttsBtn.addEventListener('click', () => {
       ttsOn = !ttsOn;
@@ -281,28 +376,80 @@
     });
     window.speechSynthesis?.getVoices();
 
-    // ── 語音狀態顯示 ──
+    // ── 語音輸入 ───────────────────────────────────────────────────
     const statusLabels = { 'voice-recording': '錄音中…', 'voice-processing': '辨識中…', 'voice-done': '完成' };
     new MutationObserver(() => {
       const st = [...document.getElementById('mic-btn').classList].find(c => c.startsWith('voice-'));
       document.getElementById('voice-status').textContent = statusLabels[st] || '待機';
     }).observe(document.getElementById('mic-btn'), { attributes: true, attributeFilter: ['class'] });
 
-    voice.onResult(res => {
-      document.getElementById('chat-input').value = res.text;
-      document.getElementById('voice-status').textContent = '✓';
-    });
-    voice.onError(e => {
-      document.getElementById('voice-status').textContent = '⚠';
-    });
+    voice.onResult(res => { document.getElementById('chat-input').value = res.text; });
+    voice.onError(() => { document.getElementById('voice-status').textContent = '⚠'; });
     document.getElementById('mic-btn').addEventListener('click', () => {
       if (voice.recording) voice.stop(); else voice.start();
     });
 
-    // ── 對話 ──
+    // ── ⚙ 設定面板 ────────────────────────────────────────────────
+    const overlay      = document.getElementById('settings-overlay');
+    const keyInput     = document.getElementById('key-input');
+    const detectedLbl  = document.getElementById('detected-label');
+
+    // 開啟設定
+    document.getElementById('settings-btn').addEventListener('click', () => {
+      keyInput.value = localStorage.getItem('ai_personal_key') || '';
+      _updateDetectedLabel(keyInput.value);
+      overlay.classList.add('open');
+      keyInput.focus();
+    });
+
+    // 關閉設定
+    function closeSettings() { overlay.classList.remove('open'); }
+    document.getElementById('settings-close').addEventListener('click', closeSettings);
+    overlay.addEventListener('click', e => { if (e.target === overlay) closeSettings(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSettings(); });
+
+    // 即時偵測供應商
+    keyInput.addEventListener('input', () => _updateDetectedLabel(keyInput.value.trim()));
+
+    function _updateDetectedLabel(key) {
+      if (!key) {
+        detectedLbl.className = 'detected-label';
+        detectedLbl.textContent = '— 請貼上 API Key —';
+        return;
+      }
+      const provider = detectAIProvider(key);
+      if (provider) {
+        const info = AI_BYOK_PROVIDERS[provider];
+        detectedLbl.className = 'detected-label ok';
+        detectedLbl.textContent = `${info.icon} 偵測到：${info.name}`;
+      } else {
+        detectedLbl.className = 'detected-label warn';
+        detectedLbl.textContent = '⚠ 無法識別的 Key 格式';
+      }
+    }
+
+    // 儲存
+    document.getElementById('key-save').addEventListener('click', () => {
+      const key = keyInput.value.trim();
+      if (!key) { alert('請先貼上 API Key'); return; }
+      if (!detectAIProvider(key)) { alert('無法識別此 Key 格式，請確認是否貼對'); return; }
+      localStorage.setItem('ai_personal_key', key);
+      updateProviderBadge();
+      closeSettings();
+    });
+
+    // 清除
+    document.getElementById('key-clear').addEventListener('click', () => {
+      localStorage.removeItem('ai_personal_key');
+      keyInput.value = '';
+      _updateDetectedLabel('');
+      updateProviderBadge();
+    });
+
+    // ── 對話 ──────────────────────────────────────────────────────
     function addBubble(role, text, isError) {
       const msgs = document.getElementById('chat-messages');
-      const div = document.createElement('div');
+      const div  = document.createElement('div');
       div.className = 'bubble ' + role + (isError ? ' error' : '');
       div.textContent = text;
       msgs.appendChild(div);
@@ -312,7 +459,7 @@
 
     async function sendMessage() {
       const input = document.getElementById('chat-input');
-      const text = input.value.trim();
+      const text  = input.value.trim();
       if (!text) return;
       input.value = '';
       document.getElementById('offline-notice').style.display = 'none';
@@ -336,7 +483,7 @@
           history.push({ role: 'assistant', content: aiText });
           if (ttsOn) chat.ttsSpeak(aiText);
         }
-      } catch(e) {
+      } catch (e) {
         aiBubble.textContent = '⚠ ' + (e.message === 'AI_UNAVAILABLE'
           ? '所有 AI 通道暫時無法連線，請稍後再試。'
           : e.message);
@@ -350,14 +497,14 @@
       if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
     });
 
-    // ── 摘要 ──
+    // ── 摘要 ──────────────────────────────────────────────────────
     document.getElementById('summarize-btn').addEventListener('click', async () => {
       if (!history.length) return;
       const btn = document.getElementById('summarize-btn');
       btn.textContent = '生成中…'; btn.disabled = true;
       try {
         document.getElementById('summary-content').textContent = await chat.summarize(history);
-      } catch(e) {
+      } catch (e) {
         document.getElementById('summary-content').textContent = '摘要失敗：' + e.message;
       }
       btn.textContent = '重新生成'; btn.disabled = false;

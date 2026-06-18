@@ -1,175 +1,320 @@
-// js/chat.js v6.4
-// Pollinations.ai 限制: 匿名每IP同時只能1個請求，目前唯一模型 openai-fast (推理模型)
-// 策略: 單一請求 + 最多3次重試 + 過濾 <think> 推理token + 本機備援
-(function(global) {
+// js/chat.js v7.0
+// ─────────────────────────────────────────────────────────────────────────────
+// 供應商優先順序（零硬碼 API Key）：
+//   1. 🔑 使用者 BYOK (localStorage) — Gemini / GPT / Claude / NVIDIA / HF
+//   2. ☁️ CF Worker proxy → HF Qwen3-8B → CF AI → NVIDIA NIM (key 存 Worker secret)
+//   3. 🌸 Pollinations.ai (匿名備援，無需任何 key)
+// ─────────────────────────────────────────────────────────────────────────────
+(function (global) {
+  'use strict';
   if (global.AIChat) return;
 
-  const POLL_URL   = 'https://text.pollinations.ai/openai';
-  const POLL_MODEL = 'openai-fast'; // 2026-06 唯一匿名模型，alias: openai
-  const LOCAL_URL  = 'http://localhost:8765/generate';
-  const MAX_RETRY  = 3;
-  const RETRY_WAIT = [2000, 4000, 7000]; // 退避等待 ms
+  // ── 供應商 URL（由 providers.js 設定，無敏感資料）──────────────────────
+  const _P = global.AI_PROVIDERS || {};
 
+  // CF Worker URL：部署後由 providers.js 填入（不含任何 API key）
+  const CF_WORKER_URL = _P.cf_worker_url || '';
+
+  // Pollinations 備援（匿名，無 key）
+  const POLL_URL   = 'https://text.pollinations.ai/openai';
+  const POLL_MODEL = 'openai-fast';
+
+  // 繁體中文系統提示（統一格式）
+  const SYS_ZH_TW =
+    '你是 AI 學習助理，專門協助學習 AI 相關術語與概念。' +
+    '請務必使用繁體中文回答，禁止使用任何簡體字。' +
+    '回答簡潔清晰，適合學習者理解。/no_think';
+
+  // ── BYOK 供應商偵測 ────────────────────────────────────────────────────
+  const BYOK_PROVIDERS = {
+    claude:      { prefix: 'sk-ant-', name: 'Anthropic Claude',  icon: '🤖' },
+    openai:      { prefix: 'sk-',     name: 'OpenAI ChatGPT',    icon: '🟢' },
+    gemini:      { prefix: 'AIzaSy',  name: 'Google Gemini',     icon: '🔷' },
+    nvidia:      { prefix: 'nvapi-',  name: 'NVIDIA NIM Build',  icon: '🟩' },
+    huggingface: { prefix: 'hf_',     name: 'Hugging Face',      icon: '🤗' },
+  };
+
+  function _detectProvider(key) {
+    if (!key) return null;
+    // claude 必須在 openai 之前（兩者都以 sk- 開頭）
+    for (const [id, info] of Object.entries(BYOK_PROVIDERS)) {
+      if (key.startsWith(info.prefix)) return id;
+    }
+    return null;
+  }
+
+  // ── AIChat 主類 ────────────────────────────────────────────────────────
   class AIChat {
     constructor() {
       this.abortController = null;
-      this._onStream = null;
-      this.ttsEnabled = true;
+      this._onStream       = null;
+      this.ttsEnabled      = true;
     }
 
-    // ── TTS ──────────────────────────────────────────────
+    // ── TTS ──────────────────────────────────────────────────────────────
     ttsSpeak(text) {
       if (!this.ttsEnabled || !('speechSynthesis' in window) || !text) return;
       speechSynthesis.cancel();
-      const utt = new SpeechSynthesisUtterance(text);
-      utt.lang = 'zh-TW'; utt.rate = 1.05;
-      const v = speechSynthesis.getVoices()
-        .find(v => v.lang.startsWith('zh') && v.name.includes('Female'))
-        || speechSynthesis.getVoices().find(v => v.lang.startsWith('zh'));
-      if (v) utt.voice = v;
+      const utt    = new SpeechSynthesisUtterance(text);
+      utt.lang     = 'zh-TW';
+      utt.rate     = 1.05;
+      const voices = speechSynthesis.getVoices();
+      utt.voice    = voices.find(v => v.lang.startsWith('zh') && v.name.includes('Female'))
+                  || voices.find(v => v.lang.startsWith('zh'))
+                  || null;
       speechSynthesis.speak(utt);
     }
     ttsStop() { speechSynthesis.cancel(); }
 
-    // ── 主要對話 ─────────────────────────────────────────
+    // ── 主要對話 ──────────────────────────────────────────────────────────
     async ask(message, context) {
       this.abortController = new AbortController();
       const sig = this.abortController.signal;
       const messages = [
-        { role: 'system', content: '你是 AI 學習助理，用繁體中文簡潔回答，避免過長推理。' },
+        { role: 'system', content: SYS_ZH_TW },
         ...(context || []),
         { role: 'user', content: message }
       ];
 
-      // ① 雲端（Pollinations，單一請求重試）
-      try {
-        const text = await this._fetchWithRetry(messages, sig);
-        await this._drip(text, sig);
-        return text;
-      } catch(e) {
-        if (e.name === 'AbortError') return '';
-      }
+      const userKey      = localStorage.getItem('ai_personal_key') || '';
+      const userProvider = _detectProvider(userKey);
 
-      // ② 本機備援
-      try {
-        await this._streamLocal(messages, sig);
-        return '';
-      } catch(e) {
-        if (e.name === 'AbortError') return '';
-        throw new Error('AI_UNAVAILABLE');
+      const chain = [
+        // 1. 使用者自帶 Key（BYOK）→ 直接呼叫各家 API
+        (userKey && userProvider)
+          ? () => this._askBYOK(userProvider, userKey, messages, sig)
+          : null,
+        // 2. CF Worker（系統供應商，key 存 Worker secret，不暴露在前端）
+        CF_WORKER_URL
+          ? () => this._askCFWorker(messages, sig)
+          : null,
+        // 3. Pollinations 匿名備援
+        () => this._askPollinations(messages, sig),
+      ].filter(Boolean);
+
+      for (const fn of chain) {
+        try {
+          const text = await fn();
+          if (text) { await this._drip(text, sig); return text; }
+        } catch (e) {
+          if (e.name === 'AbortError') return '';
+          console.warn('[AIChat]', e.message);
+        }
+      }
+      throw new Error('AI_UNAVAILABLE');
+    }
+
+    // ── BYOK 分派 ──────────────────────────────────────────────────────
+    _askBYOK(provider, key, messages, sig) {
+      switch (provider) {
+        case 'openai':      return this._askOpenAI(key, messages, sig);
+        case 'gemini':      return this._askGemini(key, messages, sig);
+        case 'claude':      return this._askClaude(key, messages, sig);
+        case 'nvidia':      return this._askNVIDIA(key, messages, sig);
+        case 'huggingface': return this._askHFDirect(key, messages, sig);
       }
     }
 
-    // 單一請求 + 指數退避重試
-    async _fetchWithRetry(messages, signal) {
+    // ── OpenAI ChatGPT ─────────────────────────────────────────────────
+    async _askOpenAI(key, messages, sig) {
+      const r = await _tf('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
+        body: JSON.stringify({ model: 'gpt-4o-mini', messages, max_tokens: 600 }),
+        signal: sig,
+      }, 30000);
+      if (!r.ok) throw new Error(`OpenAI HTTP ${r.status}`);
+      return _clean((await r.json())?.choices?.[0]?.message?.content);
+    }
+
+    // ── Google Gemini ──────────────────────────────────────────────────
+    async _askGemini(key, messages, sig) {
+      const sys  = messages.find(m => m.role === 'system');
+      const chat = messages.filter(m => m.role !== 'system');
+      const body = {
+        contents: chat.map(m => ({
+          role: m.role === 'assistant' ? 'model' : 'user',
+          parts: [{ text: m.content }],
+        })),
+        generationConfig: { maxOutputTokens: 600 },
+      };
+      if (sys) body.system_instruction = { parts: [{ text: sys.content }] };
+      const r = await _tf(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`,
+        { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: sig },
+        30000
+      );
+      if (!r.ok) throw new Error(`Gemini HTTP ${r.status}`);
+      return _clean((await r.json())?.candidates?.[0]?.content?.parts?.[0]?.text);
+    }
+
+    // ── Anthropic Claude ───────────────────────────────────────────────
+    async _askClaude(key, messages, sig) {
+      const sys  = messages.find(m => m.role === 'system')?.content || SYS_ZH_TW;
+      const chat = messages.filter(m => m.role !== 'system');
+      const r = await _tf('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': key,
+          'anthropic-version': '2023-06-01',
+          // Anthropic 要求明確授權直接從瀏覽器呼叫
+          'anthropic-dangerous-direct-browser-access': 'true',
+        },
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 600,
+          system: sys,
+          messages: chat,
+        }),
+        signal: sig,
+      }, 30000);
+      if (!r.ok) throw new Error(`Claude HTTP ${r.status}`);
+      return _clean((await r.json())?.content?.[0]?.text);
+    }
+
+    // ── NVIDIA NIM Build（BYOK：使用者自己的 nvapi- key）──────────────
+    async _askNVIDIA(key, messages, sig) {
+      const r = await _tf('https://integrate.api.nvidia.com/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
+        body: JSON.stringify({
+          model: 'meta/llama-3.3-70b-instruct',
+          messages,
+          max_tokens: 600,
+          stream: false,
+        }),
+        signal: sig,
+      }, 30000);
+      if (!r.ok) throw new Error(`NVIDIA HTTP ${r.status}`);
+      return _clean((await r.json())?.choices?.[0]?.message?.content);
+    }
+
+    // ── Hugging Face 直連（BYOK：使用者自己的 hf_ key）───────────────
+    async _askHFDirect(key, messages, sig) {
+      const r = await _tf('https://router.huggingface.co/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
+        body: JSON.stringify({ model: 'Qwen/Qwen3-8B', messages, max_tokens: 600 }),
+        signal: sig,
+      }, 30000);
+      if (!r.ok) throw new Error(`HF HTTP ${r.status}`);
+      const d = await r.json();
+      if (d?.error) throw new Error(d.error);
+      return _clean(d?.choices?.[0]?.message?.content);
+    }
+
+    // ── CF Worker（系統供應商，API key 存 Worker secret）──────────────
+    // Worker 內部輪流嘗試：HF Qwen3-8B → CF Workers AI → NVIDIA NIM
+    async _askCFWorker(messages, sig) {
+      const r = await _tf(CF_WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages, max_tokens: 600 }),
+        signal: sig,
+      }, 35000);
+      if (!r.ok) throw new Error(`CF Worker HTTP ${r.status}`);
+      const d = await r.json();
+      if (d?.error) throw new Error(d.error);
+      return _clean(d?.choices?.[0]?.message?.content);
+    }
+
+    // ── Pollinations.ai 備援（匿名，無 key）──────────────────────────
+    async _askPollinations(messages, sig) {
       let lastErr;
-      for (let i = 0; i < MAX_RETRY; i++) {
-        if (signal?.aborted) throw new DOMException('Aborted', 'AbortError');
+      for (let i = 0; i < 3; i++) {
+        if (sig?.aborted) throw new DOMException('Aborted', 'AbortError');
         try {
-          const text = await this._fetchOnce(messages, signal);
-          if (text) return text;
-        } catch(e) {
+          const r = await _tf(POLL_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ model: POLL_MODEL, messages, stream: false, max_tokens: 500 }),
+            signal: sig,
+          }, 22000);
+          if (r.status === 429) throw new Error('rate_limit');
+          if (!r.ok) throw new Error(`Pollinations HTTP ${r.status}`);
+          const d = await r.json();
+          const t  = _clean(d?.choices?.[0]?.message?.content);
+          if (t) return t;
+        } catch (e) {
           if (e.name === 'AbortError') throw e;
           lastErr = e;
         }
-        // 等待後重試（最後一次不等）
-        if (i < MAX_RETRY - 1) {
-          await _sleep(RETRY_WAIT[i], signal);
-        }
+        if (i < 2) await _sleep([2000, 4000][i], sig);
       }
-      throw lastErr || new Error('Cloud failed');
+      throw lastErr || new Error('Pollinations failed');
     }
 
-    async _fetchOnce(messages, signal) {
-      const ctrl = new AbortController();
-      signal?.addEventListener('abort', () => ctrl.abort());
-      const timer = setTimeout(() => ctrl.abort(), 22000); // 22s per attempt
-
-      try {
-        const resp = await fetch(POLL_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            model: POLL_MODEL,
-            messages,
-            stream: false,
-            max_tokens: 500
-          }),
-          signal: ctrl.signal
-        });
-        if (resp.status === 429) throw new Error('rate_limit');
-        if (!resp.ok) throw new Error('HTTP ' + resp.status);
-        const data = await resp.json();
-        const raw = data?.choices?.[0]?.message?.content || '';
-        return _stripThinking(raw); // 過濾推理模型的 <think> 標籤
-      } finally {
-        clearTimeout(timer);
-      }
-    }
-
-    // 打字機逐字效果
-    async _drip(text, signal) {
+    // ── 打字機動畫 ────────────────────────────────────────────────────
+    async _drip(text, sig) {
       for (let i = 0; i < text.length; i += 3) {
-        if (signal?.aborted) return;
+        if (sig?.aborted) return;
         if (this._onStream) this._onStream({ text: text.slice(i, i + 3) });
-        await new Promise(r => setTimeout(r, 20));
+        await new Promise(r => setTimeout(r, 18));
       }
     }
 
-    // 本機串流備援
-    async _streamLocal(messages, signal) {
-      const resp = await fetch(LOCAL_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages, stream: true, max_tokens: 512 }),
-        signal
-      });
-      if (!resp.ok) throw new Error('Local ' + resp.status);
-      const reader = resp.body.getReader();
-      const dec = new TextDecoder();
-      let buf = '';
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        buf += dec.decode(value, { stream: true });
-        const lines = buf.split('\n'); buf = lines.pop();
-        for (const line of lines) {
-          if (!line.startsWith('data:')) continue;
-          const raw = line.slice(5).trim();
-          if (raw === '[DONE]') return;
-          try { const p = JSON.parse(raw); if (this._onStream) this._onStream(p); } catch {}
-        }
-      }
-    }
-
-    // 摘要
+    // ── 對話摘要 ──────────────────────────────────────────────────────
     async summarize(history) {
       const msgs = [
-        { role: 'system', content: '請用繁體中文條列摘要，每點15字以內。' },
-        { role: 'user', content: '條列3-5點摘要以下對話學習重點：\n' +
-          history.map(m => `${m.role}: ${m.content}`).join('\n') }
+        { role: 'system', content: SYS_ZH_TW },
+        {
+          role: 'user',
+          content: '請用繁體中文條列3-5點摘要以下對話學習重點，每點15字以內：\n' +
+            history.map(m => `${m.role}: ${m.content}`).join('\n'),
+        },
       ];
-      const text = await this._fetchWithRetry(msgs, null);
-      if (text) return text;
+      const userKey      = localStorage.getItem('ai_personal_key') || '';
+      const userProvider = _detectProvider(userKey);
+      const chain = [
+        (userKey && userProvider) ? () => this._askBYOK(userProvider, userKey, msgs, null) : null,
+        CF_WORKER_URL             ? () => this._askCFWorker(msgs, null) : null,
+        () => this._askPollinations(msgs, null),
+      ].filter(Boolean);
+      for (const fn of chain) {
+        try { const t = await fn(); if (t) return t; } catch (_) {}
+      }
       throw new Error('AI_UNAVAILABLE');
     }
 
     onStream(cb) { this._onStream = cb; }
-    abort() { this.abortController?.abort(); this.ttsStop(); }
+    abort()      { this.abortController?.abort(); this.ttsStop(); }
+
+    // UI 顯示用
+    getProviderInfo() {
+      const key = localStorage.getItem('ai_personal_key') || '';
+      const p   = _detectProvider(key);
+      if (key && p)    return BYOK_PROVIDERS[p];
+      if (CF_WORKER_URL) return { name: 'HF Qwen3/CF AI', icon: '☁️' };
+      return { name: 'Pollinations', icon: '🌸' };
+    }
   }
 
-  // 過濾推理模型 <think>...</think> 標籤
-  function _stripThinking(text) {
-    return text.replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
+  // ── 工具函式 ──────────────────────────────────────────────────────────
+  function _tf(url, opts, timeout) {
+    const ctrl = new AbortController();
+    opts.signal?.addEventListener('abort', () => ctrl.abort());
+    const { signal: _s, ...rest } = opts;
+    const t = setTimeout(() => ctrl.abort(), timeout);
+    return fetch(url, { ...rest, signal: ctrl.signal }).finally(() => clearTimeout(t));
   }
 
-  // 可中斷的 sleep
+  function _clean(text) {
+    return (text || '').replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
+  }
+
   function _sleep(ms, signal) {
     return new Promise((res, rej) => {
       const t = setTimeout(res, ms);
-      signal?.addEventListener('abort', () => { clearTimeout(t); rej(new DOMException('Aborted', 'AbortError')); });
+      signal?.addEventListener('abort', () => {
+        clearTimeout(t);
+        rej(new DOMException('Aborted', 'AbortError'));
+      });
     });
   }
 
-  global.AIChat = AIChat;
+  // ── 對外暴露 ──────────────────────────────────────────────────────────
+  global.AIChat            = AIChat;
+  global.AI_BYOK_PROVIDERS = BYOK_PROVIDERS;
+  global.detectAIProvider  = _detectProvider;
 })(window);

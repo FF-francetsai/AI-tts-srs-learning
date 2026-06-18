@@ -1,2 +1,9 @@
-*.csv  
-.vscode/  
+*.csv
+.vscode/
+# 工作計畫文件（本地用，不部署）
+TASK_*.md
+DONE_*.md
+REDESIGN_PLAN_*.md
+TELEGRAM_DISPATCH.md
+HANDOFF_NOTE.md
+参考源/
