@@ -6,7 +6,7 @@
 
   const CLOUD_URL = 'https://text.pollinations.ai/openai';
   const LOCAL_URL = 'http://localhost:8765/generate';
-  const CLOUD_MODEL = 'openai-large';
+  const CLOUD_MODEL = 'openai'; // 'openai-large' deprecated 2026-06
 
   class AIChat {
     constructor() {
@@ -36,33 +36,24 @@
     }
 
     async _streamCloud(messages, signal) {
+      // Use non-stream to avoid reasoning/content field confusion, then drip-feed tokens
       const resp = await fetch(CLOUD_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ model: CLOUD_MODEL, messages, stream: true, max_tokens: 512 }),
+        body: JSON.stringify({ model: CLOUD_MODEL, messages, stream: false, max_tokens: 512 }),
         signal
       });
       if (!resp.ok) throw new Error('Cloud ' + resp.status);
+      const data = await resp.json();
+      const fullText = data?.choices?.[0]?.message?.content || '';
+      if (!fullText) throw new Error('Cloud empty');
 
-      const reader = resp.body.getReader();
-      const dec = new TextDecoder();
-      let buf = '';
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        buf += dec.decode(value, { stream: true });
-        const parts = buf.split('\n');
-        buf = parts.pop();
-        for (const line of parts) {
-          if (!line.startsWith('data:')) continue;
-          const raw = line.slice(5).trim();
-          if (raw === '[DONE]') return;
-          try {
-            const p = JSON.parse(raw);
-            const text = p?.choices?.[0]?.delta?.content || '';
-            if (text && this._onStream) this._onStream({ text });
-          } catch {}
-        }
+      // Drip-feed characters in groups of 3 to simulate streaming effect
+      for (let i = 0; i < fullText.length; i += 3) {
+        if (signal?.aborted) return;
+        const chunk = fullText.slice(i, i + 3);
+        if (this._onStream) this._onStream({ text: chunk });
+        await new Promise(r => setTimeout(r, 20));
       }
     }
 
@@ -106,7 +97,7 @@
         const resp = await fetch(CLOUD_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ model: CLOUD_MODEL, messages, max_tokens: 256 })
+          body: JSON.stringify({ model: CLOUD_MODEL, messages, stream: false, max_tokens: 256 })
         });
         if (resp.ok) {
           const data = await resp.json();
