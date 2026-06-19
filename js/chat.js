@@ -298,16 +298,23 @@
       }
 
       if (!('speechSynthesis' in window)) return;
-      const utt    = new SpeechSynthesisUtterance(clean);
-      utt.lang     = 'zh-TW';
-      utt.rate     = 1.05;
-      const voices = speechSynthesis.getVoices();
-      utt.voice    = voices.find(v => /Microsoft.*HsiaoChen/i.test(v.name))
-                  || voices.find(v => /Microsoft/i.test(v.name) && v.lang === 'zh-TW')
-                  || voices.find(v => /Microsoft/i.test(v.name) && v.lang.startsWith('zh'))
-                  || voices.find(v => v.lang === 'zh-TW')
-                  || voices.find(v => v.lang.startsWith('zh'))
-                  || null;
+      const utt  = new SpeechSynthesisUtterance(clean);
+      utt.lang   = 'zh-TW';
+      utt.rate   = 1.05;
+      // getVoices() 在頁面剛載入時非同步，需等 voiceschanged 事件
+      const voices = await new Promise(resolve => {
+        const v = speechSynthesis.getVoices();
+        if (v.length) { resolve(v); return; }
+        const handler = () => resolve(speechSynthesis.getVoices());
+        speechSynthesis.addEventListener('voiceschanged', handler, { once: true });
+        setTimeout(() => { speechSynthesis.removeEventListener('voiceschanged', handler); resolve(speechSynthesis.getVoices()); }, 3000);
+      });
+      utt.voice  = voices.find(v => /Microsoft.*HsiaoChen/i.test(v.name))
+                || voices.find(v => /Microsoft/i.test(v.name) && v.lang === 'zh-TW')
+                || voices.find(v => /Microsoft/i.test(v.name) && v.lang.startsWith('zh'))
+                || voices.find(v => v.lang === 'zh-TW')
+                || voices.find(v => v.lang.startsWith('zh'))
+                || null;
       speechSynthesis.speak(utt);
     }
 

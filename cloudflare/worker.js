@@ -2,7 +2,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // 端點：
 //   POST /chat       — AI 對話代理（HF / CF-AI / NVIDIA）
-//   POST /tts        — Edge TTS 雲端代理（zh-TW-HsiaoChenNeural，無需 key）
+//   POST /tts        — Google TTS 雲端代理（zh-TW，HTTP GET，無需 key）
 //   POST /transcribe — CF Workers AI Whisper 語音轉文字（無需 key）
 // API key 全部存 Worker Secret，永不暴露前端
 // ─────────────────────────────────────────────────────────────────────────────
@@ -52,94 +52,30 @@ function withSysTW(messages) {
   return has ? messages : [{ role: 'system', content: SYS_ZH }, ...messages];
 }
 
-// ── Edge TTS（Microsoft zh-TW-HsiaoChenNeural）────────────────────────────
-// 透過 Microsoft Edge Read Aloud WebSocket 協定取得 MP3，不需任何 API key
-const EDGE_TTS_WS  = 'wss://speech.platform.bing.com/consumer/speech/synthesize/readaloud/edge/v1';
-const EDGE_TOKEN   = '6A5AA1D4EAFF4E9FB37E23D68491D6F4';
-const EDGE_VOICE   = 'zh-TW-HsiaoChenNeural';
-const EDGE_FORMAT  = 'audio-24khz-48kbitrate-mono-mp3';
-
-async function handleEdgeTTS(text, origin) {
-  const connId = crypto.randomUUID().replace(/-/g, '');
-  const wsUrl  = `${EDGE_TTS_WS}?TrustedClientToken=${EDGE_TOKEN}&ConnectionId=${connId}`;
-
-  const wsResp = await fetch(wsUrl, {
-    headers: {
-      'Upgrade':          'websocket',
-      'Connection':       'Upgrade',
-      'Origin':           'chrome-extension://jdiccldimpdaibmpdkjnbmckianbfold',
-      'User-Agent':       'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-      'Accept-Language':  'zh-TW,zh;q=0.9',
-      'Cache-Control':    'no-cache',
-    },
+// ── Google Translate TTS（HTTP GET，zh-TW，無需 API key）─────────────────
+// Edge TTS 需要 WebSocket 連外，CF Workers 不支援；改用 Google Translate TTS
+async function handleGoogleTTS(text, origin) {
+  const params = new URLSearchParams({
+    ie: 'UTF-8',
+    q:  text.slice(0, 200),   // Google TTS 單次字元限制約 200
+    tl: 'zh-TW',
+    client: 'gtx',
   });
-
-  const ws = wsResp.webSocket;
-  if (!ws) throw new Error('WebSocket upgrade failed');
-  ws.accept();
-
-  const ts = new Date().toISOString();
-
-  // 1. 傳送 speech.config
-  ws.send(
-    `X-Timestamp:${ts}\r\n` +
-    `Content-Type:application/json; charset=utf-8\r\n` +
-    `Path:speech.config\r\n\r\n` +
-    JSON.stringify({ context: { synthesis: { audio: {
-      metadataoptions: { sentenceBoundaryEnabled: 'false', wordBoundaryEnabled: 'false' },
-      outputFormat: EDGE_FORMAT
-    }}}})
-  );
-
-  // 2. 傳送 SSML（特殊字元轉義）
-  const safe = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  const ssml = `<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='zh-TW'>` +
-               `<voice name='${EDGE_VOICE}'><prosody rate='+0%'>${safe}</prosody></voice></speak>`;
-  ws.send(
-    `X-RequestId:${connId}\r\n` +
-    `Content-Type:application/ssml+xml\r\n` +
-    `X-Timestamp:${ts}Z\r\n` +
-    `Path:ssml\r\n\r\n` +
-    ssml
-  );
-
-  // 3. 收集二進位音訊片段，直到 turn.end
-  return new Promise((resolve, reject) => {
-    const chunks = [];
-    const timer  = setTimeout(() => { ws.close(); reject(new Error('TTS timeout')); }, 18000);
-
-    ws.addEventListener('message', ev => {
-      if (typeof ev.data === 'string') {
-        if (ev.data.includes('Path:turn.end')) {
-          clearTimeout(timer);
-          ws.close();
-          // 合併所有 MP3 片段
-          const total = chunks.reduce((s, c) => s + c.byteLength, 0);
-          const out   = new Uint8Array(total);
-          let off = 0;
-          chunks.forEach(c => { out.set(new Uint8Array(c), off); off += c.byteLength; });
-          resolve(new Response(out, {
-            headers: {
-              ...corsHeaders(origin),
-              'Content-Type':  'audio/mpeg',
-              'Cache-Control': 'no-store',
-            },
-          }));
-        }
-      } else {
-        // Binary：前 2 byte 是 header 長度，header 後才是 MP3 資料
-        const ab     = ev.data instanceof ArrayBuffer ? ev.data : ev.data.buffer;
-        if (ab.byteLength < 2) return;
-        const hdrLen = new DataView(ab).getUint16(0);
-        const hdr    = new TextDecoder().decode(new Uint8Array(ab, 2, hdrLen));
-        if (hdr.includes('Path:audio')) {
-          const audio = ab.slice(2 + hdrLen);
-          if (audio.byteLength > 0) chunks.push(audio);
-        }
-      }
-    });
-
-    ws.addEventListener('error', e => { clearTimeout(timer); reject(e); });
+  const r = await fetch(`https://translate.google.com/translate_tts?${params}`, {
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+    },
+    signal: AbortSignal.timeout(12000),
+  });
+  if (!r.ok) throw new Error(`Google TTS: ${r.status}`);
+  const audio = await r.arrayBuffer();
+  if (audio.byteLength < 100) throw new Error('Google TTS: empty audio');
+  return new Response(audio, {
+    headers: {
+      ...corsHeaders(origin),
+      'Content-Type':  'audio/mpeg',
+      'Cache-Control': 'no-store',
+    },
   });
 }
 
@@ -196,7 +132,7 @@ export default {
       const text = (body.text || '').trim().slice(0, 2000);
       if (!text) return jsonResp({ error: 'no text' }, 400, origin);
       try {
-        return await handleEdgeTTS(text, origin);
+        return await handleGoogleTTS(text, origin);
       } catch (e) {
         return jsonResp({ error: 'TTS failed', detail: e.message }, 500, origin);
       }
