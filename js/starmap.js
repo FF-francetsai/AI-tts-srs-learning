@@ -170,15 +170,14 @@
         const angle  = (ci / CAT_DEFS.length) * 360 - 90;
         const [gcx, gcy] = this._pt(angle, this._orbitR);
         const n      = items.length;
-        const groupR = Math.max(55, Math.min(105, 22 + Math.sqrt(n) * 9.5));
-        const G      = Math.PI * (3 - Math.sqrt(5));
+        const pos    = this._concentricPos(n, 16);
+        const groupR = pos.length ? Math.max(...pos.map(p=>p.r)) + 18 : 18;
 
         const nodes = items.map((t, i) => {
-          const r  = groupR * Math.sqrt((i+0.5)/Math.max(n,1));
-          const th = i * G;
+          const p = pos[i] || { r:0, th:0 };
           return { id:t.id, title:t.title, eng:t.eng, cat:def.cat, def:t.def,
             color:def.color, r:t.key_goal ? 5.5 : 3.5,
-            lx: gcx + r*Math.cos(th), ly: gcy + r*Math.sin(th) };
+            lx: gcx + p.r*Math.cos(p.th), ly: gcy + p.r*Math.sin(p.th) };
         });
         const links = this._mstLinks(nodes);
         this._clusters.push({ def, centerAngle:angle, gcx, gcy, groupR, nodes, links });
@@ -215,6 +214,27 @@
           });
       });
       return links;
+    }
+
+    _concentricPos(n, minSep) {
+      // 同心環排列：保證節點圓心間距 ≥ minSep px
+      const out = [];
+      if (n === 0) return out;
+      let ring = 0;
+      while (out.length < n) {
+        if (ring === 0) {
+          out.push({ r:0, th:0 });
+        } else {
+          const ringR = ring * minSep;
+          const cap   = Math.max(1, Math.floor(2 * Math.PI * ringR / minSep));
+          const offset = ring * 0.37; // 錯開各環，避免節點沿徑向對齊
+          for (let i = 0; i < cap && out.length < n; i++) {
+            out.push({ r: ringR, th: offset + 2*Math.PI*i/cap });
+          }
+        }
+        ring++;
+      }
+      return out;
     }
 
     _buildZodiacNodes() {
@@ -298,21 +318,20 @@
         .attr('width','100%').attr('height','100%')
         .attr('fill','none').style('pointer-events','all');
 
-      // Root → zoomG (D3 pan+zoom) → rotG (auto-rotation)
-      this._root  = this._svg.append('g').attr('class','ca-root');
-      this._zoomG = this._root.append('g').attr('class','ca-zoomg')
-        .attr('transform',`translate(${this._cx},${this._cy})`);
-      this._rotG  = this._zoomG.append('g').attr('class','ca-rotg');
+      // Root (D3 pan+zoom) → rotG (auto-rotation)
+      this._root = this._svg.append('g').attr('class','ca-root');
+      this._rotG = this._root.append('g').attr('class','ca-rotg');
 
-      // D3 zoom: 滾輪縮放、左鍵拖曳平移
+      // D3 zoom：以滑鼠游標位置為中心縮放，左鍵拖曳平移
       this._zoomBehavior = d3.zoom()
         .scaleExtent([0.12, 8])
         .on('zoom', ev => {
-          const t = ev.transform;
-          this._zoomG.attr('transform',
-            `translate(${this._cx + t.x},${this._cy + t.y}) scale(${t.k})`);
+          this._root.attr('transform', ev.transform.toString());
         });
       this._svg.call(this._zoomBehavior);
+      // 初始：節點座標原點對齊畫面中心
+      this._svg.call(this._zoomBehavior.transform,
+        d3.zoomIdentity.translate(this._cx, this._cy));
       this._svg.on('dblclick.zoom', null);
 
       // Click on background closes panel
@@ -547,22 +566,82 @@
     // ── 中心核心 ──────────────────────────────────────────────────────────────
 
     _drawCore() {
-      const g=this._rotG.append('g').attr('class','ca-core');
-      const r=this._coreR, r2=r*1.6;
-      g.append('circle').attr('r',r2+8).attr('fill','none')
-        .attr('stroke','rgba(125,211,252,0.08)').attr('stroke-width',1).attr('stroke-dasharray','3,12');
-      g.append('circle').attr('r',r2).attr('fill','none')
-        .attr('stroke','rgba(125,211,252,0.16)').attr('stroke-width',1);
-      g.append('circle').attr('r',r).attr('fill','url(#core-grad)').style('filter','url(#core-glow)');
-      g.append('text').attr('text-anchor','middle').attr('dy','0.3em')
-        .attr('fill','#1c1917').attr('font-size',r*0.55).attr('font-weight',700).text('AI');
-      for (let i=0;i<8;i++) {
-        const a=this._d2r(i*45), r0=r+2, r1=r+(i%2===0?16:9);
-        g.append('line')
-          .attr('x1',Math.cos(a)*r0).attr('y1',Math.sin(a)*r0)
-          .attr('x2',Math.cos(a)*r1).attr('y2',Math.sin(a)*r1)
-          .attr('stroke','#fbbf24').attr('stroke-width',i%2===0?1.5:1).attr('stroke-opacity',0.7);
+      // 熱流折射濾鏡（模擬水/空氣光線折射）
+      const defs = this._svg.select('defs');
+      const wf = defs.append('filter').attr('id','solar-warp')
+        .attr('x','-80%').attr('y','-80%').attr('width','260%').attr('height','260%');
+      wf.append('feTurbulence')
+        .attr('type','fractalNoise').attr('baseFrequency','0.014')
+        .attr('numOctaves',2).attr('seed',7).attr('result','noise');
+      wf.append('feDisplacementMap')
+        .attr('in','SourceGraphic').attr('in2','noise')
+        .attr('scale',8).attr('xChannelSelector','R').attr('yChannelSelector','G');
+
+      const r  = this._coreR * 0.72; // 縮小至原本 0.72x
+      const g  = this._rotG.append('g').attr('class','ca-core').style('cursor','pointer');
+
+      // 日冕光暈圈（由外而內，最外層套折射濾鏡）
+      [
+        { cr:r*5.0, sw:22, op:0.030, flt:'url(#solar-warp)', dur:7.0 },
+        { cr:r*3.5, sw:12, op:0.060, flt:null,               dur:5.5 },
+        { cr:r*2.4, sw:5,  op:0.12,  flt:null,               dur:4.0 },
+        { cr:r*1.7, sw:2,  op:0.22,  flt:null,               dur:3.0 },
+      ].forEach(({ cr, sw, op, flt, dur }) => {
+        const ring = g.append('circle').attr('r', cr)
+          .attr('fill','none').attr('stroke','#fde68a')
+          .attr('stroke-width', sw).attr('stroke-opacity', op);
+        if (flt) ring.attr('filter', flt);
+        // SMIL 脈衝動畫
+        ring.append('animate')
+          .attr('attributeName','stroke-opacity')
+          .attr('values',`${op*0.5};${Math.min(op*1.8,0.5)};${op*0.5}`)
+          .attr('dur',`${dur}s`).attr('repeatCount','indefinite');
+      });
+
+      // 光芒射線 — 16 道（長短交替），虛線向外流動
+      for (let i = 0; i < 16; i++) {
+        const a    = this._d2r(i * 22.5);
+        const main = i % 2 === 0;
+        const r0   = r + 1.5;
+        const r1   = r + (main ? r*3.2 : r*1.8);
+        const ray  = g.append('line')
+          .attr('x1', Math.cos(a)*r0).attr('y1', Math.sin(a)*r0)
+          .attr('x2', Math.cos(a)*r1).attr('y2', Math.sin(a)*r1)
+          .attr('stroke','#fde68a')
+          .attr('stroke-width',  main ? 1.4 : 0.7)
+          .attr('stroke-opacity', main ? 0.65 : 0.35)
+          .attr('stroke-dasharray', main ? '4,3' : '2,4');
+        ray.append('animate')
+          .attr('attributeName','stroke-dashoffset')
+          .attr('from','0').attr('to', main ? '-14' : '-12')
+          .attr('dur', `${main ? 5 : 7}s`).attr('repeatCount','indefinite');
       }
+
+      // 太陽本體
+      const coreCircle = g.append('circle').attr('r', r)
+        .attr('fill','url(#core-grad)').style('filter','url(#core-glow)');
+      g.append('text').attr('text-anchor','middle').attr('dy','0.32em')
+        .attr('fill','#1c1917').attr('font-size', r*0.6).attr('font-weight', 700)
+        .attr('pointer-events','none').text('AI');
+
+      // 中心術語：人工智慧（可點擊開啟面板）
+      const aiTerm = {
+        id:'core-ai', title:'人工智慧', eng:'Artificial Intelligence',
+        cat:'AI 代理人', color:'#fbbf24', r,
+        def:'模擬人類智能的計算系統，是機器學習、深度學習、電腦視覺、NLP、AI代理人等所有子領域的統稱。目標是讓機器能感知、推理、學習與行動。'
+      };
+      g.on('mouseenter', ev => {
+          coreCircle.transition().duration(150).attr('r', r*1.3);
+          this._tooltip(ev, aiTerm);
+        })
+       .on('mouseleave', () => {
+          coreCircle.transition().duration(200).attr('r', r);
+          this._hideTooltip();
+        })
+       .on('click', ev => {
+          ev.stopPropagation();
+          this._panel(aiTerm);
+        });
     }
 
     // ── Tooltip & Panel ───────────────────────────────────────────────────────
@@ -659,12 +738,12 @@
       this._visible = true;
       this._svg.style('display','block');
       if (!this._raf) this._startAnim();
-      // 初次顯示：縮小至 0.65x 讓全圖可見，使用者滾輪放大查看細節
+      // 初次顯示：0.65x 縮小讓全圖可見，中心對齊畫面中央
       if (!this._initZoomSet) {
         this._initZoomSet = true;
         requestAnimationFrame(() => {
           this._svg.call(this._zoomBehavior.transform,
-            d3.zoomIdentity.scale(0.65));
+            d3.zoomIdentity.translate(this._cx, this._cy).scale(0.65));
         });
       }
     }
@@ -684,7 +763,8 @@
       this._rot = 0;
       this._applyRot();
       this._svg.transition().duration(600)
-        .call(this._zoomBehavior.transform, d3.zoomIdentity);
+        .call(this._zoomBehavior.transform,
+          d3.zoomIdentity.translate(this._cx, this._cy).scale(0.65));
     }
   }
 
