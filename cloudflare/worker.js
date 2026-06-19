@@ -213,23 +213,30 @@ export default {
     const messages  = withSysTW(body.messages || []);
     const maxTokens = Math.min(Number(body.max_tokens) || 600, 1024);
 
+    // 接受前端傳入的 model 偏好（基本格式驗證防注入）
+    const HF_ID = /^[A-Za-z0-9_\-./]+\/[A-Za-z0-9_\-./]+$/.test(body.model_hf || '')
+      ? body.model_hf : HF_MODEL;
+    const CF_ID = (body.model_cf || '').startsWith('@cf/')
+      ? body.model_cf : CF_AI_MODEL;
+    const NV_ID = /^[a-z0-9_\-.]+\/[a-z0-9_\-.]+$/.test(body.model_nv || '')
+      ? body.model_nv : NV_MODEL;
+
     // ── 供應商嘗試鏈 ────────────────────────────────────────────────
     const errors = [];
 
-    // 1. Hugging Face Router (Qwen3-8B)
-    //    HF_TOKEN 由 `wrangler secret put HF_TOKEN` 設定，不存在程式碼中
+    // 1. Hugging Face Router
     if (env.HF_TOKEN) {
       try {
         const r = await fetch(HF_URL, {
           method:  'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${env.HF_TOKEN}` },
-          body:    JSON.stringify({ model: HF_MODEL, messages, max_tokens: maxTokens }),
+          body:    JSON.stringify({ model: HF_ID, messages, max_tokens: maxTokens }),
           signal:  AbortSignal.timeout(28000),
         });
         if (r.ok) {
           const d       = await r.json();
           const content = _clean(d?.choices?.[0]?.message?.content || '');
-          if (content) return jsonResp({ choices: [{ message: { role: 'assistant', content } }], provider: 'hf' }, 200, origin);
+          if (content) return jsonResp({ choices: [{ message: { role: 'assistant', content } }], provider: 'hf', model: HF_ID }, 200, origin);
         }
         errors.push(`HF:${r.status}`);
       } catch (e) { errors.push(`HF:${e.message}`); }
@@ -238,27 +245,26 @@ export default {
     // 2. Cloudflare Workers AI (AI binding，無額外 key)
     if (env.AI) {
       try {
-        const result = await env.AI.run(CF_AI_MODEL, { messages, max_tokens: maxTokens });
+        const result = await env.AI.run(CF_ID, { messages, max_tokens: maxTokens });
         const content = _clean(result?.response || result?.choices?.[0]?.message?.content || '');
-        if (content) return jsonResp({ choices: [{ message: { role: 'assistant', content } }], provider: 'cf-ai' }, 200, origin);
+        if (content) return jsonResp({ choices: [{ message: { role: 'assistant', content } }], provider: 'cf-ai', model: CF_ID }, 200, origin);
         errors.push('CF-AI:empty');
       } catch (e) { errors.push(`CF-AI:${e.message}`); }
     }
 
     // 3. NVIDIA NIM Build（選配）
-    //    NVIDIA_KEY 由 `wrangler secret put NVIDIA_KEY` 設定
     if (env.NVIDIA_KEY) {
       try {
         const r = await fetch(NV_URL, {
           method:  'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${env.NVIDIA_KEY}` },
-          body:    JSON.stringify({ model: NV_MODEL, messages, max_tokens: maxTokens, stream: false }),
+          body:    JSON.stringify({ model: NV_ID, messages, max_tokens: maxTokens, stream: false }),
           signal:  AbortSignal.timeout(28000),
         });
         if (r.ok) {
           const d       = await r.json();
           const content = _clean(d?.choices?.[0]?.message?.content || '');
-          if (content) return jsonResp({ choices: [{ message: { role: 'assistant', content } }], provider: 'nvidia' }, 200, origin);
+          if (content) return jsonResp({ choices: [{ message: { role: 'assistant', content } }], provider: 'nvidia', model: NV_ID }, 200, origin);
         }
         errors.push(`NVIDIA:${r.status}`);
       } catch (e) { errors.push(`NVIDIA:${e.message}`); }

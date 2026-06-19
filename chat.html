@@ -176,6 +176,31 @@
       border-radius: 8px; font-size: 12px; color: var(--muted);
     }
     .current-provider-row strong { color: var(--text); }
+    /* ── 模型選單 ── */
+    .model-select-row {
+      margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border);
+    }
+    .model-select-row label {
+      display: block; font-size: 11px; color: var(--muted);
+      text-transform: uppercase; letter-spacing: .4px; margin-bottom: 6px;
+    }
+    #model-select {
+      width: 100%; background: var(--bg); color: var(--text);
+      border: 1px solid var(--border); border-radius: 8px;
+      padding: 8px 10px; font-size: 12px; outline: none;
+      cursor: pointer; transition: border-color .2s;
+    }
+    #model-select:focus { border-color: var(--accent); }
+    #model-select optgroup { color: var(--muted); font-size: 11px; }
+    #model-select option  { color: var(--text); background: #0b1725; padding: 4px 0; }
+    .model-avail-note {
+      margin-top: 6px; font-size: 11px; color: var(--muted); line-height: 1.5;
+    }
+    .model-avail-note span { margin-right: 8px; }
+    .avail-nv  { color: #86efac; }
+    .avail-cf  { color: #7dd3fc; }
+    .avail-hf  { color: #fbbf24; }
+    .avail-no  { color: #475569; }
 
     /* ── 響應式斷點 ── */
     @media (max-width: 479px) {
@@ -251,6 +276,13 @@
       <div class="settings-actions">
         <button class="btn-save"  id="key-save">✓ 儲存並使用</button>
         <button class="btn-clear" id="key-clear">✕ 清除 Key</button>
+      </div>
+
+      <!-- 模型選單 -->
+      <div class="model-select-row">
+        <label>AI 模型選擇</label>
+        <select id="model-select"></select>
+        <div class="model-avail-note" id="model-avail-note"></div>
       </div>
 
       <!-- 目前使用中的供應商 -->
@@ -329,7 +361,7 @@
   <!-- 供應商設定（無 API key，僅含 CF Worker URL） -->
   <script src="js/providers.js?v=7.0"></script>
   <script src="js/voice.js?v=7.0"></script>
-  <script src="js/chat.js?v=7.0"></script>
+  <script src="js/chat.js?v=8.0"></script>
   <script>
     // ── 動態響應式 ──────────────────────────────────────────────────
     function applyLayout() {
@@ -364,6 +396,48 @@
       document.getElementById('current-provider-name').textContent = `${info.icon} ${info.name}`;
     }
     updateProviderBadge();
+
+    // ── 模型選單初始化 ─────────────────────────────────────────────
+    (function initModelSelect() {
+      const sel  = document.getElementById('model-select');
+      const note = document.getElementById('model-avail-note');
+      const groups = {};
+      AI_MODEL_CATALOG.forEach(m => {
+        if (!groups[m.group]) groups[m.group] = [];
+        groups[m.group].push(m);
+      });
+      Object.entries(groups).forEach(([gname, models]) => {
+        const og = document.createElement('optgroup');
+        og.label = '▸ ' + gname;
+        models.forEach(m => {
+          const opt = document.createElement('option');
+          opt.value = m.key;
+          opt.textContent = m.label;
+          og.appendChild(opt);
+        });
+        sel.appendChild(og);
+      });
+      sel.value = getModelKey();
+      if (!sel.value) sel.selectedIndex = 0;
+
+      function updateNote() {
+        const m = AI_MODEL_CATALOG.find(x => x.key === sel.value) || AI_MODEL_CATALOG[0];
+        const tags = [
+          m.nvidia ? `<span class="avail-nv">🟩 NV: ${m.nvidia}</span>`  : `<span class="avail-no">🟩 NV: —</span>`,
+          m.cf     ? `<span class="avail-cf">🟦 CF: ${m.cf}</span>`      : `<span class="avail-no">🟦 CF: —</span>`,
+          m.hf     ? `<span class="avail-hf">🤗 HF: ${m.hf}</span>`     : `<span class="avail-no">🤗 HF: —</span>`,
+          m.poll   ? `<span class="avail-hf">🌸 Poll: ${m.poll}</span>`  : '',
+        ];
+        note.innerHTML = tags.filter(Boolean).join('<br>');
+      }
+      updateNote();
+      sel.addEventListener('change', () => { setModelKey(sel.value); updateNote(); });
+    })();
+
+    // 設定面板開啟時同步選單
+    document.getElementById('settings-btn').addEventListener('click', () => {
+      document.getElementById('model-select').value = getModelKey();
+    }, true);
 
     // ── TTS 開關 ───────────────────────────────────────────────────
     const ttsBtn = document.getElementById('tts-btn');
