@@ -75,28 +75,35 @@
       const clean = this._ttsClean(text);
       if (!clean) return;
 
-      // ① 優先：mllm_app 本地 edge-tts（zh-TW-HsiaoChenNeural 神經擬真女聲）
-      try {
-        const ctrl = new AbortController();
-        const tid  = setTimeout(() => ctrl.abort(), 6000);
-        const res  = await fetch('http://localhost:8501/api/tts', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ text: clean }),
-          signal: ctrl.signal
-        });
-        clearTimeout(tid);
-        if (res.ok) {
-          const blob  = await res.blob();
-          const url   = URL.createObjectURL(blob);
-          const audio = new Audio(url);
-          this._ttsAudio = audio;
-          audio.onended = () => { URL.revokeObjectURL(url); this._ttsAudio = null; };
-          audio.onerror = () => { URL.revokeObjectURL(url); this._ttsAudio = null; };
-          await audio.play();
-          return;
-        }
-      } catch(_) { /* 本地服務未啟動，降級 Web Speech */ }
+      // ① 優先：CF Worker /tts（雲端 Edge TTS，任何設備皆可用）
+      const ttsEndpoints = [
+        CF_WORKER_URL ? CF_WORKER_URL.replace(/\/?$/, '/tts') : null,
+        'http://localhost:8501/api/tts', // 本地 mllm_app 備援
+      ].filter(Boolean);
+
+      for (const endpoint of ttsEndpoints) {
+        try {
+          const ctrl = new AbortController();
+          const tid  = setTimeout(() => ctrl.abort(), 10000);
+          const res  = await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: clean }),
+            signal: ctrl.signal
+          });
+          clearTimeout(tid);
+          if (res.ok) {
+            const blob  = await res.blob();
+            const url   = URL.createObjectURL(blob);
+            const audio = new Audio(url);
+            this._ttsAudio = audio;
+            audio.onended = () => { URL.revokeObjectURL(url); this._ttsAudio = null; };
+            audio.onerror = () => { URL.revokeObjectURL(url); this._ttsAudio = null; };
+            await audio.play();
+            return;
+          }
+        } catch(_) { /* 此端點失敗，試下一個 */ }
+      }
 
       // ② 備援：瀏覽器 Web Speech API（Microsoft HsiaoChen 優先）
       if (!('speechSynthesis' in window)) return;
