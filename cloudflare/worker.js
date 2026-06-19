@@ -1,14 +1,10 @@
 // Cloudflare Worker: AI-tts-srs 安全 AI Proxy
 // ─────────────────────────────────────────────────────────────────────────────
-// 功能：作為瀏覽器與各 AI 供應商之間的後端代理
-//   - 系統 API key (HF_TOKEN, NVIDIA_KEY) 存為 Worker Secret，永不暴露至前端
-//   - 對外僅提供一個 POST /chat 端點，瀏覽器不需知道任何 API key
-//   - CORS 鎖定 GitHub Pages 網域
-//
-// 內部供應商優先順序：
-//   1. Hugging Face Router (Qwen3-8B) — HF_TOKEN 存 Worker Secret
-//   2. Cloudflare Workers AI           — 使用 AI binding，無額外 key
-//   3. NVIDIA NIM Build               — NVIDIA_KEY 存 Worker Secret（選配）
+// 端點：
+//   POST /chat       — AI 對話代理（HF / CF-AI / NVIDIA）
+//   POST /tts        — Edge TTS 雲端代理（zh-TW-HsiaoChenNeural，無需 key）
+//   POST /transcribe — CF Workers AI Whisper 語音轉文字（無需 key）
+// API key 全部存 Worker Secret，永不暴露前端
 // ─────────────────────────────────────────────────────────────────────────────
 
 const ALLOWED_ORIGINS = [
@@ -16,6 +12,8 @@ const ALLOWED_ORIGINS = [
   'http://localhost:5500',
   'http://localhost:3000',
   'http://127.0.0.1:5500',
+  'http://localhost:8501',   // mllm_app 本地前端
+  'http://127.0.0.1:8501',
 ];
 
 const HF_URL   = 'https://router.huggingface.co/v1/chat/completions';
@@ -157,6 +155,36 @@ export default {
 
     if (request.method !== 'POST') {
       return jsonResp({ error: 'Method Not Allowed' }, 405, origin);
+    }
+
+    // ── /transcribe 端點：CF Workers AI Whisper 語音轉文字 ────────────
+    // 情境A：手機/平板/無GPU設備 → 走這裡（雲端 Whisper Large V3 Turbo）
+    // 情境B：本地 mllm_app 的 whisper-small 引擎 fallback → 也走這裡
+    // Breeze-ASR 25/26（台語/繁中專用）無雲端替代，仍走 localhost:8501
+    if (path === '/transcribe') {
+      let body;
+      try { body = await request.json(); } catch {
+        return jsonResp({ error: 'Invalid JSON' }, 400, origin);
+      }
+      const audio_b64 = (body.audio_b64 || '').trim();
+      if (!audio_b64) return jsonResp({ error: 'no audio_b64' }, 400, origin);
+      if (!env.AI)    return jsonResp({ error: 'AI binding not available' }, 503, origin);
+      try {
+        // base64 → Uint8Array
+        const bin   = atob(audio_b64);
+        const bytes = new Uint8Array(bin.length);
+        for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+        const result = await env.AI.run('@cf/openai/whisper-large-v3-turbo', {
+          audio: [...bytes]
+        });
+        return jsonResp({
+          text:     result.text     || '',
+          language: result.language || 'zh',
+          source:   'cf-whisper-large-v3-turbo',
+        }, 200, origin);
+      } catch (e) {
+        return jsonResp({ error: 'Whisper failed: ' + e.message }, 500, origin);
+      }
     }
 
     // ── /tts 端點：Edge TTS 雲端代理 ──────────────────────────────────
