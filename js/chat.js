@@ -52,10 +52,55 @@
     }
 
     // ── TTS ──────────────────────────────────────────────────────────────
-    ttsSpeak(text) {
-      if (!this.ttsEnabled || !('speechSynthesis' in window) || !text) return;
-      speechSynthesis.cancel();
-      const utt    = new SpeechSynthesisUtterance(text);
+    _ttsClean(text) {
+      return text
+        .replace(/https?:\/\/([^\s/]+)[^\s]*/g, (_, d) => `網址 ${d}`)
+        .replace(/```[\s\S]*?```/g, '程式碼區塊')
+        .replace(/`([^`]+)`/g, '$1')
+        .replace(/\*\*(.*?)\*\*/g, '$1')
+        .replace(/#+\s/g, '')
+        .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+        .replace(/[【】《》「」『』〔〕]/g, '')
+        .replace(/[-—–]{2,}/g, '，')
+        .replace(/[•·→←↑↓⬆⬇]/g, '')
+        .replace(/[\u{1F300}-\u{1F9FF}]/gu, '')
+        .replace(/[*_~#]/g, '')
+        .replace(/ {2,}/g, ' ')
+        .trim();
+    }
+
+    async ttsSpeak(text) {
+      if (!this.ttsEnabled || !text) return;
+      this.ttsStop();
+      const clean = this._ttsClean(text);
+      if (!clean) return;
+
+      // ① 優先：mllm_app 本地 edge-tts（zh-TW-HsiaoChenNeural 神經擬真女聲）
+      try {
+        const ctrl = new AbortController();
+        const tid  = setTimeout(() => ctrl.abort(), 6000);
+        const res  = await fetch('http://localhost:8501/api/tts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text: clean }),
+          signal: ctrl.signal
+        });
+        clearTimeout(tid);
+        if (res.ok) {
+          const blob  = await res.blob();
+          const url   = URL.createObjectURL(blob);
+          const audio = new Audio(url);
+          this._ttsAudio = audio;
+          audio.onended = () => { URL.revokeObjectURL(url); this._ttsAudio = null; };
+          audio.onerror = () => { URL.revokeObjectURL(url); this._ttsAudio = null; };
+          await audio.play();
+          return;
+        }
+      } catch(_) { /* 本地服務未啟動，降級 Web Speech */ }
+
+      // ② 備援：瀏覽器 Web Speech API（Microsoft HsiaoChen 優先）
+      if (!('speechSynthesis' in window)) return;
+      const utt    = new SpeechSynthesisUtterance(clean);
       utt.lang     = 'zh-TW';
       utt.rate     = 1.05;
       const voices = speechSynthesis.getVoices();
@@ -67,7 +112,11 @@
                   || null;
       speechSynthesis.speak(utt);
     }
-    ttsStop() { speechSynthesis.cancel(); }
+
+    ttsStop() {
+      if (this._ttsAudio) { this._ttsAudio.pause(); this._ttsAudio = null; }
+      window.speechSynthesis?.cancel();
+    }
 
     // ── 主要對話 ──────────────────────────────────────────────────────────
     async ask(message, context) {
