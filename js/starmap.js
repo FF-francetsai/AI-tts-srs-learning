@@ -117,9 +117,10 @@
       this._cx = this._W / 2;
       this._cy = this._H / 2;
       const md      = Math.min(this._W, this._H - 90);
-      this._orbitR  = md * 0.285;
-      this._zodR    = md * 0.405;
-      this._sxR     = md * 0.520;
+      // 放大各環半徑，初始縮小 0.65x 後可看到全圖，滾輪/拖曳放大細節
+      this._orbitR  = md * 0.44;
+      this._zodR    = md * 0.60;
+      this._sxR     = md * 0.75;
       this._coreR   = md * 0.055;
     }
 
@@ -169,7 +170,7 @@
         const angle  = (ci / CAT_DEFS.length) * 360 - 90;
         const [gcx, gcy] = this._pt(angle, this._orbitR);
         const n      = items.length;
-        const groupR = Math.max(52, Math.min(130, 28 + Math.sqrt(n) * 11));
+        const groupR = Math.max(55, Math.min(105, 22 + Math.sqrt(n) * 9.5));
         const G      = Math.PI * (3 - Math.sqrt(5));
 
         const nodes = items.map((t, i) => {
@@ -292,20 +293,20 @@
       g.append('stop').attr('offset','45%').attr('stop-color','#fbbf24');
       g.append('stop').attr('offset','100%').attr('stop-color','#b45309');
 
+      // 透明背景 rect — 讓 D3 zoom drag 在空白區域也能捕捉
+      this._svg.append('rect')
+        .attr('width','100%').attr('height','100%')
+        .attr('fill','none').style('pointer-events','all');
+
       // Root → zoomG (D3 pan+zoom) → rotG (auto-rotation)
       this._root  = this._svg.append('g').attr('class','ca-root');
       this._zoomG = this._root.append('g').attr('class','ca-zoomg')
         .attr('transform',`translate(${this._cx},${this._cy})`);
       this._rotG  = this._zoomG.append('g').attr('class','ca-rotg');
 
-      // D3 zoom: scroll=zoom, drag=pan; exclude node elements from drag-start
+      // D3 zoom: 滾輪縮放、左鍵拖曳平移
       this._zoomBehavior = d3.zoom()
-        .scaleExtent([0.18, 7])
-        .filter(ev => {
-          if (ev.type === 'wheel') return true;
-          const tag = ev.target.tagName.toLowerCase();
-          return tag !== 'circle' && tag !== 'text';
-        })
+        .scaleExtent([0.12, 8])
         .on('zoom', ev => {
           const t = ev.transform;
           this._zoomG.attr('transform',
@@ -585,6 +586,12 @@
     _panel(node) {
       const p = document.getElementById('atlas-panel');
       if (!p) return;
+      // 存入 sessionStorage 供 chat.html 讀取定義
+      try {
+        sessionStorage.setItem('chatTermData', JSON.stringify({
+          title: node.title, eng: node.eng || '', def: node.def || ''
+        }));
+      } catch(_) {}
       p.innerHTML = `
         <button class="panel-close"
           onclick="this.closest('#atlas-panel').classList.remove('show')">×</button>
@@ -652,6 +659,14 @@
       this._visible = true;
       this._svg.style('display','block');
       if (!this._raf) this._startAnim();
+      // 初次顯示：縮小至 0.65x 讓全圖可見，使用者滾輪放大查看細節
+      if (!this._initZoomSet) {
+        this._initZoomSet = true;
+        requestAnimationFrame(() => {
+          this._svg.call(this._zoomBehavior.transform,
+            d3.zoomIdentity.scale(0.65));
+        });
+      }
     }
 
     hide() {

@@ -376,6 +376,34 @@
     });
     window.speechSynthesis?.getVoices();
 
+    // ── 術語帶入 ───────────────────────────────────────────────────
+    function setTerm(title, eng, def) {
+      document.getElementById('tp-title').textContent = title || '—';
+      document.getElementById('tp-eng').textContent   = eng   || '';
+      document.getElementById('tp-def').textContent   = def   || '（無說明）';
+      document.getElementById('current-term-label').textContent = `術語：${title}`;
+      const inp = document.getElementById('chat-input');
+      if (title && !inp.value) inp.value = `請介紹「${title}」這個AI術語`;
+    }
+    // 從 URL ?term= 或 sessionStorage chatTermData 帶入
+    (function loadInitTerm() {
+      const params = new URLSearchParams(location.search);
+      const termParam = params.get('term');
+      if (termParam) {
+        let eng = '', def = '';
+        try {
+          const stored = JSON.parse(sessionStorage.getItem('chatTermData') || '{}');
+          if (stored.title === termParam) { eng = stored.eng; def = stored.def; }
+        } catch(_) {}
+        setTerm(termParam, eng, def);
+        return;
+      }
+      try {
+        const stored = JSON.parse(sessionStorage.getItem('chatTermData') || '{}');
+        if (stored.title) setTerm(stored.title, stored.eng, stored.def);
+      } catch(_) {}
+    })();
+
     // ── 語音輸入 ───────────────────────────────────────────────────
     const statusLabels = { 'voice-recording': '錄音中…', 'voice-processing': '辨識中…', 'voice-done': '完成' };
     new MutationObserver(() => {
@@ -383,7 +411,11 @@
       document.getElementById('voice-status').textContent = statusLabels[st] || '待機';
     }).observe(document.getElementById('mic-btn'), { attributes: true, attributeFilter: ['class'] });
 
-    voice.onResult(res => { document.getElementById('chat-input').value = res.text; });
+    voice.onResult(res => {
+      const inp = document.getElementById('chat-input');
+      inp.value = res.text;
+      inp.focus();
+    });
     voice.onError(() => { document.getElementById('voice-status').textContent = '⚠'; });
     document.getElementById('mic-btn').addEventListener('click', () => {
       if (voice.recording) voice.stop(); else voice.start();

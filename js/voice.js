@@ -69,14 +69,15 @@
         return;
       }
       const recog = new SR();
+      this._recog = recog;
       recog.lang = 'zh-TW';
-      recog.continuous = false;
+      recog.continuous = true;
       recog.interimResults = false;
+      let accumulated = '';
       recog.onresult = ev => {
-        const text = ev.results[0][0].transcript;
-        this.recording = false;
-        this.setStatus('voice-done');
-        if (this._onResult) this._onResult({ text, engine: 'web-speech' });
+        for (let i = ev.resultIndex; i < ev.results.length; i++) {
+          if (ev.results[i].isFinal) accumulated += ev.results[i][0].transcript;
+        }
       };
       recog.onerror = ev => {
         this.recording = false;
@@ -85,7 +86,11 @@
         const msg = ASR_ERROR_MSG[code] || `語音辨識失敗（${code}）`;
         if (this._onError) this._onError(new Error(msg));
       };
-      recog.onend = () => { this.recording = false; };
+      recog.onend = () => {
+        this.recording = false;
+        this.setStatus('voice-done');
+        if (accumulated && this._onResult) this._onResult({ text: accumulated.trim(), engine: 'web-speech' });
+      };
       try { recog.start(); }
       catch(e) {
         this.recording = false;
@@ -98,6 +103,8 @@
       this.recording = false;
       if (this.mediaRecorder && this.mediaRecorder.state === 'recording') {
         this.mediaRecorder.stop();
+      } else if (this._recog) {
+        this._recog.stop();
       } else {
         this.setStatus('voice-done');
       }

@@ -59,7 +59,10 @@
       utt.lang     = 'zh-TW';
       utt.rate     = 1.05;
       const voices = speechSynthesis.getVoices();
-      utt.voice    = voices.find(v => v.lang.startsWith('zh') && v.name.includes('Female'))
+      utt.voice    = voices.find(v => /Microsoft.*HsiaoChen/i.test(v.name))
+                  || voices.find(v => /Microsoft/i.test(v.name) && v.lang === 'zh-TW')
+                  || voices.find(v => /Microsoft/i.test(v.name) && v.lang.startsWith('zh'))
+                  || voices.find(v => v.lang === 'zh-TW')
                   || voices.find(v => v.lang.startsWith('zh'))
                   || null;
       speechSynthesis.speak(utt);
