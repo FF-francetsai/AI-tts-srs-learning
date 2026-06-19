@@ -147,7 +147,7 @@ export default {
     }
 
     const messages  = withSysTW(body.messages || []);
-    const maxTokens = Math.min(Number(body.max_tokens) || 600, 1024);
+    const maxTokens = Math.min(Number(body.max_tokens) || 1200, 2000);
 
     // 接受前端傳入的 model 偏好（基本格式驗證防注入）
     const HF_ID = /^[A-Za-z0-9_\-./]+\/[A-Za-z0-9_\-./]+$/.test(body.model_hf || '')

@@ -265,60 +265,61 @@
     async ttsSpeak(text) {
       if (!this.ttsEnabled || !text) return;
       this.ttsStop();
+      this._ttsAborted = false;
       const clean = this._ttsClean(text);
       if (!clean) return;
 
-      const ttsEndpoints = [
-        CF_WORKER_URL ? CF_WORKER_URL.replace(/\/?$/, '/tts') : null,
-        'http://localhost:8501/api/tts',
-      ].filter(Boolean);
-
-      for (const endpoint of ttsEndpoints) {
-        try {
-          const ctrl = new AbortController();
-          const tid  = setTimeout(() => ctrl.abort(), 10000);
-          const res  = await fetch(endpoint, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text: clean }),
-            signal: ctrl.signal
-          });
-          clearTimeout(tid);
-          if (res.ok) {
-            const blob  = await res.blob();
-            const url   = URL.createObjectURL(blob);
-            const audio = new Audio(url);
-            this._ttsAudio = audio;
-            audio.onended = () => { URL.revokeObjectURL(url); this._ttsAudio = null; };
-            audio.onerror = () => { URL.revokeObjectURL(url); this._ttsAudio = null; };
-            await audio.play();
-            return;
-          }
-        } catch(_) { /* 此端點失敗，試下一個 */ }
+      // ① 優先：瀏覽器 Web Speech API（Microsoft HsiaoChen 等，即時、無字數限制）
+      if ('speechSynthesis' in window) {
+        const voices = await _loadVoices();
+        const voice  = voices.find(v => /Microsoft.*HsiaoChen/i.test(v.name))
+                    || voices.find(v => /Microsoft/i.test(v.name) && v.lang === 'zh-TW')
+                    || voices.find(v => /Microsoft/i.test(v.name) && v.lang.startsWith('zh'))
+                    || voices.find(v => v.lang === 'zh-TW')
+                    || voices.find(v => v.lang.startsWith('zh'));
+        if (voice) {
+          const utt = new SpeechSynthesisUtterance(clean);
+          utt.lang  = 'zh-TW';
+          utt.rate  = 1.05;
+          utt.voice = voice;
+          speechSynthesis.speak(utt);
+          return;
+        }
       }
 
-      if (!('speechSynthesis' in window)) return;
-      const utt  = new SpeechSynthesisUtterance(clean);
-      utt.lang   = 'zh-TW';
-      utt.rate   = 1.05;
-      // getVoices() 在頁面剛載入時非同步，需等 voiceschanged 事件
-      const voices = await new Promise(resolve => {
-        const v = speechSynthesis.getVoices();
-        if (v.length) { resolve(v); return; }
-        const handler = () => resolve(speechSynthesis.getVoices());
-        speechSynthesis.addEventListener('voiceschanged', handler, { once: true });
-        setTimeout(() => { speechSynthesis.removeEventListener('voiceschanged', handler); resolve(speechSynthesis.getVoices()); }, 3000);
-      });
-      utt.voice  = voices.find(v => /Microsoft.*HsiaoChen/i.test(v.name))
-                || voices.find(v => /Microsoft/i.test(v.name) && v.lang === 'zh-TW')
-                || voices.find(v => /Microsoft/i.test(v.name) && v.lang.startsWith('zh'))
-                || voices.find(v => v.lang === 'zh-TW')
-                || voices.find(v => v.lang.startsWith('zh'))
-                || null;
-      speechSynthesis.speak(utt);
+      // ② 備援：CF Worker Google TTS（裝置無 zh-TW 聲音時，如 iOS/Android/Linux）
+      //    長文拆句逐段播放，避免 200 字截斷
+      if (!CF_WORKER_URL) return;
+      try {
+        const chunks = _ttsSplit(clean, 190);
+        for (const chunk of chunks) {
+          if (this._ttsAborted) break;
+          const ctrl = new AbortController();
+          const tid  = setTimeout(() => ctrl.abort(), 12000);
+          const res  = await fetch(CF_WORKER_URL.replace(/\/?$/, '/tts'), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: chunk }),
+            signal: ctrl.signal,
+          });
+          clearTimeout(tid);
+          if (!res.ok) break;
+          const blob = await res.blob();
+          if (blob.size < 100) break;
+          await new Promise((resolve, reject) => {
+            const url  = URL.createObjectURL(blob);
+            const audio = new Audio(url);
+            this._ttsAudio = audio;
+            audio.onended = () => { URL.revokeObjectURL(url); this._ttsAudio = null; resolve(); };
+            audio.onerror = () => { URL.revokeObjectURL(url); this._ttsAudio = null; reject(); };
+            audio.play().catch(reject);
+          });
+        }
+      } catch(_) {}
     }
 
     ttsStop() {
+      this._ttsAborted = true;
       if (this._ttsAudio) { this._ttsAudio.pause(); this._ttsAudio = null; }
       window.speechSynthesis?.cancel();
     }
@@ -374,7 +375,7 @@
       const r = await _tf('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
-        body: JSON.stringify({ model: 'gpt-4o-mini', messages, max_tokens: 600 }),
+        body: JSON.stringify({ model: 'gpt-4o-mini', messages, max_tokens: 1200 }),
         signal: sig,
       }, 30000);
       if (!r.ok) throw new Error(`OpenAI HTTP ${r.status}`);
@@ -416,7 +417,7 @@
         },
         body: JSON.stringify({
           model: 'claude-haiku-4-5-20251001',
-          max_tokens: 600,
+          max_tokens: 1200,
           system: sys,
           messages: chat,
         }),
@@ -434,7 +435,7 @@
       const r = await _tf('https://integrate.api.nvidia.com/v1/chat/completions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
-        body: JSON.stringify({ model: mid, messages, max_tokens: 600, stream: false }),
+        body: JSON.stringify({ model: mid, messages, max_tokens: 1200, stream: false }),
         signal: sig,
       }, 30000);
       if (!r.ok) throw new Error(`NVIDIA HTTP ${r.status}`);
@@ -448,7 +449,7 @@
       const r = await _tf('https://router.huggingface.co/v1/chat/completions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
-        body: JSON.stringify({ model: mid, messages, max_tokens: 600 }),
+        body: JSON.stringify({ model: mid, messages, max_tokens: 1200 }),
         signal: sig,
       }, 30000);
       if (!r.ok) throw new Error(`HF HTTP ${r.status}`);
@@ -460,7 +461,7 @@
     // ── CF Worker（系統供應商，API key 存 Worker secret）──────────────
     async _askCFWorker(messages, sig) {
       const m    = _getModelEntry();
-      const body = { messages, max_tokens: 600 };
+      const body = { messages, max_tokens: 1200 };
       // 傳遞模型偏好給 Worker，Worker 會在驗證後採用
       if (m.hf)     body.model_hf = m.hf;
       if (m.cf)     body.model_cf = m.cf;
@@ -489,7 +490,7 @@
           const r = await _tf(POLL_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ model: mid, messages, stream: false, max_tokens: 500 }),
+            body: JSON.stringify({ model: mid, messages, stream: false, max_tokens: 1000 }),
             signal: sig,
           }, 22000);
           if (r.status === 429) throw new Error('rate_limit');
@@ -552,6 +553,33 @@
   }
 
   // ── 工具函式 ──────────────────────────────────────────────────────────
+
+  // 等待瀏覽器聲音清單非同步載入（getVoices() 在首次呼叫時可能回傳空陣列）
+  function _loadVoices() {
+    return new Promise(resolve => {
+      const v = speechSynthesis.getVoices();
+      if (v.length) { resolve(v); return; }
+      const h = () => resolve(speechSynthesis.getVoices());
+      speechSynthesis.addEventListener('voiceschanged', h, { once: true });
+      setTimeout(() => { speechSynthesis.removeEventListener('voiceschanged', h); resolve(speechSynthesis.getVoices()); }, 2000);
+    });
+  }
+
+  // 長文拆成 ≤maxLen 字元的句段（以句尾標點為優先切點）
+  function _ttsSplit(text, maxLen) {
+    const result = [];
+    let buf = '';
+    for (const part of text.split(/(?<=[。！？.!?\n])/)) {
+      if ((buf + part).length <= maxLen) { buf += part; continue; }
+      if (buf) result.push(buf);
+      let r = part;
+      while (r.length > maxLen) { result.push(r.slice(0, maxLen)); r = r.slice(maxLen); }
+      buf = r;
+    }
+    if (buf) result.push(buf);
+    return result.filter(s => s.trim());
+  }
+
   function _tf(url, opts, timeout) {
     const ctrl = new AbortController();
     opts.signal?.addEventListener('abort', () => ctrl.abort());

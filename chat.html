@@ -402,9 +402,10 @@
 
     // 供應商徽章更新
     function updateProviderBadge() {
-      const info = chat.getProviderInfo();
-      document.getElementById('provider-badge').textContent = `${info.icon} ${info.name}`;
-      document.getElementById('current-provider-name').textContent = `${info.icon} ${info.name}`;
+      const info  = chat.getProviderInfo();
+      const model = info.model ? info.model.replace(/^[★\s]+/, '') : info.name;
+      document.getElementById('provider-badge').textContent = `${info.icon} ${model}`;
+      document.getElementById('current-provider-name').textContent = `${info.icon} ${info.name} · ${model}`;
     }
     updateProviderBadge();
 
