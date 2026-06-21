@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 學習導航 — V6.1</title>
+    <title>iPAS AI 應用規劃師智策網學院</title>
     <link rel="stylesheet" href="css/style.css">
     <script type="importmap">
     {
@@ -189,6 +189,202 @@
             animation: spin 0.8s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ── V7 新增：今日目標 ── */
+        .daily-goal-wrap {
+            width: 90%;
+            max-width: 480px;
+            margin-top: 36px;
+        }
+        .daily-goal {
+            background: rgba(255,255,255,0.04);
+            border-radius: 12px;
+            padding: 16px 24px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .goal-title {
+            font-size: 0.9rem;
+            color: #8b8ba0;
+            margin: 0 0 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .goal-bar {
+            height: 8px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 999px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+        .goal-fill {
+            height: 100%;
+            width: 0%;
+            background: #7dd3fc;
+            border-radius: 999px;
+            transition: width 0.5s ease;
+        }
+        .goal-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 0.85rem;
+        }
+        #goalCount { color: #e0e0f0; }
+        #streakCount { color: #fbbf24; font-size: 0.85rem; }
+        .goal-action { text-align: right; }
+        .goal-btn {
+            display: inline-block;
+            border-radius: 20px;
+            padding: 6px 16px;
+            background: rgba(125,211,252,0.15);
+            border: 1px solid #7dd3fc;
+            color: #7dd3fc;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s;
+        }
+        .goal-btn:hover { background: #7dd3fc; color: #1e1e2e; }
+
+        /* ── V7 新增：Stage 路線圖 ── */
+        .stage-roadmap-wrap {
+            width: 90%;
+            max-width: 860px;
+            margin-top: 32px;
+        }
+        .stage-roadmap {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 12px;
+            padding: 24px;
+        }
+        .stage-roadmap h3 {
+            color: #e2e8f0;
+            font-size: 1rem;
+            margin: 0 0 20px;
+            text-align: center;
+        }
+        .stage-cards {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .stage-card {
+            flex: 1;
+            min-width: 120px;
+            max-width: 180px;
+            border-radius: 10px;
+            padding: 16px 12px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .stage-badge-0 { background: rgba(125,211,252,0.08); border: 1px solid rgba(125,211,252,0.3); }
+        .stage-badge-1 { background: rgba(52,211,153,0.08);  border: 1px solid rgba(52,211,153,0.3); }
+        .stage-badge-2 { background: rgba(167,139,250,0.08); border: 1px solid rgba(167,139,250,0.3); }
+        .stage-badge-3 { background: rgba(251,146,60,0.08);  border: 1px solid rgba(251,146,60,0.3); }
+        .stage-card .s-icon { font-size: 1.4rem; margin-bottom: 6px; display: block; }
+        .stage-card .s-name { font-weight: 600; font-size: 0.9rem; }
+        .stage-badge-0 .s-name { color: #7dd3fc; }
+        .stage-badge-1 .s-name { color: #34d399; }
+        .stage-badge-2 .s-name { color: #a78bfa; }
+        .stage-badge-3 .s-name { color: #fb923c; }
+        .stage-card .s-count { color: #94a3b8; font-size: 0.75rem; margin: 6px 0; }
+        .stage-card .s-btn {
+            display: block;
+            margin-top: 10px;
+            padding: 6px 0;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .stage-card .s-btn:hover { opacity: 0.8; }
+        .stage-badge-0 .s-btn { background: rgba(125,211,252,0.15); border: 1px solid #7dd3fc; color: #7dd3fc; }
+        .stage-badge-1 .s-btn { background: rgba(52,211,153,0.15);  border: 1px solid #34d399; color: #34d399; }
+        .stage-badge-2 .s-btn { background: rgba(167,139,250,0.15); border: 1px solid #a78bfa; color: #a78bfa; }
+        .stage-badge-3 .s-btn { background: rgba(251,146,60,0.15);  border: 1px solid #fb923c; color: #fb923c; }
+        .stage-arrow { display: flex; align-items: center; color: #475569; font-size: 1.2rem; }
+        .stage-card.active { box-shadow: 0 0 0 2px currentColor, 0 0 16px rgba(255,255,255,0.1); transform: scale(1.04); }
+
+        /* ── V7 新增：今日精選術語 ── */
+        .daily-term-wrap {
+            width: 90%;
+            max-width: 560px;
+            margin-top: 32px;
+            margin-bottom: 8px;
+        }
+        .daily-term {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+        }
+        .daily-term .dt-label { color: #94a3b8; font-size: 0.85rem; letter-spacing: 0.08em; margin: 0 0 16px; text-transform: uppercase; }
+        .daily-term .dt-en   { color: #e2e8f0; font-size: 1.5rem; font-weight: 700; margin-bottom: 4px; }
+        .daily-term .dt-zh   { color: #7dd3fc; font-size: 1rem; margin-bottom: 12px; }
+        .daily-term .dt-def  { color: #94a3b8; font-size: 0.85rem; line-height: 1.6; max-width: 360px; margin: 0 auto 20px; }
+        .daily-term .dt-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .dt-btn-tts {
+            background: rgba(125,211,252,0.1); border: 1px solid rgba(125,211,252,0.4);
+            border-radius: 8px; color: #7dd3fc; padding: 8px 16px; cursor: pointer; font-size: 0.9rem;
+        }
+        .dt-btn-learn {
+            background: rgba(125,211,252,0.15); border: 1px solid #7dd3fc;
+            border-radius: 8px; color: #7dd3fc; padding: 8px 16px; font-size: 0.9rem; text-decoration: none;
+        }
+
+        /* ── V7 新增：Wizard Modal ── */
+        .wizard-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10,10,26,0.88);
+            z-index: 500;
+            align-items: center;
+            justify-content: center;
+        }
+        .wizard-card {
+            background: rgba(255,255,255,0.07);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 16px;
+            padding: 36px 32px;
+            max-width: 480px;
+            width: 90%;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+        }
+        .wizard-header { text-align: center; margin-bottom: 24px; }
+        .wizard-header .w-title { color: #7dd3fc; font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; }
+        .wizard-header .w-sub   { color: #94a3b8; font-size: 0.88rem; }
+        .wizard-progress { display: flex; gap: 8px; margin-bottom: 28px; justify-content: center; }
+        .wizard-progress .w-step {
+            width: 64px; height: 4px; border-radius: 4px;
+            background: rgba(255,255,255,0.15); transition: background 0.3s;
+        }
+        .wizard-progress .w-step.active { background: #7dd3fc; }
+        #wizardQ { min-height: 180px; }
+        .w-q-title { color: #e2e8f0; font-size: 1rem; font-weight: 600; margin-bottom: 16px; }
+        .w-opt {
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 14px; margin-bottom: 8px;
+            border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer; color: #cbd5e1; font-size: 0.88rem;
+        }
+        .w-opt input { accent-color: #7dd3fc; }
+        .wizard-footer { display: flex; justify-content: flex-end; margin-top: 20px; }
+        .w-next-btn {
+            background: #7dd3fc; color: #0a0a1a;
+            border: none; border-radius: 8px;
+            padding: 10px 28px; font-size: 0.95rem; font-weight: 600; cursor: pointer;
+        }
+        .w-next-btn:hover { background: #93c5fd; }
     </style>
 </head>
 <body>
@@ -196,6 +392,25 @@
     <!-- 載入動畫 -->
     <div id="loading-overlay">
         <div class="spinner"></div>
+    </div>
+
+    <!-- Wizard Modal（E）-->
+    <div id="wizardModal" class="wizard-overlay">
+        <div class="wizard-card">
+            <div class="wizard-header">
+                <div class="w-title">🎓 iPAS AI 應用規劃師智策網學院</div>
+                <div class="w-sub">回答 3 個問題，找到最適合你的起點。</div>
+            </div>
+            <div class="wizard-progress">
+                <div class="w-step active" id="wStep0"></div>
+                <div class="w-step"        id="wStep1"></div>
+                <div class="w-step"        id="wStep2"></div>
+            </div>
+            <div id="wizardQ"></div>
+            <div class="wizard-footer">
+                <button class="w-next-btn" id="wizardNext" onclick="wizardNext()">下一步 →</button>
+            </div>
+        </div>
     </div>
 
     <!-- Three.js 背景 -->
@@ -206,8 +421,23 @@
 
         <!-- 主標題 -->
         <div class="hero-title">
-            <h1>🧬 AI 學習導航</h1>
-            <p>從基礎到實戰，探索人工智慧的知識宇宙</p>
+            <h1>🧠 iPAS AI 應用規劃師智策網學院</h1>
+            <p>從新手到專業規劃師，依循漸進掌握人工智慧核心職能</p>
+        </div>
+
+        <!-- B：今日學習目標 -->
+        <div class="daily-goal-wrap">
+            <div class="daily-goal">
+                <div class="goal-title">📅 今日學習目標</div>
+                <div class="goal-bar"><div class="goal-fill" id="goalFill"></div></div>
+                <div class="goal-info">
+                    <span id="goalCount">0 / 10 個術語</span>
+                    <span id="streakCount">🔥 0 天連續</span>
+                </div>
+                <div class="goal-action">
+                    <a href="learn.html" class="goal-btn">開始今日學習</a>
+                </div>
+            </div>
         </div>
 
         <!-- 學習路徑導航 → 點擊跳轉至概念星圖並自動過濾 -->
@@ -220,6 +450,44 @@
             <a href="atlas.html?cat=NLP" data-cat="nlp">💬 NLP</a>
             <a href="learn.html" data-cat="srs">📚 SRS 學習</a>
         </nav>
+
+        <!-- C：四階段 Stage 路線圖 -->
+        <div class="stage-roadmap-wrap">
+            <div class="stage-roadmap">
+                <h3>選擇你的學習起點
+                    <span style="font-size:0.75rem;color:#475569;margin-left:10px;font-weight:400;cursor:pointer;" onclick="reopenWizard()">⟳ 重新測驗</span>
+                </h3>
+                <div class="stage-cards">
+                    <div class="stage-card stage-badge-0" id="stageCard0">
+                        <span class="s-icon">✦</span>
+                        <div class="s-name">AI 入門</div>
+                        <div class="s-count">~20 術語</div>
+                        <a href="learn.html?stage=0" class="s-btn">開始學習</a>
+                    </div>
+                    <div class="stage-arrow">→</div>
+                    <div class="stage-card stage-badge-1" id="stageCard1">
+                        <span class="s-icon">🪐</span>
+                        <div class="s-name">iPAS 初級</div>
+                        <div class="s-count">~118 術語</div>
+                        <a href="learn.html?stage=1" class="s-btn">開始學習</a>
+                    </div>
+                    <div class="stage-arrow">→</div>
+                    <div class="stage-card stage-badge-2" id="stageCard2">
+                        <span class="s-icon">🧠</span>
+                        <div class="s-name">中級技術</div>
+                        <div class="s-count">~278 術語</div>
+                        <a href="learn.html?stage=2" class="s-btn">開始學習</a>
+                    </div>
+                    <div class="stage-arrow">→</div>
+                    <div class="stage-card stage-badge-3" id="stageCard3">
+                        <span class="s-icon">⚡</span>
+                        <div class="s-name">中級數據</div>
+                        <div class="s-count">~324 術語</div>
+                        <a href="learn.html?stage=3" class="s-btn">開始學習</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- 4 大功能卡片 -->
         <div class="feature-cards">
@@ -245,12 +513,125 @@
             </div>
         </div>
 
+        <!-- D：今日精選術語 -->
+        <div class="daily-term-wrap">
+            <div class="daily-term">
+                <div class="dt-label">✨ 今日精選術語</div>
+                <div class="dt-en" id="dtEn"></div>
+                <div class="dt-zh" id="dtZh"></div>
+                <div class="dt-def" id="dtDef"></div>
+                <div class="dt-btns">
+                    <button class="dt-btn-tts" onclick="speakTerm()">🔊 朗讀</button>
+                    <a href="learn.html" class="dt-btn-learn">加入學習 →</a>
+                </div>
+            </div>
+        </div>
+
         <!-- 頁尾 -->
         <footer class="site-footer">
-            &copy; 2025 AI TTS SRS Learning &nbsp;|&nbsp; V6.1 &nbsp;|&nbsp; Powered by Three.js &amp; D3.js
+            &copy; 2026 iPAS AI Application Planning Specialist &amp; Strategy Training Network
         </footer>
 
     </div>
+
+    <!-- D：今日精選術語 JS -->
+    <script>
+    (function(){
+        var TERM_POOL = [
+            {en:'Artificial Intelligence', zh:'人工智慧', def:'賦予機器學習、推理與決策能力的技術總稱'},
+            {en:'Machine Learning', zh:'機器學習', def:'AI 的分支，強調不需顯式編程，而是透過經驗改進表現'},
+            {en:'Large Language Model', zh:'大型語言模型', def:'基於海量文本訓練，具備自然語言理解與生成能力的大型模型'},
+            {en:'Transformer', zh:'變壓器架構', def:'基於注意力機制拋棄循環結構，可並行處理序列數據的現代架構'},
+            {en:'Prompt Engineering', zh:'提示工程', def:'透過精確設計輸入提示來引導 LLM 產生高品質輸出的過程'}
+        ];
+        var idx = Math.floor(Date.now() / 86400000) % TERM_POOL.length;
+        var t = TERM_POOL[idx];
+        document.getElementById('dtEn').textContent = t.en;
+        document.getElementById('dtZh').textContent = t.zh;
+        document.getElementById('dtDef').textContent = t.def;
+        window.speakTerm = function(){ var u = new SpeechSynthesisUtterance(t.en); u.lang = 'en-US'; speechSynthesis.speak(u); };
+    })();
+    </script>
+
+    <!-- B：今日學習目標 JS -->
+    <script>
+    (function(){
+        var todayCount = parseInt(localStorage.getItem('srs_today_count') || '0');
+        var dailyGoal  = parseInt(localStorage.getItem('srs_daily_goal')  || '10');
+        var streak     = parseInt(localStorage.getItem('srs_streak')       || '0');
+        var pct = Math.min((todayCount / dailyGoal) * 100, 100);
+        document.getElementById('goalFill').style.width = pct + '%';
+        document.getElementById('goalCount').textContent = todayCount + ' / ' + dailyGoal + ' 個術語';
+        document.getElementById('streakCount').textContent = '🔥 ' + streak + ' 天連續';
+    })();
+    </script>
+
+    <!-- C：Stage 路線圖 JS -->
+    <script>
+    (function(){
+        var cur = parseInt(localStorage.getItem('srs_current_stage') || '-1');
+        if (cur >= 0 && cur <= 3) {
+            var card = document.getElementById('stageCard' + cur);
+            if (card) card.classList.add('active');
+        }
+    })();
+    </script>
+
+    <!-- E：Wizard JS -->
+    <script>
+    (function(){
+        var questions = [
+            { q:'你對 AI 的了解程度？',   opts:['A. 完全零基礎','B. 聽過但沒深入','C. 用過 ChatGPT 等工具','D. 有技術背景'] },
+            { q:'你的學習目標？',          opts:['A. 了解 AI 基本概念','B. 準備 iPAS 初級認證','C. 準備 iPAS 中級認證','D. 深入技術研究'] },
+            { q:'每天能投入的學習時間？',  opts:['A. 不到 10 分鐘','B. 10–20 分鐘','C. 20–40 分鐘','D. 40 分鐘以上'] }
+        ];
+        var step = 0, answers = [];
+
+        function renderQ() {
+            var q = questions[step];
+            var html = '<div class="w-q-title">' + (step+1) + '. ' + q.q + '</div>';
+            q.opts.forEach(function(opt, i){
+                html += '<label class="w-opt"><input type="radio" name="wq" value="'+i+'"> '+opt+'</label>';
+            });
+            document.getElementById('wizardQ').innerHTML = html;
+            for (var s = 0; s < 3; s++) {
+                var el = document.getElementById('wStep'+s);
+                if (el) el.className = 'w-step' + (s <= step ? ' active' : '');
+            }
+            document.getElementById('wizardNext').textContent = step === 2 ? '完成 ✓' : '下一步 →';
+        }
+
+        window.wizardNext = function(){
+            var sel = document.querySelector('input[name="wq"]:checked');
+            if (!sel) return;
+            answers.push(parseInt(sel.value));
+            if (step < 2) { step++; renderQ(); }
+            else {
+                var stage = answers[0] <= 1 ? 0 : answers[1] <= 1 ? 1 : answers[1] === 2 ? 2 : 3;
+                localStorage.setItem('wizard_done', '1');
+                localStorage.setItem('srs_current_stage', stage);
+                document.getElementById('wizardModal').style.display = 'none';
+                // 更新 stage 卡片 active 狀態
+                for (var i = 0; i <= 3; i++) {
+                    var c = document.getElementById('stageCard'+i);
+                    if (c) c.classList.toggle('active', i === stage);
+                }
+            }
+        };
+
+        window.reopenWizard = function(){
+            localStorage.removeItem('wizard_done');
+            step = 0; answers = [];
+            document.getElementById('wizardModal').style.display = 'flex';
+            renderQ();
+        };
+
+        if (!localStorage.getItem('wizard_done')) {
+            document.getElementById('wizardModal').style.display = 'flex';
+            renderQ();
+        }
+    })();
+    </script>
 
     <!-- Three.js 神經光粒子背景 -->
     <script type="module">
@@ -275,27 +656,23 @@
         const colors = new Float32Array(PARTICLE_COUNT * 3);
         const sizes = new Float32Array(PARTICLE_COUNT);
 
-        // 分類顏色 palette
         const palette = [
-            new THREE.Color('#a78bfa'),  // 機器學習
-            new THREE.Color('#fbbf24'),  // 深度學習
-            new THREE.Color('#34d399'),  // 神經網路
-            new THREE.Color('#7dd3fc'),  // AI概念
-            new THREE.Color('#f472b6'),  // AI應用
+            new THREE.Color('#a78bfa'),
+            new THREE.Color('#fbbf24'),
+            new THREE.Color('#34d399'),
+            new THREE.Color('#7dd3fc'),
+            new THREE.Color('#f472b6'),
         ];
 
-        // 隨機分配粒子
         for (let i = 0; i < PARTICLE_COUNT; i++) {
             const i3 = i * 3;
             positions[i3]     = (Math.random() - 0.5) * 100;
             positions[i3 + 1] = (Math.random() - 0.5) * 100;
             positions[i3 + 2] = (Math.random() - 0.5) * 60;
-
             const c = palette[Math.floor(Math.random() * palette.length)];
             colors[i3]     = c.r;
             colors[i3 + 1] = c.g;
             colors[i3 + 2] = c.b;
-
             sizes[i] = Math.random() * 2.0 + 0.5;
         }
 
@@ -304,7 +681,6 @@
         particleGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
         particleGeo.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
 
-        // 自訂 ShaderMaterial 讓粒子有圓形 + 發光感
         const particleMat = new THREE.ShaderMaterial({
             uniforms: {
                 uTime: { value: 0 },
@@ -320,7 +696,6 @@
                 void main() {
                     vColor = color;
                     vec3 pos = position;
-                    // 緩慢飄動
                     pos.x += sin(uTime * 0.15 + position.y * 0.05) * 1.5;
                     pos.y += cos(uTime * 0.12 + position.x * 0.04) * 1.2;
                     pos.z += sin(uTime * 0.1  + position.z * 0.03) * 0.8;
@@ -349,7 +724,6 @@
         const particles = new THREE.Points(particleGeo, particleMat);
         scene.add(particles);
 
-        // ── 連線（神經網路效果） ──
         const LINE_COUNT = 300;
         const linePositions = new Float32Array(LINE_COUNT * 6);
         const lineColors = new Float32Array(LINE_COUNT * 6);
@@ -368,13 +742,11 @@
         const lines = new THREE.LineSegments(lineGeo, lineMat);
         scene.add(lines);
 
-        // 建立連線：距離近的粒子互相連結
         function updateLines() {
             const posArr = particleGeo.attributes.position.array;
             const colArr = particleGeo.attributes.color.array;
             let lineIdx = 0;
             const maxDist = 12;
-
             for (let i = 0; i < Math.min(PARTICLE_COUNT, 400) && lineIdx < LINE_COUNT; i++) {
                 for (let j = i + 1; j < Math.min(PARTICLE_COUNT, 400) && lineIdx < LINE_COUNT; j++) {
                     const dx = posArr[i*3]   - posArr[j*3];
@@ -383,69 +755,41 @@
                     const dist = Math.sqrt(dx*dx + dy*dy + dz*dz);
                     if (dist < maxDist) {
                         const li = lineIdx * 6;
-                        linePositions[li]   = posArr[i*3];
-                        linePositions[li+1] = posArr[i*3+1];
-                        linePositions[li+2] = posArr[i*3+2];
-                        linePositions[li+3] = posArr[j*3];
-                        linePositions[li+4] = posArr[j*3+1];
-                        linePositions[li+5] = posArr[j*3+2];
-
-                        lineColors[li]   = colArr[i*3];
-                        lineColors[li+1] = colArr[i*3+1];
-                        lineColors[li+2] = colArr[i*3+2];
-                        lineColors[li+3] = colArr[j*3];
-                        lineColors[li+4] = colArr[j*3+1];
-                        lineColors[li+5] = colArr[j*3+2];
+                        linePositions[li]   = posArr[i*3];   linePositions[li+1] = posArr[i*3+1]; linePositions[li+2] = posArr[i*3+2];
+                        linePositions[li+3] = posArr[j*3];   linePositions[li+4] = posArr[j*3+1]; linePositions[li+5] = posArr[j*3+2];
+                        lineColors[li]   = colArr[i*3];      lineColors[li+1]   = colArr[i*3+1]; lineColors[li+2]   = colArr[i*3+2];
+                        lineColors[li+3] = colArr[j*3];      lineColors[li+4]   = colArr[j*3+1]; lineColors[li+5]   = colArr[j*3+2];
                         lineIdx++;
                     }
                 }
             }
-            // 剩餘線段歸零
-            for (let k = lineIdx * 6; k < LINE_COUNT * 6; k++) {
-                linePositions[k] = 0;
-            }
+            for (let k = lineIdx * 6; k < LINE_COUNT * 6; k++) linePositions[k] = 0;
             lineGeo.attributes.position.needsUpdate = true;
             lineGeo.attributes.color.needsUpdate = true;
         }
 
-        // ── Bloom 後處理 ──
         const composer = new EffectComposer(renderer);
         composer.addPass(new RenderPass(scene, camera));
-
         const bloomPass = new UnrealBloomPass(
-            new THREE.Vector2(window.innerWidth, window.innerHeight),
-            1.2,   // strength
-            0.5,   // radius
-            0.3    // threshold
+            new THREE.Vector2(window.innerWidth, window.innerHeight), 1.2, 0.5, 0.3
         );
         composer.addPass(bloomPass);
 
-        // ── 動畫迴圈 ──
         let lastLineUpdate = 0;
         const clock = new THREE.Clock();
 
         function animate() {
             requestAnimationFrame(animate);
             const elapsed = clock.getElapsedTime();
-
             particleMat.uniforms.uTime.value = elapsed;
-
-            // 粒子整體緩慢旋轉
             particles.rotation.y = elapsed * 0.02;
             particles.rotation.x = Math.sin(elapsed * 0.01) * 0.1;
             lines.rotation.y = elapsed * 0.02;
             lines.rotation.x = Math.sin(elapsed * 0.01) * 0.1;
-
-            // 每 0.5 秒更新連線
-            if (elapsed - lastLineUpdate > 0.5) {
-                updateLines();
-                lastLineUpdate = elapsed;
-            }
-
+            if (elapsed - lastLineUpdate > 0.5) { updateLines(); lastLineUpdate = elapsed; }
             composer.render();
         }
 
-        // ── 視窗縮放 ──
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
@@ -453,11 +797,9 @@
             composer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        // ── 隱藏載入動畫 ──
         const overlay = document.getElementById('loading-overlay');
         setTimeout(() => overlay.classList.add('hidden'), 800);
 
-        // ── 啟動 ──
         updateLines();
         animate();
     </script>
