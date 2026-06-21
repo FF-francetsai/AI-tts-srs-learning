@@ -305,7 +305,8 @@
       const utt = new SpeechSynthesisUtterance(text);
       utt.lang = 'zh-TW'; utt.rate = 0.9;
       const doSpeak = (voices) => {
-        utt.voice = voices.find(v => /Microsoft.*(HsiaoChen|HsiaoYu)/i.test(v.name))
+        utt.voice = voices.find(v => /Microsoft.*HsiaoChen/i.test(v.name))
+          || voices.find(v => /Microsoft.*(HsiaoYu|Yating)/i.test(v.name))
           || voices.find(v => /Microsoft/i.test(v.name) && v.lang === 'zh-TW')
           || voices.find(v => v.lang === 'zh-TW')
           || null;

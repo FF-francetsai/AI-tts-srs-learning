@@ -869,8 +869,9 @@ const App = {
                     utter.voice = gv.find(v => v.name.includes(gender === 'female' ? '-A' : '-B')) || gv[0];
                 }
             } else {
-                // 優先 Microsoft 擬真人聲
-                utter.voice = voices.find(v => /Microsoft.*(HsiaoChen|HsiaoYu)/i.test(v.name))
+                // 固定女聲：Microsoft HsiaoChen（對應 edge-tts zh-TW-HsiaoChenNeural）
+                utter.voice = voices.find(v => /Microsoft.*HsiaoChen/i.test(v.name))
+                    || voices.find(v => /Microsoft.*(HsiaoYu|Yating)/i.test(v.name))
                     || voices.find(v => /Microsoft/i.test(v.name) && v.lang === 'zh-TW' && (gender === 'female' ? !/Male/i.test(v.name) : /Male/i.test(v.name)))
                     || voices.find(v => /Microsoft/i.test(v.name) && v.lang === 'zh-TW')
                     || voices.find(v => v.lang === 'zh-TW')
