@@ -467,6 +467,7 @@ const App = {
                 sub.topics.forEach(topic => {
                     const link = document.createElement('div');
                     link.className = 'topic-link';
+                    if (topic.stage !== undefined) link.dataset.stage = topic.stage;
                     link.innerHTML = `<i class="fas fa-file-alt"></i> ${topic.id}. ${topic.title}`;
                     link.onclick = (e) => {
                         e.stopPropagation();
@@ -850,26 +851,49 @@ const App = {
 
     speakZh: (text, speedOverride = null) => {
         App.synth.cancel();
-        const utter = new SpeechSynthesisUtterance(text);
-        const rateSlider = document.getElementById('ttsRateSlider');
-        utter.rate = speedOverride || (rateSlider ? parseFloat(rateSlider.value) : 1.0);
+
+        const doSpeak = (voices) => {
+            const utter = new SpeechSynthesisUtterance(text);
+            utter.lang = 'zh-TW';
+            const rateSlider = document.getElementById('ttsRateSlider');
+            utter.rate = (speedOverride !== null && speedOverride !== undefined)
+                ? speedOverride
+                : (rateSlider ? parseFloat(rateSlider.value) : 0.85);
+
+            const engine = document.getElementById('ttsEngineSelect')?.value || 'browser';
+            const gender = document.getElementById('ttsGenderSelect')?.value || 'female';
+
+            if (engine === 'google') {
+                const gv = voices.filter(v => v.name.includes('Google') && v.lang.includes('zh-TW'));
+                if (gv.length > 0) {
+                    utter.voice = gv.find(v => v.name.includes(gender === 'female' ? '-A' : '-B')) || gv[0];
+                }
+            } else {
+                // 優先 Microsoft 擬真人聲
+                utter.voice = voices.find(v => /Microsoft.*(HsiaoChen|HsiaoYu)/i.test(v.name))
+                    || voices.find(v => /Microsoft/i.test(v.name) && v.lang === 'zh-TW' && (gender === 'female' ? !/Male/i.test(v.name) : /Male/i.test(v.name)))
+                    || voices.find(v => /Microsoft/i.test(v.name) && v.lang === 'zh-TW')
+                    || voices.find(v => v.lang === 'zh-TW')
+                    || null;
+            }
+
+            const pitchSlider = document.getElementById('ttsPitchSlider');
+            if (engine === 'browser' && pitchSlider) utter.pitch = parseFloat(pitchSlider.value);
+
+            App.synth.speak(utter);
+        };
 
         const voices = App.synth.getVoices();
-        const engine = document.getElementById('ttsEngineSelect').value;
-        const gender = document.getElementById('ttsGenderSelect').value;
-
-        if (engine === 'google') {
-            const googleVoices = voices.filter(v => v.name.includes('Google') && v.lang.includes('zh-TW'));
-            if (googleVoices.length > 0) {
-                const targetVoice = googleVoices.find(v => v.name.includes(gender === 'female' ? '-A' : '-B')) || googleVoices[0];
-                utter.voice = targetVoice;
-            }
+        if (voices.length > 0) {
+            doSpeak(voices);
         } else {
-            const zhVoice = voices.find(v => v.lang.includes('zh-TW') && (gender === 'female' ? !v.name.includes('Male') : v.name.includes('Male')));
-            if (zhVoice) utter.voice = zhVoice;
+            // 等待非同步聲音清單載入
+            const prev = App.synth.onvoiceschanged;
+            App.synth.onvoiceschanged = () => {
+                App.synth.onvoiceschanged = prev || null;
+                doSpeak(App.synth.getVoices());
+            };
         }
-
-        App.synth.speak(utter);
     },
 
     speakEng: (text) => {

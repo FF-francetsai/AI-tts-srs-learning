@@ -303,10 +303,17 @@
       if (!('speechSynthesis' in window)) return;
       speechSynthesis.cancel();
       const utt = new SpeechSynthesisUtterance(text);
-      utt.lang = 'zh-TW'; utt.rate = 1.0;
-      const v = speechSynthesis.getVoices().find(v => v.lang.startsWith('zh'));
-      if (v) utt.voice = v;
-      speechSynthesis.speak(utt);
+      utt.lang = 'zh-TW'; utt.rate = 0.9;
+      const doSpeak = (voices) => {
+        utt.voice = voices.find(v => /Microsoft.*(HsiaoChen|HsiaoYu)/i.test(v.name))
+          || voices.find(v => /Microsoft/i.test(v.name) && v.lang === 'zh-TW')
+          || voices.find(v => v.lang === 'zh-TW')
+          || null;
+        speechSynthesis.speak(utt);
+      };
+      const voices = speechSynthesis.getVoices();
+      if (voices.length > 0) { doSpeak(voices); }
+      else { speechSynthesis.onvoiceschanged = () => { speechSynthesis.onvoiceschanged = null; doSpeak(speechSynthesis.getVoices()); }; }
     }
 
     // ── 事件：展開卡片 + TTS ──

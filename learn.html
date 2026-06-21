@@ -38,6 +38,26 @@
             font-size: 14px; z-index: 10000; max-width: 400px; text-align: center;
         }
     </style>
+
+<style id="stage-banner-style">
+.stage-banner {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 1.1em;
+  font-weight: bold;
+  border-radius: 8px;
+  margin: 10px 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.stage-banner .stage-label {
+  font-size: 0.85em;
+  opacity: 0.85;
+  margin-right: 6px;
+}
+</style>
+
 </head>
 
 <body class="dark-theme">
@@ -74,8 +94,8 @@
                         <i class="fas fa-volume-up" style="color:var(--accent-color);font-size:0.9rem;"></i>
                         <span class="tts-label">發音引擎</span>
                         <select id="ttsEngineSelect" class="tts-engine-select">
-                            <option value="browser">💻 系統預設</option>
-                            <option value="google" selected>🌐 Google 真人</option>
+                            <option value="browser" selected>💻 Microsoft 擬真人</option>
+                            <option value="google">🌐 Google 真人</option>
                         </select>
                         <span class="tts-divider"></span>
                         <i class="fas fa-user" style="color:var(--text-dim);font-size:0.8rem;"></i>
@@ -220,6 +240,112 @@
             });
         })();
     </script>
+
+<script id="stage-filter-script">
+(function() {
+  const STAGE_NAMES = {
+    '0': 'AI入門',
+    '1': 'iPAS初級',
+    '2': '中級技術',
+    '3': '中級數據'
+  };
+
+  function getStageFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    const s = params.get('stage');
+    if (s !== null && STAGE_NAMES.hasOwnProperty(s)) {
+      return s;
+    }
+    return null;
+  }
+
+  function applyStageFilter() {
+    const stage = getStageFromURL();
+    if (stage === null) return; // 無參數，顯示全部
+
+    // 插入或更新 Stage 橫幅
+    let banner = document.getElementById('stage-banner');
+    if (!banner) {
+      banner = document.createElement('div');
+      banner.id = 'stage-banner';
+      banner.className = 'stage-banner';
+      // 插到 body 最前面（或第一個主要容器前）
+      const main = document.querySelector('main, .container, #app, body');
+      if (main && main !== document.body) {
+        main.parentNode.insertBefore(banner, main);
+      } else {
+        document.body.insertBefore(banner, document.body.firstChild);
+      }
+    }
+    banner.innerHTML = '<span class="stage-label">目前 Stage：</span>' +
+      'Stage ' + stage + ' — ' + STAGE_NAMES[stage];
+
+    // 篩選術語卡片
+    // 嘗試多種可能的卡片選擇器
+    const selectors = [
+      '.topic-link[data-stage]', '.term-card', '.card', '.term', '[data-term]',
+      '.topic-card', '.item', '.vocab-item', '.glossary-item'
+    ];
+
+    let cards = [];
+    for (const sel of selectors) {
+      cards = document.querySelectorAll(sel);
+      if (cards.length > 0) break;
+    }
+
+    if (cards.length === 0) {
+      // 嘗試找所有包含 stage 屬性的元素
+      cards = document.querySelectorAll('[stage]');
+    }
+
+    let visibleCount = 0;
+    let hiddenCount = 0;
+
+    cards.forEach(function(card) {
+      // 嘗試從 data-stage 或 stage 屬性讀取
+      let cardStage = card.getAttribute('data-stage') || card.getAttribute('stage');
+      if (cardStage === null || cardStage === undefined || cardStage === '') {
+        return; // 找不到 stage 屬性，不隱藏（避免誤隱藏）
+      }
+      cardStage = String(cardStage).trim();
+      if (cardStage === stage) {
+        card.style.display = '';
+        visibleCount++;
+      } else {
+        card.style.display = 'none';
+        hiddenCount++;
+      }
+    });
+
+    console.log('[Stage Filter] stage=' + stage + ' 顯示=' + visibleCount + ' 隱藏=' + hiddenCount);
+  }
+
+  // DOMContentLoaded 或已載入時執行
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', applyStageFilter);
+  } else {
+    applyStageFilter();
+  }
+
+  // 若有動態渲染（從 data.js 載入後才生成卡片），用 MutationObserver 監聽
+  const observer = new MutationObserver(function(mutations) {
+    let shouldReapply = false;
+    mutations.forEach(function(m) {
+      if (m.addedNodes.length > 0) shouldReapply = true;
+    });
+    if (shouldReapply) {
+      // debounce
+      clearTimeout(window._stageFilterTimer);
+      window._stageFilterTimer = setTimeout(applyStageFilter, 200);
+    }
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
+
+  // 5 秒後停止觀察（避免無限監聽）
+  setTimeout(function() { observer.disconnect(); }, 5000);
+})();
+</script>
+
 </body>
 
 </html>
