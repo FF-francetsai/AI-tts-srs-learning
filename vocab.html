@@ -182,6 +182,7 @@
   <!-- Card grid -->
   <div class="vocab-grid" id="vocab-grid"></div>
 
+  <script src="js/providers.js"></script>
   <script src="data.js?v=6.1"></script>
   <script>
     // ── 分類顏色對應 ──
@@ -299,22 +300,49 @@
     }
 
     // ── TTS ──
+    const _CF_URL = (window.AI_PROVIDERS && window.AI_PROVIDERS.cf_worker_url) || '';
+    async function speakViaCF(text) {
+      if (!_CF_URL) return false;
+      try {
+        const res = await fetch(_CF_URL.replace(/\/?$/, '/tts'), {
+          method: 'POST', headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({text})
+        });
+        if (!res.ok) return false;
+        const url = URL.createObjectURL(await res.blob());
+        const a = new Audio(url);
+        a.onended = () => URL.revokeObjectURL(url);
+        await a.play(); return true;
+      } catch { return false; }
+    }
     function speak(text) {
-      if (!('speechSynthesis' in window)) return;
+      if (!('speechSynthesis' in window)) { speakViaCF(text); return; }
       speechSynthesis.cancel();
-      const utt = new SpeechSynthesisUtterance(text);
-      utt.lang = 'zh-TW'; utt.rate = 0.9;
       const doSpeak = (voices) => {
-        utt.voice = voices.find(v => /Microsoft.*HsiaoChen/i.test(v.name))
+        const msVoice = voices.find(v => /Microsoft.*HsiaoChen/i.test(v.name))
           || voices.find(v => /Microsoft.*(HsiaoYu|Yating)/i.test(v.name))
           || voices.find(v => /Microsoft/i.test(v.name) && v.lang === 'zh-TW')
-          || voices.find(v => v.lang === 'zh-TW')
           || null;
-        speechSynthesis.speak(utt);
+        if (msVoice) {
+          const utt = new SpeechSynthesisUtterance(text);
+          utt.lang = 'zh-TW'; utt.rate = 0.9; utt.voice = msVoice;
+          speechSynthesis.speak(utt);
+        } else {
+          speakViaCF(text).then(ok => {
+            if (!ok) {
+              const utt = new SpeechSynthesisUtterance(text);
+              utt.lang = 'zh-TW'; utt.rate = 0.9;
+              speechSynthesis.speak(utt);
+            }
+          });
+        }
       };
       const voices = speechSynthesis.getVoices();
       if (voices.length > 0) { doSpeak(voices); }
-      else { speechSynthesis.onvoiceschanged = () => { speechSynthesis.onvoiceschanged = null; doSpeak(speechSynthesis.getVoices()); }; }
+      else {
+        speechSynthesis.onvoiceschanged = () => { speechSynthesis.onvoiceschanged = null; doSpeak(speechSynthesis.getVoices()); };
+        setTimeout(() => { if (!speechSynthesis.getVoices().length) speakViaCF(text); }, 2000);
+      }
     }
 
     // ── 事件：展開卡片 + TTS ──

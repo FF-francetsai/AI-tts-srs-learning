@@ -851,25 +851,44 @@ const App = {
 
     speakZh: (text, speedOverride = null) => {
         App.synth.cancel();
+        const CF_URL = (window.AI_PROVIDERS && window.AI_PROVIDERS.cf_worker_url) || '';
+        const rateSlider = document.getElementById('ttsRateSlider');
+        const rate = (speedOverride !== null && speedOverride !== undefined)
+            ? speedOverride
+            : (rateSlider ? parseFloat(rateSlider.value) : 0.85);
+        const engine = document.getElementById('ttsEngineSelect')?.value || 'browser';
+        const gender = document.getElementById('ttsGenderSelect')?.value || 'female';
 
-        const doSpeak = (voices) => {
+        // CF Worker（Edge TTS HsiaoChenNeural）直接播放
+        const speakViaCF = async () => {
+            if (!CF_URL) return false;
+            try {
+                const res = await fetch(CF_URL.replace(/\/?$/, '/tts'), {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({text})
+                });
+                if (!res.ok) return false;
+                const blob = await res.blob();
+                const url = URL.createObjectURL(blob);
+                const audio = new Audio(url);
+                audio.playbackRate = Math.min(Math.max(rate, 0.5), 2.0);
+                audio.onended = () => URL.revokeObjectURL(url);
+                await audio.play();
+                return true;
+            } catch { return false; }
+        };
+
+        const speakViaBrowser = (voices) => {
             const utter = new SpeechSynthesisUtterance(text);
             utter.lang = 'zh-TW';
-            const rateSlider = document.getElementById('ttsRateSlider');
-            utter.rate = (speedOverride !== null && speedOverride !== undefined)
-                ? speedOverride
-                : (rateSlider ? parseFloat(rateSlider.value) : 0.85);
-
-            const engine = document.getElementById('ttsEngineSelect')?.value || 'browser';
-            const gender = document.getElementById('ttsGenderSelect')?.value || 'female';
+            utter.rate = rate;
 
             if (engine === 'google') {
                 const gv = voices.filter(v => v.name.includes('Google') && v.lang.includes('zh-TW'));
-                if (gv.length > 0) {
+                if (gv.length > 0)
                     utter.voice = gv.find(v => v.name.includes(gender === 'female' ? '-A' : '-B')) || gv[0];
-                }
             } else {
-                // 固定女聲：Microsoft HsiaoChen（對應 edge-tts zh-TW-HsiaoChenNeural）
                 utter.voice = voices.find(v => /Microsoft.*HsiaoChen/i.test(v.name))
                     || voices.find(v => /Microsoft.*(HsiaoYu|Yating)/i.test(v.name))
                     || voices.find(v => /Microsoft/i.test(v.name) && v.lang === 'zh-TW' && (gender === 'female' ? !/Male/i.test(v.name) : /Male/i.test(v.name)))
@@ -877,23 +896,36 @@ const App = {
                     || voices.find(v => v.lang === 'zh-TW')
                     || null;
             }
-
             const pitchSlider = document.getElementById('ttsPitchSlider');
             if (engine === 'browser' && pitchSlider) utter.pitch = parseFloat(pitchSlider.value);
-
             App.synth.speak(utter);
+        };
+
+        const doWithVoices = (voices) => {
+            // 有 Microsoft 聲音 → 用瀏覽器；否則 CF Worker fallback
+            const hasMicrosoft = voices.some(v => /Microsoft.*HsiaoChen/i.test(v.name) || (/Microsoft/i.test(v.name) && v.lang === 'zh-TW'));
+            if (engine === 'google' || hasMicrosoft) {
+                speakViaBrowser(voices);
+            } else {
+                speakViaCF().then(ok => { if (!ok) speakViaBrowser(voices); });
+            }
         };
 
         const voices = App.synth.getVoices();
         if (voices.length > 0) {
-            doSpeak(voices);
+            doWithVoices(voices);
         } else {
-            // 等待非同步聲音清單載入
             const prev = App.synth.onvoiceschanged;
             App.synth.onvoiceschanged = () => {
                 App.synth.onvoiceschanged = prev || null;
-                doSpeak(App.synth.getVoices());
+                const v = App.synth.getVoices();
+                if (v.length > 0) { doWithVoices(v); }
+                else { speakViaCF(); }
             };
+            // 若 2 秒後仍無聲音清單，直接用 CF Worker
+            setTimeout(() => {
+                if (!App.synth.getVoices().length) speakViaCF();
+            }, 2000);
         }
     },
 
