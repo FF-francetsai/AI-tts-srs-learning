@@ -461,28 +461,28 @@
                     <div class="stage-card stage-badge-0" id="stageCard0">
                         <span class="s-icon">✦</span>
                         <div class="s-name">AI 入門</div>
-                        <div class="s-count">~20 術語</div>
+                        <div class="s-count" id="sCount0">— 術語</div>
                         <a href="learn.html?stage=0" class="s-btn">開始學習</a>
                     </div>
                     <div class="stage-arrow">→</div>
                     <div class="stage-card stage-badge-1" id="stageCard1">
                         <span class="s-icon">🪐</span>
                         <div class="s-name">iPAS 初級</div>
-                        <div class="s-count">~118 術語</div>
+                        <div class="s-count" id="sCount1">— 術語</div>
                         <a href="learn.html?stage=1" class="s-btn">開始學習</a>
                     </div>
                     <div class="stage-arrow">→</div>
                     <div class="stage-card stage-badge-2" id="stageCard2">
                         <span class="s-icon">🧠</span>
                         <div class="s-name">中級技術</div>
-                        <div class="s-count">~278 術語</div>
+                        <div class="s-count" id="sCount2">— 術語</div>
                         <a href="learn.html?stage=2" class="s-btn">開始學習</a>
                     </div>
                     <div class="stage-arrow">→</div>
                     <div class="stage-card stage-badge-3" id="stageCard3">
                         <span class="s-icon">⚡</span>
                         <div class="s-name">中級數據</div>
-                        <div class="s-count">~324 術語</div>
+                        <div class="s-count" id="sCount3">— 術語</div>
                         <a href="learn.html?stage=3" class="s-btn">開始學習</a>
                     </div>
                 </div>
@@ -534,6 +534,9 @@
 
     </div>
 
+    <!-- 載入術語資料庫（供 stage 計數動態更新使用）-->
+    <script src="data.js"></script>
+
     <!-- D：今日精選術語 JS -->
     <script>
     (function(){
@@ -566,9 +569,31 @@
     })();
     </script>
 
-    <!-- C：Stage 路線圖 JS -->
+    <!-- C：Stage 路線圖 JS（動態計算術語數量）-->
     <script>
     (function(){
+        // 動態更新 stage 術語數量（從 lessonData 計算）
+        if (typeof lessonData !== 'undefined') {
+            var counts = [0,0,0,0];
+            for (var i = 0; i < lessonData.length; i++) {
+                var s = parseInt(lessonData[i].stage || '1');
+                if (s >= 0 && s <= 3) counts[s]++;
+            }
+            for (var j = 0; j <= 3; j++) {
+                var el = document.getElementById('sCount' + j);
+                if (el) el.textContent = counts[j] + ' 術語';
+            }
+            // 更新互動詞庫描述的術語數
+            var total = lessonData.length;
+            document.querySelectorAll('[id]').forEach(function(e){});
+            var descEls = document.querySelectorAll('.card-desc');
+            descEls.forEach(function(e){
+                if (e.textContent.indexOf('個術語') > -1 && e.textContent.indexOf('搜尋') > -1) {
+                    e.textContent = '搜尋 ' + total + ' 個術語、朗讀定義、分類篩選、問 AI 深入解析';
+                }
+            });
+        }
+        // 高亮目前 stage
         var cur = parseInt(localStorage.getItem('srs_current_stage') || '-1');
         if (cur >= 0 && cur <= 3) {
             var card = document.getElementById('stageCard' + cur);
