@@ -372,11 +372,11 @@
       const cf = defs.append('filter').attr('id','core-glow')
         .attr('x','-150%').attr('y','-150%').attr('width','500%').attr('height','500%');
       const cfBlur = cf.append('feGaussianBlur').attr('in','SourceGraphic').attr('stdDeviation',12).attr('result','b');
-      // 閃爍：動態改變光暈模糊半徑
+      // 閃爍：動態改變光暈模糊半徑（慢速，14s）
       cfBlur.append('animate')
         .attr('attributeName','stdDeviation')
         .attr('values','10;16;10;20;12;18;10')
-        .attr('dur','4.5s').attr('repeatCount','indefinite');
+        .attr('dur','14s').attr('repeatCount','indefinite');
       const cm = cf.append('feMerge');
       cm.append('feMergeNode').attr('in','b');
       cm.append('feMergeNode').attr('in','SourceGraphic');
@@ -734,16 +734,16 @@
       // 太陽本體（帶 SMIL 閃爍脈衝）
       const coreCircle = g.append('circle').attr('r', r)
         .attr('fill','url(#core-grad)').style('filter','url(#core-glow)');
-      // 半徑脈衝：呼吸感閃爍
+      // 半徑脈衝：緩慢呼吸（16s）
       coreCircle.append('animate')
         .attr('attributeName','r')
         .attr('values',`${r};${r*1.06};${r*0.97};${r*1.09};${r*0.98};${r}`)
-        .attr('dur','5s').attr('repeatCount','indefinite');
-      // 透明度閃爍（模擬星體不穩定光）
+        .attr('dur','16s').attr('repeatCount','indefinite');
+      // 透明度閃爍（10s，像恆星緩慢搏動）
       coreCircle.append('animate')
         .attr('attributeName','opacity')
         .attr('values','1;0.85;1;0.75;0.95;1;0.88;1')
-        .attr('dur','3.8s').attr('repeatCount','indefinite');
+        .attr('dur','10s').attr('repeatCount','indefinite');
       g.append('text').attr('text-anchor','middle').attr('dy','0.32em')
         .attr('fill','#1c1917').attr('font-size', r*0.6).attr('font-weight', 700)
         .attr('pointer-events','none').text('AI');
