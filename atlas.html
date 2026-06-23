@@ -289,23 +289,37 @@
   <script src="js/atlas.js?v=6.1"></script>
   <script src="js/starmap.js?v=1.0"></script>
   <script>
-    // 扁平化 lessonData → topics（category 在 topic 層）
+    // 扁平化 lessonData → topics（支援舊版巢狀結構與新版扁平陣列）
     const topics = [];
     if (typeof lessonData !== 'undefined') {
-      lessonData.forEach(section => {
-        (section.sub_units || []).forEach(sub => {
-          (sub.topics || []).forEach(t => {
-            const rawCat = (t.category || '').split('\n')[0].trim() || 'AI 基礎';
-            topics.push({
-              id:       String(t.id || Math.random()),
-              title:    t.title    || '',
-              eng_name: t.eng_name || t.eng_abbr || '',
-              category: rawCat,
-              def:      t.def      || '',
-              key_goal: t.key_goal || ''
+      lessonData.forEach(item => {
+        // 新版：每筆 item 直接是術語（有 title 欄位）
+        if (item.title) {
+          const rawCat = (item.category || '').split('\n')[0].trim() || 'AI 基礎';
+          topics.push({
+            id:       String(item.id || Math.random()),
+            title:    item.title    || '',
+            eng_name: item.eng_name || item.eng_abbr || '',
+            category: rawCat,
+            def:      item.def      || '',
+            key_goal: item.key_goal || ''
+          });
+        } else {
+          // 舊版：section → sub_units → topics 三層結構
+          (item.sub_units || []).forEach(sub => {
+            (sub.topics || []).forEach(t => {
+              const rawCat = (t.category || '').split('\n')[0].trim() || 'AI 基礎';
+              topics.push({
+                id:       String(t.id || Math.random()),
+                title:    t.title    || '',
+                eng_name: t.eng_name || t.eng_abbr || '',
+                category: rawCat,
+                def:      t.def      || '',
+                key_goal: t.key_goal || ''
+              });
             });
           });
-        });
+        }
       });
     }
 

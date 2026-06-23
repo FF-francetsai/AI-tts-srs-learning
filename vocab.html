@@ -201,25 +201,41 @@
       return 'var(--cat-def)';
     }
 
-    // ── 扁平化 data.js ──
+    // ── 扁平化 data.js（支援舊版巢狀結構與新版扁平陣列）──
     const allTerms = [];
     if (typeof lessonData !== 'undefined') {
-      lessonData.forEach(section => {
-        (section.sub_units || []).forEach(sub => {
-          (sub.topics || []).forEach(t => {
-            const cat = (t.category || '').split('\n')[0].trim() || 'AI 基礎';
-            allTerms.push({
-              id:       t.id,
-              title:    t.title    || '',
-              eng:      t.eng_name || '',
-              abbr:     t.eng_abbr || '',
-              cat,
-              def:      t.def      || '',
-              goal:     t.key_goal || '',
-              apps:     t.common_apps || ''
+      lessonData.forEach(item => {
+        // 新版：每筆 item 直接是術語（有 title 欄位）
+        if (item.title) {
+          const cat = (item.category || '').split('\n')[0].trim() || 'AI 基礎';
+          allTerms.push({
+            id:   item.id,
+            title: item.title    || '',
+            eng:   item.eng_name || '',
+            abbr:  item.eng_abbr || '',
+            cat,
+            def:   item.def      || '',
+            goal:  item.key_goal || '',
+            apps:  item.common_apps || ''
+          });
+        } else {
+          // 舊版：section → sub_units → topics 三層結構
+          (item.sub_units || []).forEach(sub => {
+            (sub.topics || []).forEach(t => {
+              const cat = (t.category || '').split('\n')[0].trim() || 'AI 基礎';
+              allTerms.push({
+                id:   t.id,
+                title: t.title    || '',
+                eng:   t.eng_name || '',
+                abbr:  t.eng_abbr || '',
+                cat,
+                def:   t.def      || '',
+                goal:  t.key_goal || '',
+                apps:  t.common_apps || ''
+              });
             });
           });
-        });
+        }
       });
     }
 
