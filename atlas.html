@@ -159,6 +159,8 @@
     <button class="domain-tab" data-cat="DL"   onclick="showCat('深度學習','DL')">🔥 深度學習</button>
     <button class="domain-tab" data-cat="NN"   onclick="showCat('神經網路','NN')">🧩 神經網路</button>
     <button class="domain-tab" data-cat="GEN"  onclick="showCat('生成式 AI','GEN')">✨ 生成式 AI</button>
+    <button class="domain-tab" data-cat="DISC" onclick="showCat('鑑別式 AI','DISC')">🔍 鑑別式 AI</button>
+    <button class="domain-tab" data-cat="MM"   onclick="showCat('多模態 AI','MM')">🎭 多模態 AI</button>
     <button class="domain-tab" data-cat="CV"   onclick="showCat('電腦視覺','CV')">👁️ 電腦視覺</button>
     <button class="domain-tab" data-cat="NLP"  onclick="showCat('NLP基礎','NLP')">💬 NLP</button>
     <button class="domain-tab" data-cat="AGT"  onclick="showCat('AI 代理人','AGT')">🧠 AI 代理人</button>
@@ -182,6 +184,8 @@
     <div class="atlas-legend-item"><span class="legend-dot" style="background:#fbbf24"></span>深度學習</div>
     <div class="atlas-legend-item"><span class="legend-dot" style="background:#34d399"></span>神經網路</div>
     <div class="atlas-legend-item"><span class="legend-dot" style="background:#7dd3fc"></span>生成式 AI</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#a3e635"></span>鑑別式 AI</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#22d3ee"></span>多模態 AI</div>
     <div class="atlas-legend-item"><span class="legend-dot" style="background:#f472b6"></span>電腦視覺</div>
     <div class="atlas-legend-item"><span class="legend-dot" style="background:#fb923c"></span>NLP</div>
     <div class="atlas-legend-item"><span class="legend-dot" style="background:#c084fc"></span>AI 代理人</div>
@@ -189,19 +193,7 @@
     <div class="atlas-legend-item"><span class="legend-dot" style="background:#2dd4bf"></span>資料科學</div>
     <div class="atlas-legend-item"><span class="legend-dot" style="background:#94a3b8"></span>AI 應用</div>
   </div>
-  <!-- 球形視圖圖例（同樣內容，另一實例保留 display 切換相容性）-->
-  <div class="atlas-legend" id="legend-atlas" style="display:none">
-    <div class="atlas-legend-item"><span class="legend-dot" style="background:#a78bfa"></span>機器學習</div>
-    <div class="atlas-legend-item"><span class="legend-dot" style="background:#fbbf24"></span>深度學習</div>
-    <div class="atlas-legend-item"><span class="legend-dot" style="background:#34d399"></span>神經網路</div>
-    <div class="atlas-legend-item"><span class="legend-dot" style="background:#7dd3fc"></span>生成式 AI</div>
-    <div class="atlas-legend-item"><span class="legend-dot" style="background:#f472b6"></span>電腦視覺</div>
-    <div class="atlas-legend-item"><span class="legend-dot" style="background:#fb923c"></span>NLP</div>
-    <div class="atlas-legend-item"><span class="legend-dot" style="background:#c084fc"></span>AI 代理人</div>
-    <div class="atlas-legend-item"><span class="legend-dot" style="background:#e879f9"></span>AI 治理</div>
-    <div class="atlas-legend-item"><span class="legend-dot" style="background:#2dd4bf"></span>資料科學</div>
-    <div class="atlas-legend-item"><span class="legend-dot" style="background:#94a3b8"></span>AI 應用</div>
-  </div>
+  <div class="atlas-legend" id="legend-atlas" style="display:none"></div>
 
   <!-- 粒子背景動畫 -->
   <script>
@@ -298,7 +290,7 @@
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="data.js?v=6.1"></script>
   <script src="js/atlas.js?v=7.0"></script>
-  <script src="js/starmap.js?v=2.4"></script>
+  <script src="js/starmap.js?v=2.5"></script>
   <script>
     // 扁平化 lessonData → topics（支援舊版巢狀結構與新版扁平陣列）
     const topics = [];
@@ -428,6 +420,7 @@
     // 行星點擊 → 導向該分類詳細頁
     const CAT_KEY_MAP = {
       '機器學習':'ML','深度學習':'DL','神經網路':'NN','生成式 AI':'GEN',
+      '鑑別式 AI':'DISC','多模態 AI':'MM',
       '電腦視覺':'CV','NLP基礎':'NLP','AI 代理人':'AGT',
       'AI 治理':'GOV','資料科學':'DS','AI 應用':'APP'
     };

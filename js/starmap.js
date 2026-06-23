@@ -70,16 +70,18 @@
   ];
 
   const CAT_DEFS = [
-    { cat:'機器學習',  color:'#a78bfa', shortName:'ML'  },
-    { cat:'深度學習',  color:'#fbbf24', shortName:'DL'  },
-    { cat:'神經網路',  color:'#34d399', shortName:'NN'  },
-    { cat:'生成式 AI', color:'#7dd3fc', shortName:'GEN' },
-    { cat:'電腦視覺',  color:'#f472b6', shortName:'CV'  },
-    { cat:'NLP基礎',   color:'#fb923c', shortName:'NLP' },
-    { cat:'AI 代理人', color:'#c084fc', shortName:'AGT' },
-    { cat:'AI 治理',   color:'#e879f9', shortName:'GOV' },
-    { cat:'資料科學',  color:'#2dd4bf', shortName:'DS'  },
-    { cat:'AI 應用',   color:'#94a3b8', shortName:'APP' },
+    { cat:'機器學習',  color:'#a78bfa', shortName:'ML'   },
+    { cat:'深度學習',  color:'#fbbf24', shortName:'DL'   },
+    { cat:'神經網路',  color:'#34d399', shortName:'NN'   },
+    { cat:'生成式 AI', color:'#7dd3fc', shortName:'GEN'  },
+    { cat:'鑑別式 AI', color:'#a3e635', shortName:'DISC' },
+    { cat:'多模態 AI', color:'#22d3ee', shortName:'MM'   },
+    { cat:'電腦視覺',  color:'#f472b6', shortName:'CV'   },
+    { cat:'NLP基礎',   color:'#fb923c', shortName:'NLP'  },
+    { cat:'AI 代理人', color:'#c084fc', shortName:'AGT'  },
+    { cat:'AI 治理',   color:'#e879f9', shortName:'GOV'  },
+    { cat:'資料科學',  color:'#2dd4bf', shortName:'DS'   },
+    { cat:'AI 應用',   color:'#94a3b8', shortName:'APP'  },
   ];
 
   const CROSS_LINKS = [
@@ -163,9 +165,17 @@
       if (/生成式|擴散模型|提示工程|rag|大型語言模型|llm|gpt|diffusion|生成ai|本土模型|本土優化/.test(cl))
         return '生成式 AI';
 
+      // ── 多模態 AI（獨立分類，從深度學習中分離）──────────────────────
+      if (/多模態|跨模態|視覺語言|image.*text|text.*image|\bclip\b|\bflamingo\b|\bblip\b|多感官/.test(cl))
+        return '多模態 AI';
+
       // ── 深度學習 ──────────────────────────────────────────────────────
-      if (/深度學習|transformer|注意力|多模態|表徵學習|具身智能|跨模態/.test(cl))
+      if (/深度學習|transformer|注意力|表徵學習|具身智能/.test(cl))
         return '深度學習';
+
+      // ── 鑑別式 AI（判別模型，從機器學習中分離）──────────────────────
+      if (/鑑別式|判別式|判別模型|discriminative|\bsvm\b|支援向量機|支持向量機|邏輯回歸|logistic.*回歸|感知機|perceptron|線性分類|線性判別/.test(cl))
+        return '鑑別式 AI';
 
       // ── 機器學習 ──────────────────────────────────────────────────────
       if (/機器學習|傳統\s*ml|集成學習|演算法|特徵工程|模型訓練|模型微調|訓練模式|強化學習|不均衡|模型優化|模型壓縮|模型量化|模型架構|模型評估|模型監控|模型效能|模型決策|xai|可解釋|自動特徵|推論優化|lmm推論/.test(cl))
@@ -514,42 +524,37 @@
     _drawClusters() {
       const self = this;
       this._clusterEls = [];
-      const defs = this._svg.select('defs');
       const planetR = Math.max(20, this._md * 0.038);
 
       this._clusters.forEach((cluster, ci) => {
         const cg = this._rotG.append('g').attr('class', `ca-cluster ca-cluster-${ci}`);
 
-        // 行星徑向漸層（球面高光效果）
-        const gradId = `pg${ci}`;
-        const grad = defs.append('radialGradient').attr('id', gradId)
-          .attr('cx', '38%').attr('cy', '35%').attr('r', '65%');
-        grad.append('stop').attr('offset', '0%')
-          .attr('stop-color', '#ffffff').attr('stop-opacity', 0.55);
-        grad.append('stop').attr('offset', '45%')
-          .attr('stop-color', cluster.def.color).attr('stop-opacity', 1);
-        grad.append('stop').attr('offset', '100%')
-          .attr('stop-color', cluster.def.color).attr('stop-opacity', 0.35);
-
         const pg = cg.append('g').attr('class', 'ca-planet')
           .attr('transform', `translate(${cluster.gcx},${cluster.gcy})`)
           .style('cursor', 'pointer');
 
-        // 多層光暈（由外到內）
-        pg.append('circle').attr('r', planetR * 2.4)
-          .attr('fill', cluster.def.color + '07').attr('pointer-events', 'none');
-        pg.append('circle').attr('r', planetR * 1.6)
-          .attr('fill', cluster.def.color + '13').attr('pointer-events', 'none');
-        // 行星本體
+        // 外層光暈（純色+透明度）
+        pg.append('circle').attr('r', planetR * 2.6)
+          .attr('fill', cluster.def.color + '09').attr('pointer-events', 'none');
+        pg.append('circle').attr('r', planetR * 1.7)
+          .attr('fill', cluster.def.color + '18').attr('pointer-events', 'none');
+        // 行星本體（純色實心，保證可見）
         pg.append('circle').attr('class', 'ca-planet-body').attr('r', planetR)
-          .attr('fill', `url(#${gradId})`).style('filter', 'url(#star-glow)');
+          .attr('fill', cluster.def.color).attr('fill-opacity', 0.88)
+          .attr('stroke', '#ffffff').attr('stroke-opacity', 0.2).attr('stroke-width', 0.8)
+          .style('filter', 'url(#star-glow)');
+        // 3D 高光（左上方白色小圓，模擬球面光澤）
+        pg.append('circle').attr('r', planetR * 0.32)
+          .attr('cx', -planetR * 0.22).attr('cy', -planetR * 0.26)
+          .attr('fill', '#ffffff').attr('fill-opacity', 0.42)
+          .attr('pointer-events', 'none');
         // 類別名稱（行星下方）
-        pg.append('text').attr('text-anchor', 'middle').attr('dy', planetR + 14)
+        pg.append('text').attr('text-anchor', 'middle').attr('dy', planetR + 15)
           .attr('fill', cluster.def.color).attr('font-size', 10).attr('font-weight', 600)
           .attr('pointer-events', 'none').text(cluster.def.cat);
-        // 術語數（更小字）
-        pg.append('text').attr('text-anchor', 'middle').attr('dy', planetR + 25)
-          .attr('fill', cluster.def.color + '88').attr('font-size', 8)
+        // 術語數量（小字）
+        pg.append('text').attr('text-anchor', 'middle').attr('dy', planetR + 27)
+          .attr('fill', cluster.def.color + '80').attr('font-size', 8)
           .attr('pointer-events', 'none')
           .text(`${(self._byCat[cluster.def.cat] || []).length} 個術語`);
 
@@ -573,7 +578,6 @@
             if (typeof self.onCatClick === 'function') self.onCatClick(cluster.def.cat);
           });
 
-        // linesSel / nodeSel 設為 null（行星模式無單節點連線）
         this._clusterEls.push({ cg, linesSel: null, nodeSel: null, cluster });
       });
     }
@@ -636,7 +640,8 @@
       ].forEach(({ cr, sw, op, flt, dur }) => {
         const ring = g.append('circle').attr('r', cr)
           .attr('fill','none').attr('stroke','#fde68a')
-          .attr('stroke-width', sw).attr('stroke-opacity', op);
+          .attr('stroke-width', sw).attr('stroke-opacity', op)
+          .attr('pointer-events', 'none');
         if (flt) ring.attr('filter', flt);
         // SMIL 脈衝動畫
         ring.append('animate')
@@ -657,7 +662,8 @@
           .attr('stroke','#fde68a')
           .attr('stroke-width',  main ? 1.4 : 0.7)
           .attr('stroke-opacity', main ? 0.65 : 0.35)
-          .attr('stroke-dasharray', main ? '4,3' : '2,4');
+          .attr('stroke-dasharray', main ? '4,3' : '2,4')
+          .attr('pointer-events', 'none');
         ray.append('animate')
           .attr('attributeName','stroke-dashoffset')
           .attr('from','0').attr('to', main ? '-14' : '-12')
@@ -677,15 +683,17 @@
         cat:'AI 代理人', color:'#fbbf24', r,
         def:'模擬人類智能的計算系統，是機器學習、深度學習、電腦視覺、NLP、AI代理人等所有子領域的統稱。目標是讓機器能感知、推理、學習與行動。'
       };
-      g.on('mouseenter', ev => {
+      // 事件只綁在核心圓本體，不讓光芒射線攔截點擊
+      coreCircle.style('cursor', 'pointer')
+        .on('mouseenter', ev => {
           coreCircle.transition().duration(150).attr('r', r*1.3);
           this._tooltip(ev, aiTerm);
         })
-       .on('mouseleave', () => {
+        .on('mouseleave', () => {
           coreCircle.transition().duration(200).attr('r', r);
           this._hideTooltip();
         })
-       .on('click', ev => {
+        .on('click', ev => {
           ev.stopPropagation();
           this._panel(aiTerm);
         });
@@ -794,7 +802,7 @@
         ? (n > 100 ? 22 : n > 50 ? 28 : 35)
         : (n > 150 ? 30 : n > 100 ? 38 : n > 50 ? 45 : 55);
 
-      const minStartR = this._coreR + 60; // 讓 AI 核心周圍留白
+      const minStartR = this._coreR * 3.4; // 超過光芒射線末端
       const pos = this._concentricPos(n, minSep, minStartR);
 
       const g = this._rotG.insert('g', '.ca-cluster')
@@ -961,7 +969,7 @@
         ? (n > 400 ? 14 : n > 200 ? 17 : 22)
         : (n > 600 ? 16 : n > 300 ? 20 : n > 150 ? 25 : 30);
 
-      const minStartR = this._coreR + 60; // 中心留白
+      const minStartR = this._coreR * 3.4; // 超過光芒射線末端（射線到 coreR*3.0），留安全邊距
       const pos = this._concentricPos(n, minSep, minStartR);
       const g = this._rotG.insert('g', '.ca-cluster')
         .attr('class', 'ca-detail').attr('opacity', 0);
@@ -971,36 +979,32 @@
         return { id:t.id, title:t.title, eng:t.eng, cat:t.cat, def:t.def,
           key_goal:t.key_goal, color:t.color,
           lx: p.r * Math.cos(p.th), ly: p.r * Math.sin(p.th),
-          nr: t.key_goal ? 2.5 : 1.5 };  // 小星點
+          nr: t.key_goal ? 1.8 : 1.0 };  // 更小的星點
       });
 
       // 空間格子法高效建連線
       const links = this._nearestLinks(nodes, minSep * 2.0);
 
+      // 連線：同色，依 key_goal 關係決定粗細
       g.selectAll('line.cd-link').data(links).join('line').attr('class', 'cd-link')
         .attr('x1', d => d.s.lx).attr('y1', d => d.s.ly)
         .attr('x2', d => d.t.lx).attr('y2', d => d.t.ly)
-        .attr('stroke', d => d.s.color).attr('stroke-opacity', 0.16)
-        .attr('stroke-width', 0.6).attr('stroke-dasharray', '2,4');
+        .attr('stroke', d => d.s.color === d.t.color ? d.s.color : d.s.color)
+        .attr('stroke-opacity', d => d.s.key_goal && d.t.key_goal ? 0.40 : d.s.key_goal || d.t.key_goal ? 0.22 : 0.12)
+        .attr('stroke-width',   d => d.s.key_goal && d.t.key_goal ? 1.2  : d.s.key_goal || d.t.key_goal ? 0.7  : 0.4)
+        .attr('stroke-dasharray', d => d.s.key_goal && d.t.key_goal ? 'none' : '2,4');
 
       const ns = g.selectAll('g.cd-node').data(nodes).join('g').attr('class', 'cd-node')
         .attr('transform', d => `translate(${d.lx},${d.ly})`).style('cursor', 'pointer');
 
-      // 外層半透明光暈（大但淡）
+      // 外層光暈
       ns.append('circle').attr('class', 'cd-halo')
-        .attr('r', d => d.nr * 7).attr('fill', d => d.color + '11')
+        .attr('r', d => d.nr * 8).attr('fill', d => d.color + '0e')
         .attr('pointer-events', 'none');
-      // 內層實心小點
+      // 內層實心點（全部AI不顯示標籤）
       ns.append('circle').attr('class', 'cd-dot')
-        .attr('r', d => d.nr).attr('fill', d => d.color).attr('fill-opacity', 0.92)
+        .attr('r', d => d.nr).attr('fill', d => d.color).attr('fill-opacity', 0.95)
         .style('filter', 'url(#star-glow)');
-
-      // key_goal 節點標籤（小字）
-      ns.filter(d => d.key_goal).append('text')
-        .attr('text-anchor', 'middle').attr('dy', d => -(d.nr + 4))
-        .attr('fill', d => d.color + 'bb').attr('font-size', 8)
-        .attr('pointer-events', 'none')
-        .text(d => d.title.length > 8 ? d.title.slice(0, 7) + '…' : d.title);
 
       const self = this;
       ns.on('mouseenter', (ev, d) => {
