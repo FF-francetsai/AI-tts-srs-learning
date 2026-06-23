@@ -118,14 +118,14 @@
       box-shadow: 0 0 8px rgba(251,191,36,0.2);
     }
     .learn-tab[data-lcat="LALL"]  { --ltab-color: #fbbf24; }
-    .learn-tab[data-lcat="SL"]    { --ltab-color: #60a5fa; }
+    .learn-tab[data-lcat="INTRO"] { --ltab-color: #22d3ee; }
+    .learn-tab[data-lcat="DATA"]  { --ltab-color: #60a5fa; }
+    .learn-tab[data-lcat="SL"]    { --ltab-color: #a78bfa; }
     .learn-tab[data-lcat="UL"]    { --ltab-color: #34d399; }
-    .learn-tab[data-lcat="SSL"]   { --ltab-color: #a78bfa; }
-    .learn-tab[data-lcat="SELF"]  { --ltab-color: #fbbf24; }
+    .learn-tab[data-lcat="DL"]    { --ltab-color: #fbbf24; }
     .learn-tab[data-lcat="GEN"]   { --ltab-color: #f472b6; }
-    .learn-tab[data-lcat="DISC"]  { --ltab-color: #a3e635; }
     .learn-tab[data-lcat="RL"]    { --ltab-color: #fb923c; }
-    .learn-tab[data-lcat="CLS"]   { --ltab-color: #94a3b8; }
+    .learn-tab[data-lcat="ADV"]   { --ltab-color: #94a3b8; }
 
     /* ── Atlas container ── */
     #atlas-container {
@@ -227,17 +227,17 @@
     <button class="domain-tab" data-cat="APP"  onclick="showCat('AI 應用','APP')">🛠️ AI 應用</button>
   </nav>
 
-  <!-- 學習導向 tabs -->
+  <!-- 學習導向 tabs（漸進路徑：入門 → 進階）-->
   <nav class="learn-nav" id="learn-nav">
-    <button class="learn-tab active" data-lcat="LALL" onclick="showLearnOverview()">🌌 全覽</button>
-    <button class="learn-tab" data-lcat="SL"   onclick="showLearnCat('監督式','SL')">🎯 監督式</button>
-    <button class="learn-tab" data-lcat="UL"   onclick="showLearnCat('非監督式','UL')">🔍 非監督式</button>
-    <button class="learn-tab" data-lcat="SSL"  onclick="showLearnCat('半監督式','SSL')">🔀 半監督式</button>
-    <button class="learn-tab" data-lcat="SELF" onclick="showLearnCat('自監督','SELF')">🔄 自監督</button>
-    <button class="learn-tab" data-lcat="GEN"  onclick="showLearnCat('生成式','GEN')">✨ 生成式</button>
-    <button class="learn-tab" data-lcat="DISC" onclick="showLearnCat('鑑別式','DISC')">🔬 鑑別式</button>
-    <button class="learn-tab" data-lcat="RL"   onclick="showLearnCat('強化學習','RL')">🎮 強化學習</button>
-    <button class="learn-tab" data-lcat="CLS"  onclick="showLearnCat('傳統演算法','CLS')">📐 傳統演算法</button>
+    <button class="learn-tab active" data-lcat="LALL"  onclick="showLearnOverview()">🌌 學習全覽</button>
+    <button class="learn-tab" data-lcat="INTRO" onclick="showLearnCat('AI 入門','INTRO')">🌱 AI 入門</button>
+    <button class="learn-tab" data-lcat="DATA"  onclick="showLearnCat('資料基礎','DATA')">📊 資料基礎</button>
+    <button class="learn-tab" data-lcat="SL"    onclick="showLearnCat('監督式','SL')">🎯 監督式</button>
+    <button class="learn-tab" data-lcat="UL"    onclick="showLearnCat('非監督式','UL')">🔍 非監督式</button>
+    <button class="learn-tab" data-lcat="DL"    onclick="showLearnCat('深度學習','DL')">🧠 深度學習</button>
+    <button class="learn-tab" data-lcat="GEN"   onclick="showLearnCat('生成式','GEN')">✨ 生成式</button>
+    <button class="learn-tab" data-lcat="RL"    onclick="showLearnCat('強化學習','RL')">🎮 強化學習</button>
+    <button class="learn-tab" data-lcat="ADV"   onclick="showLearnCat('中級進階','ADV')">⚙️ 中級進階</button>
   </nav>
 
   <!-- D3 SVG 容器 -->
@@ -266,14 +266,14 @@
   </div>
   <div class="atlas-legend" id="legend-atlas" style="display:none"></div>
   <div class="atlas-legend" id="legend-learn" style="display:none">
-    <div class="atlas-legend-item"><span class="legend-dot" style="background:#60a5fa"></span>監督式</div>
-    <div class="atlas-legend-item"><span class="legend-dot" style="background:#34d399"></span>非監督式</div>
-    <div class="atlas-legend-item"><span class="legend-dot" style="background:#a78bfa"></span>半監督式</div>
-    <div class="atlas-legend-item"><span class="legend-dot" style="background:#fbbf24"></span>自監督</div>
-    <div class="atlas-legend-item"><span class="legend-dot" style="background:#f472b6"></span>生成式</div>
-    <div class="atlas-legend-item"><span class="legend-dot" style="background:#a3e635"></span>鑑別式</div>
-    <div class="atlas-legend-item"><span class="legend-dot" style="background:#fb923c"></span>強化學習</div>
-    <div class="atlas-legend-item"><span class="legend-dot" style="background:#94a3b8"></span>傳統演算法</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#22d3ee"></span>🌱 AI 入門</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#60a5fa"></span>📊 資料基礎</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#a78bfa"></span>🎯 監督式</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#34d399"></span>🔍 非監督式</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#fbbf24"></span>🧠 深度學習</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#f472b6"></span>✨ 生成式</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#fb923c"></span>🎮 強化學習</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#94a3b8"></span>⚙️ 中級進階</div>
   </div>
 
   <!-- 粒子背景動畫 -->
@@ -371,7 +371,7 @@
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="data.js?v=6.1"></script>
   <script src="js/atlas.js?v=7.0"></script>
-  <script src="js/starmap.js?v=3.2"></script>
+  <script src="js/starmap.js?v=3.3"></script>
   <script>
     // 扁平化 lessonData → topics（支援舊版巢狀結構與新版扁平陣列）
     const topics = [];
@@ -526,9 +526,11 @@
 
     // 學習星體點擊 callback
     starMap.onLearnCatClick = (cat) => {
-      const keyMap = {'監督式':'SL','非監督式':'UL','半監督式':'SSL',
-        '自監督':'SELF','生成式':'GEN','鑑別式':'DISC','強化學習':'RL','傳統演算法':'CLS'};
-      showLearnCat(cat, keyMap[cat] || 'SL');
+      const keyMap = {
+        'AI 入門':'INTRO','資料基礎':'DATA','監督式':'SL','非監督式':'UL',
+        '深度學習':'DL','生成式':'GEN','強化學習':'RL','中級進階':'ADV'
+      };
+      showLearnCat(cat, keyMap[cat] || 'INTRO');
     };
 
     // 旋轉切換按鈕

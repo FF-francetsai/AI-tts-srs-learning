@@ -84,16 +84,16 @@
     { cat:'AI 應用',   color:'#94a3b8', shortName:'APP'  },
   ];
 
-  // ── 學習導向八大範式定義 ──────────────────────────────────────────────────────
+  // ── 學習導向：8 個漸進式學習路徑（入門→進階）─────────────────────────────────
   const LEARN_DEFS = [
-    { cat:'監督式',     color:'#60a5fa', shortName:'SL',   emoji:'🎯' },
-    { cat:'非監督式',   color:'#34d399', shortName:'UL',   emoji:'🔍' },
-    { cat:'半監督式',   color:'#a78bfa', shortName:'SSL',  emoji:'🔀' },
-    { cat:'自監督',     color:'#fbbf24', shortName:'SELF', emoji:'🔄' },
-    { cat:'生成式',     color:'#f472b6', shortName:'GEN',  emoji:'✨' },
-    { cat:'鑑別式',     color:'#a3e635', shortName:'DISC', emoji:'🔬' },
-    { cat:'強化學習',   color:'#fb923c', shortName:'RL',   emoji:'🎮' },
-    { cat:'傳統演算法', color:'#94a3b8', shortName:'CLS',  emoji:'📐' },
+    { cat:'AI 入門',   color:'#22d3ee', shortName:'INTRO', emoji:'🌱' },
+    { cat:'資料基礎',  color:'#60a5fa', shortName:'DATA',  emoji:'📊' },
+    { cat:'監督式',    color:'#a78bfa', shortName:'SL',    emoji:'🎯' },
+    { cat:'非監督式',  color:'#34d399', shortName:'UL',    emoji:'🔍' },
+    { cat:'深度學習',  color:'#fbbf24', shortName:'DL',    emoji:'🧠' },
+    { cat:'生成式',    color:'#f472b6', shortName:'GEN',   emoji:'✨' },
+    { cat:'強化學習',  color:'#fb923c', shortName:'RL',    emoji:'🎮' },
+    { cat:'中級進階',  color:'#94a3b8', shortName:'ADV',   emoji:'⚙️' },
   ];
 
   const CROSS_LINKS = [
@@ -240,24 +240,53 @@
     // ── 學習導向：術語依學習範式分類 ─────────────────────────────────────────────
 
     _normLearnCat(t) {
-      const s = [t.title || '', t.eng_name || t.eng || '', t.category || '', t.def || '']
-        .join(' ').toLowerCase();
-      if (/強化學習|reinforcement.learn|q.learn(?:ing)?|policy.gradient|深度強化|ppo\b|dqn\b|mdp\b|馬可夫決策|bellman|actor.critic|temporal.differ|蒙特卡羅.*強化/.test(s))
+      const title = (t.title || '').toLowerCase();
+      const eng   = (t.eng_name || t.eng || '').toLowerCase();
+      const cat   = (t.category || '').toLowerCase();
+      const def   = (t.def || '').toLowerCase();
+      const s = `${title} ${eng} ${cat} ${def}`;
+
+      // ── 1. 強化學習（最具體，優先判斷）
+      if (/強化學習|reinforcement.learn|q.learn|policy.gradient|深度強化|\bppo\b|\bdqn\b|\bmdp\b|馬可夫決策|bellman|actor.critic|temporal.differ|蒙特卡羅.*強化|multi.armed.bandit|sarsa\b/.test(s))
         return '強化學習';
-      if (/半監督|semi.supervis|偽標籤|pseudo.label|label.propagat|consistency.regulari/.test(s))
-        return '半監督式';
-      if (/自監督|self.supervis|對比學習|contrastive.learn|masked.language|表徵學習(?!.*監督)|simclr|moco\b|byol\b|momentum.contrast|預訓練.*語言模型|language.model.*pretrain/.test(s))
-        return '自監督';
-      if (/生成.*對抗|\bgan\b|生成對抗|variational.*auto|\bvae\b|擴散模型|diffusion.model|score.match|ddpm|flow.based|normalizing.flow|生成模型|generative.model|denoising.diffus|stable.diffusion/.test(s))
+
+      // ── 2. 生成式（含自監督、對比學習）
+      if (/生成.*對抗|\bgan\b|生成對抗|variational.*auto|\bvae\b|擴散模型|diffusion.model|\bddpm\b|flow.based|normalizing.flow|生成模型|generative.model|stable.diffusion|denoising.diffus|自監督|self.supervis|對比學習|contrastive.learn|masked.language|\bbert\b.*pretrain|\bgpt\b.*pretrain|預訓練.*語言/.test(s))
         return '生成式';
-      if (/鑑別式|判別式|discriminative|支援向量機|\bsvm\b|感知機(?!.*多層)|邏輯回歸|logistic.regress|線性判別|binary.classif(?!.*neural)/.test(s))
-        return '鑑別式';
-      if (/非監督|unsupervis|聚類|clustering|\bk.means\b|dbscan|降維|dimension.*reduc|\bpca\b|主成分分析|自編碼器(?!.*變分)|autoencoder(?!.*variational)|\bt.sne\b|\bumap\b/.test(s))
+
+      // ── 3. 非監督式
+      if (/非監督|unsupervis|聚類|clustering|\bk.means\b|dbscan|hierarchical.cluster|降維|dimension.*reduc|\bpca\b|主成分分析|自編碼器(?!.*變分)|autoencoder(?!.*variational)|\bt.sne\b|\bumap\b|異常偵測|anomaly.detect|孤立森林|isolation.forest/.test(s))
         return '非監督式';
-      if (/決策樹|decision.tree|隨機森林|random.forest|樸素貝葉斯|naive.bayes|k.近鄰|\bknn\b|gradient.boost|xgboost|adaboost|bagging\b|集成.{0,4}學習|ensemble.learn|boosting/.test(s))
-        return '傳統演算法';
-      if (/監督.{0,4}學習|supervis.{0,10}learn|標注.{0,4}資料|labeled.data|backpropag|反向傳播|梯度下降|gradient.descent|cross.entropy.*loss|損失函數|過擬合|underfitt|train.*test.*split/.test(s))
+
+      // ── 4. 深度學習（神經網路架構、訓練技術）
+      if (/神經網路|neural.network|deep.learn|\bcnn\b|卷積神經|\brnn\b|循環神經|\blstm\b|\bgru\b|\btransformer\b|注意力機制|attention.mechanism|embedding.*layer|批次正規化|batch.norm|dropout層|激活函數|activation.func|反向傳播|backpropag|殘差網路|resnet|\bvgg\b|遷移.*深度/.test(s))
+        return '深度學習';
+
+      // ── 5. 監督式（含傳統分類/回歸算法）
+      if (/監督.{0,4}學習|supervis.{0,10}learn|分類算法|回歸算法|決策樹|decision.tree|隨機森林|random.forest|邏輯回歸|logistic.regress|\bsvm\b|支援向量|梯度下降|gradient.descent|過擬合|overfitt|正規化.*模型|regulariz|交叉驗證|cross.valid|樸素貝葉斯|naive.bayes|\bknn\b|k.近鄰|gradient.boost|xgboost|adaboost|集成學習|ensemble|感知機|perceptron|線性回歸|linear.regress/.test(s))
         return '監督式';
+
+      // ── 6. 資料基礎（資料處理、特徵工程、評估指標）
+      if (/資料前處理|data.preprocess|特徵工程|feature.engineer|資料清洗|data.clean|評估指標|evaluation.metric|混淆矩陣|confusion.matrix|準確率|accuracy\b|精確率|precision.*recall|\bf1.score|\broc\b|\bauc\b|資料集.*分割|train.*test.*split|資料不平衡|class.imbalance|過採樣|undersampl|標準化.*資料|data.normaliz|缺失值|missing.value|資料科學|data.scien/.test(s))
+        return '資料基礎';
+
+      // ── 7. 中級進階（治理、部署、MLOps、多智能體）
+      if (/ai.治理|ai.govern|偏見.*ai|bias.*ai|可解釋.*ai|explainab|模型.*公平|fairness.*model|mlops|模型部署|model.deploy|持續學習|continual.learn|遷移學習|transfer.learn|元學習|meta.learn|多智能體|multi.agent|聯邦學習|federated|量化.*模型|model.quantiz|剪枝.*模型|model.prun|知識蒸餾|knowledge.distill|ai.*倫理|ethics.*ai|負責任.*ai/.test(s))
+        return '中級進階';
+
+      // ── 8. AI 入門（No-code/Low-code、應用、概念）
+      if (/no.?code|low.?code|ai.{0,4}入門|人工智.{1,3}基礎|ai.{0,4}概念|ai.{0,4}歷史|圖靈測試|弱.?ai|強.?ai|\bagi\b|通用人工|ai.{0,4}應用|ai.{0,4}工具|虛擬助理|聊天機器人|語音助理|智慧音箱|推薦系統|影像辨識.*應用|自動駕駛|機器人.*應用|大數據.*應用|智慧製造|ai.{0,4}助手/.test(s))
+        return 'AI 入門';
+
+      // ── 分類回退：依原始 category 欄位快速映射（確保高覆蓋率）
+      if (/資料科學/.test(cat))             return '資料基礎';
+      if (/神經網路|電腦視覺|nlp基礎/.test(cat)) return '深度學習';
+      if (/深度學習/.test(cat))             return '深度學習';
+      if (/生成式|多模態/.test(cat))         return '生成式';
+      if (/機器學習|鑑別式/.test(cat))       return '監督式';
+      if (/ai.代理人|ai.治理/.test(cat))     return '中級進階';
+      if (/ai.應用/.test(cat))              return 'AI 入門';
+
       return null;
     }
 
@@ -378,12 +407,11 @@
     _buildDetailLayerLearn(cat, color, items) {
       const n = items.length;
       if (!n) return;
+      // 黃金螺旋排列（無連線）—— 與全部AI 相同風格，乾淨不雜亂
       const mobile = this._md < 768;
-      const minSep = mobile
-        ? (n > 100 ? 28 : n > 50 ? 35 : 42)
-        : (n > 150 ? 35 : n > 100 ? 42 : n > 50 ? 50 : 60);
+      const spiralC = mobile ? 10 : 13;
       const minStartR = this._coreR * 3.4;
-      const pos = this._concentricPos(n, minSep, minStartR);
+      const pos = this._goldenSpiralPos(n, spiralC, minStartR);
       const g = this._rotG.insert('g', '.ca-cluster')
         .attr('class', 'ca-detail').attr('opacity', 0);
       const nodes = items.map((t, i) => {
@@ -391,16 +419,9 @@
         return { id:t.id, title:t.title, eng:t.eng, cat:t.cat, def:t.def,
           key_goal:t.key_goal, color,
           lx: p.r * Math.cos(p.th), ly: p.r * Math.sin(p.th),
-          nr: t.key_goal ? 3.2 : 1.8 };
+          nr: t.key_goal ? 2.0 : 1.2 };
       });
-      const links = this._mstLinks(nodes, minSep * 2.2);
-      g.selectAll('line.cd-link').data(links).join('line').attr('class','cd-link')
-        .attr('x1',d=>d.s.lx).attr('y1',d=>d.s.ly)
-        .attr('x2',d=>d.t.lx).attr('y2',d=>d.t.ly)
-        .attr('stroke',color)
-        .attr('stroke-opacity',d=>d.s.key_goal&&d.t.key_goal?0.45:d.s.key_goal||d.t.key_goal?0.22:0.10)
-        .attr('stroke-width',d=>d.s.key_goal&&d.t.key_goal?1.2:0.5)
-        .attr('stroke-dasharray',d=>d.s.key_goal&&d.t.key_goal?'none':'3,5');
+      // 無連線，純星點
       const ns = g.selectAll('g.cd-node').data(nodes).join('g').attr('class','cd-node')
         .attr('transform',d=>`translate(${d.lx},${d.ly})`).style('cursor','pointer');
       ns.append('circle').attr('class','cd-halo')
