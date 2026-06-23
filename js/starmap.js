@@ -754,10 +754,15 @@
         const ns = mg.selectAll('g.mn').data(nodes).join('g').attr('class','mn')
           .attr('transform',(_,i)=>`translate(${m.stars[i][0]},${m.stars[i][1]})`)
           .style('cursor','pointer');
-        // 節點套用 cd-dot 閃爍（各自獨立週期，用全域索引 idx*10+i 錯開）
-        ns.append('circle').attr('r',d=>d.r).attr('data-nid',d=>d.id)
+        // 雙層節點：外層光暈 + 內層閃爍（與 cd-node 相同結構，縮小半徑）
+        const MR_KEY = 2.0, MR_REG = 1.3;
+        ns.append('circle').attr('class','cd-halo').attr('pointer-events','none')
+          .attr('r', d => (d.r > 2.3 ? MR_KEY : MR_REG) * 2.5)
+          .attr('fill', d => d.color + '22');
+        ns.append('circle').attr('data-nid',d=>d.id)
           .attr('class', d => d.r > 2.3 ? 'cd-dot is-key' : 'cd-dot')
-          .attr('fill',d=>d.color).attr('fill-opacity',0.90)
+          .attr('r', d => d.r > 2.3 ? MR_KEY : MR_REG)
+          .attr('fill',d=>d.color).attr('fill-opacity',0.92)
           .style('filter','url(#star-glow)')
           .style('--sd', (d, i) => {
             const gi = idx * 10 + i;
@@ -767,13 +772,15 @@
           })
           .style('animation-delay', (_, i) => `-${((idx * 10 + i) * 1.17 % 12).toFixed(2)}s`);
         ns.on('mouseenter',(ev,d)=>{
-            d3.select(ev.currentTarget).select('circle')
-              .transition().duration(100).attr('r',d.r*2.8);
+            const nr = d.r > 2.3 ? MR_KEY : MR_REG;
+            d3.select(ev.currentTarget).select('.cd-dot')
+              .transition().duration(100).attr('r',nr*2.5);
             self._tooltip(ev,d);
           })
           .on('mouseleave',(ev,d)=>{
-            d3.select(ev.currentTarget).select('circle')
-              .transition().duration(200).attr('r',d.r);
+            const nr = d.r > 2.3 ? MR_KEY : MR_REG;
+            d3.select(ev.currentTarget).select('.cd-dot')
+              .transition().duration(200).attr('r',nr);
             self._hideTooltip();
           })
           .on('click',(ev,d)=>{
@@ -800,10 +807,15 @@
         const ns = pg.selectAll('g.zn').data(nodes).join('g').attr('class','zn')
           .attr('transform',(_,i)=>`translate(${pat.stars[i][0]},${pat.stars[i][1]})`)
           .style('cursor','pointer');
-        // 節點套用 cd-dot 閃爍（各自獨立週期）
-        ns.append('circle').attr('r',d=>d.r).attr('data-nid',d=>d.id)
+        // 雙層節點：外層光暈 + 內層閃爍（縮小半徑）
+        const ZR_KEY = 2.3, ZR_REG = 1.5;
+        ns.append('circle').attr('class','cd-halo').attr('pointer-events','none')
+          .attr('r', d => (d.r > 3.0 ? ZR_KEY : ZR_REG) * 2.5)
+          .attr('fill', d => d.color + '22');
+        ns.append('circle').attr('data-nid',d=>d.id)
           .attr('class', d => d.r > 3.0 ? 'cd-dot is-key' : 'cd-dot')
-          .attr('fill',d=>d.color).attr('fill-opacity',0.90)
+          .attr('r', d => d.r > 3.0 ? ZR_KEY : ZR_REG)
+          .attr('fill',d=>d.color).attr('fill-opacity',0.92)
           .style('filter','url(#star-glow)')
           .style('--sd', (d, i) => {
             const gi = 300 + zi * 10 + i;
@@ -813,13 +825,15 @@
           })
           .style('animation-delay', (_, i) => `-${((300 + zi * 10 + i) * 1.23 % 14).toFixed(2)}s`);
         ns.on('mouseenter',(ev,d)=>{
-            d3.select(ev.currentTarget).select('circle')
-              .transition().duration(100).attr('r',d.r*2.8);
+            const nr = d.r > 3.0 ? ZR_KEY : ZR_REG;
+            d3.select(ev.currentTarget).select('.cd-dot')
+              .transition().duration(100).attr('r',nr*2.5);
             self._tooltip(ev,d);
           })
           .on('mouseleave',(ev,d)=>{
-            d3.select(ev.currentTarget).select('circle')
-              .transition().duration(200).attr('r',d.r);
+            const nr = d.r > 3.0 ? ZR_KEY : ZR_REG;
+            d3.select(ev.currentTarget).select('.cd-dot')
+              .transition().duration(200).attr('r',nr);
             self._hideTooltip();
           })
           .on('click',(ev,d)=>{
