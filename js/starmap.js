@@ -84,6 +84,18 @@
     { cat:'AI 應用',   color:'#94a3b8', shortName:'APP'  },
   ];
 
+  // ── 學習導向八大範式定義 ──────────────────────────────────────────────────────
+  const LEARN_DEFS = [
+    { cat:'監督式',     color:'#60a5fa', shortName:'SL',   emoji:'🎯' },
+    { cat:'非監督式',   color:'#34d399', shortName:'UL',   emoji:'🔍' },
+    { cat:'半監督式',   color:'#a78bfa', shortName:'SSL',  emoji:'🔀' },
+    { cat:'自監督',     color:'#fbbf24', shortName:'SELF', emoji:'🔄' },
+    { cat:'生成式',     color:'#f472b6', shortName:'GEN',  emoji:'✨' },
+    { cat:'鑑別式',     color:'#a3e635', shortName:'DISC', emoji:'🔬' },
+    { cat:'強化學習',   color:'#fb923c', shortName:'RL',   emoji:'🎮' },
+    { cat:'傳統演算法', color:'#94a3b8', shortName:'CLS',  emoji:'📐' },
+  ];
+
   const CROSS_LINKS = [
     { a:'機器學習',  b:'深度學習'  },
     { a:'深度學習',  b:'神經網路'  },
@@ -114,6 +126,7 @@
 
       this._calc();
       this._buildTermPools();
+      this._buildLearnPools();
       this._buildClusters();
       this._buildZodiacNodes();
       this._buildMansionNodes();
@@ -222,6 +235,210 @@
       if (/鑑別式|判別式|discriminative|支援向量|支持向量|\bsvm\b|邏輯回歸|logistic.*regress|logistic.*分類|感知機|perceptron|樸素貝葉斯|naive\s*bayes|k[\s-]近鄰|knn|線性判別|線性分類|二元分類|多元分類|分類器|classifier/.test(s))
         return '鑑別式 AI';
       return null;
+    }
+
+    // ── 學習導向：術語依學習範式分類 ─────────────────────────────────────────────
+
+    _normLearnCat(t) {
+      const s = [t.title || '', t.eng_name || t.eng || '', t.category || '', t.def || '']
+        .join(' ').toLowerCase();
+      if (/強化學習|reinforcement.learn|q.learn(?:ing)?|policy.gradient|深度強化|ppo\b|dqn\b|mdp\b|馬可夫決策|bellman|actor.critic|temporal.differ|蒙特卡羅.*強化/.test(s))
+        return '強化學習';
+      if (/半監督|semi.supervis|偽標籤|pseudo.label|label.propagat|consistency.regulari/.test(s))
+        return '半監督式';
+      if (/自監督|self.supervis|對比學習|contrastive.learn|masked.language|表徵學習(?!.*監督)|simclr|moco\b|byol\b|momentum.contrast|預訓練.*語言模型|language.model.*pretrain/.test(s))
+        return '自監督';
+      if (/生成.*對抗|\bgan\b|生成對抗|variational.*auto|\bvae\b|擴散模型|diffusion.model|score.match|ddpm|flow.based|normalizing.flow|生成模型|generative.model|denoising.diffus|stable.diffusion/.test(s))
+        return '生成式';
+      if (/鑑別式|判別式|discriminative|支援向量機|\bsvm\b|感知機(?!.*多層)|邏輯回歸|logistic.regress|線性判別|binary.classif(?!.*neural)/.test(s))
+        return '鑑別式';
+      if (/非監督|unsupervis|聚類|clustering|\bk.means\b|dbscan|降維|dimension.*reduc|\bpca\b|主成分分析|自編碼器(?!.*變分)|autoencoder(?!.*variational)|\bt.sne\b|\bumap\b/.test(s))
+        return '非監督式';
+      if (/決策樹|decision.tree|隨機森林|random.forest|樸素貝葉斯|naive.bayes|k.近鄰|\bknn\b|gradient.boost|xgboost|adaboost|bagging\b|集成.{0,4}學習|ensemble.learn|boosting/.test(s))
+        return '傳統演算法';
+      if (/監督.{0,4}學習|supervis.{0,10}learn|標注.{0,4}資料|labeled.data|backpropag|反向傳播|梯度下降|gradient.descent|cross.entropy.*loss|損失函數|過擬合|underfitt|train.*test.*split/.test(s))
+        return '監督式';
+      return null;
+    }
+
+    _buildLearnPools() {
+      this._byLearnCat = {};
+      this._topics.forEach(t => {
+        const lcat = this._normLearnCat(t);
+        if (!lcat) return;
+        (this._byLearnCat[lcat] ??= []).push({
+          id:       String(t.id || ('l' + Math.random())),
+          title:    t.title    || '',
+          eng:      t.eng_name || '',
+          cat:      lcat,
+          def:      t.def      || '',
+          key_goal: !!t.key_goal,
+        });
+      });
+    }
+
+    // 學習導向全覽：8 顆學習範式星體
+    showLearnOverview() {
+      this._filterCat = '__learn__';
+      this._rotG.selectAll('.ca-detail').transition().duration(280).attr('opacity', 0)
+        .on('end', function() { d3.select(this).remove(); });
+      // 顯示學習星體，隱藏功能星體
+      this._rotG.selectAll('.ca-cluster').transition().duration(280).attr('opacity', 0);
+      setTimeout(() => {
+        if (this._filterCat !== '__learn__') return;
+        this._rotG.selectAll('.ca-cluster').style('display', 'none').attr('opacity', 1);
+        this._drawLearnClusters();
+      }, 300);
+    }
+
+    _drawLearnClusters() {
+      // 清除舊的學習星體
+      this._rotG.selectAll('.ca-learn-cluster').remove();
+      const self = this;
+      const planetR = Math.max(18, this._md * 0.034);
+      const n = LEARN_DEFS.length;
+      // 8 顆行星均勻分佈在軌道上
+      LEARN_DEFS.forEach((def, li) => {
+        const angle = (li / n) * 360 - 90;
+        const [gcx, gcy] = this._pt(angle, this._orbitR);
+        const items = this._byLearnCat[def.cat] || [];
+        const cg = this._rotG.append('g')
+          .attr('class', `ca-learn-cluster ca-learn-cluster-${li}`);
+        const pg = cg.append('g').attr('class', 'ca-learn-planet')
+          .attr('transform', `translate(${gcx},${gcy})`).style('cursor', 'pointer');
+        // 外層光暈
+        pg.append('circle').attr('r', planetR * 2.4)
+          .attr('fill', def.color + '09').attr('pointer-events', 'none');
+        pg.append('circle').attr('r', planetR * 1.6)
+          .attr('fill', def.color + '18').attr('pointer-events', 'none');
+        // 行星本體 + SMIL 閃爍（各自不同週期）
+        const LEARN_DUR = [9, 12, 8, 14, 7, 11, 10, 13];
+        const LEARN_LOW = [0.50,0.38,0.55,0.35,0.60,0.42,0.48,0.40];
+        const dur = LEARN_DUR[li] ?? 10;
+        const low = LEARN_LOW[li] ?? 0.45;
+        const body = pg.append('circle').attr('class', 'ca-learn-body').attr('r', planetR)
+          .attr('fill', def.color).attr('fill-opacity', 0.88)
+          .attr('stroke', '#ffffff').attr('stroke-opacity', 0.18).attr('stroke-width', 0.8)
+          .style('filter', 'url(#star-glow)');
+        body.append('animate').attr('attributeName','opacity')
+          .attr('values', `0.88;${low};0.95;${low*0.8};0.88`)
+          .attr('dur', `${dur}s`).attr('begin', `${(li * 1.5).toFixed(1)}s`)
+          .attr('repeatCount', 'indefinite');
+        // 3D 高光
+        pg.append('circle').attr('r', planetR * 0.30)
+          .attr('cx', -planetR * 0.22).attr('cy', -planetR * 0.26)
+          .attr('fill', '#ffffff').attr('fill-opacity', 0.40)
+          .attr('pointer-events', 'none');
+        // 名稱標籤
+        pg.append('text').attr('text-anchor', 'middle').attr('dy', planetR + 15)
+          .attr('fill', def.color).attr('font-size', 10).attr('font-weight', 600)
+          .attr('pointer-events', 'none').text(def.cat);
+        pg.append('text').attr('text-anchor', 'middle').attr('dy', planetR + 27)
+          .attr('fill', def.color + '80').attr('font-size', 8)
+          .attr('pointer-events', 'none').text(`${items.length} 個術語`);
+        // Hover / click
+        pg.on('mouseenter', (ev) => {
+            pg.select('.ca-learn-body').transition().duration(150).attr('r', planetR * 1.18);
+            const tip = document.getElementById('atlas-tooltip');
+            if (tip) {
+              tip.innerHTML = `<strong style="color:${def.color}">${def.emoji} ${def.cat}</strong>
+                <br><span style="color:#94a3b8;font-size:10px">點擊查看 ${items.length} 個術語</span>`;
+              tip.style.display = 'block';
+              tip.style.left = Math.min(ev.clientX + 14, window.innerWidth - 220) + 'px';
+              tip.style.top  = Math.min(ev.clientY - 10, window.innerHeight - 80) + 'px';
+            }
+          })
+          .on('mouseleave', () => {
+            pg.select('.ca-learn-body').transition().duration(200).attr('r', planetR);
+            self._hideTooltip();
+          })
+          .on('click', (ev) => {
+            ev.stopPropagation();
+            if (typeof self.onLearnCatClick === 'function') self.onLearnCatClick(def.cat);
+          });
+      });
+    }
+
+    filterLearnCat(cat) {
+      this._filterCat = '__learn_detail__' + cat;
+      // 隱藏學習星體
+      this._rotG.selectAll('.ca-learn-cluster').transition().duration(280).attr('opacity', 0);
+      // 清除功能詳細層
+      this._rotG.selectAll('.ca-detail').transition().duration(280).attr('opacity', 0)
+        .on('end', function() { d3.select(this).remove(); });
+      setTimeout(() => {
+        if (this._filterCat !== '__learn_detail__' + cat) return;
+        this._rotG.selectAll('.ca-learn-cluster').style('display','none').attr('opacity',1);
+        const def = LEARN_DEFS.find(d => d.cat === cat);
+        const items = this._byLearnCat[cat] || [];
+        this._buildDetailLayerLearn(cat, def?.color || '#7dd3fc', items);
+      }, 320);
+    }
+
+    _buildDetailLayerLearn(cat, color, items) {
+      const n = items.length;
+      if (!n) return;
+      const mobile = this._md < 768;
+      const minSep = mobile
+        ? (n > 100 ? 28 : n > 50 ? 35 : 42)
+        : (n > 150 ? 35 : n > 100 ? 42 : n > 50 ? 50 : 60);
+      const minStartR = this._coreR * 3.4;
+      const pos = this._concentricPos(n, minSep, minStartR);
+      const g = this._rotG.insert('g', '.ca-cluster')
+        .attr('class', 'ca-detail').attr('opacity', 0);
+      const nodes = items.map((t, i) => {
+        const p = pos[i] || { r: minStartR, th: 0 };
+        return { id:t.id, title:t.title, eng:t.eng, cat:t.cat, def:t.def,
+          key_goal:t.key_goal, color,
+          lx: p.r * Math.cos(p.th), ly: p.r * Math.sin(p.th),
+          nr: t.key_goal ? 3.2 : 1.8 };
+      });
+      const links = this._mstLinks(nodes, minSep * 2.2);
+      g.selectAll('line.cd-link').data(links).join('line').attr('class','cd-link')
+        .attr('x1',d=>d.s.lx).attr('y1',d=>d.s.ly)
+        .attr('x2',d=>d.t.lx).attr('y2',d=>d.t.ly)
+        .attr('stroke',color)
+        .attr('stroke-opacity',d=>d.s.key_goal&&d.t.key_goal?0.45:d.s.key_goal||d.t.key_goal?0.22:0.10)
+        .attr('stroke-width',d=>d.s.key_goal&&d.t.key_goal?1.2:0.5)
+        .attr('stroke-dasharray',d=>d.s.key_goal&&d.t.key_goal?'none':'3,5');
+      const ns = g.selectAll('g.cd-node').data(nodes).join('g').attr('class','cd-node')
+        .attr('transform',d=>`translate(${d.lx},${d.ly})`).style('cursor','pointer');
+      ns.append('circle').attr('class','cd-halo')
+        .attr('r',d=>d.nr*2.5).attr('fill',color+'20').attr('pointer-events','none');
+      ns.append('circle')
+        .attr('class',d=>d.key_goal?'cd-dot is-key':'cd-dot')
+        .attr('r',d=>d.nr).attr('fill',color).attr('fill-opacity',0.92)
+        .style('filter','url(#star-glow)')
+        .style('--sd',(d,i)=>d.key_goal?`${(6+(i*0.41%4)).toFixed(2)}s`:`${(14+(i*0.83%8)).toFixed(2)}s`)
+        .style('animation-delay',(_,i)=>`-${(i*1.73%14).toFixed(2)}s`);
+      const self = this;
+      ns.on('mouseenter',(ev,d)=>{
+          ns.filter(dd=>dd.id===d.id).select('.cd-dot').transition().duration(120).attr('r',d.nr*2.5);
+          self._tooltip(ev,d);
+        })
+        .on('mouseleave',(ev,d)=>{
+          ns.filter(dd=>dd.id===d.id).select('.cd-dot').transition().duration(200).attr('r',d.nr);
+          self._hideTooltip();
+        })
+        .on('click',(ev,d)=>{ev.stopPropagation();self._panel(d);})
+        .on('touchstart',(ev,d)=>{
+          ev.preventDefault();ev.stopPropagation();
+          const t=ev.touches[0];
+          self._tooltip({clientX:t.clientX,clientY:t.clientY},d);
+          setTimeout(()=>self._hideTooltip(),2200);
+          setTimeout(()=>self._panel(d),250);
+        },{passive:false});
+      g.transition().duration(450).attr('opacity',1);
+    }
+
+    // 從學習導向返回全覽：清除學習圖層，還原功能導向
+    restoreFromLearn() {
+      this._filterCat = null;
+      this._rotG.selectAll('.ca-learn-cluster').remove();
+      this._rotG.selectAll('.ca-detail').transition().duration(280).attr('opacity',0)
+        .on('end', function() { d3.select(this).remove(); });
+      this._rotG.selectAll('.ca-cluster').style('display','').attr('opacity',0)
+        .transition().duration(350).attr('opacity',1);
     }
 
     _buildClusters() {
