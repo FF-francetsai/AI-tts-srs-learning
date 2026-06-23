@@ -89,6 +89,7 @@
     { cat:'AI 入門',   color:'#22d3ee', shortName:'INTRO', emoji:'🌱' },
     { cat:'資料基礎',  color:'#60a5fa', shortName:'DATA',  emoji:'📊' },
     { cat:'監督式',    color:'#a78bfa', shortName:'SL',    emoji:'🎯' },
+    { cat:'鑑別式',    color:'#a3e635', shortName:'DISC',  emoji:'🔬' },
     { cat:'非監督式',  color:'#34d399', shortName:'UL',    emoji:'🔍' },
     { cat:'深度學習',  color:'#fbbf24', shortName:'DL',    emoji:'🧠' },
     { cat:'生成式',    color:'#f472b6', shortName:'GEN',   emoji:'✨' },
@@ -262,8 +263,12 @@
       if (/神經網路|neural.network|deep.learn|\bcnn\b|卷積神經|\brnn\b|循環神經|\blstm\b|\bgru\b|\btransformer\b|注意力機制|attention.mechanism|embedding.*layer|批次正規化|batch.norm|dropout層|激活函數|activation.func|反向傳播|backpropag|殘差網路|resnet|\bvgg\b|遷移.*深度/.test(s))
         return '深度學習';
 
-      // ── 5. 監督式（含傳統分類/回歸算法）
-      if (/監督.{0,4}學習|supervis.{0,10}learn|分類算法|回歸算法|決策樹|decision.tree|隨機森林|random.forest|邏輯回歸|logistic.regress|\bsvm\b|支援向量|梯度下降|gradient.descent|過擬合|overfitt|正規化.*模型|regulariz|交叉驗證|cross.valid|樸素貝葉斯|naive.bayes|\bknn\b|k.近鄰|gradient.boost|xgboost|adaboost|集成學習|ensemble|感知機|perceptron|線性回歸|linear.regress/.test(s))
+      // ── 5a. 鑑別式（判別模型，比監督式更具體）
+      if (/鑑別式|判別式|discriminative|\bsvm\b|支援向量機|感知機(?!.*多層)|邏輯回歸|logistic.regress|線性判別|linear.discriminant|sigmoid.*分類|二元.*分類器(?!.*深度)/.test(s))
+        return '鑑別式';
+
+      // ── 5b. 監督式（含傳統分類/回歸算法）
+      if (/監督.{0,4}學習|supervis.{0,10}learn|分類算法|回歸算法|決策樹|decision.tree|隨機森林|random.forest|梯度下降|gradient.descent|過擬合|overfitt|正規化.*模型|regulariz|交叉驗證|cross.valid|樸素貝葉斯|naive.bayes|\bknn\b|k.近鄰|gradient.boost|xgboost|adaboost|集成學習|ensemble|線性回歸|linear.regress/.test(s))
         return '監督式';
 
       // ── 6. 資料基礎（資料處理、特徵工程、評估指標）
@@ -739,7 +744,7 @@
     _drawMansions() {
       const g = this._rotG.append('g').attr('class','ca-mansions');
       const self = this;
-      this._mansionData.forEach(({ m, cx, cy, color, nodes }) => {
+      this._mansionData.forEach(({ m, idx, cx, cy, color, nodes }) => {
         const mg = g.append('g').attr('transform',`translate(${cx},${cy})`);
         m.lines.forEach(([si,ti]) => {
           const s=m.stars[si], t=m.stars[ti];
@@ -749,9 +754,18 @@
         const ns = mg.selectAll('g.mn').data(nodes).join('g').attr('class','mn')
           .attr('transform',(_,i)=>`translate(${m.stars[i][0]},${m.stars[i][1]})`)
           .style('cursor','pointer');
+        // 節點套用 cd-dot 閃爍（各自獨立週期，用全域索引 idx*10+i 錯開）
         ns.append('circle').attr('r',d=>d.r).attr('data-nid',d=>d.id)
-          .attr('fill',d=>d.color).attr('fill-opacity',0.72)
-          .style('filter','url(#star-glow)');
+          .attr('class', d => d.r > 2.3 ? 'cd-dot is-key' : 'cd-dot')
+          .attr('fill',d=>d.color).attr('fill-opacity',0.90)
+          .style('filter','url(#star-glow)')
+          .style('--sd', (d, i) => {
+            const gi = idx * 10 + i;
+            return d.r > 2.3
+              ? `${(4.5 + (gi * 0.53 % 3.5)).toFixed(2)}s`
+              : `${(9.0 + (gi * 0.79 % 7.0)).toFixed(2)}s`;
+          })
+          .style('animation-delay', (_, i) => `-${((idx * 10 + i) * 1.17 % 12).toFixed(2)}s`);
         ns.on('mouseenter',(ev,d)=>{
             d3.select(ev.currentTarget).select('circle')
               .transition().duration(100).attr('r',d.r*2.8);
@@ -775,7 +789,8 @@
     _drawZodiacPatterns() {
       const g = this._rotG.append('g').attr('class','ca-zodiac');
       const self = this;
-      this._zodiacData.forEach(({ pat, cx, cy, catDef, nodes }) => {
+      // zi = zodiac index（300 偏移避免與 mansion delay 重複）
+      this._zodiacData.forEach(({ pat, zi, cx, cy, catDef, nodes }) => {
         const pg = g.append('g').attr('transform',`translate(${cx},${cy})`);
         pat.lines.forEach(([si,ti]) => {
           const s=pat.stars[si], t=pat.stars[ti];
@@ -785,9 +800,18 @@
         const ns = pg.selectAll('g.zn').data(nodes).join('g').attr('class','zn')
           .attr('transform',(_,i)=>`translate(${pat.stars[i][0]},${pat.stars[i][1]})`)
           .style('cursor','pointer');
+        // 節點套用 cd-dot 閃爍（各自獨立週期）
         ns.append('circle').attr('r',d=>d.r).attr('data-nid',d=>d.id)
-          .attr('fill',d=>d.color).attr('fill-opacity',0.78)
-          .style('filter','url(#star-glow)');
+          .attr('class', d => d.r > 3.0 ? 'cd-dot is-key' : 'cd-dot')
+          .attr('fill',d=>d.color).attr('fill-opacity',0.90)
+          .style('filter','url(#star-glow)')
+          .style('--sd', (d, i) => {
+            const gi = 300 + zi * 10 + i;
+            return d.r > 3.0
+              ? `${(4.0 + (gi * 0.61 % 4.0)).toFixed(2)}s`
+              : `${(8.5 + (gi * 0.83 % 6.5)).toFixed(2)}s`;
+          })
+          .style('animation-delay', (_, i) => `-${((300 + zi * 10 + i) * 1.23 % 14).toFixed(2)}s`);
         ns.on('mouseenter',(ev,d)=>{
             d3.select(ev.currentTarget).select('circle')
               .transition().duration(100).attr('r',d.r*2.8);

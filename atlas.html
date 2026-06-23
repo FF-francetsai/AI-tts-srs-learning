@@ -121,6 +121,7 @@
     .learn-tab[data-lcat="INTRO"] { --ltab-color: #22d3ee; }
     .learn-tab[data-lcat="DATA"]  { --ltab-color: #60a5fa; }
     .learn-tab[data-lcat="SL"]    { --ltab-color: #a78bfa; }
+    .learn-tab[data-lcat="DISC"]  { --ltab-color: #a3e635; }
     .learn-tab[data-lcat="UL"]    { --ltab-color: #34d399; }
     .learn-tab[data-lcat="DL"]    { --ltab-color: #fbbf24; }
     .learn-tab[data-lcat="GEN"]   { --ltab-color: #f472b6; }
@@ -233,6 +234,7 @@
     <button class="learn-tab" data-lcat="INTRO" onclick="showLearnCat('AI 入門','INTRO')">🌱 AI 入門</button>
     <button class="learn-tab" data-lcat="DATA"  onclick="showLearnCat('資料基礎','DATA')">📊 資料基礎</button>
     <button class="learn-tab" data-lcat="SL"    onclick="showLearnCat('監督式','SL')">🎯 監督式</button>
+    <button class="learn-tab" data-lcat="DISC"  onclick="showLearnCat('鑑別式','DISC')">🔬 鑑別式</button>
     <button class="learn-tab" data-lcat="UL"    onclick="showLearnCat('非監督式','UL')">🔍 非監督式</button>
     <button class="learn-tab" data-lcat="DL"    onclick="showLearnCat('深度學習','DL')">🧠 深度學習</button>
     <button class="learn-tab" data-lcat="GEN"   onclick="showLearnCat('生成式','GEN')">✨ 生成式</button>
@@ -269,6 +271,7 @@
     <div class="atlas-legend-item"><span class="legend-dot" style="background:#22d3ee"></span>🌱 AI 入門</div>
     <div class="atlas-legend-item"><span class="legend-dot" style="background:#60a5fa"></span>📊 資料基礎</div>
     <div class="atlas-legend-item"><span class="legend-dot" style="background:#a78bfa"></span>🎯 監督式</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#a3e635"></span>🔬 鑑別式</div>
     <div class="atlas-legend-item"><span class="legend-dot" style="background:#34d399"></span>🔍 非監督式</div>
     <div class="atlas-legend-item"><span class="legend-dot" style="background:#fbbf24"></span>🧠 深度學習</div>
     <div class="atlas-legend-item"><span class="legend-dot" style="background:#f472b6"></span>✨ 生成式</div>
@@ -371,7 +374,7 @@
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="data.js?v=6.1"></script>
   <script src="js/atlas.js?v=7.0"></script>
-  <script src="js/starmap.js?v=3.3"></script>
+  <script src="js/starmap.js?v=3.4"></script>
   <script>
     // 扁平化 lessonData → topics（支援舊版巢狀結構與新版扁平陣列）
     const topics = [];
@@ -527,8 +530,8 @@
     // 學習星體點擊 callback
     starMap.onLearnCatClick = (cat) => {
       const keyMap = {
-        'AI 入門':'INTRO','資料基礎':'DATA','監督式':'SL','非監督式':'UL',
-        '深度學習':'DL','生成式':'GEN','強化學習':'RL','中級進階':'ADV'
+        'AI 入門':'INTRO','資料基礎':'DATA','監督式':'SL','鑑別式':'DISC',
+        '非監督式':'UL','深度學習':'DL','生成式':'GEN','強化學習':'RL','中級進階':'ADV'
       };
       showLearnCat(cat, keyMap[cat] || 'INTRO');
     };
