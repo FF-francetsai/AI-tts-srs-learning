@@ -260,20 +260,20 @@
       return links;
     }
 
-    _concentricPos(n, minSep) {
-      // 同心環排列：保證節點圓心間距 ≥ minSep px
+    _concentricPos(n, minSep, minStartR = 0) {
+      // 同心環排列：保證節點圓心間距 ≥ minSep px；minStartR 讓中心留白
       const out = [];
       if (n === 0) return out;
       let ring = 0;
       while (out.length < n) {
-        if (ring === 0) {
-          out.push({ r:0, th:0 });
+        const ringR = minStartR + ring * minSep;
+        if (ringR === 0) {
+          out.push({ r: 0, th: 0 });
         } else {
-          const ringR = ring * minSep;
-          const cap   = Math.max(1, Math.floor(2 * Math.PI * ringR / minSep));
-          const offset = ring * 0.37; // 錯開各環，避免節點沿徑向對齊
+          const cap    = Math.max(1, Math.floor(2 * Math.PI * ringR / minSep));
+          const offset = ring * 0.37;
           for (let i = 0; i < cap && out.length < n; i++) {
-            out.push({ r: ringR, th: offset + 2*Math.PI*i/cap });
+            out.push({ r: ringR, th: offset + 2 * Math.PI * i / cap });
           }
         }
         ring++;
@@ -509,69 +509,72 @@
       });
     }
 
-    // ── 七大 AI 類別星座群（內環）────────────────────────────────────────────
+    // ── 全覽圖：10 顆行星（每個分類一顆，點擊進入該分類）────────────────────
 
     _drawClusters() {
       const self = this;
       this._clusterEls = [];
+      const defs = this._svg.select('defs');
+      const planetR = Math.max(20, this._md * 0.038);
+
       this._clusters.forEach((cluster, ci) => {
-        const cg = this._rotG.append('g').attr('class',`ca-cluster ca-cluster-${ci}`);
-        const lo = cluster.groupR + 18;
-        const [lx,ly] = this._pt(cluster.centerAngle, this._orbitR + lo);
-        cg.append('text').attr('x',lx).attr('y',ly-4).attr('text-anchor','middle')
-          .attr('fill',cluster.def.color).attr('font-size',11).attr('font-weight',700)
-          .attr('letter-spacing',1).attr('pointer-events','none').text(cluster.def.cat);
-        cg.append('text').attr('x',lx).attr('y',ly+9).attr('text-anchor','middle')
-          .attr('fill',cluster.def.color+'88').attr('font-size',8).attr('pointer-events','none')
-          .text(`(${cluster.def.shortName})`);
+        const cg = this._rotG.append('g').attr('class', `ca-cluster ca-cluster-${ci}`);
 
-        const linesSel = cg.selectAll(`line.cl${ci}`).data(cluster.links).join('line')
-          .attr('class',`cl${ci}`)
-          .attr('x1',d=>d.s.lx).attr('y1',d=>d.s.ly)
-          .attr('x2',d=>d.t.lx).attr('y2',d=>d.t.ly)
-          .attr('stroke',cluster.def.color).attr('stroke-opacity',0.32).attr('stroke-width',1);
+        // 行星徑向漸層（球面高光效果）
+        const gradId = `pg${ci}`;
+        const grad = defs.append('radialGradient').attr('id', gradId)
+          .attr('cx', '38%').attr('cy', '35%').attr('r', '65%');
+        grad.append('stop').attr('offset', '0%')
+          .attr('stop-color', '#ffffff').attr('stop-opacity', 0.55);
+        grad.append('stop').attr('offset', '45%')
+          .attr('stop-color', cluster.def.color).attr('stop-opacity', 1);
+        grad.append('stop').attr('offset', '100%')
+          .attr('stop-color', cluster.def.color).attr('stop-opacity', 0.35);
 
-        const nodeSel = cg.selectAll(`g.cs${ci}`).data(cluster.nodes).join('g')
-          .attr('class',`cs${ci}`)
-          .attr('transform',d=>`translate(${d.lx},${d.ly})`)
-          .style('cursor','pointer');
+        const pg = cg.append('g').attr('class', 'ca-planet')
+          .attr('transform', `translate(${cluster.gcx},${cluster.gcy})`)
+          .style('cursor', 'pointer');
 
-        nodeSel.append('circle').attr('r',d=>d.r*3)
-          .attr('fill',cluster.def.color+'16').attr('pointer-events','none');
-        nodeSel.append('circle').attr('r',d=>d.r).attr('data-nid',d=>d.id)
-          .attr('fill',cluster.def.color)
-          .attr('stroke','#fff').attr('stroke-width',0.5).attr('stroke-opacity',0.5)
-          .style('filter','url(#star-glow)');
+        // 多層光暈（由外到內）
+        pg.append('circle').attr('r', planetR * 2.4)
+          .attr('fill', cluster.def.color + '07').attr('pointer-events', 'none');
+        pg.append('circle').attr('r', planetR * 1.6)
+          .attr('fill', cluster.def.color + '13').attr('pointer-events', 'none');
+        // 行星本體
+        pg.append('circle').attr('class', 'ca-planet-body').attr('r', planetR)
+          .attr('fill', `url(#${gradId})`).style('filter', 'url(#star-glow)');
+        // 類別名稱（行星下方）
+        pg.append('text').attr('text-anchor', 'middle').attr('dy', planetR + 14)
+          .attr('fill', cluster.def.color).attr('font-size', 10).attr('font-weight', 600)
+          .attr('pointer-events', 'none').text(cluster.def.cat);
+        // 術語數（更小字）
+        pg.append('text').attr('text-anchor', 'middle').attr('dy', planetR + 25)
+          .attr('fill', cluster.def.color + '88').attr('font-size', 8)
+          .attr('pointer-events', 'none')
+          .text(`${(self._byCat[cluster.def.cat] || []).length} 個術語`);
 
-        // Only label key_goal nodes (r > 5)
-        nodeSel.filter(d=>d.r>5).append('text')
-          .attr('text-anchor','middle').attr('dy',d=>-(d.r+7))
-          .attr('fill',cluster.def.color+'dd').attr('font-size',8.5)
-          .attr('pointer-events','none')
-          .text(d=>d.title.length>9?d.title.slice(0,8)+'…':d.title);
-
-        nodeSel
-          .on('mouseenter',(ev,d)=>{
-            d3.select(ev.currentTarget).select('circle:nth-child(2)')
-              .transition().duration(120).attr('r',d.r*2.5);
-            linesSel
-              .attr('stroke-opacity',l=>l.s.id===d.id||l.t.id===d.id?1:0.08)
-              .attr('stroke-width',l=>l.s.id===d.id||l.t.id===d.id?2.5:0.8);
-            self._tooltip(ev,d);
+        pg.on('mouseenter', (ev) => {
+            pg.select('.ca-planet-body').transition().duration(150).attr('r', planetR * 1.18);
+            const tip = document.getElementById('atlas-tooltip');
+            if (tip) {
+              tip.innerHTML = `<strong style="color:${cluster.def.color}">${cluster.def.cat}</strong>
+                <br><span style="color:#94a3b8;font-size:10px">點擊查看所有術語</span>`;
+              tip.style.display = 'block';
+              tip.style.left = Math.min(ev.clientX + 14, window.innerWidth - 220) + 'px';
+              tip.style.top  = Math.min(ev.clientY - 10, window.innerHeight - 80) + 'px';
+            }
           })
-          .on('mouseleave',(ev,d)=>{
-            d3.select(ev.currentTarget).select('circle:nth-child(2)')
-              .transition().duration(200).attr('r',d.r);
-            linesSel.attr('stroke-opacity',0.32).attr('stroke-width',1);
+          .on('mouseleave', () => {
+            pg.select('.ca-planet-body').transition().duration(200).attr('r', planetR);
             self._hideTooltip();
           })
-          .on('click',(ev,d)=>{
+          .on('click', (ev) => {
             ev.stopPropagation();
-            self._panel(d);
-            self._neuralPulse(d, cluster.links, cluster.def.color);
+            if (typeof self.onCatClick === 'function') self.onCatClick(cluster.def.cat);
           });
 
-        this._clusterEls.push({ cg, linesSel, nodeSel, cluster });
+        // linesSel / nodeSel 設為 null（行星模式無單節點連線）
+        this._clusterEls.push({ cg, linesSel: null, nodeSel: null, cluster });
       });
     }
 
@@ -791,42 +794,45 @@
         ? (n > 100 ? 22 : n > 50 ? 28 : 35)
         : (n > 150 ? 30 : n > 100 ? 38 : n > 50 ? 45 : 55);
 
-      const pos = this._concentricPos(n, minSep);
+      const minStartR = this._coreR + 60; // 讓 AI 核心周圍留白
+      const pos = this._concentricPos(n, minSep, minStartR);
 
       const g = this._rotG.insert('g', '.ca-cluster')
         .attr('class', 'ca-detail').attr('opacity', 0);
 
       const nodes = items.map((t, i) => {
-        const p = pos[i] || { r:0, th:0 };
+        const p = pos[i] || { r: minStartR, th: 0 };
         return { id:t.id, title:t.title, eng:t.eng, cat:def.cat, def:t.def,
           key_goal:t.key_goal, color:def.color,
           lx: p.r * Math.cos(p.th), ly: p.r * Math.sin(p.th),
-          nr: t.key_goal ? 5.5 : 3.5 };
+          nr: t.key_goal ? 2.5 : 1.5 };  // 縮小節點至類似紅箭頭的小星點
       });
 
       const links = this._mstLinks(nodes, minSep * 2.3);
 
-      // 虛線連線（星座風格）
+      // 細虛線連線（星座風格）
       g.selectAll('line.cd-link').data(links).join('line').attr('class', 'cd-link')
         .attr('x1', d => d.s.lx).attr('y1', d => d.s.ly)
         .attr('x2', d => d.t.lx).attr('y2', d => d.t.ly)
-        .attr('stroke', def.color).attr('stroke-opacity', 0.25)
-        .attr('stroke-width', 0.9).attr('stroke-dasharray', '3,5');
+        .attr('stroke', def.color).attr('stroke-opacity', 0.22)
+        .attr('stroke-width', 0.7).attr('stroke-dasharray', '3,5');
 
       const ns = g.selectAll('g.cd-node').data(nodes).join('g').attr('class', 'cd-node')
         .attr('transform', d => `translate(${d.lx},${d.ly})`).style('cursor', 'pointer');
 
+      // 外層半透明光暈
       ns.append('circle').attr('class', 'cd-halo')
-        .attr('r', d => d.nr * 3.5).attr('fill', def.color + '15')
+        .attr('r', d => d.nr * 7).attr('fill', def.color + '12')
         .attr('pointer-events', 'none');
+      // 內層實心點（小而亮）
       ns.append('circle').attr('class', 'cd-dot')
-        .attr('r', d => d.nr).attr('fill', def.color).attr('fill-opacity', 0.85)
+        .attr('r', d => d.nr).attr('fill', def.color).attr('fill-opacity', 0.92)
         .style('filter', 'url(#star-glow)');
 
-      // key_goal 節點顯示標籤
+      // key_goal 節點顯示標籤（較小字）
       ns.filter(d => d.key_goal).append('text')
-        .attr('text-anchor', 'middle').attr('dy', d => -(d.nr + 6))
-        .attr('fill', def.color + 'cc').attr('font-size', 10).attr('font-weight', 600)
+        .attr('text-anchor', 'middle').attr('dy', d => -(d.nr + 5))
+        .attr('fill', def.color + 'cc').attr('font-size', 9).attr('font-weight', 600)
         .attr('pointer-events', 'none')
         .text(d => d.title.length > 10 ? d.title.slice(0, 9) + '…' : d.title);
 
@@ -850,21 +856,31 @@
 
     search(query) {
       if (!this._clusterEls) return;
+      // 在 detail 層搜尋（行星模式下 nodeSel/linesSel 均為 null，直接在 detail layer 操作）
+      const detailLayer = this._rotG?.select('.ca-detail');
       if (!query) {
-        this._clusterEls.forEach(({nodeSel,linesSel}) => {
-          nodeSel.select('circle:nth-child(2)').attr('opacity',1);
-          linesSel.attr('stroke-opacity',0.32);
+        detailLayer?.selectAll('.cd-dot').attr('opacity', 1);
+        detailLayer?.selectAll('.cd-link').attr('stroke-opacity', 0.25);
+        this._clusterEls.forEach(({ nodeSel, linesSel }) => {
+          if (nodeSel) nodeSel.select('circle:nth-child(2)').attr('opacity', 1);
+          if (linesSel) linesSel.attr('stroke-opacity', 0.32);
         });
         return;
       }
       const q = query.toLowerCase();
       const hitIds = new Set(
-        this._allNodes.filter(n=>n.title.toLowerCase().includes(q)||n.eng.toLowerCase().includes(q))
-          .map(n=>n.id)
+        this._allNodes.filter(n => n.title.toLowerCase().includes(q) || n.eng.toLowerCase().includes(q))
+          .map(n => n.id)
       );
-      this._clusterEls.forEach(({nodeSel,linesSel}) => {
-        nodeSel.select('circle:nth-child(2)').attr('opacity',d=>hitIds.has(d.id)?1:0.07);
-        linesSel.attr('stroke-opacity',l=>hitIds.has(l.s.id)||hitIds.has(l.t.id)?0.7:0.04);
+      // Detail layer 搜尋
+      detailLayer?.selectAll('g.cd-node').each(function(d) {
+        d3.select(this).select('.cd-dot').attr('opacity', hitIds.has(d.id) ? 1 : 0.05);
+      });
+      detailLayer?.selectAll('line.cd-link')
+        .attr('stroke-opacity', l => hitIds.has(l.s.id) || hitIds.has(l.t.id) ? 0.7 : 0.02);
+      this._clusterEls.forEach(({ nodeSel, linesSel }) => {
+        if (nodeSel) nodeSel.select('circle:nth-child(2)').attr('opacity', d => hitIds.has(d.id) ? 1 : 0.07);
+        if (linesSel) linesSel.attr('stroke-opacity', l => hitIds.has(l.s.id) || hitIds.has(l.t.id) ? 0.7 : 0.04);
       });
       if (hitIds.size) {
         const first = this._allNodes.find(n=>hitIds.has(n.id));
@@ -945,43 +961,44 @@
         ? (n > 400 ? 14 : n > 200 ? 17 : 22)
         : (n > 600 ? 16 : n > 300 ? 20 : n > 150 ? 25 : 30);
 
-      const pos = this._concentricPos(n, minSep);
+      const minStartR = this._coreR + 60; // 中心留白
+      const pos = this._concentricPos(n, minSep, minStartR);
       const g = this._rotG.insert('g', '.ca-cluster')
         .attr('class', 'ca-detail').attr('opacity', 0);
 
       const nodes = allItems.map((t, i) => {
-        const p = pos[i] || { r:0, th:0 };
+        const p = pos[i] || { r: minStartR, th: 0 };
         return { id:t.id, title:t.title, eng:t.eng, cat:t.cat, def:t.def,
           key_goal:t.key_goal, color:t.color,
           lx: p.r * Math.cos(p.th), ly: p.r * Math.sin(p.th),
-          nr: t.key_goal ? 5 : 3 };
+          nr: t.key_goal ? 2.5 : 1.5 };  // 小星點
       });
 
-      // 用空間格子法高效建連線，避免 O(n²) 慢
+      // 空間格子法高效建連線
       const links = this._nearestLinks(nodes, minSep * 2.0);
 
       g.selectAll('line.cd-link').data(links).join('line').attr('class', 'cd-link')
         .attr('x1', d => d.s.lx).attr('y1', d => d.s.ly)
         .attr('x2', d => d.t.lx).attr('y2', d => d.t.ly)
-        .attr('stroke', d => d.s.color).attr('stroke-opacity', 0.18)
-        .attr('stroke-width', 0.7).attr('stroke-dasharray', '2,4');
+        .attr('stroke', d => d.s.color).attr('stroke-opacity', 0.16)
+        .attr('stroke-width', 0.6).attr('stroke-dasharray', '2,4');
 
       const ns = g.selectAll('g.cd-node').data(nodes).join('g').attr('class', 'cd-node')
         .attr('transform', d => `translate(${d.lx},${d.ly})`).style('cursor', 'pointer');
 
-      // 外層半透明暈圈
+      // 外層半透明光暈（大但淡）
       ns.append('circle').attr('class', 'cd-halo')
-        .attr('r', d => d.nr * 3).attr('fill', d => d.color + '18')
+        .attr('r', d => d.nr * 7).attr('fill', d => d.color + '11')
         .attr('pointer-events', 'none');
-      // 內層實心點
+      // 內層實心小點
       ns.append('circle').attr('class', 'cd-dot')
-        .attr('r', d => d.nr).attr('fill', d => d.color).attr('fill-opacity', 0.88)
+        .attr('r', d => d.nr).attr('fill', d => d.color).attr('fill-opacity', 0.92)
         .style('filter', 'url(#star-glow)');
 
-      // key_goal 節點標籤
+      // key_goal 節點標籤（小字）
       ns.filter(d => d.key_goal).append('text')
-        .attr('text-anchor', 'middle').attr('dy', d => -(d.nr + 5))
-        .attr('fill', d => d.color + 'bb').attr('font-size', 9)
+        .attr('text-anchor', 'middle').attr('dy', d => -(d.nr + 4))
+        .attr('fill', d => d.color + 'bb').attr('font-size', 8)
         .attr('pointer-events', 'none')
         .text(d => d.title.length > 8 ? d.title.slice(0, 7) + '…' : d.title);
 

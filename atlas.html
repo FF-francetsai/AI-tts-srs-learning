@@ -298,7 +298,7 @@
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="data.js?v=6.1"></script>
   <script src="js/atlas.js?v=7.0"></script>
-  <script src="js/starmap.js?v=2.3"></script>
+  <script src="js/starmap.js?v=2.4"></script>
   <script>
     // 扁平化 lessonData → topics（支援舊版巢狀結構與新版扁平陣列）
     const topics = [];
@@ -424,6 +424,17 @@
       document.getElementById('atlas-search').value = '';
       showStar();
     });
+
+    // 行星點擊 → 導向該分類詳細頁
+    const CAT_KEY_MAP = {
+      '機器學習':'ML','深度學習':'DL','神經網路':'NN','生成式 AI':'GEN',
+      '電腦視覺':'CV','NLP基礎':'NLP','AI 代理人':'AGT',
+      'AI 治理':'GOV','資料科學':'DS','AI 應用':'APP'
+    };
+    starMap.onCatClick = (cat) => {
+      const key = CAT_KEY_MAP[cat] || 'ML';
+      showCat(cat, key);
+    };
 
     // 節點點擊後面板加入導覽按鈕
     const origShowPanel = atlas.showPanel.bind(atlas);
