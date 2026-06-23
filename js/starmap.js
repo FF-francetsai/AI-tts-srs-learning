@@ -370,16 +370,25 @@
       pm.append('feMergeNode').attr('in','SourceGraphic');
 
       const cf = defs.append('filter').attr('id','core-glow')
-        .attr('x','-100%').attr('y','-100%').attr('width','400%').attr('height','400%');
-      cf.append('feGaussianBlur').attr('in','SourceGraphic').attr('stdDeviation',10).attr('result','b');
+        .attr('x','-150%').attr('y','-150%').attr('width','500%').attr('height','500%');
+      const cfBlur = cf.append('feGaussianBlur').attr('in','SourceGraphic').attr('stdDeviation',12).attr('result','b');
+      // 閃爍：動態改變光暈模糊半徑
+      cfBlur.append('animate')
+        .attr('attributeName','stdDeviation')
+        .attr('values','10;16;10;20;12;18;10')
+        .attr('dur','4.5s').attr('repeatCount','indefinite');
       const cm = cf.append('feMerge');
       cm.append('feMergeNode').attr('in','b');
       cm.append('feMergeNode').attr('in','SourceGraphic');
 
-      const g = defs.append('radialGradient').attr('id','core-grad').attr('cx','35%').attr('cy','35%');
-      g.append('stop').attr('offset','0%').attr('stop-color','#fff7d6');
-      g.append('stop').attr('offset','45%').attr('stop-color','#fbbf24');
-      g.append('stop').attr('offset','100%').attr('stop-color','#b45309');
+      // 核心漸層：中心高亮 → 中段金黃 → 邊緣半透明（漸層光暈感）
+      const cg = defs.append('radialGradient').attr('id','core-grad')
+        .attr('cx','36%').attr('cy','32%').attr('r','68%');
+      cg.append('stop').attr('offset','0%').attr('stop-color','#fffde8').attr('stop-opacity', 1);
+      cg.append('stop').attr('offset','25%').attr('stop-color','#fde68a').attr('stop-opacity', 1);
+      cg.append('stop').attr('offset','60%').attr('stop-color','#f59e0b').attr('stop-opacity', 0.92);
+      cg.append('stop').attr('offset','85%').attr('stop-color','#d97706').attr('stop-opacity', 0.75);
+      cg.append('stop').attr('offset','100%').attr('stop-color','#78350f').attr('stop-opacity', 0.35);
 
       // 透明背景 rect — 讓 D3 zoom drag 在空白區域也能捕捉
       this._svg.append('rect')
@@ -684,9 +693,19 @@
           .attr('dur', `${main ? 5 : 7}s`).attr('repeatCount','indefinite');
       }
 
-      // 太陽本體
+      // 太陽本體（帶 SMIL 閃爍脈衝）
       const coreCircle = g.append('circle').attr('r', r)
         .attr('fill','url(#core-grad)').style('filter','url(#core-glow)');
+      // 半徑脈衝：呼吸感閃爍
+      coreCircle.append('animate')
+        .attr('attributeName','r')
+        .attr('values',`${r};${r*1.06};${r*0.97};${r*1.09};${r*0.98};${r}`)
+        .attr('dur','5s').attr('repeatCount','indefinite');
+      // 透明度閃爍（模擬星體不穩定光）
+      coreCircle.append('animate')
+        .attr('attributeName','opacity')
+        .attr('values','1;0.85;1;0.75;0.95;1;0.88;1')
+        .attr('dur','3.8s').attr('repeatCount','indefinite');
       g.append('text').attr('text-anchor','middle').attr('dy','0.32em')
         .attr('fill','#1c1917').attr('font-size', r*0.6).attr('font-weight', 700)
         .attr('pointer-events','none').text('AI');
@@ -851,13 +870,7 @@
         .attr('r', d => d.nr).attr('fill', def.color).attr('fill-opacity', 0.92)
         .style('filter', 'url(#star-glow)');
 
-      // key_goal 節點顯示標籤（較小字）
-      ns.filter(d => d.key_goal).append('text')
-        .attr('text-anchor', 'middle').attr('dy', d => -(d.nr + 5))
-        .attr('fill', def.color + 'cc').attr('font-size', 9).attr('font-weight', 600)
-        .attr('pointer-events', 'none')
-        .text(d => d.title.length > 10 ? d.title.slice(0, 9) + '…' : d.title);
-
+      // 靜態文字標籤已移除，hover/touch 時顯示 tooltip
       const self = this;
       ns.on('mouseenter', (ev, d) => {
           ns.filter(dd => dd.id === d.id).select('.cd-dot')
@@ -869,7 +882,14 @@
             .transition().duration(200).attr('r', d.nr);
           self._hideTooltip();
         })
-        .on('click', (ev, d) => { ev.stopPropagation(); self._panel(d); });
+        .on('click', (ev, d) => { ev.stopPropagation(); self._panel(d); })
+        .on('touchstart', (ev, d) => {
+          ev.preventDefault(); ev.stopPropagation();
+          const t = ev.touches[0];
+          self._tooltip({ clientX: t.clientX, clientY: t.clientY }, d);
+          setTimeout(() => self._hideTooltip(), 2200);
+          setTimeout(() => self._panel(d), 250);
+        }, { passive: false });
 
       g.transition().duration(450).attr('opacity', 1);
     }
@@ -998,18 +1018,7 @@
           nr: t.key_goal ? 1.8 : 1.0 };  // 更小的星點
       });
 
-      // 黃金螺旋連線：相鄰螺旋節點（閾值 = 螺旋縮放係數 * 約 3 步距）
-      const links = this._nearestLinks(nodes, spiralC * 3.5);
-
-      // 連線：同色，依 key_goal 關係決定粗細
-      g.selectAll('line.cd-link').data(links).join('line').attr('class', 'cd-link')
-        .attr('x1', d => d.s.lx).attr('y1', d => d.s.ly)
-        .attr('x2', d => d.t.lx).attr('y2', d => d.t.ly)
-        .attr('stroke', d => d.s.color === d.t.color ? d.s.color : d.s.color)
-        .attr('stroke-opacity', d => d.s.key_goal && d.t.key_goal ? 0.40 : d.s.key_goal || d.t.key_goal ? 0.22 : 0.12)
-        .attr('stroke-width',   d => d.s.key_goal && d.t.key_goal ? 1.2  : d.s.key_goal || d.t.key_goal ? 0.7  : 0.4)
-        .attr('stroke-dasharray', d => d.s.key_goal && d.t.key_goal ? 'none' : '2,4');
-
+      // 全部AI 不畫連線，只顯示黃金螺旋星點
       const ns = g.selectAll('g.cd-node').data(nodes).join('g').attr('class', 'cd-node')
         .attr('transform', d => `translate(${d.lx},${d.ly})`).style('cursor', 'pointer');
 
@@ -1033,7 +1042,14 @@
             .transition().duration(200).attr('r', d.nr);
           self._hideTooltip();
         })
-        .on('click', (ev, d) => { ev.stopPropagation(); self._panel(d); });
+        .on('click', (ev, d) => { ev.stopPropagation(); self._panel(d); })
+        .on('touchstart', (ev, d) => {
+          ev.preventDefault(); ev.stopPropagation();
+          const t = ev.touches[0];
+          self._tooltip({ clientX: t.clientX, clientY: t.clientY }, d);
+          setTimeout(() => self._hideTooltip(), 2200);
+          setTimeout(() => self._panel(d), 250);
+        }, { passive: false });
 
       g.transition().duration(450).attr('opacity', 1);
     }
