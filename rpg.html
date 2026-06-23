@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 星際聯盟 — 學習 RPG</title>
+<link rel="stylesheet" href="rpg.css">
+</head>
+<body>
+
+<!-- 粒子背景 -->
+<canvas id="rpg-bg"></canvas>
+
+<!-- ════════════════════════════════════════════════
+     畫面 1：世界地圖
+════════════════════════════════════════════════ -->
+<div id="screen-map" class="rpg-screen active">
+  <div class="map-header">
+    <div>
+      <div class="map-title">AI 星際聯盟</div>
+      <div class="map-subtitle">見習士訓練計劃</div>
+    </div>
+  </div>
+
+  <svg id="domain-map" viewBox="0 0 800 560" xmlns="http://www.w3.org/2000/svg"></svg>
+
+  <div class="player-card">
+    <div class="player-rank" id="pc-rank">見習士</div>
+    <div class="player-exp-label">經驗值</div>
+    <div class="exp-bar"><div class="exp-fill" id="pc-exp-fill" style="width:0%"></div></div>
+    <div class="player-cleared" id="pc-cleared">已通關：0 / 9 星域</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     畫面 2：對話劇情
+════════════════════════════════════════════════ -->
+<div id="screen-dialogue" class="rpg-screen">
+  <div class="dialogue-header">
+    <div class="dialogue-domain-badge" id="dlg-domain">AI 入門星</div>
+    <div class="dialogue-progress" id="dlg-progress">第 1 / 2 章</div>
+  </div>
+
+  <div class="dialogue-body">
+    <div class="char-portrait" id="dlg-portrait">
+      <!-- SVG 由 RPG_UI.showDialogue 動態替換 -->
+    </div>
+    <div class="dialogue-box">
+      <div class="dialogue-text" id="dlg-text"></div>
+      <div class="dialogue-choices" id="dlg-choices"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     畫面 3：關卡測驗
+════════════════════════════════════════════════ -->
+<div id="screen-quiz" class="rpg-screen">
+  <div class="quiz-header">
+    <span class="quiz-progress" id="quiz-prog">題目 1 / 5</span>
+    <div class="quiz-hp" id="quiz-hp">
+      <span class="heart" id="h1">❤️</span>
+      <span class="heart" id="h2">❤️</span>
+      <span class="heart" id="h3">❤️</span>
+    </div>
+  </div>
+  <div class="quiz-body">
+    <div class="quiz-question" id="quiz-q"></div>
+    <div class="quiz-options" id="quiz-opts"></div>
+    <div class="quiz-hint" id="quiz-hint"></div>
+  </div>
+
+  <!-- 通關/失敗結果 -->
+  <div class="result-overlay" id="result-overlay">
+    <div class="result-emoji" id="result-emoji">🌟</div>
+    <div class="result-title" id="result-title">通關！</div>
+    <div class="result-sub"   id="result-sub"></div>
+    <button class="result-btn" id="result-btn" onclick="RPG_UI.showMap()">返回星域地圖</button>
+  </div>
+</div>
+
+<!-- 技能解鎖 overlay -->
+<div class="skill-unlock-overlay" id="skill-overlay">
+  <div style="font-size:14px;color:#fbbf24;font-weight:700;margin-bottom:4px">✨ 新技能解鎖！</div>
+  <div id="skill-cards"></div>
+  <button class="result-btn" onclick="document.getElementById('skill-overlay').classList.remove('show')">繼續</button>
+</div>
+
+<!-- Toast -->
+<div id="rpg-toast"></div>
+
+<!-- ════════════════════════════════════════════════
+     角色 SVG 立繪定義
+════════════════════════════════════════════════ -->
+<template id="char-isabel"><!-- 伊莎貝爾（AI入門星，#22d3ee） -->
+<svg viewBox="0 0 180 252" xmlns="http://www.w3.org/2000/svg" style="color:#22d3ee">
+  <defs>
+    <radialGradient id="ig1" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#e0f7ff"/>
+      <stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="iglow"><feGaussianBlur in="SourceGraphic" stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <!-- 光暈 -->
+  <ellipse cx="90" cy="100" rx="70" ry="80" fill="url(#ig1)" opacity="0.3"/>
+  <!-- 身體（深色外套） -->
+  <rect x="52" y="148" width="76" height="90" rx="10" fill="#0c2233"/>
+  <rect x="60" y="148" width="60" height="40" rx="6" fill="#0e2d40"/>
+  <!-- 領口 -->
+  <path d="M75 148 L90 165 L105 148" fill="none" stroke="#22d3ee" stroke-width="1.5"/>
+  <!-- 裝飾徽章 -->
+  <circle cx="72" cy="168" r="5" fill="#22d3ee" opacity="0.8" filter="url(#iglow)"/>
+  <!-- 頭部 -->
+  <ellipse cx="90" cy="95" rx="32" ry="36" fill="#f4d5b0"/>
+  <!-- 頭髮（淺藍白色，長至肩） -->
+  <path d="M58 88 Q55 55 90 52 Q125 55 122 88" fill="#c8effa"/>
+  <path d="M60 90 Q54 110 58 132 Q62 140 68 142 Q64 125 63 105 Z" fill="#c8effa"/>
+  <path d="M120 90 Q126 110 122 132 Q118 140 112 142 Q116 125 117 105 Z" fill="#c8effa"/>
+  <!-- 瀏海 -->
+  <path d="M62 82 Q70 68 90 66 Q110 68 118 82" fill="#c8effa"/>
+  <!-- 眼睛（發光青色） -->
+  <ellipse cx="78" cy="96" rx="7" ry="8" fill="#0a1a2a"/>
+  <ellipse cx="102" cy="96" rx="7" ry="8" fill="#0a1a2a"/>
+  <ellipse cx="78" cy="96" rx="4.5" ry="5.5" fill="#22d3ee" filter="url(#iglow)"/>
+  <ellipse cx="102" cy="96" rx="4.5" ry="5.5" fill="#22d3ee" filter="url(#iglow)"/>
+  <circle cx="80" cy="94" r="1.5" fill="white" opacity="0.9"/>
+  <circle cx="104" cy="94" r="1.5" fill="white" opacity="0.9"/>
+  <!-- 嘴巴（微笑） -->
+  <path d="M84 109 Q90 115 96 109" fill="none" stroke="#c0806a" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- 手臂 -->
+  <rect x="38" y="150" width="18" height="55" rx="9" fill="#0c2233"/>
+  <rect x="124" y="150" width="18" height="55" rx="9" fill="#0c2233"/>
+  <!-- 手 -->
+  <ellipse cx="47" cy="207" rx="9" ry="8" fill="#f4d5b0"/>
+  <ellipse cx="133" cy="207" rx="9" ry="8" fill="#f4d5b0"/>
+  <!-- 星形裝飾（右手持） -->
+  <g transform="translate(142,195) rotate(-15)" filter="url(#iglow)">
+    <polygon points="0,-12 3,-4 11,-4 5,2 7,10 0,5 -7,10 -5,2 -11,-4 -3,-4" fill="#22d3ee" opacity="0.9"/>
+  </g>
+</svg>
+</template>
+
+<template id="char-moon"><!-- 穆恩（深度熔爐，#fbbf24） -->
+<svg viewBox="0 0 180 252" xmlns="http://www.w3.org/2000/svg" style="color:#fbbf24">
+  <defs>
+    <radialGradient id="mg1" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#fffde0"/>
+      <stop offset="100%" stop-color="#fbbf24" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="mglow"><feGaussianBlur in="SourceGraphic" stdDeviation="3.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <!-- 光暈 -->
+  <ellipse cx="90" cy="100" rx="75" ry="85" fill="url(#mg1)" opacity="0.25"/>
+  <!-- 身體（厚重深色長袍） -->
+  <path d="M48 148 Q44 180 40 238 L140 238 Q136 180 132 148 Z" fill="#1a0f04"/>
+  <!-- 袍服金色紋路 -->
+  <path d="M88 148 L88 238" stroke="#fbbf24" stroke-width="0.8" stroke-opacity="0.4" stroke-dasharray="3,5"/>
+  <path d="M60 165 Q90 158 120 165" fill="none" stroke="#fbbf24" stroke-width="0.8" stroke-opacity="0.35"/>
+  <path d="M55 185 Q90 178 125 185" fill="none" stroke="#fbbf24" stroke-width="0.8" stroke-opacity="0.3"/>
+  <!-- 領口 -->
+  <path d="M72 148 L90 160 L108 148" fill="none" stroke="#fbbf24" stroke-width="1.5" stroke-opacity="0.7"/>
+  <!-- 頭部 -->
+  <ellipse cx="90" cy="95" rx="30" ry="34" fill="#d4a478"/>
+  <!-- 頭髮（長直黑髮，金色光澤） -->
+  <path d="M60 85 Q57 50 90 47 Q123 50 120 85" fill="#1a0c00"/>
+  <path d="M62 88 Q55 120 58 148 Q63 156 70 158 Q67 138 66 110 Z" fill="#1a0c00"/>
+  <path d="M118 88 Q125 120 122 148 Q117 156 110 158 Q113 138 114 110 Z" fill="#1a0c00"/>
+  <!-- 額前金色碎髮 -->
+  <path d="M68 78 Q75 65 90 63" fill="none" stroke="#fbbf24" stroke-width="1.5" stroke-opacity="0.6"/>
+  <!-- 眼睛（深邃，金色虹膜） -->
+  <ellipse cx="79" cy="94" rx="7.5" ry="8.5" fill="#0d0800"/>
+  <ellipse cx="101" cy="94" rx="7.5" ry="8.5" fill="#0d0800"/>
+  <ellipse cx="79" cy="94" rx="4.5" ry="5.5" fill="#fbbf24" filter="url(#mglow)" opacity="0.85"/>
+  <ellipse cx="101" cy="94" rx="4.5" ry="5.5" fill="#fbbf24" filter="url(#mglow)" opacity="0.85"/>
+  <circle cx="81" cy="92" r="1.5" fill="white" opacity="0.8"/>
+  <circle cx="103" cy="92" r="1.5" fill="white" opacity="0.8"/>
+  <!-- 嘴巴（沉穩淡然） -->
+  <path d="M84 108 Q90 111 96 108" fill="none" stroke="#a06040" stroke-width="1.3" stroke-linecap="round"/>
+  <!-- 手臂 -->
+  <path d="M48 152 Q38 175 40 210 Q44 218 50 220 Q52 195 55 170 Z" fill="#1a0f04"/>
+  <path d="M132 152 Q142 175 140 210 Q136 218 130 220 Q128 195 125 170 Z" fill="#1a0f04"/>
+  <!-- 手 -->
+  <ellipse cx="45" cy="215" rx="9" ry="8" fill="#d4a478"/>
+  <ellipse cx="135" cy="215" rx="9" ry="8" fill="#d4a478"/>
+  <!-- 左手持神經網路法杖 -->
+  <line x1="36" y1="200" x2="36" y2="248" stroke="#fbbf24" stroke-width="2.5" stroke-opacity="0.7"/>
+  <circle cx="36" cy="198" r="7" fill="none" stroke="#fbbf24" stroke-width="1.5" filter="url(#mglow)" stroke-opacity="0.8"/>
+  <line x1="30" y1="198" x2="42" y2="198" stroke="#fbbf24" stroke-width="1" stroke-opacity="0.6"/>
+  <line x1="36" y1="192" x2="36" y2="204" stroke="#fbbf24" stroke-width="1" stroke-opacity="0.6"/>
+</svg>
+</template>
+
+<!-- 其他角色 fallback（文字頭像） -->
+
+<!-- ════════════════════════════════════════════════
+     資料層 + 引擎
+════════════════════════════════════════════════ -->
+<script src="data.js"></script>
+<script src="rpg-data.js"></script>
+
+<!-- ════════════════════════════════════════════════
+     RPG_UI — UI 控制層（供 rpg.js 呼叫）
+════════════════════════════════════════════════ -->
+<script>
+// ── 粒子背景 ─────────────────────────────────────────────────────────────
+(function(){
+  const c = document.getElementById('rpg-bg');
+  const ctx = c.getContext('2d');
+  let W, H, stars = [];
+  function resize(){ W = c.width = innerWidth; H = c.height = innerHeight; }
+  function init(){
+    stars = Array.from({length:120},()=>({
+      x: Math.random()*W, y: Math.random()*H,
+      r: Math.random()*1.5+0.3,
+      a: Math.random(), da: (Math.random()-.5)*0.005,
+      dx: (Math.random()-.5)*0.05, dy: (Math.random()-.5)*0.05
+    }));
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    stars.forEach(s=>{
+      s.x=(s.x+s.dx+W)%W; s.y=(s.y+s.dy+H)%H;
+      s.a=Math.max(0.1,Math.min(1,s.a+s.da));
+      if(s.a<=0.1||s.a>=1)s.da*=-1;
+      ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(125,211,252,${s.a*0.6})`; ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  resize(); init(); draw();
+  window.addEventListener('resize',()=>{ resize(); init(); });
+})();
+
+// ── 星域地圖繪製 ─────────────────────────────────────────────────────────
+function buildDomainMap(cleared=[]) {
+  const svg = document.getElementById('domain-map');
+  svg.innerHTML = '';
+  const ns = 'http://www.w3.org/2000/svg';
+  const W=800, H=560, cx=W/2, cy=H/2;
+
+  // 中央 AI 核心太陽
+  const defs = document.createElementNS(ns,'defs');
+  const cg = document.createElementNS(ns,'radialGradient');
+  cg.setAttribute('id','core-g'); cg.setAttribute('cx','36%'); cg.setAttribute('cy','32%'); cg.setAttribute('r','68%');
+  [['0%','#fffde8',1],['30%','#fde68a',1],['65%','#f59e0b',0.85],['100%','#78350f',0.3]].forEach(([off,col,op])=>{
+    const s=document.createElementNS(ns,'stop');
+    s.setAttribute('offset',off); s.setAttribute('stop-color',col); s.setAttribute('stop-opacity',op); cg.appendChild(s);
+  });
+  defs.appendChild(cg); svg.appendChild(defs);
+
+  // 軌道環
+  [140,230,310].forEach(r=>{
+    const el=document.createElementNS(ns,'ellipse');
+    el.setAttribute('cx',cx); el.setAttribute('cy',cy);
+    el.setAttribute('rx',r); el.setAttribute('ry',r*0.55);
+    el.setAttribute('fill','none'); el.setAttribute('stroke','rgba(125,211,252,0.07)');
+    el.setAttribute('stroke-width','1'); el.setAttribute('stroke-dasharray','3,8');
+    svg.appendChild(el);
+  });
+
+  // 核心太陽
+  const sunG = document.createElementNS(ns,'g');
+  const sunGlow = document.createElementNS(ns,'circle');
+  sunGlow.setAttribute('cx',cx); sunGlow.setAttribute('cy',cy); sunGlow.setAttribute('r','38');
+  sunGlow.setAttribute('fill','rgba(251,191,36,0.12)'); sunG.appendChild(sunGlow);
+  const sun = document.createElementNS(ns,'circle');
+  sun.setAttribute('cx',cx); sun.setAttribute('cy',cy); sun.setAttribute('r','22');
+  sun.setAttribute('fill','url(#core-g)'); sun.setAttribute('filter','url(#core-glow)');
+  sunG.appendChild(sun);
+  // AI 文字
+  const sunTxt = document.createElementNS(ns,'text');
+  sunTxt.setAttribute('x',cx); sunTxt.setAttribute('y',cy+5);
+  sunTxt.setAttribute('text-anchor','middle'); sunTxt.setAttribute('fill','#0a0800');
+  sunTxt.setAttribute('font-size','12'); sunTxt.setAttribute('font-weight','700');
+  sunTxt.textContent='AI'; sunG.appendChild(sunTxt);
+  svg.appendChild(sunG);
+
+  // 星域節點位置（橢圓三軌道）
+  const PLACEMENTS = [
+    [cx, cy-140*0.55],          // 正上（軌道1）
+    [cx+140, cy],                // 右（軌道1）
+    [cx, cy+140*0.55],          // 正下（軌道1）
+    [cx-140, cy],                // 左（軌道1）
+    [cx+230*0.87, cy-230*0.55*0.5], // 右上（軌道2）
+    [cx+230*0.87, cy+230*0.55*0.5], // 右下（軌道2）
+    [cx-230*0.87, cy-230*0.55*0.5], // 左上（軌道2）
+    [cx-230*0.87, cy+230*0.55*0.5], // 左下（軌道2）
+    [cx, cy-310*0.55],          // 最上（軌道3）
+  ];
+
+  if (typeof DOMAINS === 'undefined') return;
+  DOMAINS.forEach((d, i) => {
+    const [px, py] = PLACEMENTS[i] || [cx, cy];
+    const isCleared = cleared.includes(d.key);
+    const isLocked  = d.unlockAfter && !cleared.includes(d.unlockAfter) && d.key !== 'INTRO';
+
+    const g = document.createElementNS(ns,'g');
+    g.setAttribute('class','domain-node' + (isLocked?' locked':''));
+    g.style.cursor = isLocked ? 'default' : 'pointer';
+
+    // 光暈
+    const halo=document.createElementNS(ns,'circle');
+    halo.setAttribute('cx',px); halo.setAttribute('cy',py);
+    halo.setAttribute('r','28'); halo.setAttribute('fill',d.color+'18');
+    g.appendChild(halo);
+
+    // 星球本體
+    const orb=document.createElementNS(ns,'circle');
+    orb.setAttribute('cx',px); orb.setAttribute('cy',py); orb.setAttribute('r','18');
+    orb.setAttribute('fill',d.color); orb.setAttribute('fill-opacity', isCleared?'0.95':'0.65');
+    orb.setAttribute('class','domain-orb'); g.appendChild(orb);
+
+    // 通關打勾
+    if (isCleared) {
+      const ck=document.createElementNS(ns,'text');
+      ck.setAttribute('x',px); ck.setAttribute('y',py+4);
+      ck.setAttribute('text-anchor','middle'); ck.setAttribute('fill','white');
+      ck.setAttribute('font-size','12'); ck.textContent='✓'; g.appendChild(ck);
+    }
+
+    // 鎖定圖示
+    if (isLocked) {
+      const lk=document.createElementNS(ns,'text');
+      lk.setAttribute('x',px); lk.setAttribute('y',py+5);
+      lk.setAttribute('text-anchor','middle'); lk.setAttribute('font-size','12');
+      lk.textContent='🔒'; g.appendChild(lk);
+    }
+
+    // emoji
+    const em=document.createElementNS(ns,'text');
+    em.setAttribute('x',px); em.setAttribute('y',isLocked||isCleared?py+5:py+4);
+    em.setAttribute('text-anchor','middle'); em.setAttribute('font-size','13');
+    if (!isLocked && !isCleared) em.textContent=d.emoji; g.appendChild(em);
+
+    // 名稱標籤
+    const lbl=document.createElementNS(ns,'text');
+    lbl.setAttribute('x',px); lbl.setAttribute('y',py+33);
+    lbl.setAttribute('class','domain-label');
+    lbl.setAttribute('fill', isLocked?'#64748b':d.color);
+    lbl.setAttribute('font-size','10'); lbl.textContent=d.name; g.appendChild(lbl);
+
+    // 守護者
+    const sub=document.createElementNS(ns,'text');
+    sub.setAttribute('x',px); sub.setAttribute('y',py+44);
+    sub.setAttribute('class','domain-sublabel'); sub.textContent=d.guardian; g.appendChild(sub);
+
+    if (!isLocked) {
+      g.addEventListener('click',()=>{ if(window.RPG_ENGINE) RPG_ENGINE.enterDomain(d.key); });
+      g.addEventListener('mouseenter',()=>{ orb.setAttribute('r','21'); });
+      g.addEventListener('mouseleave',()=>{ orb.setAttribute('r','18'); });
+    }
+    svg.appendChild(g);
+  });
+}
+
+// ── 角色立繪取得 ─────────────────────────────────────────────────────────
+function getCharSVG(charKey, color) {
+  const tpl = document.getElementById('char-'+charKey);
+  if (tpl) return tpl.innerHTML;
+  // fallback 文字頭像
+  const initial = (charKey||'?')[0].toUpperCase();
+  return `<svg viewBox="0 0 180 252" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="90" cy="90" r="55" fill="${color||'#64748b'}" fill-opacity="0.25"/>
+    <circle cx="90" cy="90" r="40" fill="${color||'#64748b'}" fill-opacity="0.5"/>
+    <text x="90" y="105" text-anchor="middle" fill="white" font-size="36" font-weight="700">${initial}</text>
+  </svg>`;
+}
+
+// ── RPG_UI 公開介面 ───────────────────────────────────────────────────────
+const RPG_UI = {
+  // 切換至地圖
+  showMap() {
+    _setScreen('map');
+    buildDomainMap(window.RPG_ENGINE?._state?.cleared || []);
+  },
+
+  // 對話場景
+  showDialogue(scene) {
+    _setScreen('dialogue');
+    document.getElementById('dlg-domain').textContent  = window._rpgCurDomainName || '';
+    document.getElementById('dlg-portrait').innerHTML  =
+      getCharSVG(scene.char, scene.charColor) +
+      `<div class="char-name-tag" style="color:${scene.charColor};border-color:${scene.charColor}40">${scene.charName}</div>`;
+
+    const textEl    = document.getElementById('dlg-text');
+    const choiceEl  = document.getElementById('dlg-choices');
+    textEl.innerHTML = ''; choiceEl.innerHTML = '';
+
+    // 打字機效果（逐行）
+    let lineIdx = 0;
+    function showLine() {
+      if (lineIdx >= scene.lines.length) {
+        // 全部顯示後顯示選項/按鈕
+        if (scene.choices && scene.choices.length) {
+          scene.choices.forEach(c=>{
+            const b=document.createElement('button');
+            b.className='choice-btn'; b.textContent=c.text;
+            b.onclick=()=>{ if(scene.onChoice) scene.onChoice(c); };
+            choiceEl.appendChild(b);
+          });
+        } else {
+          const nb=document.createElement('button');
+          nb.className='dialogue-next'; nb.textContent='繼續 ▶';
+          nb.onclick=()=>{ if(scene.onNext) scene.onNext(); };
+          choiceEl.appendChild(nb);
+        }
+        return;
+      }
+      const para = document.createElement('p');
+      textEl.appendChild(para);
+      _typewriter(para, scene.lines[lineIdx], ()=>{ lineIdx++; setTimeout(showLine, 200); });
+    }
+    showLine();
+  },
+
+  // 測驗題目
+  showQuiz(q) {
+    _setScreen('quiz');
+    document.getElementById('quiz-prog').textContent=`題目 ${q.progress.cur} / ${q.progress.total}`;
+    // HP
+    ['h1','h2','h3'].forEach((id,i)=>{
+      document.getElementById(id).className='heart'+(i>=q.hp?' empty':'');
+    });
+    document.getElementById('quiz-q').textContent = q.text;
+    document.getElementById('quiz-hint').textContent = '';
+    document.getElementById('quiz-hint').className = 'quiz-hint';
+
+    const optEl = document.getElementById('quiz-opts');
+    optEl.innerHTML = '';
+    const LABELS = ['A','B','C','D'];
+    q.options.forEach((opt, i)=>{
+      const b=document.createElement('div'); b.className='quiz-opt';
+      b.innerHTML=`<span class="opt-label">${LABELS[i]}</span><span>${opt}</span>`;
+      b.addEventListener('click',()=>{
+        // 顯示結果
+        optEl.querySelectorAll('.quiz-opt').forEach(el=>el.classList.add('disabled'));
+        if(i===q.answer){ b.classList.add('correct'); }
+        else {
+          b.classList.add('wrong');
+          optEl.children[q.answer]?.classList.add('correct');
+          const hint=document.getElementById('quiz-hint');
+          hint.textContent='💡 '+q.hint; hint.className='quiz-hint show';
+        }
+        setTimeout(()=>{ if(q.onAnswer) q.onAnswer(i); }, 900);
+      });
+      optEl.appendChild(b);
+    });
+    document.getElementById('result-overlay').classList.remove('show');
+  },
+
+  // 解鎖星域（更新地圖）
+  unlockDomain(key) {
+    buildDomainMap(window.RPG_ENGINE?._state?.cleared || [key]);
+  },
+
+  // 更新玩家資訊
+  updatePlayer(info) {
+    document.getElementById('pc-rank').textContent = info.rank;
+    const pct = Math.min(100, Math.round(info.exp / info.maxExp * 100));
+    document.getElementById('pc-exp-fill').style.width = pct+'%';
+    document.getElementById('pc-cleared').textContent = `已通關：${info.cleared} / 9 星域`;
+  },
+
+  // 通關/失敗結果
+  showQuizResult(result) {
+    const ov=document.getElementById('result-overlay');
+    document.getElementById('result-emoji').textContent = result.pass?'🌟':'💔';
+    document.getElementById('result-title').textContent = result.pass?'通關！':'挑戰失敗';
+    document.getElementById('result-sub').textContent   =
+      `答對 ${result.score} / ${result.total} 題${result.pass?'，繼續前進！':'，再試一次吧！'}`;
+    ov.classList.add('show');
+  },
+
+  // 技能解鎖
+  showSkillUnlock(skills) {
+    const c=document.getElementById('skill-cards');
+    c.innerHTML=skills.map(s=>
+      `<div class="skill-card"><div class="skill-name">⚔️ ${s.name}</div><div class="skill-effect">${s.effect}</div></div>`
+    ).join('');
+    document.getElementById('skill-overlay').classList.add('show');
+  },
+
+  // Toast 提示
+  showToast(msg, ms=2500) {
+    const t=document.getElementById('rpg-toast');
+    t.textContent=msg; t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'), ms);
+  }
+};
+window.RPG_UI = RPG_UI;
+
+// ── 工具 ─────────────────────────────────────────────────────────────────
+function _setScreen(name) {
+  document.querySelectorAll('.rpg-screen').forEach(el=>el.classList.remove('active'));
+  document.getElementById('screen-'+name)?.classList.add('active');
+}
+
+function _typewriter(el, text, done, speed=28) {
+  let i=0;
+  el.innerHTML='<span class="cursor">▋</span>';
+  const t=setInterval(()=>{
+    el.innerHTML=text.slice(0,i)+'<span class="cursor">▋</span>';
+    i++;
+    if(i>text.length){ clearInterval(t); el.innerHTML=text; if(done)done(); }
+  }, speed);
+}
+</script>
+
+<!-- ════════════════════════════════════════════════
+     遊戲引擎
+════════════════════════════════════════════════ -->
+<script src="rpg.js"></script>
+<script>
+// 初始化
+window.addEventListener('DOMContentLoaded', ()=>{
+  buildDomainMap([]);
+  window.RPG_ENGINE = new RPGEngine(RPG_UI);
+  RPG_ENGINE.start();
+});
+</script>
+</body>
+</html>
