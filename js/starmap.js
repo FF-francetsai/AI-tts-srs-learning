@@ -202,29 +202,34 @@
 
     _buildClusters() {
       this._clusters = [];
+      const MAX_NODES = 15;   // 每個 cluster 最多顯示節點數，保持稀疏星座感
+      const ORBIT_MINSEP = 35; // 固定大間距，讓節點之間有明顯留白
       CAT_DEFS.forEach((def, ci) => {
-        const items  = this._byCat[def.cat] || [];
+        const allItems = this._byCat[def.cat] || [];
+        // 優先取 key_goal 節點，不足再補一般節點
+        const key  = allItems.filter(t => t.key_goal);
+        const rest = allItems.filter(t => !t.key_goal);
+        const items = [...key, ...rest].slice(0, MAX_NODES);
+
         const angle  = (ci / CAT_DEFS.length) * 360 - 90;
         const [gcx, gcy] = this._pt(angle, this._orbitR);
         const n      = items.length;
-        // 自適應間距：節點多時縮小間距，避免 cluster 無限膨脹
-        const minSep = n > 80 ? 9 : n > 40 ? 12 : 15;
-        const pos    = this._concentricPos(n, minSep);
-        const groupR = pos.length ? Math.max(...pos.map(p=>p.r)) + 14 : 14;
+        const pos    = this._concentricPos(n, ORBIT_MINSEP);
+        const groupR = pos.length ? Math.max(...pos.map(p=>p.r)) + 18 : 18;
 
         const nodes = items.map((t, i) => {
           const p = pos[i] || { r:0, th:0 };
           return { id:t.id, title:t.title, eng:t.eng, cat:def.cat, def:t.def,
-            color:def.color, r:t.key_goal ? 5.5 : 3.5,
+            key_goal:t.key_goal, color:def.color, r:t.key_goal ? 5.5 : 3.5,
             lx: gcx + p.r*Math.cos(p.th), ly: gcy + p.r*Math.sin(p.th) };
         });
-        const links = this._mstLinks(nodes);
+        const links = this._mstLinks(nodes, ORBIT_MINSEP * 2.5);
         this._clusters.push({ def, centerAngle:angle, gcx, gcy, groupR, nodes, links });
       });
       this._allNodes = this._clusters.flatMap(c => c.nodes);
     }
 
-    _mstLinks(nodes) {
+    _mstLinks(nodes, maxShortDist = 55) {
       if (nodes.length <= 1) return [];
       const dist = (a,b) => Math.hypot(a.lx-b.lx, a.ly-b.ly);
       const inMST = new Set([0]);
@@ -247,7 +252,7 @@
         nodes.map((b,j)=>({j,d:dist(a,b)})).filter(({j})=>j!==i)
           .sort((x,y)=>x.d-y.d).slice(0,3).forEach(({j})=>{
             const k1=`${a.id}-${nodes[j].id}`, k2=`${nodes[j].id}-${a.id}`;
-            if (!used.has(k1)&&!used.has(k2)&&dist(a,nodes[j])<55){
+            if (!used.has(k1)&&!used.has(k2)&&dist(a,nodes[j])<maxShortDist){
               used.add(k1); links.push({s:a,t:nodes[j]});
             }
           });
@@ -742,34 +747,103 @@
       })();
     }
 
-    // ── 分類過濾（分類頁籤：只顯示該 cluster，其他淡出）─────────────────────
+    // ── 分類過濾（分類頁籤：展開該類所有節點鋪滿畫面，其他隱藏）──────────
 
     filterCategory(cat) {
       if (!this._clusterEls) return;
       this._filterCat = cat || null;
+      this._clearDetailLayer();
+
       if (!cat) {
-        // 清除過濾，恢復全部顯示
+        // 恢復全部 cluster 顯示
         this._clusterEls.forEach(({ cg }) =>
-          cg.transition().duration(350).attr('opacity', 1));
+          cg.attr('display', null).transition().duration(350).attr('opacity', 1));
         this._rotG.select('.ca-crosslinks').transition().duration(350).attr('opacity', 1);
         this._rotG.select('.ca-zodiac').transition().duration(350).attr('opacity', 0.6);
         this._rotG.select('.ca-mansions').transition().duration(350).attr('opacity', 0.6);
         return;
       }
-      this._clusterEls.forEach(({ cg, cluster }) => {
-        const match = cluster.def.cat === cat;
-        cg.transition().duration(350).attr('opacity', match ? 1 : 0.03);
+
+      // 淡出並隱藏所有 cluster 及裝飾
+      this._clusterEls.forEach(({ cg }) =>
+        cg.transition().duration(280).attr('opacity', 0)
+          .on('end', function() { d3.select(this).attr('display', 'none'); }));
+      this._rotG.select('.ca-crosslinks').transition().duration(280).attr('opacity', 0);
+      this._rotG.select('.ca-zodiac').transition().duration(280).attr('opacity', 0);
+      this._rotG.select('.ca-mansions').transition().duration(280).attr('opacity', 0);
+
+      // 延遲建立 detail layer（等淡出完成）
+      setTimeout(() => { if (this._filterCat === cat) this._buildDetailLayer(cat); }, 320);
+    }
+
+    _clearDetailLayer() {
+      this._rotG?.select('.ca-detail').remove();
+    }
+
+    _buildDetailLayer(cat) {
+      const items = this._byCat[cat] || [];
+      const def   = CAT_DEFS.find(d => d.cat === cat);
+      if (!items.length || !def) return;
+
+      const n      = items.length;
+      const mobile = this._md < 768;
+      const minSep = mobile
+        ? (n > 100 ? 22 : n > 50 ? 28 : 35)
+        : (n > 150 ? 30 : n > 100 ? 38 : n > 50 ? 45 : 55);
+
+      const pos = this._concentricPos(n, minSep);
+
+      const g = this._rotG.insert('g', '.ca-cluster')
+        .attr('class', 'ca-detail').attr('opacity', 0);
+
+      const nodes = items.map((t, i) => {
+        const p = pos[i] || { r:0, th:0 };
+        return { id:t.id, title:t.title, eng:t.eng, cat:def.cat, def:t.def,
+          key_goal:t.key_goal, color:def.color,
+          lx: p.r * Math.cos(p.th), ly: p.r * Math.sin(p.th),
+          nr: t.key_goal ? 5.5 : 3.5 };
       });
-      // 其他裝飾元素（zodiac / mansions / cross-links）淡到幾乎不可見
-      this._rotG.select('.ca-crosslinks').transition().duration(350).attr('opacity', 0.02);
-      this._rotG.select('.ca-zodiac').transition().duration(350).attr('opacity', 0.04);
-      this._rotG.select('.ca-mansions').transition().duration(350).attr('opacity', 0.04);
-      // 旋轉到該 cluster 朝向正前方（12 點方向）
-      const cl = this._clusters.find(c => c.def.cat === cat);
-      if (cl) {
-        this._rot = (-cl.centerAngle - 90 + 360) % 360;
-        this._applyRot();
-      }
+
+      const links = this._mstLinks(nodes, minSep * 2.3);
+
+      // 虛線連線（星座風格）
+      g.selectAll('line.cd-link').data(links).join('line').attr('class', 'cd-link')
+        .attr('x1', d => d.s.lx).attr('y1', d => d.s.ly)
+        .attr('x2', d => d.t.lx).attr('y2', d => d.t.ly)
+        .attr('stroke', def.color).attr('stroke-opacity', 0.25)
+        .attr('stroke-width', 0.9).attr('stroke-dasharray', '3,5');
+
+      const ns = g.selectAll('g.cd-node').data(nodes).join('g').attr('class', 'cd-node')
+        .attr('transform', d => `translate(${d.lx},${d.ly})`).style('cursor', 'pointer');
+
+      ns.append('circle').attr('class', 'cd-halo')
+        .attr('r', d => d.nr * 3.5).attr('fill', def.color + '15')
+        .attr('pointer-events', 'none');
+      ns.append('circle').attr('class', 'cd-dot')
+        .attr('r', d => d.nr).attr('fill', def.color).attr('fill-opacity', 0.85)
+        .style('filter', 'url(#star-glow)');
+
+      // key_goal 節點顯示標籤
+      ns.filter(d => d.key_goal).append('text')
+        .attr('text-anchor', 'middle').attr('dy', d => -(d.nr + 6))
+        .attr('fill', def.color + 'cc').attr('font-size', 10).attr('font-weight', 600)
+        .attr('pointer-events', 'none')
+        .text(d => d.title.length > 10 ? d.title.slice(0, 9) + '…' : d.title);
+
+      const self = this;
+      ns.on('mouseenter', (ev, d) => {
+          ns.filter(dd => dd.id === d.id).select('.cd-dot')
+            .transition().duration(120).attr('r', d.nr * 2.5);
+          self._tooltip(ev, d);
+        })
+        .on('mouseleave', (ev, d) => {
+          ns.filter(dd => dd.id === d.id).select('.cd-dot')
+            .transition().duration(200).attr('r', d.nr);
+          self._hideTooltip();
+        })
+        .on('click', (ev, d) => { ev.stopPropagation(); self._panel(d); });
+
+      g.transition().duration(450).attr('opacity', 1);
     }
 
     // ── 搜尋 ──────────────────────────────────────────────────────────────────
