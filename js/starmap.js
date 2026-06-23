@@ -127,6 +127,7 @@
       this._cx = this._W / 2;
       this._cy = this._H / 2;
       const md      = Math.min(this._W, this._H - 90);
+      this._md      = md;   // 供外部方法（_drawClusters 等）使用
       // 放大各環半徑，初始縮小 0.65x 後可看到全圖，滾輪/拖曳放大細節
       this._orbitR  = md * 0.44;
       this._zodR    = md * 0.60;
@@ -198,7 +199,11 @@
 
     _buildTermPools() {
       this._topics.forEach(t => {
-        const cat = this._normCat(t.category);
+        let cat = this._normCat(t.category);
+        // 補充：若分類是機器學習/深度學習，再以術語名稱細分至鑑別式/多模態 AI
+        if (cat === '機器學習' || cat === '深度學習' || cat === 'AI 應用') {
+          cat = this._normCatByTitle(t.title, t.eng_name) || cat;
+        }
         (this._byCat[cat] ??= []).push({
           id:       String(t.id || ('r'+Math.random())),
           title:    t.title    || '',
@@ -208,6 +213,15 @@
           key_goal: !!t.key_goal,
         });
       });
+    }
+
+    _normCatByTitle(title, eng) {
+      const s = ((title || '') + ' ' + (eng || '')).toLowerCase();
+      if (/多模態|multimodal|跨模態|cross[\s-]modal|視覺語言|vision.*language|language.*vision|\bclip\b|\bblip\b/.test(s))
+        return '多模態 AI';
+      if (/鑑別式|判別式|discriminative|支援向量|支持向量|\bsvm\b|邏輯回歸|logistic.*regress|logistic.*分類|感知機|perceptron|樸素貝葉斯|naive\s*bayes|k[\s-]近鄰|knn|線性判別|線性分類|二元分類|多元分類|分類器|classifier/.test(s))
+        return '鑑別式 AI';
+      return null;
     }
 
     _buildClusters() {
@@ -969,8 +983,10 @@
         ? (n > 400 ? 14 : n > 200 ? 17 : 22)
         : (n > 600 ? 16 : n > 300 ? 20 : n > 150 ? 25 : 30);
 
-      const minStartR = this._coreR * 3.4; // 超過光芒射線末端（射線到 coreR*3.0），留安全邊距
-      const pos = this._concentricPos(n, minSep, minStartR);
+      const minStartR = this._coreR * 3.4; // 超過光芒射線末端
+      // 黃金螺旋（向日葵籽排列），spiralC 為縮放係數
+      const spiralC = mobile ? 10 : 13;
+      const pos = this._goldenSpiralPos(n, spiralC, minStartR);
       const g = this._rotG.insert('g', '.ca-cluster')
         .attr('class', 'ca-detail').attr('opacity', 0);
 
@@ -982,8 +998,8 @@
           nr: t.key_goal ? 1.8 : 1.0 };  // 更小的星點
       });
 
-      // 空間格子法高效建連線
-      const links = this._nearestLinks(nodes, minSep * 2.0);
+      // 黃金螺旋連線：相鄰螺旋節點（閾值 = 螺旋縮放係數 * 約 3 步距）
+      const links = this._nearestLinks(nodes, spiralC * 3.5);
 
       // 連線：同色，依 key_goal 關係決定粗細
       g.selectAll('line.cd-link').data(links).join('line').attr('class', 'cd-link')
@@ -1020,6 +1036,17 @@
         .on('click', (ev, d) => { ev.stopPropagation(); self._panel(d); });
 
       g.transition().duration(450).attr('opacity', 1);
+    }
+
+    // ── 黃金螺旋位置排列（向日葵籽 / 費波那契螺旋）────────────────────────────
+    // c: 縮放係數（控制整體大小）；minStartR: 最內圈最小半徑（跳過中心）
+    _goldenSpiralPos(n, c, minStartR = 0) {
+      const goldenAngle = Math.PI * (3 - Math.sqrt(5)); // ≈ 137.508°
+      const startIdx    = minStartR > 0 ? Math.ceil((minStartR / c) ** 2) : 0;
+      return Array.from({ length: n }, (_, i) => ({
+        r:  c * Math.sqrt(i + startIdx + 1),
+        th: (i + startIdx) * goldenAngle
+      }));
     }
 
     // 空間格子法：找距離 maxDist 以內的相鄰節點並建立連線（O(n)）
