@@ -742,6 +742,36 @@
       })();
     }
 
+    // ── 分類過濾（分類頁籤：只顯示該 cluster，其他淡出）─────────────────────
+
+    filterCategory(cat) {
+      if (!this._clusterEls) return;
+      this._filterCat = cat || null;
+      if (!cat) {
+        // 清除過濾，恢復全部顯示
+        this._clusterEls.forEach(({ cg }) =>
+          cg.transition().duration(350).attr('opacity', 1));
+        this._rotG.select('.ca-crosslinks').transition().duration(350).attr('opacity', 1);
+        this._rotG.select('.ca-zodiac').transition().duration(350).attr('opacity', 0.6);
+        this._rotG.select('.ca-mansions').transition().duration(350).attr('opacity', 0.6);
+        return;
+      }
+      this._clusterEls.forEach(({ cg, cluster }) => {
+        const match = cluster.def.cat === cat;
+        cg.transition().duration(350).attr('opacity', match ? 1 : 0.03);
+      });
+      // 其他裝飾元素（zodiac / mansions / cross-links）淡到幾乎不可見
+      this._rotG.select('.ca-crosslinks').transition().duration(350).attr('opacity', 0.02);
+      this._rotG.select('.ca-zodiac').transition().duration(350).attr('opacity', 0.04);
+      this._rotG.select('.ca-mansions').transition().duration(350).attr('opacity', 0.04);
+      // 旋轉到該 cluster 朝向正前方（12 點方向）
+      const cl = this._clusters.find(c => c.def.cat === cat);
+      if (cl) {
+        this._rot = (-cl.centerAngle - 90 + 360) % 360;
+        this._applyRot();
+      }
+    }
+
     // ── 搜尋 ──────────────────────────────────────────────────────────────────
 
     search(query) {
