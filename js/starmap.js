@@ -390,6 +390,32 @@
       cg.append('stop').attr('offset','85%').attr('stop-color','#d97706').attr('stop-opacity', 0.75);
       cg.append('stop').attr('offset','100%').attr('stop-color','#78350f').attr('stop-opacity', 0.35);
 
+      // ── 節點閃爍 CSS 動畫（依重要性分三層）────────────────────────────────
+      defs.append('style').text(`
+        /* key_goal 重要節點：激烈閃爍 + scale 脈衝 */
+        .cd-dot.is-key {
+          animation: star-flash-key var(--sd,2.2s) ease-in-out infinite;
+          transform-origin: center;
+          transform-box: fill-box;
+        }
+        @keyframes star-flash-key {
+          0%,100% { opacity:1;    transform:scale(1);    }
+          12%     { opacity:0.35; transform:scale(0.82); }
+          28%     { opacity:1;    transform:scale(1.28); }
+          46%     { opacity:0.5;  transform:scale(0.88); }
+          64%     { opacity:0.95; transform:scale(1.18); }
+          82%     { opacity:0.6;  transform:scale(1);    }
+        }
+        /* 普通節點：慢速呼吸暗淡（省效能） */
+        .cd-dot {
+          animation: star-pulse var(--sd,4s) ease-in-out infinite;
+        }
+        @keyframes star-pulse {
+          0%,100% { opacity:0.88; }
+          50%     { opacity:0.38; }
+        }
+      `);
+
       // 透明背景 rect — 讓 D3 zoom drag 在空白區域也能捕捉
       this._svg.append('rect')
         .attr('width','100%').attr('height','100%')
@@ -865,10 +891,16 @@
       ns.append('circle').attr('class', 'cd-halo')
         .attr('r', d => d.nr * 7).attr('fill', def.color + '12')
         .attr('pointer-events', 'none');
-      // 內層實心點（小而亮）
-      ns.append('circle').attr('class', 'cd-dot')
+      // 內層實心點（小而亮）；key_goal 加 is-key class 觸發激烈閃爍
+      ns.append('circle')
+        .attr('class', d => d.key_goal ? 'cd-dot is-key' : 'cd-dot')
         .attr('r', d => d.nr).attr('fill', def.color).attr('fill-opacity', 0.92)
-        .style('filter', 'url(#star-glow)');
+        .style('filter', 'url(#star-glow)')
+        // --sd 控制各節點動畫週期：key_goal 1.4-2.8s，普通 2.8-6s（錯開閃爍）
+        .style('--sd', (d, i) => d.key_goal
+          ? `${(1.4 + (i * 0.31 % 1.4)).toFixed(2)}s`
+          : `${(2.8 + (i * 0.53 % 3.2)).toFixed(2)}s`)
+        .style('animation-delay', (_, i) => `-${(i * 0.73 % 6).toFixed(2)}s`);
 
       // 靜態文字標籤已移除，hover/touch 時顯示 tooltip
       const self = this;
@@ -1027,9 +1059,14 @@
         .attr('r', d => d.nr * 8).attr('fill', d => d.color + '0e')
         .attr('pointer-events', 'none');
       // 內層實心點（全部AI不顯示標籤）
-      ns.append('circle').attr('class', 'cd-dot')
+      ns.append('circle')
+        .attr('class', d => d.key_goal ? 'cd-dot is-key' : 'cd-dot')
         .attr('r', d => d.nr).attr('fill', d => d.color).attr('fill-opacity', 0.95)
-        .style('filter', 'url(#star-glow)');
+        .style('filter', 'url(#star-glow)')
+        .style('--sd', (d, i) => d.key_goal
+          ? `${(1.3 + (i * 0.29 % 1.5)).toFixed(2)}s`
+          : `${(3.0 + (i * 0.61 % 3.5)).toFixed(2)}s`)
+        .style('animation-delay', (_, i) => `-${(i * 0.83 % 7).toFixed(2)}s`);
 
       const self = this;
       ns.on('mouseenter', (ev, d) => {
