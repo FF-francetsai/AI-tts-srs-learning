@@ -392,9 +392,9 @@
 
       // ── 節點閃爍 CSS 動畫（依重要性分三層）────────────────────────────────
       defs.append('style').text(`
-        /* key_goal 重要節點：激烈閃爍 + scale 脈衝（週期 3.5-6s，視覺從容） */
+        /* key_goal 重要節點：激烈閃爍 + scale 脈衝（週期 6-12s） */
         .cd-dot.is-key {
-          animation: star-flash-key var(--sd,4.5s) ease-in-out infinite;
+          animation: star-flash-key var(--sd,8s) ease-in-out infinite;
           transform-origin: center;
           transform-box: fill-box;
         }
@@ -406,9 +406,9 @@
           66%     { opacity:0.95; transform:scale(1.16); }
           84%     { opacity:0.6;  transform:scale(1);    }
         }
-        /* 普通節點：慢速呼吸暗淡（週期 7-12s，幾乎感覺不到在動） */
+        /* 普通節點：慢速呼吸暗淡（週期 14-24s，緩緩呼吸） */
         .cd-dot {
-          animation: star-pulse var(--sd,9s) ease-in-out infinite;
+          animation: star-pulse var(--sd,18s) ease-in-out infinite;
         }
         @keyframes star-pulse {
           0%,100% { opacity:0.85; }
@@ -587,11 +587,23 @@
           .attr('fill', cluster.def.color + '09').attr('pointer-events', 'none');
         pg.append('circle').attr('r', planetR * 1.7)
           .attr('fill', cluster.def.color + '18').attr('pointer-events', 'none');
-        // 行星本體（純色實心，保證可見）
-        pg.append('circle').attr('class', 'ca-planet-body').attr('r', planetR)
+        // 行星本體（純色實心）— 12 顆各有獨立 SMIL 閃爍週期
+        // 12 個獨特週期（秒），讓每顆行星的呼吸節奏完全不同
+        const PLANET_DUR  = [8, 11, 7, 13, 9, 15, 6.5, 12, 10, 14, 8.5, 16];
+        const PLANET_LOW  = [0.50,0.40,0.60,0.35,0.55,0.30,0.65,0.45,0.58,0.38,0.52,0.42];
+        const dur = PLANET_DUR[ci] ?? 9;
+        const low = PLANET_LOW[ci] ?? 0.45;
+        const planetBody = pg.append('circle').attr('class', 'ca-planet-body').attr('r', planetR)
           .attr('fill', cluster.def.color).attr('fill-opacity', 0.88)
           .attr('stroke', '#ffffff').attr('stroke-opacity', 0.2).attr('stroke-width', 0.8)
           .style('filter', 'url(#star-glow)');
+        // 各自獨立的閃爍週期（SMIL）
+        planetBody.append('animate')
+          .attr('attributeName', 'opacity')
+          .attr('values', `0.88;${low};0.95;${low*0.8};0.88`)
+          .attr('dur', `${dur}s`)
+          .attr('begin', `${(ci * 1.3).toFixed(1)}s`)
+          .attr('repeatCount', 'indefinite');
         // 3D 高光（左上方白色小圓，模擬球面光澤）
         pg.append('circle').attr('r', planetR * 0.32)
           .attr('cx', -planetR * 0.22).attr('cy', -planetR * 0.26)
@@ -896,11 +908,11 @@
         .attr('class', d => d.key_goal ? 'cd-dot is-key' : 'cd-dot')
         .attr('r', d => d.nr).attr('fill', def.color).attr('fill-opacity', 0.92)
         .style('filter', 'url(#star-glow)')
-        // --sd 控制各節點動畫週期：key_goal 3.5-6s，普通 7-12s（錯開閃爍）
+        // --sd：key_goal 6-10s，普通 14-22s（依索引錯開）
         .style('--sd', (d, i) => d.key_goal
-          ? `${(3.5 + (i * 0.41 % 2.5)).toFixed(2)}s`
-          : `${(7.0 + (i * 0.67 % 5.0)).toFixed(2)}s`)
-        .style('animation-delay', (_, i) => `-${(i * 1.31 % 10).toFixed(2)}s`);
+          ? `${(6.0 + (i * 0.41 % 4.0)).toFixed(2)}s`
+          : `${(14.0 + (i * 0.83 % 8.0)).toFixed(2)}s`)
+        .style('animation-delay', (_, i) => `-${(i * 1.73 % 14).toFixed(2)}s`);
 
       // 靜態文字標籤已移除，hover/touch 時顯示 tooltip
       const self = this;
@@ -1063,10 +1075,15 @@
         .attr('class', d => d.key_goal ? 'cd-dot is-key' : 'cd-dot')
         .attr('r', d => d.nr).attr('fill', d => d.color).attr('fill-opacity', 0.95)
         .style('filter', 'url(#star-glow)')
-        .style('--sd', (d, i) => d.key_goal
-          ? `${(3.5 + (i * 0.43 % 2.5)).toFixed(2)}s`
-          : `${(7.0 + (i * 0.71 % 5.0)).toFixed(2)}s`)
-        .style('animation-delay', (_, i) => `-${(i * 1.37 % 10).toFixed(2)}s`);
+        // 全部AI：12 個分類各有固定基準週期，同分類節點閃爍速率相近
+        .style('--sd', (d, i) => {
+          const CI_KEY = [7,8,9.5,8.5,11,6.5,10,9,12,8.8,7.5,10.5]; // 12 分類 key_goal 週期
+          const CI_REG = [14,17,20,16,24,13,22,18,26,19,15,23];       // 12 分類普通週期
+          const ci = CAT_DEFS.findIndex(c => c.cat === d.cat);
+          const base = d.key_goal ? (CI_KEY[ci] ?? 8) : (CI_REG[ci] ?? 18);
+          return `${(base + (i % 6) * 0.35).toFixed(2)}s`;
+        })
+        .style('animation-delay', (_, i) => `-${(i * 1.79 % 16).toFixed(2)}s`);
 
       const self = this;
       ns.on('mouseenter', (ev, d) => {
