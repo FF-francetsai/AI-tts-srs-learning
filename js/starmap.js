@@ -41,10 +41,10 @@
     S:[50,63,77,90,103,117,130],
   };
   const GROUP_CAT = {
-    N:['機器學習','神經網路'],
+    N:['機器學習','資料科學'],
     E:['深度學習','電腦視覺'],
     W:['NLP基礎','AI 代理人'],
-    S:['生成式 AI','深度學習'],
+    S:['生成式 AI','AI 治理'],
   };
   const GROUP_ORDER = { N:0, E:7, W:14, S:21 };
 
@@ -65,8 +65,8 @@
 
   const ZODIAC_CAT = [
     'AI 代理人','機器學習','NLP基礎','神經網路',
-    '生成式 AI','深度學習','電腦視覺','機器學習',
-    'AI 代理人','神經網路','生成式 AI','NLP基礎',
+    '生成式 AI','深度學習','電腦視覺','資料科學',
+    'AI 代理人','AI 治理','生成式 AI','NLP基礎',
   ];
 
   const CAT_DEFS = [
@@ -77,6 +77,9 @@
     { cat:'電腦視覺',  color:'#f472b6', shortName:'CV'  },
     { cat:'NLP基礎',   color:'#fb923c', shortName:'NLP' },
     { cat:'AI 代理人', color:'#c084fc', shortName:'AGT' },
+    { cat:'AI 治理',   color:'#e879f9', shortName:'GOV' },
+    { cat:'資料科學',  color:'#2dd4bf', shortName:'DS'  },
+    { cat:'AI 應用',   color:'#94a3b8', shortName:'APP' },
   ];
 
   const CROSS_LINKS = [
@@ -87,6 +90,11 @@
     { a:'生成式 AI', b:'NLP基礎'   },
     { a:'生成式 AI', b:'AI 代理人' },
     { a:'NLP基礎',   b:'AI 代理人' },
+    { a:'機器學習',  b:'資料科學'  },
+    { a:'資料科學',  b:'深度學習'  },
+    { a:'AI 代理人', b:'AI 治理'   },
+    { a:'AI 治理',   b:'AI 應用'   },
+    { a:'AI 應用',   b:'生成式 AI' },
   ];
 
   // ─────────────────────────────────────────────────────────────────────────────
@@ -131,22 +139,51 @@
     }
 
     _normCat(raw) {
-      const c = String(raw || '').split('\n')[0].trim()
-        .replace(/\s+/g,' ')
-        .replace(/NLP\s*基礎/i,'NLP基礎')
-        .replace(/生成式AI/i,'生成式 AI')
-        .replace(/AI\s*代理人/i,'AI 代理人');
+      const c = String(raw || '').split('\n')[0].trim().replace(/\s+/g, ' ')
+        .replace(/NLP\s*基礎/i, 'NLP基礎')
+        .replace(/生成式\s*AI/i, '生成式 AI')
+        .replace(/AI\s*代理人/i, 'AI 代理人');
+      // 完全相符
       for (const d of CAT_DEFS) if (c === d.cat) return d.cat;
-      for (const d of CAT_DEFS) if (c.includes(d.cat)||d.cat.includes(c.replace(/ /g,''))) return d.cat;
+
       const cl = c.toLowerCase();
-      if (cl.includes('ml')||cl.includes('機器')) return '機器學習';
-      if (cl.includes('dl')||cl.includes('深度')) return '深度學習';
-      if (cl.includes('nn')||cl.includes('神經')) return '神經網路';
-      if (cl.includes('gen')||cl.includes('生成')) return '生成式 AI';
-      if (cl.includes('cv')||cl.includes('視覺')) return '電腦視覺';
-      if (cl.includes('nlp')||cl.includes('語言')) return 'NLP基礎';
-      if (cl.includes('agt')||cl.includes('代理')) return 'AI 代理人';
-      return '生成式 AI';
+
+      // ── NLP（優先，避免被「語言」誤入深度學習）────────────────────────
+      if (/nlp|自然語言|句法|詞彙|語義|語用|依存|剖析|語音技術|文本評估|詞義消歧|語言特性|語言技術|搜尋/.test(cl))
+        return 'NLP基礎';
+
+      // ── 電腦視覺 ──────────────────────────────────────────────────────
+      if (/視覺|影像|目標偵測|物件偵測|影像分割|醫學影像|車牌|圖像|文字辨識|ocr|工業感測器|工業資料/.test(cl))
+        return '電腦視覺';
+
+      // ── 神經網路 ──────────────────────────────────────────────────────
+      if (/神經網路|神經/.test(cl)) return '神經網路';
+
+      // ── 生成式 AI ─────────────────────────────────────────────────────
+      if (/生成式|擴散模型|提示工程|rag|大型語言模型|llm|gpt|diffusion|生成ai|本土模型|本土優化/.test(cl))
+        return '生成式 AI';
+
+      // ── 深度學習 ──────────────────────────────────────────────────────
+      if (/深度學習|transformer|注意力|多模態|表徵學習|具身智能|跨模態/.test(cl))
+        return '深度學習';
+
+      // ── 機器學習 ──────────────────────────────────────────────────────
+      if (/機器學習|傳統\s*ml|集成學習|演算法|特徵工程|模型訓練|模型微調|訓練模式|強化學習|不均衡|模型優化|模型壓縮|模型量化|模型架構|模型評估|模型監控|模型效能|模型決策|xai|可解釋|自動特徵|推論優化|lmm推論/.test(cl))
+        return '機器學習';
+
+      // ── AI 代理人 ─────────────────────────────────────────────────────
+      if (/代理人|任務編排|智慧製造|agent/.test(cl)) return 'AI 代理人';
+
+      // ── AI 治理 ───────────────────────────────────────────────────────
+      if (/治理|倫理|法律|法規|合規|透明|問責|公平|偏見|隱私|資安|資訊安全|風險管理|稽核|監管|沙盒|演算法偏見|內容治理|組織治理/.test(cl))
+        return 'AI 治理';
+
+      // ── 資料科學 ──────────────────────────────────────────────────────
+      if (/資料|數據|數學|統計|特徵工程|資料科學|前處理|預處理|資料工程|大數據|資料集|補值|採樣|資料品質|結構化資料|時序|異常偵測|幾何運算|圖形資料/.test(cl))
+        return '資料科學';
+
+      // ── AI 應用（其餘）───────────────────────────────────────────────
+      return 'AI 應用';
     }
 
     _buildTermPools() {
@@ -170,8 +207,10 @@
         const angle  = (ci / CAT_DEFS.length) * 360 - 90;
         const [gcx, gcy] = this._pt(angle, this._orbitR);
         const n      = items.length;
-        const pos    = this._concentricPos(n, 16);
-        const groupR = pos.length ? Math.max(...pos.map(p=>p.r)) + 18 : 18;
+        // 自適應間距：節點多時縮小間距，避免 cluster 無限膨脹
+        const minSep = n > 80 ? 9 : n > 40 ? 12 : 15;
+        const pos    = this._concentricPos(n, minSep);
+        const groupR = pos.length ? Math.max(...pos.map(p=>p.r)) + 14 : 14;
 
         const nodes = items.map((t, i) => {
           const p = pos[i] || { r:0, th:0 };

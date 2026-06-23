@@ -63,14 +63,17 @@
       background: rgba(125,211,252,0.1);
       box-shadow: 0 0 8px rgba(125,211,252,0.25);
     }
-    .domain-tab[data-cat="ALL"] { --tab-color: #7dd3fc; }
-    .domain-tab[data-cat="ML"]  { --tab-color: #a78bfa; }
-    .domain-tab[data-cat="DL"]  { --tab-color: #fbbf24; }
-    .domain-tab[data-cat="NN"]  { --tab-color: #34d399; }
-    .domain-tab[data-cat="GEN"] { --tab-color: #7dd3fc; }
-    .domain-tab[data-cat="CV"]  { --tab-color: #f472b6; }
-    .domain-tab[data-cat="NLP"] { --tab-color: #fb923c; }
-    .domain-tab[data-cat="AGT"] { --tab-color: #c084fc; }
+    .domain-tab[data-cat="ALL"]  { --tab-color: #7dd3fc; }
+    .domain-tab[data-cat="ML"]   { --tab-color: #a78bfa; }
+    .domain-tab[data-cat="DL"]   { --tab-color: #fbbf24; }
+    .domain-tab[data-cat="NN"]   { --tab-color: #34d399; }
+    .domain-tab[data-cat="GEN"]  { --tab-color: #7dd3fc; }
+    .domain-tab[data-cat="CV"]   { --tab-color: #f472b6; }
+    .domain-tab[data-cat="NLP"]  { --tab-color: #fb923c; }
+    .domain-tab[data-cat="AGT"]  { --tab-color: #c084fc; }
+    .domain-tab[data-cat="GOV"]  { --tab-color: #e879f9; }
+    .domain-tab[data-cat="DS"]   { --tab-color: #2dd4bf; }
+    .domain-tab[data-cat="APP"]  { --tab-color: #94a3b8; }
 
     /* ── Atlas container ── */
     #atlas-container {
@@ -151,14 +154,17 @@
   <!-- 分類 tabs -->
   <nav class="domain-nav">
     <button class="domain-tab active" data-cat="STAR" onclick="switchMode('star')">🌌 AI 知識圖譜</button>
-    <button class="domain-tab" data-cat="ALL"  onclick="switchMode('atlas'); setFilter(null)">🔮 全部 AI</button>
-    <button class="domain-tab" data-cat="ML"  onclick="switchMode('atlas'); setFilter('機器學習')">🤖 機器學習</button>
-    <button class="domain-tab" data-cat="DL"  onclick="setFilter('深度學習')">🔥 深度學習</button>
-    <button class="domain-tab" data-cat="NN"  onclick="setFilter('神經網路')">🧩 神經網路</button>
-    <button class="domain-tab" data-cat="GEN" onclick="setFilter('生成式 AI')">✨ 生成式 AI</button>
-    <button class="domain-tab" data-cat="CV"  onclick="setFilter('電腦視覺')">👁️ 電腦視覺</button>
-    <button class="domain-tab" data-cat="NLP" onclick="setFilter('NLP')">💬 NLP</button>
-    <button class="domain-tab" data-cat="AGT" onclick="setFilter('AI 代理人')">🧠 AI 代理人</button>
+    <button class="domain-tab" data-cat="ALL"  onclick="switchAndFilter(null)">🔮 全部 AI</button>
+    <button class="domain-tab" data-cat="ML"   onclick="switchAndFilter('機器學習')">🤖 機器學習</button>
+    <button class="domain-tab" data-cat="DL"   onclick="switchAndFilter('深度學習')">🔥 深度學習</button>
+    <button class="domain-tab" data-cat="NN"   onclick="switchAndFilter('神經網路')">🧩 神經網路</button>
+    <button class="domain-tab" data-cat="GEN"  onclick="switchAndFilter('生成式 AI')">✨ 生成式 AI</button>
+    <button class="domain-tab" data-cat="CV"   onclick="switchAndFilter('電腦視覺')">👁️ 電腦視覺</button>
+    <button class="domain-tab" data-cat="NLP"  onclick="switchAndFilter('NLP基礎')">💬 NLP</button>
+    <button class="domain-tab" data-cat="AGT"  onclick="switchAndFilter('AI 代理人')">🧠 AI 代理人</button>
+    <button class="domain-tab" data-cat="GOV"  onclick="switchAndFilter('AI 治理')">⚖️ AI 治理</button>
+    <button class="domain-tab" data-cat="DS"   onclick="switchAndFilter('資料科學')">📊 資料科學</button>
+    <button class="domain-tab" data-cat="APP"  onclick="switchAndFilter('AI 應用')">🛠️ AI 應用</button>
   </nav>
 
   <!-- D3 SVG 容器 -->
@@ -170,7 +176,7 @@
   <!-- 浮動 tooltip -->
   <div id="atlas-tooltip"></div>
 
-  <!-- 圖例：AI 知識圖譜（星象視圖）-->
+  <!-- 共用圖例（星象視圖 & 球形視圖皆顯示）-->
   <div class="atlas-legend" id="legend-star">
     <div class="atlas-legend-item"><span class="legend-dot" style="background:#a78bfa"></span>機器學習</div>
     <div class="atlas-legend-item"><span class="legend-dot" style="background:#fbbf24"></span>深度學習</div>
@@ -179,9 +185,11 @@
     <div class="atlas-legend-item"><span class="legend-dot" style="background:#f472b6"></span>電腦視覺</div>
     <div class="atlas-legend-item"><span class="legend-dot" style="background:#fb923c"></span>NLP</div>
     <div class="atlas-legend-item"><span class="legend-dot" style="background:#c084fc"></span>AI 代理人</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#e879f9"></span>AI 治理</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#2dd4bf"></span>資料科學</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#94a3b8"></span>AI 應用</div>
   </div>
-
-  <!-- 圖例：AI 圖譜模式 -->
+  <!-- 球形視圖圖例（同樣內容，另一實例保留 display 切換相容性）-->
   <div class="atlas-legend" id="legend-atlas" style="display:none">
     <div class="atlas-legend-item"><span class="legend-dot" style="background:#a78bfa"></span>機器學習</div>
     <div class="atlas-legend-item"><span class="legend-dot" style="background:#fbbf24"></span>深度學習</div>
@@ -190,6 +198,9 @@
     <div class="atlas-legend-item"><span class="legend-dot" style="background:#f472b6"></span>電腦視覺</div>
     <div class="atlas-legend-item"><span class="legend-dot" style="background:#fb923c"></span>NLP</div>
     <div class="atlas-legend-item"><span class="legend-dot" style="background:#c084fc"></span>AI 代理人</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#e879f9"></span>AI 治理</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#2dd4bf"></span>資料科學</div>
+    <div class="atlas-legend-item"><span class="legend-dot" style="background:#94a3b8"></span>AI 應用</div>
   </div>
 
   <!-- 粒子背景動畫 -->
@@ -286,8 +297,8 @@
 
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="data.js?v=6.1"></script>
-  <script src="js/atlas.js?v=6.1"></script>
-  <script src="js/starmap.js?v=1.0"></script>
+  <script src="js/atlas.js?v=7.0"></script>
+  <script src="js/starmap.js?v=2.0"></script>
   <script>
     // 扁平化 lessonData → topics（支援舊版巢狀結構與新版扁平陣列）
     const topics = [];
@@ -365,8 +376,9 @@
     }
 
     const CAT_MAP = {
-      'ML': '機器學習', 'DL': '深度學習', 'NN': '神經網路',
-      'GEN': '生成式 AI', 'CV': '電腦視覺', 'NLP': 'NLP', 'AGT': 'AI 代理人'
+      'ML':  '機器學習', 'DL':  '深度學習', 'NN':  '神經網路',
+      'GEN': '生成式 AI','CV':  '電腦視覺', 'NLP': 'NLP基礎',
+      'AGT': 'AI 代理人','GOV': 'AI 治理',  'DS':  '資料科學', 'APP': 'AI 應用'
     };
 
     function setFilter(cat) {
@@ -375,6 +387,12 @@
       document.querySelectorAll('.domain-tab').forEach(b => {
         b.classList.toggle('active', b.getAttribute('data-cat') === (activeKey || 'ALL'));
       });
+    }
+
+    // 切換到球形視圖並設定分類（各分類頁籤統一入口）
+    function switchAndFilter(cat) {
+      switchMode('atlas');
+      setFilter(cat);
     }
 
     // 旋轉切換按鈕

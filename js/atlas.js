@@ -1,240 +1,206 @@
-// atlas.js — D3.js v7 AI Term Atlas v6.1
-// Requires: D3.js v7 loaded before this file
+// atlas.js — Sphere Layout v7.0
+// 全部 AI → 所有術語同心球；分類頁籤 → 只顯示該類，其他完全隱藏
 
 class TermAtlas {
   static CAT_COLOR = {
-    "機器學習":   "#a78bfa",   // 薰衣草紫
-    "深度學習":   "#fbbf24",   // 琥珀橘
-    "神經網路":   "#34d399",   // 翡翠綠
-    "生成式 AI":  "#7dd3fc",   // 天藍 (最多 57 筆)
-    "電腦視覺":   "#f472b6",   // 玫瑰粉 (34 筆)
-    "NLP":        "#fb923c",   // 橙色
-    "AI 代理人":  "#c084fc",   // 紫羅蘭
-    "default":    "#9ca3af"
+    "機器學習":  "#a78bfa",
+    "深度學習":  "#fbbf24",
+    "神經網路":  "#34d399",
+    "生成式 AI": "#7dd3fc",
+    "電腦視覺":  "#f472b6",
+    "NLP基礎":   "#fb923c",
+    "AI 代理人": "#c084fc",
+    "AI 治理":   "#e879f9",
+    "資料科學":  "#2dd4bf",
+    "AI 應用":   "#94a3b8",
+    "default":   "#64748b"
   };
 
   constructor(containerEl, data) {
     this.el = typeof containerEl === "string"
       ? document.querySelector(containerEl) : containerEl;
-    this.W = this.el.clientWidth  || window.innerWidth;
-    this.H = this.el.clientHeight || window.innerHeight;
-    this._buildGraph(data);
+    this._allTopics = data || [];
     this._setupSVG();
-    this._drawEdges();
-    this._drawNodes();
-    this._drawLabels();
-    this._simulate();
-    this._setupZoom();
-    this._setupSearch();
+    this._render(this._allTopics);
   }
 
   _color(cat) {
     if (!cat) return TermAtlas.CAT_COLOR.default;
+    const c = cat.split('\n')[0].trim();
     for (const [k, v] of Object.entries(TermAtlas.CAT_COLOR)) {
-      if (cat.includes(k) || k.includes(cat)) return v;
+      if (k === 'default') continue;
+      if (c === k || c.includes(k) || k.includes(c.split(/[\s\n]/)[0])) return v;
     }
     return TermAtlas.CAT_COLOR.default;
   }
 
-  _buildGraph(raw) {
-    this.nodes = (raw || []).map((item, i) => ({
-      id:       item.id ?? `n${i}`,
-      title:    item.title    || "",
-      eng:      item.eng_name || "",
-      category: item.category || "AI概念",
-      def:      item.def      || "",
-      color:    this._color(item.category),
-      r:        item.key_goal ? 9 : 6
-    }));
-
-    const byCat = {};
-    this.nodes.forEach(n => { (byCat[n.category] ??= []).push(n); });
-    this.links = [];
-    Object.values(byCat).forEach(group => {
-      const max = Math.min(group.length - 1, 10);
-      for (let i = 0; i < max; i++) {
-        this.links.push({
-          source: group[i].id,
-          target: group[(i + 1) % group.length].id
-        });
+  _concentricPos(n) {
+    const W = this.el.clientWidth || window.innerWidth;
+    const isMobile = W < 768;
+    // 根據術語數量自動調整間距：節點多 → 緊一點
+    const minSep = isMobile
+      ? (n > 100 ? 7 : 9)
+      : (n > 300 ? 8 : n > 150 ? 10 : n > 80 ? 12 : 15);
+    const out = [];
+    if (n === 0) return out;
+    let ring = 0;
+    while (out.length < n) {
+      if (ring === 0) {
+        out.push({ r: 0, th: 0 });
+      } else {
+        const ringR = ring * minSep;
+        const cap = Math.max(1, Math.floor(2 * Math.PI * ringR / minSep));
+        const offset = ring * 0.37;
+        for (let i = 0; i < cap && out.length < n; i++) {
+          out.push({ r: ringR, th: offset + 2 * Math.PI * i / cap });
+        }
       }
-    });
+      ring++;
+    }
+    return out;
   }
 
   _setupSVG() {
-    this.svg = d3.select(this.el).append("svg")
-      .attr("width", "100%").attr("height", "100%")
-      .style("position", "absolute").style("top", 0).style("left", 0);
+    d3.select(this.el).select('svg.ta-svg').remove();
+    this.svg = d3.select(this.el).append('svg').attr('class', 'ta-svg')
+      .attr('width', '100%').attr('height', '100%')
+      .style('position', 'absolute').style('top', 0).style('left', 0)
+      .style('display', 'none');
 
-    const defs = this.svg.append("defs");
-    Object.entries(TermAtlas.CAT_COLOR).forEach(([key]) => {
-      const f = defs.append("filter").attr("id", `glow-${key}`)
-        .attr("x", "-80%").attr("y", "-80%")
-        .attr("width", "260%").attr("height", "260%");
-      f.append("feGaussianBlur").attr("in", "SourceGraphic")
-        .attr("stdDeviation", 4).attr("result", "blur");
-      const m = f.append("feMerge");
-      m.append("feMergeNode").attr("in", "blur");
-      m.append("feMergeNode").attr("in", "SourceGraphic");
-    });
+    const defs = this.svg.append('defs');
+    const f = defs.append('filter').attr('id', 'ta-glow')
+      .attr('x', '-80%').attr('y', '-80%')
+      .attr('width', '260%').attr('height', '260%');
+    f.append('feGaussianBlur').attr('in', 'SourceGraphic')
+      .attr('stdDeviation', 3).attr('result', 'b');
+    const m = f.append('feMerge');
+    m.append('feMergeNode').attr('in', 'b');
+    m.append('feMergeNode').attr('in', 'SourceGraphic');
 
-    this.g = this.svg.append("g").attr("class", "atlas-root");
-  }
+    this.g = this.svg.append('g').attr('class', 'ta-root');
 
-  _glowId(cat) {
-    if (!cat) return "glow-default";
-    for (const k of Object.keys(TermAtlas.CAT_COLOR)) {
-      if (cat.includes(k) || k.includes(cat)) return `glow-${k}`;
-    }
-    return "glow-default";
-  }
-
-  _drawEdges() {
-    this.edgeSel = this.g.append("g").selectAll("line")
-      .data(this.links).join("line")
-      .attr("stroke", "#7dd3fc").attr("stroke-opacity", 0.12)
-      .attr("stroke-width", 1);
-  }
-
-  _drawNodes() {
-    const drag = d3.drag()
-      .on("start", (ev, d) => {
-        if (!ev.active) this.sim.alphaTarget(0.3).restart();
-        d.fx = d.x; d.fy = d.y;
-      })
-      .on("drag",  (ev, d) => { d.fx = ev.x; d.fy = ev.y; })
-      .on("end",   (ev, d) => {
-        if (!ev.active) this.sim.alphaTarget(0);
-        d.fx = null; d.fy = null;
-      });
-
-    this.nodeSel = this.g.append("g").selectAll("circle")
-      .data(this.nodes).join("circle")
-      .attr("r", d => d.r)
-      .attr("fill", d => d.color).attr("fill-opacity", 0.9)
-      .attr("stroke", d => d.color).attr("stroke-width", 1.5)
-      .attr("stroke-opacity", 0.5)
-      .style("filter", d => `url(#${this._glowId(d.category)})`)
-      .style("cursor", "pointer")
-      .call(drag)
-      .on("click",      (ev, d) => { ev.stopPropagation(); this.showPanel(d); })
-      .on("mouseenter", (ev, d) => {
-        d3.select(ev.currentTarget).raise()
-          .transition().duration(150).attr("r", d.r * 2).attr("stroke-width", 3);
-        this._highlightLinks(d);
-      })
-      .on("mouseleave", (ev, d) => {
-        d3.select(ev.currentTarget)
-          .transition().duration(200).attr("r", d.r).attr("stroke-width", 1.5);
-        this._clearHighlight();
-      });
-  }
-
-  _drawLabels() {
-    const labeled = this.nodes.filter(n => n.r > 7 || Math.random() < 0.12);
-    this.labelSel = this.g.append("g").selectAll("text")
-      .data(labeled).join("text")
-      .text(d => d.title.length > 8 ? d.title.slice(0, 7) + "…" : d.title)
-      .attr("fill", "#94a3b8").attr("font-size", 9)
-      .attr("text-anchor", "middle").attr("pointer-events", "none")
-      .attr("dy", d => d.r + 12);
-  }
-
-  _simulate() {
-    this.sim = d3.forceSimulation(this.nodes)
-      .force("link",    d3.forceLink(this.links).id(d => d.id).distance(70).strength(0.3))
-      .force("charge",  d3.forceManyBody().strength(-200))
-      .force("center",  d3.forceCenter(this.W / 2, this.H / 2).strength(0.05))
-      .force("collide", d3.forceCollide(d => d.r + 16))
-      .on("tick", () => this._tick());
-
-    for (let i = 0; i < 200; i++) this.sim.tick();
-    this._tick();
-  }
-
-  _tick() {
-    this.edgeSel
-      .attr("x1", d => d.source.x ?? 0).attr("y1", d => d.source.y ?? 0)
-      .attr("x2", d => d.target.x ?? 0).attr("y2", d => d.target.y ?? 0);
-    this.nodeSel.attr("cx", d => d.x ?? 0).attr("cy", d => d.y ?? 0);
-    this.labelSel.attr("x", d => d.x ?? 0).attr("y", d => d.y ?? 0);
-  }
-
-  _setupZoom() {
-    this.zoom = d3.zoom().scaleExtent([0.05, 10])
-      .on("zoom", ev => this.g.attr("transform", ev.transform));
+    // 滾輪縮放以游標位置為中心（D3 zoom 預設行為）
+    this.zoom = d3.zoom().scaleExtent([0.04, 14])
+      .on('zoom', ev => this.g.attr('transform', ev.transform));
     this.svg.call(this.zoom);
-    this.svg.on("click", () => {
-      document.getElementById("atlas-panel")?.classList.remove("show");
-    });
-    document.getElementById("atlas-reset")?.addEventListener("click", () => {
-      this.svg.transition().duration(600)
-        .call(this.zoom.transform, d3.zoomIdentity);
-    });
+    this.svg.on('dblclick.zoom', null);
+    this.svg.on('click', () =>
+      document.getElementById('atlas-panel')?.classList.remove('show'));
   }
 
-  _setupSearch() {
-    document.getElementById("atlas-search")
-      ?.addEventListener("input", e => this.flyToSearch(e.target.value.trim()));
-  }
+  _render(topics) {
+    this.g.selectAll('*').remove();
+    if (!topics || topics.length === 0) return;
 
-  _highlightLinks(node) {
-    const ids = new Set([node.id]);
-    this.links.forEach(l => {
-      if (l.source.id === node.id) ids.add(l.target.id);
-      if (l.target.id === node.id) ids.add(l.source.id);
+    const W = this.el.clientWidth || window.innerWidth;
+    const H = (this.el.clientHeight || window.innerHeight) - 90;
+    const cx = W / 2, cy = H / 2 + 45;
+
+    const pos = this._concentricPos(topics.length);
+    const nodeData = topics.map((t, i) => {
+      const p = pos[i] || { r: 0, th: 0 };
+      const color = this._color(t.category);
+      return {
+        ...t,
+        color,
+        x: cx + p.r * Math.cos(p.th),
+        y: cy + p.r * Math.sin(p.th),
+        nr: t.key_goal ? 5 : 3.5
+      };
     });
-    this.nodeSel.attr("opacity", d => ids.has(d.id) ? 1 : 0.1);
-    this.edgeSel.attr("stroke-opacity", d =>
-      (d.source.id === node.id || d.target.id === node.id) ? 0.8 : 0.02);
+
+    // 光暈
+    this.g.selectAll('circle.ta-halo').data(nodeData).join('circle')
+      .attr('class', 'ta-halo')
+      .attr('cx', d => d.x).attr('cy', d => d.y)
+      .attr('r', d => d.nr * 3)
+      .attr('fill', d => d.color + '18')
+      .attr('pointer-events', 'none');
+
+    // 主節點
+    this.nodeSel = this.g.selectAll('circle.ta-node').data(nodeData).join('circle')
+      .attr('class', 'ta-node')
+      .attr('cx', d => d.x).attr('cy', d => d.y).attr('r', d => d.nr)
+      .attr('fill', d => d.color).attr('fill-opacity', 0.88)
+      .attr('stroke', d => d.color).attr('stroke-width', 0.5).attr('stroke-opacity', 0.5)
+      .style('filter', 'url(#ta-glow)').style('cursor', 'pointer')
+      .on('mouseenter', (ev, d) => {
+        d3.select(ev.currentTarget).raise()
+          .transition().duration(120).attr('r', d.nr * 2.6);
+        this._tooltip(ev, d);
+      })
+      .on('mouseleave', (ev, d) => {
+        d3.select(ev.currentTarget)
+          .transition().duration(200).attr('r', d.nr);
+        this._hideTooltip();
+      })
+      .on('click', (ev, d) => { ev.stopPropagation(); this.showPanel(d); });
+
+    // 標籤（只標 key_goal 節點）
+    this.g.selectAll('text.ta-label')
+      .data(nodeData.filter(d => d.nr > 4)).join('text')
+      .attr('class', 'ta-label')
+      .attr('x', d => d.x).attr('y', d => d.y - d.nr - 4)
+      .attr('text-anchor', 'middle')
+      .attr('fill', d => d.color + 'cc')
+      .attr('font-size', 7.5).attr('pointer-events', 'none')
+      .text(d => d.title.length > 8 ? d.title.slice(0, 7) + '…' : d.title);
+
+    // 重置到初始縮放（保持球在畫面中央）
+    this.svg.call(this.zoom.transform, d3.zoomIdentity);
   }
 
-  _clearHighlight() {
-    this.nodeSel.attr("opacity", null);
-    this.edgeSel.attr("stroke-opacity", 0.12);
+  filterByCategory(cat) {
+    const filtered = cat
+      ? this._allTopics.filter(t => {
+          const c = (t.category || '').split('\n')[0].trim();
+          return c === cat
+            || c.includes(cat)
+            || (cat.length > 2 && cat.includes(c.split(/[\s\n]/)[0]));
+        })
+      : this._allTopics;
+    this._render(filtered);
   }
 
   flyToSearch(query) {
     if (!query) {
-      this.nodeSel?.classed("dim", false).classed("match", false);
+      this.nodeSel?.attr('opacity', null);
       return;
     }
     const q = query.toLowerCase();
-    const matches = this.nodes.filter(n =>
-      n.title.toLowerCase().includes(q) || n.eng.toLowerCase().includes(q));
-    this.nodeSel?.classed("dim",   d => !matches.includes(d))
-                 .classed("match", d =>  matches.includes(d));
-    if (!matches.length) return;
-    const { x, y } = matches[0];
-    const scale = 3;
-    this.svg.transition().duration(750).call(
-      this.zoom.transform,
-      d3.zoomIdentity.translate(this.W / 2 - scale * x, this.H / 2 - scale * y).scale(scale)
+    this.nodeSel?.attr('opacity', d =>
+      d.title.toLowerCase().includes(q) || (d.eng || '').toLowerCase().includes(q) ? 1 : 0.06
     );
-    this.showPanel(matches[0]);
   }
 
-  filterByCategory(cat) {
-    // Partial match: "NLP" matches "NLP 基礎","NLP 模型"; "電腦視覺" matches "電腦視覺技術" etc.
-    const matchFn = cat ? (n => n.category.includes(cat) || cat.includes(n.category.split('\n')[0].trim())) : null;
-    const ids = matchFn ? new Set(this.nodes.filter(matchFn).map(n => n.id)) : null;
-    this.nodeSel?.attr("opacity", d => !ids || ids.has(d.id) ? 1 : 0.08);
-    this.edgeSel?.attr("stroke-opacity", d =>
-      !ids || (ids.has(d.source.id) && ids.has(d.target.id)) ? 0.2 : 0.01);
+  _tooltip(ev, d) {
+    const tip = document.getElementById('atlas-tooltip');
+    if (!tip) return;
+    tip.innerHTML = `<strong style="color:${d.color}">${d.title}</strong>
+      ${d.eng ? `<br><span style="color:#94a3b8;font-size:10px">${d.eng}</span>` : ''}
+      <br><span style="color:#64748b;font-size:10px">${(d.category||'').split('\n')[0]}</span>`;
+    tip.style.display = 'block';
+    tip.style.left = Math.min(ev.clientX + 14, window.innerWidth - 220) + 'px';
+    tip.style.top  = Math.min(ev.clientY - 10, window.innerHeight - 80) + 'px';
+  }
+
+  _hideTooltip() {
+    const t = document.getElementById('atlas-tooltip');
+    if (t) t.style.display = 'none';
   }
 
   showPanel(node) {
-    const panel = document.getElementById("atlas-panel");
+    const panel = document.getElementById('atlas-panel');
     if (!panel) return;
     panel.innerHTML = `
       <button class="panel-close"
         onclick="this.closest('#atlas-panel').classList.remove('show')">×</button>
       <div class="panel-color-dot" style="background:${node.color}"></div>
       <h3 class="panel-title">${node.title}</h3>
-      ${node.eng ? `<div class="panel-eng">${node.eng}</div>` : ""}
-      <p class="panel-def">${node.def || "暫無說明。"}</p>
-      <div class="panel-cat" style="color:${node.color}">${node.category || "—"}</div>
+      ${node.eng ? `<div class="panel-eng">${node.eng}</div>` : ''}
+      <p class="panel-def">${node.def || '暫無說明。'}</p>
+      <div class="panel-cat" style="color:${node.color}">${(node.category||'').split('\n')[0] || '—'}</div>
     `;
-    panel.classList.add("show");
+    panel.classList.add('show');
   }
 }
