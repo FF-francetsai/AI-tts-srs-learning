@@ -392,27 +392,27 @@
 
       // ── 節點閃爍 CSS 動畫（依重要性分三層）────────────────────────────────
       defs.append('style').text(`
-        /* key_goal 重要節點：激烈閃爍 + scale 脈衝 */
+        /* key_goal 重要節點：激烈閃爍 + scale 脈衝（週期 3.5-6s，視覺從容） */
         .cd-dot.is-key {
-          animation: star-flash-key var(--sd,2.2s) ease-in-out infinite;
+          animation: star-flash-key var(--sd,4.5s) ease-in-out infinite;
           transform-origin: center;
           transform-box: fill-box;
         }
         @keyframes star-flash-key {
           0%,100% { opacity:1;    transform:scale(1);    }
-          12%     { opacity:0.35; transform:scale(0.82); }
-          28%     { opacity:1;    transform:scale(1.28); }
-          46%     { opacity:0.5;  transform:scale(0.88); }
-          64%     { opacity:0.95; transform:scale(1.18); }
-          82%     { opacity:0.6;  transform:scale(1);    }
+          12%     { opacity:0.35; transform:scale(0.84); }
+          30%     { opacity:1;    transform:scale(1.26); }
+          48%     { opacity:0.5;  transform:scale(0.9);  }
+          66%     { opacity:0.95; transform:scale(1.16); }
+          84%     { opacity:0.6;  transform:scale(1);    }
         }
-        /* 普通節點：慢速呼吸暗淡（省效能） */
+        /* 普通節點：慢速呼吸暗淡（週期 7-12s，幾乎感覺不到在動） */
         .cd-dot {
-          animation: star-pulse var(--sd,4s) ease-in-out infinite;
+          animation: star-pulse var(--sd,9s) ease-in-out infinite;
         }
         @keyframes star-pulse {
-          0%,100% { opacity:0.88; }
-          50%     { opacity:0.38; }
+          0%,100% { opacity:0.85; }
+          50%     { opacity:0.35; }
         }
       `);
 
@@ -887,20 +887,20 @@
       const ns = g.selectAll('g.cd-node').data(nodes).join('g').attr('class', 'cd-node')
         .attr('transform', d => `translate(${d.lx},${d.ly})`).style('cursor', 'pointer');
 
-      // 外層半透明光暈
+      // 外層半透明光暈（半徑縮小，避免圈與圈重疊交叉）
       ns.append('circle').attr('class', 'cd-halo')
-        .attr('r', d => d.nr * 7).attr('fill', def.color + '12')
+        .attr('r', d => d.nr * 2.5).attr('fill', def.color + '20')
         .attr('pointer-events', 'none');
       // 內層實心點（小而亮）；key_goal 加 is-key class 觸發激烈閃爍
       ns.append('circle')
         .attr('class', d => d.key_goal ? 'cd-dot is-key' : 'cd-dot')
         .attr('r', d => d.nr).attr('fill', def.color).attr('fill-opacity', 0.92)
         .style('filter', 'url(#star-glow)')
-        // --sd 控制各節點動畫週期：key_goal 1.4-2.8s，普通 2.8-6s（錯開閃爍）
+        // --sd 控制各節點動畫週期：key_goal 3.5-6s，普通 7-12s（錯開閃爍）
         .style('--sd', (d, i) => d.key_goal
-          ? `${(1.4 + (i * 0.31 % 1.4)).toFixed(2)}s`
-          : `${(2.8 + (i * 0.53 % 3.2)).toFixed(2)}s`)
-        .style('animation-delay', (_, i) => `-${(i * 0.73 % 6).toFixed(2)}s`);
+          ? `${(3.5 + (i * 0.41 % 2.5)).toFixed(2)}s`
+          : `${(7.0 + (i * 0.67 % 5.0)).toFixed(2)}s`)
+        .style('animation-delay', (_, i) => `-${(i * 1.31 % 10).toFixed(2)}s`);
 
       // 靜態文字標籤已移除，hover/touch 時顯示 tooltip
       const self = this;
@@ -1054,9 +1054,9 @@
       const ns = g.selectAll('g.cd-node').data(nodes).join('g').attr('class', 'cd-node')
         .attr('transform', d => `translate(${d.lx},${d.ly})`).style('cursor', 'pointer');
 
-      // 外層光暈
+      // 外層光暈（縮小，避免全部AI密集時圈圈重疊）
       ns.append('circle').attr('class', 'cd-halo')
-        .attr('r', d => d.nr * 8).attr('fill', d => d.color + '0e')
+        .attr('r', d => d.nr * 2.5).attr('fill', d => d.color + '18')
         .attr('pointer-events', 'none');
       // 內層實心點（全部AI不顯示標籤）
       ns.append('circle')
@@ -1064,9 +1064,9 @@
         .attr('r', d => d.nr).attr('fill', d => d.color).attr('fill-opacity', 0.95)
         .style('filter', 'url(#star-glow)')
         .style('--sd', (d, i) => d.key_goal
-          ? `${(1.3 + (i * 0.29 % 1.5)).toFixed(2)}s`
-          : `${(3.0 + (i * 0.61 % 3.5)).toFixed(2)}s`)
-        .style('animation-delay', (_, i) => `-${(i * 0.83 % 7).toFixed(2)}s`);
+          ? `${(3.5 + (i * 0.43 % 2.5)).toFixed(2)}s`
+          : `${(7.0 + (i * 0.71 % 5.0)).toFixed(2)}s`)
+        .style('animation-delay', (_, i) => `-${(i * 1.37 % 10).toFixed(2)}s`);
 
       const self = this;
       ns.on('mouseenter', (ev, d) => {
