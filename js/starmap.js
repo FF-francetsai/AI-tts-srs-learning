@@ -909,6 +909,121 @@
         .call(this._zoomBehavior.transform,
           d3.zoomIdentity.translate(this._cx, this._cy).scale(0.65));
     }
+
+    // ── 全部 AI 模式：所有節點展開旋轉 ─────────────────────────────────────
+
+    showAll() {
+      if (!this._clusterEls) return;
+      this._clearDetailLayer();
+      this._filterCat = '__all__';
+
+      // 隱藏 cluster 與裝飾
+      this._clusterEls.forEach(({ cg }) =>
+        cg.transition().duration(280).attr('opacity', 0)
+          .on('end', function() { d3.select(this).attr('display', 'none'); }));
+      this._rotG.select('.ca-crosslinks').transition().duration(280).attr('opacity', 0);
+      this._rotG.select('.ca-zodiac').transition().duration(280).attr('opacity', 0);
+      this._rotG.select('.ca-mansions').transition().duration(280).attr('opacity', 0);
+
+      setTimeout(() => { if (this._filterCat === '__all__') this._buildAllLayer(); }, 320);
+    }
+
+    _buildAllLayer() {
+      const colorMap = Object.fromEntries(CAT_DEFS.map(d => [d.cat, d.color]));
+      // 所有節點，依分類 interleave 排列讓顏色散布均勻
+      const buckets = CAT_DEFS.map(d => (this._byCat[d.cat] || []).map(t =>
+        ({ ...t, color: d.color })));
+      const allItems = [];
+      const maxLen = Math.max(...buckets.map(b => b.length));
+      for (let i = 0; i < maxLen; i++)
+        buckets.forEach(b => { if (b[i]) allItems.push(b[i]); });
+
+      const n = allItems.length;
+      const mobile = this._md < 768;
+      // 節點多時用小間距（使用者說「可以小一點」），整體仍會旋轉展開
+      const minSep = mobile
+        ? (n > 400 ? 14 : n > 200 ? 17 : 22)
+        : (n > 600 ? 16 : n > 300 ? 20 : n > 150 ? 25 : 30);
+
+      const pos = this._concentricPos(n, minSep);
+      const g = this._rotG.insert('g', '.ca-cluster')
+        .attr('class', 'ca-detail').attr('opacity', 0);
+
+      const nodes = allItems.map((t, i) => {
+        const p = pos[i] || { r:0, th:0 };
+        return { id:t.id, title:t.title, eng:t.eng, cat:t.cat, def:t.def,
+          key_goal:t.key_goal, color:t.color,
+          lx: p.r * Math.cos(p.th), ly: p.r * Math.sin(p.th),
+          nr: t.key_goal ? 5 : 3 };
+      });
+
+      // 用空間格子法高效建連線，避免 O(n²) 慢
+      const links = this._nearestLinks(nodes, minSep * 2.0);
+
+      g.selectAll('line.cd-link').data(links).join('line').attr('class', 'cd-link')
+        .attr('x1', d => d.s.lx).attr('y1', d => d.s.ly)
+        .attr('x2', d => d.t.lx).attr('y2', d => d.t.ly)
+        .attr('stroke', d => d.s.color).attr('stroke-opacity', 0.18)
+        .attr('stroke-width', 0.7).attr('stroke-dasharray', '2,4');
+
+      const ns = g.selectAll('g.cd-node').data(nodes).join('g').attr('class', 'cd-node')
+        .attr('transform', d => `translate(${d.lx},${d.ly})`).style('cursor', 'pointer');
+
+      // 外層半透明暈圈
+      ns.append('circle').attr('class', 'cd-halo')
+        .attr('r', d => d.nr * 3).attr('fill', d => d.color + '18')
+        .attr('pointer-events', 'none');
+      // 內層實心點
+      ns.append('circle').attr('class', 'cd-dot')
+        .attr('r', d => d.nr).attr('fill', d => d.color).attr('fill-opacity', 0.88)
+        .style('filter', 'url(#star-glow)');
+
+      // key_goal 節點標籤
+      ns.filter(d => d.key_goal).append('text')
+        .attr('text-anchor', 'middle').attr('dy', d => -(d.nr + 5))
+        .attr('fill', d => d.color + 'bb').attr('font-size', 9)
+        .attr('pointer-events', 'none')
+        .text(d => d.title.length > 8 ? d.title.slice(0, 7) + '…' : d.title);
+
+      const self = this;
+      ns.on('mouseenter', (ev, d) => {
+          ns.filter(dd => dd.id === d.id).select('.cd-dot')
+            .transition().duration(120).attr('r', d.nr * 2.5);
+          self._tooltip(ev, d);
+        })
+        .on('mouseleave', (ev, d) => {
+          ns.filter(dd => dd.id === d.id).select('.cd-dot')
+            .transition().duration(200).attr('r', d.nr);
+          self._hideTooltip();
+        })
+        .on('click', (ev, d) => { ev.stopPropagation(); self._panel(d); });
+
+      g.transition().duration(450).attr('opacity', 1);
+    }
+
+    // 空間格子法：找距離 maxDist 以內的相鄰節點並建立連線（O(n)）
+    _nearestLinks(nodes, maxDist) {
+      const links = [];
+      const used  = new Set();
+      const cell  = maxDist;
+      const grid  = {};
+      nodes.forEach((a, i) => {
+        const cx = Math.floor(a.lx / cell), cy = Math.floor(a.ly / cell);
+        for (let dx = -1; dx <= 1; dx++) {
+          for (let dy = -1; dy <= 1; dy++) {
+            const key = `${cx+dx},${cy+dy}`;
+            (grid[key] || []).forEach(j => {
+              if (j >= i) return;
+              const d = Math.hypot(a.lx - nodes[j].lx, a.ly - nodes[j].ly);
+              const k = `${j}-${i}`;
+              if (d <= maxDist && !used.has(k)) { used.add(k); links.push({ s:nodes[j], t:a }); }
+            });
+          }
+        }
+        (grid[`${cx},${cy}`] ??= []).push(i);
+      });
+      return links;
+    }
   }
 
   global.ConstellationAtlas = ConstellationAtlas;
