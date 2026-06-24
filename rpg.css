@@ -73,10 +73,10 @@ body {
 .domain-sublabel { font-size: 9px; fill: #64748b; text-anchor: middle; }
 
 /* ══════════════════════════════════════════════════════
-   畫面 2：對話劇情
+   畫面 2：全螢幕世界場景（玩家可操控）
 ══════════════════════════════════════════════════════ */
 #screen-dialogue {
-  background: linear-gradient(180deg, rgba(6,11,19,0.97) 0%, rgba(10,18,35,0.98) 100%);
+  position: fixed; inset: 0; overflow: hidden;
   justify-content: flex-start;
   align-items: stretch;
   padding: 52px 0 0;
@@ -84,65 +84,88 @@ body {
   gap: 0;
 }
 
-.dialogue-header {
-  position: fixed; top: 0; left: 0; right: 0; height: 44px;
-  display: flex; align-items: center; padding: 0 16px; gap: 10px;
-  background: rgba(6,11,19,0.9); border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(8px); z-index: 20;
-}
-.dialogue-domain-badge {
-  font-size: 11px; color: var(--accent); font-weight: 600;
-  padding: 3px 10px; border-radius: 10px; border: 1px solid var(--border);
-  background: rgba(125,211,252,0.06);
-}
-.dialogue-progress { font-size: 10px; color: var(--muted); margin-left: auto; }
-
-.dialogue-body {
-  display: flex; gap: 16px; align-items: flex-start;
-  width: 100%; max-width: 860px;
-  flex-shrink: 0; align-self: center;
-  padding: 12px 16px;
+/* 全螢幕 canvas */
+#dlg-scene-bg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  display: block; image-rendering: pixelated;
 }
 
-/* 角色立繪（sprite canvas，同 rpg-preview dp-portrait） */
-.char-portrait {
-  width: 96px; flex-shrink: 0;
-  display: flex; flex-direction: column; align-items: center; gap: 8px;
-}
-.char-name-tag {
-  font-size: 12px; font-weight: 700; padding: 3px 14px; border-radius: 10px;
-  border: 1px solid; background: rgba(0,0,0,0.4);
-}
-
-/* 對話框 */
-.dialogue-box {
-  flex: 1; background: var(--panel); border: 1px solid var(--border);
-  border-radius: 16px; padding: 20px 24px; backdrop-filter: blur(12px);
-  min-height: 180px; display: flex; flex-direction: column; gap: 16px;
-}
-.dialogue-text {
-  font-size: 15px; line-height: 1.8; flex: 1;
-  color: var(--text);
-}
-.dialogue-text .cursor { animation: blink .7s step-end infinite; }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-
-.dialogue-choices { display: flex; flex-direction: column; gap: 8px; }
-.choice-btn {
-  padding: 9px 16px; border-radius: 10px; border: 1px solid var(--border);
-  background: rgba(125,211,252,0.05); color: var(--text);
-  font-size: 13px; cursor: pointer; text-align: left;
-  transition: background .15s, border-color .15s;
-}
-.choice-btn:hover { background: rgba(125,211,252,0.12); border-color: var(--accent); }
-
-.dialogue-next {
-  align-self: flex-end; padding: 8px 22px; border-radius: 10px;
-  border: 1px solid var(--accent); background: rgba(125,211,252,0.08);
-  color: var(--accent); font-size: 13px; cursor: pointer;
+/* 返回按鈕（世界場景） */
+.world-back-btn {
+  position: fixed; top: 12px; left: 12px; z-index: 200;
+  background: rgba(6,11,19,0.85); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 14px; color: var(--accent);
+  font-size: 12px; cursor: pointer; backdrop-filter: blur(8px);
   transition: background .15s;
 }
-.dialogue-next:hover { background: rgba(125,211,252,0.18); }
+.world-back-btn:hover { background: rgba(125,211,252,0.1); }
+
+/* NPC 對話泡泡（JS 定位至 NPC 頭頂） */
+.speech-bubble {
+  display: none; position: fixed; z-index: 200;
+  background: rgba(6,11,19,0.96); border: 2px solid var(--accent);
+  border-radius: 14px; padding: 14px 18px;
+  box-shadow: 0 0 24px rgba(125,211,252,0.25);
+}
+.speech-bubble::after {
+  content: ''; position: absolute; top: 100%; left: 32px;
+  border: 8px solid transparent; border-top-color: var(--accent);
+}
+.speech-npc-name {
+  font-size: 11px; font-weight: 700; color: var(--gold);
+  margin-bottom: 6px; text-transform: uppercase; letter-spacing: .5px;
+}
+.speech-text {
+  font-size: 13px; line-height: 1.7; color: var(--text); min-height: 36px;
+}
+.speech-choice-btn {
+  display: block; width: 100%; margin-top: 6px;
+  padding: 7px 14px; border-radius: 8px;
+  border: 1px solid var(--border); background: rgba(125,211,252,0.05);
+  color: var(--text); font-size: 12px; cursor: pointer; text-align: left;
+  transition: background .15s, border-color .15s;
+}
+.speech-choice-btn:hover { background: rgba(125,211,252,0.12); border-color: var(--accent); }
+.speech-next-btn {
+  display: block; margin-top: 10px; margin-left: auto;
+  padding: 5px 16px; border-radius: 8px;
+  border: 1px solid var(--accent); background: rgba(125,211,252,0.08);
+  color: var(--accent); font-size: 12px; cursor: pointer;
+  transition: background .15s;
+}
+.speech-next-btn:hover { background: rgba(125,211,252,0.18); }
+
+/* 互動提示（走近 NPC 時顯示） */
+.interact-prompt {
+  display: none; position: fixed; z-index: 200;
+  background: rgba(6,11,19,0.85); border: 1px solid var(--accent);
+  border-radius: 8px; padding: 3px 10px; font-size: 11px; color: var(--accent);
+  pointer-events: none; backdrop-filter: blur(4px);
+  animation: pulse-border 1.5s ease-in-out infinite;
+}
+@keyframes pulse-border { 0%,100%{opacity:1} 50%{opacity:.6} }
+
+/* 手機方向鍵盤 */
+.dpad {
+  position: fixed; bottom: 100px; left: 16px; z-index: 200;
+  display: none;
+  grid-template-areas: ". u ." "l . r" ". d .";
+  grid-template-columns: repeat(3,44px);
+  grid-template-rows: repeat(3,44px);
+  gap: 3px;
+}
+.layout-mobile .dpad, .layout-tablet .dpad { display: grid; }
+#dpad-up    { grid-area: u; }
+#dpad-left  { grid-area: l; }
+#dpad-right { grid-area: r; }
+#dpad-down  { grid-area: d; }
+.dpad-btn {
+  background: rgba(6,11,19,0.75); border: 1px solid var(--border);
+  border-radius: 8px; color: var(--text); font-size: 15px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .1s; -webkit-user-select: none; user-select: none;
+}
+.dpad-btn:active { background: rgba(125,211,252,0.15); border-color: var(--accent); }
 
 /* ══════════════════════════════════════════════════════
    畫面 3：關卡測驗
@@ -245,29 +268,96 @@ body {
 .skill-name { font-size: 16px; font-weight: 700; color: var(--gold); }
 .skill-effect { font-size: 12px; color: var(--muted); margin-top: 4px; }
 
-/* ── 場景地圖（下方獨立顯示，同 rpg-preview scene-wrap） ── */
-.dlg-scene-wrap {
-  width: 100%; flex-shrink: 0;
-  border-top: 1px solid var(--border);
-  background: rgba(4,8,16,0.9);
-  display: flex; justify-content: center;
+/* （舊的 .dlg-scene-wrap / .dlg-back-btn 已移除，由 world-back-btn 取代） */
+
+/* ── 道具欄（桌機 / 平板，位於 .player-card 內）── */
+.item-bar-label {
+  font-size: 9px; color: var(--muted); margin-top: 8px; margin-bottom: 4px;
+  text-transform: uppercase; letter-spacing: .5px;
 }
-#dlg-scene-bg {
-  display: block; width: 100%; max-width: 640px; height: auto;
-  image-rendering: pixelated;
+.item-bar {
+  display: flex; gap: 5px; flex-wrap: wrap;
+}
+.item-slot {
+  width: 48px; height: 48px; border-radius: 8px;
+  background: #1a2535; border: 1px solid rgba(100,116,139,0.35);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; position: relative; cursor: default;
+  transition: border-color .15s, background .15s;
+}
+.item-slot.has-item { border-color: rgba(125,211,252,0.4); background: rgba(125,211,252,0.06); cursor: pointer; }
+.item-slot.has-item:hover { background: rgba(125,211,252,0.12); border-color: var(--accent); }
+.item-slot .item-tooltip {
+  display: none; position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%);
+  background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
+  padding: 6px 10px; white-space: nowrap; font-size: 11px; color: var(--text); z-index: 300;
+  pointer-events: none;
+}
+.item-slot.has-item:hover .item-tooltip { display: block; }
+.item-tooltip strong { display: block; color: var(--gold); margin-bottom: 2px; }
+
+/* 手機底部道具欄（layout-mobile 下才顯示） */
+.item-bar-mobile {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 30;
+  background: rgba(6,11,19,0.94); border-top: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  padding: 6px 12px 8px;
+  flex-direction: row; gap: 8px; justify-content: center;
+}
+.item-bar-mobile .item-slot { width: 44px; height: 44px; }
+
+/* ── 響應式 ─────────────────────────────────────────────── */
+
+/* 手機 (≤480px) */
+@media (max-width: 480px) {
+  .map-header { height: 44px; padding: 0 12px; }
+  .map-title { font-size: 13px; }
+  .map-subtitle { display: none; }
+
+  .player-card {
+    bottom: 60px; right: 8px; padding: 8px 12px; min-width: 140px;
+  }
+  .player-rank { font-size: 11px; }
+  .item-bar, .item-bar-label { display: none; }
+
+  #domain-map { overflow: visible; }
+
+  .dialogue-body { flex-direction: column; align-items: stretch; padding: 8px; gap: 8px; }
+  .char-portrait { width: 100%; flex-direction: row; align-items: center; gap: 8px; }
+  .char-portrait canvas, .char-portrait > div:first-child { width: 64px !important; height: 64px !important; }
+  .dialogue-box { min-height: 120px; padding: 14px 16px; }
+  .dialogue-text { font-size: 13px; }
+  .choice-btn { font-size: 12px; padding: 8px 12px; }
+
+  .quiz-body { padding-top: 56px; gap: 12px; }
+  .quiz-question { font-size: 14px; padding: 14px 16px; }
+  .quiz-opt { padding: 11px 14px; font-size: 13px; }
+  .result-emoji { font-size: 48px; }
+  .result-title { font-size: 20px; }
+
+  #rpg-toast { bottom: 68px; }
 }
 
-/* ── 返回按鈕 ── */
-.dlg-back-btn {
-  flex-shrink: 0; background: none; border: none;
-  color: var(--accent); font-size: 12px; cursor: pointer;
-  padding: 4px 10px; border-radius: 6px;
-}
-.dlg-back-btn:hover { background: rgba(125,211,252,0.1); }
+/* 手機時顯示底部道具欄 */
+.layout-mobile .item-bar-mobile { display: flex; }
+.layout-mobile .player-card .item-bar,
+.layout-mobile .player-card .item-bar-label { display: none; }
 
-/* ── 響應式 ── */
-@media (max-width: 600px) {
-  .dialogue-body { flex-direction: row; align-items: flex-start; padding: 8px; gap: 10px; }
+/* 平板 (481–768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  .player-card { bottom: 16px; right: 12px; min-width: 160px; }
+
+  .dialogue-body { max-width: 100%; padding: 10px 12px; gap: 12px; }
   .char-portrait { width: 80px; }
-  .quiz-question { font-size: 14px; }
+  .dialogue-text { font-size: 14px; }
+
+  .quiz-body { max-width: 100%; padding: 0 12px; padding-top: 60px; }
+  .quiz-question { font-size: 15px; }
+}
+
+/* 桌機 (≥769px)：最大寬度容器置中 */
+@media (min-width: 769px) {
+  .dialogue-body { max-width: 900px; }
+  .quiz-body { max-width: 680px; }
 }

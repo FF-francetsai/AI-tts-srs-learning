@@ -29,33 +29,40 @@
     <div class="player-exp-label">經驗值</div>
     <div class="exp-bar"><div class="exp-fill" id="pc-exp-fill" style="width:0%"></div></div>
     <div class="player-cleared" id="pc-cleared">已通關：0 / 9 星域</div>
+    <div class="item-bar-label">道具</div>
+    <div class="item-bar" id="item-bar"></div>
   </div>
 </div>
+
+<!-- 手機底部道具欄（.layout-mobile 時顯示） -->
+<div class="item-bar-mobile" id="item-bar-mobile"></div>
 
 <!-- ════════════════════════════════════════════════
      畫面 2：對話劇情
 ════════════════════════════════════════════════ -->
 <div id="screen-dialogue" class="rpg-screen">
-  <div class="dialogue-header">
-    <button class="dlg-back-btn" onclick="RPG_UI.showMap()">← 地圖</button>
-    <div class="dialogue-domain-badge" id="dlg-domain">AI 入門星</div>
-    <div class="dialogue-progress" id="dlg-progress">第 1 / 2 章</div>
+  <!-- 全螢幕世界 canvas -->
+  <canvas id="dlg-scene-bg"></canvas>
+
+  <!-- 返回地圖按鈕 -->
+  <button class="world-back-btn" onclick="RPG_UI.showMap()">← 地圖</button>
+
+  <!-- NPC 對話泡泡（JS 定位到 NPC 頭頂） -->
+  <div id="speech-bubble" class="speech-bubble">
+    <div class="speech-npc-name" id="speech-npc-name"></div>
+    <div class="speech-text" id="speech-text"></div>
+    <button class="speech-next-btn" id="speech-next">繼續 ▶</button>
   </div>
 
-  <!-- 對話區：sprite canvas（左）+ 對話框（右），同 rpg-preview.html -->
-  <div class="dialogue-body">
-    <div class="char-portrait" id="dlg-portrait">
-      <!-- canvas 由 RPG_UI.showDialogue 動態建立 -->
-    </div>
-    <div class="dialogue-box">
-      <div class="dialogue-text" id="dlg-text"></div>
-      <div class="dialogue-choices" id="dlg-choices"></div>
-    </div>
-  </div>
+  <!-- 接近 NPC 時的互動提示 -->
+  <div id="interact-prompt" class="interact-prompt">💬 點擊 / Enter</div>
 
-  <!-- 場景地圖（下方，獨立顯示，同 rpg-preview 的 scene-canvas） -->
-  <div class="dlg-scene-wrap">
-    <canvas id="dlg-scene-bg" width="640" height="320"></canvas>
+  <!-- 手機方向鍵盤 -->
+  <div class="dpad" id="dpad">
+    <button class="dpad-btn" id="dpad-up">▲</button>
+    <button class="dpad-btn" id="dpad-left">◀</button>
+    <button class="dpad-btn" id="dpad-right">▶</button>
+    <button class="dpad-btn" id="dpad-down">▼</button>
   </div>
 </div>
 
@@ -383,52 +390,11 @@ const RPG_UI = {
     buildDomainMap(window.RPG_ENGINE?._state?.cleared || []);
   },
 
-  // 對話場景
+  // 對話場景（全螢幕世界，玩家操控）
   showDialogue(scene) {
     _setScreen('dialogue');
-    document.getElementById('dlg-domain').textContent = window._rpgCurDomainName || '';
-
     const domain = window._rpgCurDomain;
-    const portrait = document.getElementById('dlg-portrait');
-    // 同 rpg-preview：左側用 sprite canvas + 名牌
-    portrait.innerHTML =
-      `<div style="border:2px solid ${scene.charColor}55;border-radius:8px;background:#0a1428;overflow:hidden">
-         <canvas id="dlg-sprite-cvs" width="96" height="96"
-           style="display:block;image-rendering:pixelated"></canvas>
-       </div>
-       <div class="char-name-tag" style="color:${scene.charColor};border-color:${scene.charColor}40">${scene.charName}</div>`;
-    _startDlgSprite(domain?.spriteFile || 'Female_01', 0); // dir=0 面向玩家（前視）
-    if (domain) _startDlgScene(domain);
-
-    const textEl    = document.getElementById('dlg-text');
-    const choiceEl  = document.getElementById('dlg-choices');
-    textEl.innerHTML = ''; choiceEl.innerHTML = '';
-
-    // 打字機效果（逐行）
-    let lineIdx = 0;
-    function showLine() {
-      if (lineIdx >= scene.lines.length) {
-        // 全部顯示後顯示選項/按鈕
-        if (scene.choices && scene.choices.length) {
-          scene.choices.forEach(c=>{
-            const b=document.createElement('button');
-            b.className='choice-btn'; b.textContent=c.text;
-            b.onclick=()=>{ if(scene.onChoice) scene.onChoice(c); };
-            choiceEl.appendChild(b);
-          });
-        } else {
-          const nb=document.createElement('button');
-          nb.className='dialogue-next'; nb.textContent='繼續 ▶';
-          nb.onclick=()=>{ if(scene.onNext) scene.onNext(); };
-          choiceEl.appendChild(nb);
-        }
-        return;
-      }
-      const para = document.createElement('p');
-      textEl.appendChild(para);
-      _typewriter(para, scene.lines[lineIdx], ()=>{ lineIdx++; setTimeout(showLine, 200); });
-    }
-    showLine();
+    if (domain) _startWorldScene(scene, domain);
   },
 
   // 測驗題目
@@ -505,6 +471,375 @@ const RPG_UI = {
     setTimeout(()=>t.classList.remove('show'), ms);
   }
 };
+
+// ── 全螢幕世界場景（玩家可操控）────────────────────────────────────────────
+let _worldPlayerState = null; // 跨對話段持久化玩家位置
+let _worldSceneCleanup = null;
+
+function _startWorldScene(scene, domain) {
+  cancelAnimationFrame(_dlgScenRAF); _dlgScenRAF = 0;
+  if (_dlgSprTimer) { clearInterval(_dlgSprTimer); _dlgSprTimer = null; }
+
+  const cvs = document.getElementById('dlg-scene-bg');
+  if (!cvs) return;
+  const ctx = cvs.getContext('2d');
+  ctx.imageSmoothingEnabled = false;
+
+  const TS=32, COLS=32, ROWS=24;
+  const WORLD_W=COLS*TS, WORLD_H=ROWS*TS; // 1024×768
+
+  // ── 地圖設計 ─────────────────────────────────────────────────────────────
+  // 0=草地 1=深草 2=花 3=樹 4=水 5=石 6=石板路 7=沙地 8=牆 9=建築地板
+  const MAP = (() => {
+    const G=0,D=1,F=2,T=3,W=4,R=5,P=6,S=7,B=8,I=9;
+    const m = Array.from({length:ROWS},()=>Array(COLS).fill(G));
+
+    // 邊界樹牆
+    for(let c=0;c<COLS;c++){ m[0][c]=T; m[ROWS-1][c]=T; }
+    for(let r=0;r<ROWS;r++){ m[r][0]=T; m[r][COLS-1]=T; }
+
+    // 中央石板路（row 12）
+    for(let c=1;c<COLS-1;c++) m[12][c]=P;
+
+    // 湖泊（左下 col 2-7, row 16-20）
+    for(let r=16;r<=20;r++) for(let c=2;c<=7;c++) m[r][c]=W;
+    // 沙灘護岸
+    for(let r=15;r<=21;r++) for(let c=1;c<=8;c++){
+      if(m[r][c]===G){
+        const adj=[m[r-1]?.[c],m[r+1]?.[c],m[r]?.[c-1],m[r]?.[c+1]];
+        if(adj.includes(W)) m[r][c]=S;
+      }
+    }
+
+    // 右上樹叢（col 22-26, row 2-6）
+    for(let r=2;r<=6;r++) for(let c=22;c<=26;c++) m[r][c]=T;
+    // 樹叢內留些空隙
+    [[3,23],[4,24],[5,22],[4,23]].forEach(([r,c])=>{ m[r][c]=D; });
+
+    // 零散樹木
+    [[3,10],[4,10],[3,15],[4,15],[8,19],[9,20],[8,20]].forEach(([r,c])=>{ if(m[r][c]===G)m[r][c]=T; });
+    [[14,14],[15,14],[14,15]].forEach(([r,c])=>{ if(m[r][c]===G)m[r][c]=T; });
+    [[19,13],[20,13],[19,14]].forEach(([r,c])=>{ if(m[r][c]===G)m[r][c]=T; });
+
+    // 建築（col 25-28, row 10-14）
+    for(let r=10;r<=14;r++) for(let c=25;c<=28;c++){
+      m[r][c] = (r===10||r===14||c===25||c===28) ? B : I;
+    }
+    m[12][25]=P; // 入口通往石板路
+    m[12][24]=P; // 入口前接路
+
+    // 石頭
+    [[5,8],[5,9],[6,9],[10,3],[10,4],[15,20],[16,20],[20,18],[20,19]].forEach(([r,c])=>{ if(m[r][c]===G)m[r][c]=R; });
+
+    // 花朵
+    [[2,3],[2,4],[7,13],[7,14],[11,8],[13,8],[4,17],[4,18],[9,5],[8,5],
+     [16,9],[17,9],[3,29],[2,29],[19,8],[20,9]].forEach(([r,c])=>{ if(m[r][c]===G)m[r][c]=F; });
+
+    // 深草
+    [[6,4],[6,5],[7,4],[7,5],[11,17],[3,13],[20,5],[21,5],
+     [8,28],[9,28],[15,5],[16,5],[11,14]].forEach(([r,c])=>{ if(m[r][c]===G)m[r][c]=D; });
+
+    // 確保邊界
+    for(let c=0;c<COLS;c++){ m[0][c]=T; m[ROWS-1][c]=T; }
+    for(let r=0;r<ROWS;r++){ m[r][0]=T; m[r][COLS-1]=T; }
+    return m;
+  })();
+
+  function isTileWalkable(c,r){
+    if(c<0||r<0||c>=COLS||r>=ROWS) return false;
+    const t=MAP[r][c];
+    return t!==3&&t!==4&&t!==5&&t!==8;
+  }
+
+  // ── 圖片與色彩 ───────────────────────────────────────────────────────────
+  const tileName = (domain.sceneTiles && domain.sceneTiles[0]) || 'Grass_pipo';
+  const tileImg = new Image(); tileImg.src = `assets/sprites/tiles/${tileName}.png`;
+  const npcImg  = new Image(); npcImg.src  = `assets/sprites/characters/${domain.spriteFile||'Female_01'}-1.png`;
+  const plrImg  = new Image(); plrImg.src  = `assets/sprites/characters/Male_01-1.png`;
+  const baseColor = domain.color || '#22d3ee';
+
+  const TC = {
+    0:'#4a7a32', 1:'#3a6228', 2:'#6aaa3a',
+    3:'#2a5018', 4:'#1a5080', 5:'#7a7a6a',
+    6:'#8a7a5a', 7:'#b09870', 8:'#5a4030',
+    9:'#7a6050'
+  };
+
+  // NPC 在建築入口（col 26, row 12）
+  const NPC_COL=26, NPC_ROW=12;
+  const NPC_WX=NPC_COL*TS, NPC_WY=NPC_ROW*TS;
+  const INTERACT_DIST=TS*2.5;
+
+  // 玩家初始在石板路左端（col 2, row 12）
+  if (!_worldPlayerState) {
+    _worldPlayerState = { wx:2*TS, wy:12*TS, frame:0, dir:0 };
+  }
+  const player = _worldPlayerState;
+
+  // 輸入狀態
+  const keys = {};
+  let _kd, _ku;
+  window.addEventListener('keydown', _kd = e => {
+    keys[e.key] = true;
+    if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' ','Enter'].includes(e.key)) e.preventDefault();
+  });
+  window.addEventListener('keyup', _ku = e => { keys[e.key] = false; });
+
+  // Resize canvas
+  function resizeCvs() { cvs.width = window.innerWidth; cvs.height = window.innerHeight; }
+  resizeCvs();
+  let _resH;
+  window.addEventListener('resize', _resH = resizeCvs);
+
+  // 對話狀態
+  let dialogueLine = -1;
+
+  function distToNPC() {
+    const dx = player.wx+16-(NPC_WX+16), dy = player.wy+24-(NPC_WY+24);
+    return Math.sqrt(dx*dx+dy*dy);
+  }
+
+  // 相機跟隨玩家，clamp 至世界邊界（不露黑邊）
+  function getCamera() {
+    const cx = player.wx+16 - cvs.width/2;
+    const cy = player.wy+24 - cvs.height/2;
+    return {
+      x: cvs.width  >= WORLD_W ? (WORLD_W-cvs.width)/2  : Math.max(0, Math.min(WORLD_W-cvs.width,  cx)),
+      y: cvs.height >= WORLD_H ? (WORLD_H-cvs.height)/2 : Math.max(0, Math.min(WORLD_H-cvs.height, cy)),
+    };
+  }
+
+  function updateBubblePos() {
+    const bubble = document.getElementById('speech-bubble');
+    if (!bubble || bubble.style.display==='none') return;
+    const cam = getCamera();
+    const npcSX = NPC_WX - cam.x, npcSY = NPC_WY - cam.y;
+    const bw = Math.min(300, window.innerWidth - 24);
+    bubble.style.width = bw + 'px';
+    bubble.style.left = Math.max(8, Math.min(window.innerWidth-bw-8, npcSX+16-bw/2)) + 'px';
+    bubble.style.top  = Math.max(8, npcSY - 20 - (bubble.offsetHeight||120)) + 'px';
+  }
+
+  function showSpeechLine(idx) {
+    const lines = scene.lines || [];
+    const bubble = document.getElementById('speech-bubble');
+    const textEl = document.getElementById('speech-text');
+    const nameEl = document.getElementById('speech-npc-name');
+    const nextBtn = document.getElementById('speech-next');
+    if (!bubble || !textEl) return;
+
+    if (idx >= lines.length) {
+      if (scene.choices && scene.choices.length) {
+        textEl.innerHTML = '';
+        if (nextBtn) nextBtn.style.display = 'none';
+        scene.choices.forEach(c => {
+          const b = document.createElement('button');
+          b.className = 'speech-choice-btn'; b.textContent = c.text;
+          b.onclick = () => { hideSpeechBubble(); if (scene.onChoice) scene.onChoice(c); };
+          textEl.appendChild(b);
+        });
+        bubble.style.display = 'block';
+        setTimeout(updateBubblePos, 10);
+      } else {
+        hideSpeechBubble();
+        if (scene.onNext) scene.onNext();
+      }
+      return;
+    }
+    dialogueLine = idx;
+    if (nameEl) nameEl.textContent = scene.charName || domain.guardian || '';
+    textEl.textContent = lines[idx];
+    if (nextBtn) {
+      nextBtn.style.display = 'block';
+      nextBtn.textContent = idx+1 < lines.length ? '繼續 ▶' : (scene.choices?.length?'回應 ▶':'結束 ✓');
+    }
+    bubble.style.display = 'block';
+    setTimeout(updateBubblePos, 10);
+  }
+
+  function hideSpeechBubble() {
+    const b = document.getElementById('speech-bubble');
+    if (b) b.style.display = 'none';
+    dialogueLine = -1;
+  }
+
+  const nextBtn = document.getElementById('speech-next');
+  let _nextHandler;
+  if (nextBtn) {
+    nextBtn.addEventListener('click', _nextHandler = () => {
+      if (dialogueLine >= 0) showSpeechLine(dialogueLine + 1);
+    });
+  }
+
+  cvs.addEventListener('click', cvs._wsClick = () => {
+    if (dialogueLine >= 0) { showSpeechLine(dialogueLine+1); return; }
+    if (distToNPC() < INTERACT_DIST) showSpeechLine(0);
+  });
+
+  // 手機 D-pad
+  ['up','down','left','right'].forEach(dir => {
+    const btn = document.getElementById(`dpad-${dir}`);
+    if (!btn) return;
+    const k = {up:'ArrowUp',down:'ArrowDown',left:'ArrowLeft',right:'ArrowRight'}[dir];
+    btn.addEventListener('pointerdown',  () => { keys[k]=true;  });
+    btn.addEventListener('pointerup',    () => { keys[k]=false; });
+    btn.addEventListener('pointerleave', () => { keys[k]=false; });
+    btn.addEventListener('pointercancel',() => { keys[k]=false; });
+  });
+
+  // 地面 tile 層
+  function drawBg(cam) {
+    const sc=~~(cam.x/TS)-1, ec=~~((cam.x+cvs.width)/TS)+1;
+    const sr=~~(cam.y/TS)-1, er=~~((cam.y+cvs.height)/TS)+1;
+    for(let r=sr;r<=er;r++) for(let c=sc;c<=ec;c++) {
+      const cr=Math.max(0,Math.min(ROWS-1,r)), cc=Math.max(0,Math.min(COLS-1,c));
+      const t = MAP[cr][cc];
+      const sx=c*TS-cam.x, sy=r*TS-cam.y;
+      ctx.fillStyle = TC[t]||TC[0];
+      ctx.fillRect(sx, sy, TS, TS);
+      // 水域波光動畫
+      if(t===4) {
+        ctx.fillStyle = `rgba(100,180,255,${0.15+0.1*Math.sin(tick*0.05+(c+r)*0.8)})`;
+        ctx.fillRect(sx,sy,TS,TS);
+      }
+      // 石板路縫隙
+      if(t===6||t===9) {
+        ctx.strokeStyle='rgba(0,0,0,0.12)'; ctx.lineWidth=1;
+        ctx.strokeRect(sx+0.5,sy+0.5,TS-1,TS-1);
+      }
+      // 樹幹（底部小圓）
+      if(t===3) {
+        ctx.fillStyle='#3a2010';
+        ctx.beginPath(); ctx.ellipse(sx+16,sy+26,5,4,0,0,Math.PI*2); ctx.fill();
+      }
+    }
+  }
+
+  // 精靈層上方疊加（樹冠、建築細節）
+  function drawOverlay(cam) {
+    const sc=~~(cam.x/TS)-1, ec=~~((cam.x+cvs.width)/TS)+1;
+    const sr=~~(cam.y/TS)-1, er=~~((cam.y+cvs.height)/TS)+1;
+    for(let r=sr;r<=er;r++) for(let c=sc;c<=ec;c++) {
+      const cr=Math.max(0,Math.min(ROWS-1,r)), cc=Math.max(0,Math.min(COLS-1,c));
+      const t=MAP[cr][cc];
+      const sx=c*TS-cam.x, sy=r*TS-cam.y;
+      if(t===3) { // 樹冠
+        ctx.save();
+        ctx.fillStyle='#2a6210'; ctx.shadowColor='#1a4008'; ctx.shadowBlur=6;
+        ctx.beginPath(); ctx.ellipse(sx+16,sy+4,19,17,0,0,Math.PI*2); ctx.fill();
+        ctx.fillStyle='#3a7a18';
+        ctx.beginPath(); ctx.ellipse(sx+13,sy+0,11,10,0,0,Math.PI*2); ctx.fill();
+        ctx.restore();
+      } else if(t===8) { // 建築牆磚紋
+        ctx.fillStyle='rgba(20,10,5,0.25)'; ctx.fillRect(sx,sy,TS,TS);
+        ctx.strokeStyle='rgba(0,0,0,0.2)'; ctx.lineWidth=1;
+        ctx.beginPath();
+        ctx.moveTo(sx,sy+10); ctx.lineTo(sx+TS,sy+10);
+        ctx.moveTo(sx,sy+20); ctx.lineTo(sx+TS,sy+20);
+        ctx.stroke();
+      }
+    }
+  }
+
+  function drawSprite(img, frame, dir, sx, sy) {
+    if (!img.complete||!img.naturalWidth) return;
+    ctx.save();
+    ctx.fillStyle='rgba(0,0,0,0.18)';
+    ctx.beginPath(); ctx.ellipse(sx+16,sy+30,10,4,0,0,Math.PI*2); ctx.fill();
+    ctx.restore();
+    ctx.drawImage(img, frame*32, dir*32, 32,32, sx, sy-6, 32,32);
+  }
+
+  let tick=0, nf=0;
+  const SPD=2;
+
+  function loop() {
+    tick++;
+    if (tick%14===0) nf=(nf+1)%3;
+
+    // fix2：修正方向鍵面向（sprite sheet: 0=下/正面, 1=左, 2=上/背面, 3=右）
+    if (dialogueLine < 0) {
+      let dx=0, dy=0;
+      if (keys['ArrowLeft'] ||keys['a']) { dx=-SPD; player.dir=1; }
+      if (keys['ArrowRight']||keys['d']) { dx= SPD; player.dir=3; }
+      if (keys['ArrowUp']   ||keys['w']) { dy=-SPD; player.dir=2; }
+      if (keys['ArrowDown'] ||keys['s']) { dy= SPD; player.dir=0; }
+      if (dx||dy) {
+        const nx=player.wx+dx, ny=player.wy+dy;
+        const corners=[[nx+4,ny+20],[nx+28,ny+20],[nx+4,ny+30],[nx+28,ny+30]];
+        if(corners.every(([px,py])=>isTileWalkable(~~(px/TS),~~(py/TS)))){
+          player.wx=nx; player.wy=ny;
+        }
+        if(tick%8===0) player.frame=(player.frame+1)%3;
+      }
+      if ((keys['Enter']||keys[' ']) && distToNPC()<INTERACT_DIST) {
+        keys['Enter']=keys[' ']=false;
+        showSpeechLine(0);
+      }
+    }
+
+    const cam = getCamera();
+    ctx.clearRect(0,0,cvs.width,cvs.height);
+
+    // fix1：無限草原填滿畫面
+    drawBg(cam);
+
+    // 氛圍光（NPC 位置）
+    const gx=NPC_WX+16-cam.x, gy=NPC_WY+16-cam.y;
+    const grd=ctx.createRadialGradient(gx,gy,10,gx,gy,120);
+    grd.addColorStop(0,baseColor+'30'); grd.addColorStop(1,'transparent');
+    ctx.fillStyle=grd; ctx.fillRect(0,0,cvs.width,cvs.height);
+
+    // 深度排序精靈
+    const npcSX=NPC_WX-cam.x, npcSY=NPC_WY-cam.y;
+    const plrSX=player.wx-cam.x, plrSY=player.wy-cam.y;
+    if (plrSY<=npcSY) {
+      drawSprite(plrImg,player.frame,player.dir,plrSX,plrSY);
+      drawSprite(npcImg,nf,1,npcSX,npcSY);
+    } else {
+      drawSprite(npcImg,nf,1,npcSX,npcSY);
+      drawSprite(plrImg,player.frame,player.dir,plrSX,plrSY);
+    }
+    // 樹冠/建築細節疊加在精靈之上
+    drawOverlay(cam);
+
+    // NPC 名稱
+    ctx.save();
+    ctx.font='bold 11px "PingFang TC",sans-serif';
+    ctx.textAlign='center'; ctx.textBaseline='bottom';
+    ctx.fillStyle=domain.color||'#22d3ee';
+    ctx.shadowColor='#000'; ctx.shadowBlur=4;
+    ctx.fillText(domain.guardian||'', npcSX+16, npcSY-14);
+    ctx.restore();
+
+    // 互動提示
+    const prompt = document.getElementById('interact-prompt');
+    if (prompt) {
+      if (dialogueLine<0 && distToNPC()<INTERACT_DIST) {
+        prompt.style.display='block';
+        prompt.style.left=(npcSX+4)+'px';
+        prompt.style.top=(npcSY-56)+'px';
+      } else prompt.style.display='none';
+    }
+
+    if (dialogueLine>=0) updateBubblePos();
+
+    _dlgScenRAF = requestAnimationFrame(loop);
+  }
+  loop();
+
+  _worldSceneCleanup = () => {
+    window.removeEventListener('keydown',_kd);
+    window.removeEventListener('keyup',_ku);
+    window.removeEventListener('resize',_resH);
+    if (nextBtn && _nextHandler) nextBtn.removeEventListener('click',_nextHandler);
+    if (cvs._wsClick) { cvs.removeEventListener('click',cvs._wsClick); cvs._wsClick=null; }
+    hideSpeechBubble();
+    Object.keys(keys).forEach(k=>delete keys[k]);
+    cancelAnimationFrame(_dlgScenRAF); _dlgScenRAF=0;
+  };
+}
+
 window.RPG_UI = RPG_UI;
 
 // ── 工具 ─────────────────────────────────────────────────────────────────
@@ -514,7 +849,10 @@ function _setScreen(name) {
   if (name !== 'dialogue') {
     cancelAnimationFrame(_dlgScenRAF); _dlgScenRAF = 0;
     if (_dlgSprTimer) { clearInterval(_dlgSprTimer); _dlgSprTimer = null; }
+    if (_worldSceneCleanup) { _worldSceneCleanup(); _worldSceneCleanup = null; }
   }
+  // 回地圖時清除玩家位置（fix3：每次進入星域從起點開始）
+  if (name === 'map') _worldPlayerState = null;
   document.querySelectorAll('.rpg-screen').forEach(el=>el.classList.remove('active'));
   document.getElementById('screen-'+name)?.classList.add('active');
 }
@@ -656,6 +994,8 @@ function _typewriter(el, text, done, speed=28) {
 <script>
 // 初始化
 window.addEventListener('DOMContentLoaded', ()=>{
+  initResponsive();
+  renderItems(INITIAL_ITEMS);
   buildDomainMap([]);
   window.RPG_ENGINE = new RPGEngine(RPG_UI);
   RPG_ENGINE.start();

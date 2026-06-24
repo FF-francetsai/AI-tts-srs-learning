@@ -296,3 +296,45 @@ class RPGEngine {
 // 掛到全域，等 RPG_UI 就緒後由 rpg.html 呼叫 new RPGEngine(RPG_UI).start()
 window.RPGEngine = RPGEngine;
 window.RPG_ENGINE = null; // rpg.html 初始化後覆寫
+
+// ── 響應式版面自動偵測 ────────────────────────────────────────────────────────
+function initResponsive() {
+  const BREAKPOINTS = { mobile: 480, tablet: 768 };
+  function applyLayout(w) {
+    document.body.classList.remove('layout-mobile', 'layout-tablet', 'layout-desktop');
+    if (w <= BREAKPOINTS.mobile)      document.body.classList.add('layout-mobile');
+    else if (w <= BREAKPOINTS.tablet) document.body.classList.add('layout-tablet');
+    else                              document.body.classList.add('layout-desktop');
+  }
+  applyLayout(window.innerWidth);
+  new ResizeObserver(entries => {
+    applyLayout(entries[0].contentRect.width);
+  }).observe(document.documentElement);
+}
+window.initResponsive = initResponsive;
+
+// ── 道具系統 ──────────────────────────────────────────────────────────────────
+const INITIAL_ITEMS = [
+  { id: 'charm', emoji: '🔮', name: '學習護符', desc: '+10% 積分加成' },
+  { id: 'chip',  emoji: '💾', name: '知識晶片', desc: '解鎖 1 次提示' },
+];
+const ITEM_SLOT_COUNT = 6;
+
+function renderItems(items) {
+  const slots = Array.from({ length: ITEM_SLOT_COUNT }, (_, i) => {
+    const item = items[i];
+    if (item) {
+      return `<div class="item-slot has-item" title="${item.name}">
+        ${item.emoji}
+        <div class="item-tooltip"><strong>${item.name}</strong>${item.desc}</div>
+      </div>`;
+    }
+    return `<div class="item-slot"></div>`;
+  }).join('');
+
+  const bar = document.getElementById('item-bar');
+  const barMobile = document.getElementById('item-bar-mobile');
+  if (bar) bar.innerHTML = slots;
+  if (barMobile) barMobile.innerHTML = slots;
+}
+window.renderItems = renderItems;
