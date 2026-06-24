@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 星際聯盟 — 美術風格比較</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0a0a1a;
+    color: #e2e8f0;
+    font-family: 'Courier New', monospace;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  h1 {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #a78bfa;
+    margin-bottom: 6px;
+    letter-spacing: 2px;
+  }
+  .subtitle {
+    text-align: center;
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-bottom: 24px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .card {
+    background: #0f0f2a;
+    border-radius: 12px;
+    padding: 16px;
+    border: 1px solid #1e1e3f;
+  }
+  .card-title {
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+  .card-desc {
+    font-size: 0.7rem;
+    color: #94a3b8;
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  .scene-label {
+    font-size: 0.65rem;
+    color: #475569;
+    text-align: center;
+    margin-top: 6px;
+  }
+  svg { display: block; width: 100%; }
+  .tag {
+    display: inline-block;
+    font-size: 0.6rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin: 2px 2px 8px 0;
+  }
+</style>
+</head>
+<body>
+<h1>⚔️ AI 星際聯盟 — 美術風格比較</h1>
+<p class="subtitle">三款角色+場景風格示意（Stable Diffusion 生成前的 SVG 參考稿）</p>
+
+<div class="grid">
+
+  <!-- ── 風格 A：純像素 RPG ─────────────────────────────── -->
+  <div class="card">
+    <div class="card-title" style="color:#22d3ee">A｜純像素 RPG 風</div>
+    <div>
+      <span class="tag" style="background:#083344;color:#22d3ee">8-16bit</span>
+      <span class="tag" style="background:#083344;color:#22d3ee">方格像素</span>
+      <span class="tag" style="background:#083344;color:#22d3ee">接近原始 RO</span>
+    </div>
+    <div class="card-desc">粗獷方塊感，每個像素清晰可見。色彩對比強烈、輪廓分明，像早期 Game Boy Advance/FC 主機的 RPG 畫風。</div>
+
+    <!-- 角色：純像素仙俠劍士 -->
+    <svg viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg">
+      <!-- 夜空背景 -->
+      <rect width="280" height="200" fill="#020814"/>
+      <!-- 星點 -->
+      <rect x="20" y="15" width="2" height="2" fill="#ffffff"/>
+      <rect x="60" y="8" width="2" height="2" fill="#aaaaff"/>
+      <rect x="110" y="20" width="2" height="2" fill="#ffffff"/>
+      <rect x="200" y="10" width="2" height="2" fill="#ffff88"/>
+      <rect x="250" y="25" width="2" height="2" fill="#ffffff"/>
+      <rect x="140" y="5" width="2" height="2" fill="#aaaaff"/>
+      <!-- 地面磚塊 -->
+      <rect x="0" y="170" width="280" height="30" fill="#1a3a1a"/>
+      <rect x="0" y="170" width="280" height="4" fill="#2d5a2d"/>
+      <rect x="20" y="170" width="60" height="4" fill="#3a6b3a"/>
+      <rect x="100" y="170" width="80" height="4" fill="#3a6b3a"/>
+      <rect x="200" y="170" width="60" height="4" fill="#3a6b3a"/>
+      <!-- 磚牆 -->
+      <rect x="0" y="100" width="50" height="70" fill="#2d2d4a"/>
+      <rect x="0" y="112" width="50" height="4" fill="#1a1a2e"/>
+      <rect x="0" y="124" width="50" height="4" fill="#1a1a2e"/>
+      <rect x="0" y="136" width="50" height="4" fill="#1a1a2e"/>
+      <rect x="16" y="100" width="4" height="70" fill="#1a1a2e"/>
+      <rect x="32" y="100" width="4" height="70" fill="#1a1a2e"/>
+      <!-- 角色身體（純像素方塊） -->
+      <!-- 頭 -->
+      <rect x="118" y="80" width="24" height="24" fill="#f5c5a3"/>
+      <!-- 頭髮 -->
+      <rect x="116" y="78" width="28" height="8" fill="#1a1a60"/>
+      <rect x="116" y="78" width="4" height="20" fill="#1a1a60"/>
+      <!-- 眼睛 -->
+      <rect x="122" y="88" width="4" height="4" fill="#0066ff"/>
+      <rect x="130" y="88" width="4" height="4" fill="#0066ff"/>
+      <!-- 身體（仙俠長袍） -->
+      <rect x="114" y="104" width="32" height="36" fill="#1a1a80"/>
+      <rect x="118" y="104" width="24" height="4" fill="#2a2aaa"/>
+      <rect x="122" y="108" width="16" height="2" fill="#4444cc"/>
+      <!-- 腰帶 -->
+      <rect x="114" y="128" width="32" height="4" fill="#d4af37"/>
+      <!-- 袖子 -->
+      <rect x="104" y="104" width="10" height="24" fill="#1a1a80"/>
+      <rect x="146" y="104" width="10" height="24" fill="#1a1a80"/>
+      <!-- 手 -->
+      <rect x="102" y="126" width="8" height="6" fill="#f5c5a3"/>
+      <rect x="150" y="116" width="8" height="6" fill="#f5c5a3"/>
+      <!-- 劍（右手） -->
+      <rect x="154" y="70" width="4" height="56" fill="#c0c0c0"/>
+      <rect x="150" y="112" width="12" height="4" fill="#d4af37"/>
+      <rect x="155" y="68" width="2" height="8" fill="#ffffff"/>
+      <!-- 腿 -->
+      <rect x="118" y="140" width="12" height="28" fill="#0d0d50"/>
+      <rect x="132" y="140" width="12" height="28" fill="#0d0d50"/>
+      <!-- 鞋 -->
+      <rect x="116" y="164" width="14" height="6" fill="#2a1a0a"/>
+      <rect x="130" y="164" width="14" height="6" fill="#2a1a0a"/>
+      <!-- 飛劍光效 -->
+      <rect x="200" y="60" width="2" height="40" fill="#88aaff"/>
+      <rect x="196" y="64" width="10" height="2" fill="#88aaff"/>
+      <rect x="198" y="62" width="6" height="6" fill="#ffffff" opacity="0.6"/>
+      <!-- 靈氣粒子 -->
+      <rect x="90" y="90" width="4" height="4" fill="#4488ff" opacity="0.8"/>
+      <rect x="230" y="110" width="4" height="4" fill="#4488ff" opacity="0.6"/>
+      <rect x="170" y="75" width="4" height="4" fill="#88ccff" opacity="0.7"/>
+    </svg>
+    <p class="scene-label">✦ AI 入門星 守護者「伊莎貝爾」示意 ✦</p>
+  </div>
+
+  <!-- ── 風格 B：細緻動漫像素融合 ──────────────────────── -->
+  <div class="card">
+    <div class="card-title" style="color:#f472b6">B｜細緻動漫像素融合</div>
+    <div>
+      <span class="tag" style="background:#3d0030;color:#f472b6">32-64bit</span>
+      <span class="tag" style="background:#3d0030;color:#f472b6">漸層反鋸齒</span>
+      <span class="tag" style="background:#3d0030;color:#f472b6">現代像素感</span>
+    </div>
+    <div class="card-desc">像素感較輕，有漸層過渡與柔和邊緣，接近現代 Indie RPG（如 Octopath Traveler / Eastward）。細節更豐富，角色表情立體。</div>
+
+    <svg viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="skyB" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0a0520"/>
+          <stop offset="100%" stop-color="#1a0a40"/>
+        </linearGradient>
+        <linearGradient id="groundB" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1e4d2b"/>
+          <stop offset="100%" stop-color="#0a2010"/>
+        </linearGradient>
+        <radialGradient id="glowB" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#c084fc" stop-opacity="0.6"/>
+          <stop offset="100%" stop-color="#c084fc" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="blurB">
+          <feGaussianBlur stdDeviation="2"/>
+        </filter>
+      </defs>
+      <!-- 背景 -->
+      <rect width="280" height="200" fill="url(#skyB)"/>
+      <!-- 月亮 -->
+      <circle cx="220" cy="35" r="20" fill="#fff8dc" opacity="0.9"/>
+      <circle cx="226" cy="30" r="16" fill="#1a0a40"/>
+      <!-- 星點（漸層感） -->
+      <circle cx="30" cy="20" r="1.5" fill="#ffffff" opacity="0.9"/>
+      <circle cx="80" cy="12" r="1" fill="#ccccff" opacity="0.8"/>
+      <circle cx="150" cy="18" r="1.5" fill="#ffffff" opacity="0.7"/>
+      <circle cx="190" cy="8" r="1" fill="#ffffcc" opacity="0.9"/>
+      <!-- 遠山 -->
+      <polygon points="0,140 40,90 80,130 120,80 170,120 220,70 280,110 280,140" fill="#0d2010" opacity="0.8"/>
+      <!-- 地面 -->
+      <rect x="0" y="140" width="280" height="60" fill="url(#groundB)"/>
+      <rect x="0" y="140" width="280" height="3" fill="#3a8050" opacity="0.8"/>
+      <!-- 光暈地板 -->
+      <ellipse cx="140" cy="165" rx="60" ry="10" fill="url(#glowB)" filter="url(#blurB)"/>
+      <!-- 角色（漸層細緻） -->
+      <!-- 頭部光暈 -->
+      <circle cx="140" cy="90" r="18" fill="#c084fc" opacity="0.15" filter="url(#blurB)"/>
+      <!-- 頭 -->
+      <ellipse cx="140" cy="88" rx="12" ry="13" fill="#f0c8a0"/>
+      <!-- 頭髮（漸層） -->
+      <path d="M128,82 Q132,68 140,70 Q148,68 152,82 Q148,74 140,72 Q132,74 128,82Z" fill="#2a0a6a"/>
+      <path d="M128,82 Q126,90 128,100 L130,98 Q128,90 130,84Z" fill="#2a0a6a"/>
+      <!-- 眼睛（大動漫眼） -->
+      <ellipse cx="135" cy="89" rx="3.5" ry="4" fill="#4488ff"/>
+      <ellipse cx="145" cy="89" rx="3.5" ry="4" fill="#4488ff"/>
+      <circle cx="134" cy="88" r="1.5" fill="#001a66"/>
+      <circle cx="144" cy="88" r="1.5" fill="#001a66"/>
+      <circle cx="136" cy="87" r="1" fill="#ffffff"/>
+      <circle cx="146" cy="87" r="1" fill="#ffffff"/>
+      <!-- 長袍（漸層） -->
+      <defs>
+        <linearGradient id="robeB" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#3a3aaa"/>
+          <stop offset="100%" stop-color="#1a1a60"/>
+        </linearGradient>
+      </defs>
+      <path d="M128,100 Q124,108 120,140 L160,140 Q156,108 152,100Z" fill="url(#robeB)"/>
+      <!-- 花紋 -->
+      <path d="M132,110 Q140,108 148,110" stroke="#6a6aee" stroke-width="1" fill="none"/>
+      <path d="M130,118 Q140,116 150,118" stroke="#6a6aee" stroke-width="0.8" fill="none"/>
+      <!-- 腰帶 -->
+      <rect x="126" y="124" width="28" height="4" rx="2" fill="#d4af37"/>
+      <!-- 袖子 -->
+      <path d="M128,100 Q118,106 112,120 Q118,122 122,118 Q126,108 130,104Z" fill="url(#robeB)"/>
+      <path d="M152,100 Q162,106 168,120 Q162,122 158,118 Q154,108 150,104Z" fill="url(#robeB)"/>
+      <!-- 劍 -->
+      <rect x="164" y="72" width="3" height="60" rx="1" fill="#b8c8d8"/>
+      <line x1="158" y1="112" x2="172" y2="112" stroke="#d4af37" stroke-width="2.5"/>
+      <rect x="165" y="70" width="2" height="8" rx="1" fill="#f0f0ff"/>
+      <!-- 魔法粒子 -->
+      <circle cx="110" cy="100" r="3" fill="#c084fc" opacity="0.9"/>
+      <circle cx="108" cy="95" r="2" fill="#a855f7" opacity="0.7"/>
+      <circle cx="170" cy="85" r="2.5" fill="#818cf8" opacity="0.8"/>
+      <circle cx="175" cy="92" r="1.5" fill="#c084fc" opacity="0.6"/>
+    </svg>
+    <p class="scene-label">✦ 生成創界 守護者「奧菈」示意 ✦</p>
+  </div>
+
+  <!-- ── 風格 C：三合一融合（我的選擇） ────────────────── -->
+  <div class="card">
+    <div class="card-title" style="color:#fbbf24">C｜仙俠×騎士×機械 三合一（推薦）</div>
+    <div>
+      <span class="tag" style="background:#3d2a00;color:#fbbf24">仙俠法袍</span>
+      <span class="tag" style="background:#3d2a00;color:#fbbf24">機械鎧甲</span>
+      <span class="tag" style="background:#3d2a00;color:#fbbf24">魔法齒輪</span>
+    </div>
+    <div class="card-desc">三種元素交織：東方仙俠的法袍靈氣 + 西洋騎士的金屬護甲 + 蒸汽機械的齒輪動力。每顆行星的守護者各有側重比例。</div>
+
+    <svg viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="skyC" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#080418"/>
+          <stop offset="100%" stop-color="#1a0e2a"/>
+        </linearGradient>
+        <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.5"/>
+          <stop offset="100%" stop-color="#fbbf24" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="glow2">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <!-- 背景 -->
+      <rect width="280" height="200" fill="url(#skyC)"/>
+      <!-- 齒輪背景裝飾（機械元素） -->
+      <circle cx="30" cy="50" r="22" fill="none" stroke="#2a1a0a" stroke-width="4"/>
+      <circle cx="30" cy="50" r="16" fill="none" stroke="#2a1a0a" stroke-width="2"/>
+      <circle cx="30" cy="50" r="8" fill="#1a0e00" stroke="#3a2a0a" stroke-width="1"/>
+      <!-- 齒輪齒 -->
+      <rect x="26" y="26" width="8" height="6" rx="1" fill="#2a1a0a"/>
+      <rect x="26" y="68" width="8" height="6" rx="1" fill="#2a1a0a"/>
+      <rect x="6" y="46" width="6" height="8" rx="1" fill="#2a1a0a"/>
+      <rect x="48" y="46" width="6" height="8" rx="1" fill="#2a1a0a"/>
+      <!-- 大齒輪右上 -->
+      <circle cx="240" cy="40" r="28" fill="none" stroke="#1a0a00" stroke-width="5"/>
+      <circle cx="240" cy="40" r="20" fill="none" stroke="#1a0a00" stroke-width="2"/>
+      <circle cx="240" cy="40" r="8" fill="#100800"/>
+      <rect x="236" y="10" width="8" height="8" rx="1" fill="#1a0a00"/>
+      <rect x="236" y="62" width="8" height="8" rx="1" fill="#1a0a00"/>
+      <rect x="210" y="36" width="8" height="8" rx="1" fill="#1a0a00"/>
+      <rect x="262" y="36" width="8" height="8" rx="1" fill="#1a0a00"/>
+      <!-- 地面（石板+機械板） -->
+      <rect x="0" y="155" width="280" height="45" fill="#100c1a"/>
+      <rect x="0" y="155" width="280" height="3" fill="#2a2040"/>
+      <!-- 地板格線 -->
+      <line x1="0" y1="162" x2="280" y2="162" stroke="#1a1630" stroke-width="1"/>
+      <line x1="0" y1="172" x2="280" y2="172" stroke="#1a1630" stroke-width="1"/>
+      <line x1="56" y1="155" x2="56" y2="200" stroke="#1a1630" stroke-width="1"/>
+      <line x1="112" y1="155" x2="112" y2="200" stroke="#1a1630" stroke-width="1"/>
+      <line x1="168" y1="155" x2="168" y2="200" stroke="#1a1630" stroke-width="1"/>
+      <line x1="224" y1="155" x2="224" y2="200" stroke="#1a1630" stroke-width="1"/>
+      <!-- 核心光暈（角色底部） -->
+      <ellipse cx="140" cy="160" rx="40" ry="8" fill="url(#coreGlow)"/>
+      <!-- ─── 角色本體 ─── -->
+      <!-- 頭 -->
+      <ellipse cx="140" cy="78" rx="14" ry="15" fill="#e8b896"/>
+      <!-- 頭盔（西洋騎士+仙俠混搭） -->
+      <path d="M126,72 Q128,58 140,55 Q152,58 154,72Z" fill="#4a4a6a"/>
+      <!-- 頭盔側翼 -->
+      <path d="M126,72 Q120,68 122,62 Q126,60 128,65Z" fill="#5a5a8a"/>
+      <path d="M154,72 Q160,68 158,62 Q154,60 152,65Z" fill="#5a5a8a"/>
+      <!-- 頭盔金紋 -->
+      <path d="M130,60 Q140,56 150,60" stroke="#d4af37" stroke-width="1.5" fill="none"/>
+      <!-- 眼睛 -->
+      <rect x="132" y="78" width="6" height="5" rx="1" fill="#00ccff"/>
+      <rect x="142" y="78" width="6" height="5" rx="1" fill="#00ccff"/>
+      <!-- 眼睛發光 -->
+      <rect x="133" y="79" width="2" height="2" fill="#ffffff"/>
+      <rect x="143" y="79" width="2" height="2" fill="#ffffff"/>
+      <!-- 身體（仙俠法袍+機械護甲） -->
+      <!-- 主袍 -->
+      <path d="M126,92 Q120,110 118,155 L162,155 Q160,110 154,92Z" fill="#2a1a5a"/>
+      <!-- 胸甲（騎士） -->
+      <path d="M128,92 L140,90 L152,92 L150,115 L140,118 L130,115Z" fill="#4a4a6a"/>
+      <path d="M130,93 L140,91 L150,93 L148,110 L140,112 L132,110Z" fill="#5a5a8a"/>
+      <!-- 胸甲中央符文（仙俠） -->
+      <circle cx="140" cy="100" r="5" fill="none" stroke="#d4af37" stroke-width="1.5"/>
+      <line x1="140" y1="94" x2="140" y2="106" stroke="#d4af37" stroke-width="1"/>
+      <line x1="134" y1="100" x2="146" y2="100" stroke="#d4af37" stroke-width="1"/>
+      <!-- 腰帶（機械扣環） -->
+      <rect x="124" y="122" width="32" height="5" rx="2" fill="#3a3050"/>
+      <rect x="136" y="121" width="8" height="7" rx="1" fill="#d4af37"/>
+      <circle cx="140" cy="124" r="2" fill="#fbbf24"/>
+      <!-- 左袖（法袍） -->
+      <path d="M126,92 Q114,98 108,118 L116,122 Q120,108 128,96Z" fill="#2a1a5a"/>
+      <!-- 右袖（機械護臂） -->
+      <path d="M154,92 Q164,96 170,112 L162,116 Q158,104 152,96Z" fill="#3a3060"/>
+      <!-- 機械護臂細節 -->
+      <line x1="158" y1="98" x2="166" y2="108" stroke="#6a6a9a" stroke-width="1.5"/>
+      <circle cx="165" cy="108" r="3" fill="#4a4a6a" stroke="#6a6a9a" stroke-width="1"/>
+      <!-- 手 -->
+      <ellipse cx="108" cy="122" rx="6" ry="5" fill="#e8b896"/>
+      <!-- 飛劍（仙俠元素） -->
+      <rect x="86" y="65" width="3" height="55" rx="1" fill="#88aaff" filter="url(#glow2)"/>
+      <line x1="80" y1="105" x2="96" y2="105" stroke="#d4af37" stroke-width="2"/>
+      <rect x="87" y="63" width="2" height="10" rx="1" fill="#ffffff" opacity="0.9"/>
+      <!-- 蒸汽噴口（機械） -->
+      <rect x="172" y="108" width="6" height="3" rx="1" fill="#6a6a8a"/>
+      <path d="M178,107 Q184,104 182,100 Q180,97 176,99" stroke="#aaaacc" stroke-width="1.5" fill="none" opacity="0.7"/>
+      <path d="M178,109 Q186,110 185,115" stroke="#aaaacc" stroke-width="1" fill="none" opacity="0.5"/>
+      <!-- 腿 -->
+      <rect x="128" y="140" width="10" height="15" rx="2" fill="#1a1040"/>
+      <rect x="142" y="140" width="10" height="15" rx="2" fill="#1a1040"/>
+      <!-- 靴子 -->
+      <rect x="126" y="152" width="14" height="6" rx="2" fill="#0a0820"/>
+      <rect x="140" y="152" width="14" height="6" rx="2" fill="#0a0820"/>
+      <!-- 靴子金邊 -->
+      <line x1="126" y1="152" x2="140" y2="152" stroke="#d4af37" stroke-width="1"/>
+      <line x1="140" y1="152" x2="154" y2="152" stroke="#d4af37" stroke-width="1"/>
+      <!-- 靈氣粒子 -->
+      <circle cx="100" cy="85" r="2" fill="#4488ff" opacity="0.8" filter="url(#glow2)"/>
+      <circle cx="96" cy="78" r="1.5" fill="#88aaff" opacity="0.7"/>
+      <circle cx="185" cy="90" r="2" fill="#fbbf24" opacity="0.7" filter="url(#glow2)"/>
+    </svg>
+    <p class="scene-label">✦ 深度熔爐 守護者「穆恩」示意 ✦</p>
+  </div>
+
+</div>
+
+<!-- 場景對比區 -->
+<div style="max-width:1100px;margin:30px auto 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px">
+
+  <!-- 場景A：草原像素 -->
+  <div class="card">
+    <div class="card-title" style="color:#22d3ee;font-size:0.8rem">A 場景｜AI 入門星草原（純像素）</div>
+    <svg viewBox="0 0 280 120" xmlns="http://www.w3.org/2000/svg" style="margin-top:8px">
+      <rect width="280" height="120" fill="#0a1a2a"/>
+      <!-- 天空像素漸層 -->
+      <rect x="0" y="0" width="280" height="40" fill="#0a3060"/>
+      <rect x="0" y="40" width="280" height="20" fill="#0a2040"/>
+      <!-- 雲 -->
+      <rect x="20" y="15" width="40" height="8" fill="#e0e0ff"/>
+      <rect x="28" y="10" width="24" height="8" fill="#e0e0ff"/>
+      <rect x="160" y="20" width="32" height="8" fill="#c8c8ee"/>
+      <rect x="168" y="15" width="16" height="8" fill="#c8c8ee"/>
+      <!-- 遠山（像素輪廓） -->
+      <polygon points="0,60 30,35 60,55 90,30 130,50 160,25 200,45 240,20 280,40 280,60" fill="#0d2d10"/>
+      <!-- 草地 -->
+      <rect x="0" y="60" width="280" height="60" fill="#1a4a1a"/>
+      <rect x="0" y="60" width="280" height="4" fill="#2a6a2a"/>
+      <!-- 草叢像素 -->
+      <rect x="10" y="56" width="4" height="6" fill="#2a6a2a"/>
+      <rect x="14" y="54" width="4" height="8" fill="#2a6a2a"/>
+      <rect x="18" y="56" width="4" height="6" fill="#2a6a2a"/>
+      <rect x="60" y="56" width="4" height="8" fill="#2a6a2a"/>
+      <rect x="64" y="54" width="4" height="10" fill="#3a7a3a"/>
+      <rect x="150" y="56" width="4" height="6" fill="#2a6a2a"/>
+      <rect x="200" y="54" width="4" height="8" fill="#2a6a2a"/>
+      <rect x="240" y="56" width="4" height="6" fill="#3a7a3a"/>
+      <!-- 石板路 -->
+      <rect x="110" y="64" width="60" height="56" fill="#3a3a4a"/>
+      <rect x="110" y="72" width="60" height="4" fill="#2a2a3a"/>
+      <rect x="110" y="80" width="60" height="4" fill="#2a2a3a"/>
+      <rect x="110" y="88" width="60" height="4" fill="#2a2a3a"/>
+      <rect x="130" y="64" width="4" height="56" fill="#2a2a3a"/>
+      <rect x="146" y="64" width="4" height="56" fill="#2a2a3a"/>
+    </svg>
+    <p class="scene-label">郊區草原入口 — 方塊感強烈，色塊分明</p>
+  </div>
+
+  <!-- 場景B：城堡動漫風 -->
+  <div class="card">
+    <div class="card-title" style="color:#f472b6;font-size:0.8rem">B 場景｜監督神殿（細緻動漫像素）</div>
+    <svg viewBox="0 0 280 120" xmlns="http://www.w3.org/2000/svg" style="margin-top:8px">
+      <defs>
+        <linearGradient id="skyScene" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0a0520"/>
+          <stop offset="100%" stop-color="#1a0840"/>
+        </linearGradient>
+        <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#fffbe0" stop-opacity="0.4"/>
+          <stop offset="100%" stop-color="#fffbe0" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <rect width="280" height="120" fill="url(#skyScene)"/>
+      <!-- 月亮光暈 -->
+      <circle cx="140" cy="25" r="40" fill="url(#moonGlow)"/>
+      <circle cx="140" cy="25" r="18" fill="#fffbe0" opacity="0.95"/>
+      <!-- 神殿建築（漸層柔和） -->
+      <rect x="60" y="40" width="160" height="80" fill="#2a1a4a"/>
+      <!-- 柱子 -->
+      <rect x="70" y="42" width="12" height="78" fill="#3a2a6a"/>
+      <rect x="100" y="42" width="12" height="78" fill="#3a2a6a"/>
+      <rect x="168" y="42" width="12" height="78" fill="#3a2a6a"/>
+      <rect x="198" y="42" width="12" height="78" fill="#3a2a6a"/>
+      <!-- 屋頂 -->
+      <polygon points="55,42 140,10 225,42" fill="#4a2a7a"/>
+      <polygon points="60,42 140,14 220,42" fill="#5a3a8a"/>
+      <!-- 屋頂金邊 -->
+      <line x1="55" y1="42" x2="140" y2="10" stroke="#d4af37" stroke-width="1.5"/>
+      <line x1="225" y1="42" x2="140" y2="10" stroke="#d4af37" stroke-width="1.5"/>
+      <!-- 神殿門 -->
+      <rect x="118" y="72" width="44" height="48" rx="4" fill="#1a0a30"/>
+      <rect x="122" y="74" width="18" height="46" rx="2" fill="#0a0818"/>
+      <rect x="140" y="74" width="18" height="46" rx="2" fill="#0a0818"/>
+      <!-- 門上符文 -->
+      <circle cx="140" cy="86" r="8" fill="none" stroke="#a78bfa" stroke-width="1.5"/>
+      <line x1="140" y1="78" x2="140" y2="94" stroke="#a78bfa" stroke-width="1"/>
+      <line x1="132" y1="86" x2="148" y2="86" stroke="#a78bfa" stroke-width="1"/>
+    </svg>
+    <p class="scene-label">監督神殿入口 — 漸層柔和，立體感強</p>
+  </div>
+
+  <!-- 場景C：機械礦洞 -->
+  <div class="card">
+    <div class="card-title" style="color:#fbbf24;font-size:0.8rem">C 場景｜資料礦場（三合一）</div>
+    <svg viewBox="0 0 280 120" xmlns="http://www.w3.org/2000/svg" style="margin-top:8px">
+      <defs>
+        <radialGradient id="lavaGlow" cx="50%" cy="100%" r="80%">
+          <stop offset="0%" stop-color="#ff6600" stop-opacity="0.5"/>
+          <stop offset="100%" stop-color="#ff6600" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <!-- 洞窟背景 -->
+      <rect width="280" height="120" fill="#0a0608"/>
+      <!-- 熔岩光 -->
+      <rect x="0" y="90" width="280" height="30" fill="url(#lavaGlow)"/>
+      <!-- 洞窟壁 -->
+      <polygon points="0,0 40,30 0,60" fill="#1a0a0a"/>
+      <polygon points="280,0 240,25 280,55" fill="#1a0a0a"/>
+      <polygon points="0,0 60,15 80,0" fill="#1a0a0a"/>
+      <polygon points="200,0 240,18 280,0" fill="#1a0a0a"/>
+      <!-- 礦脈（發光） -->
+      <polygon points="15,20 25,35 10,50" fill="#002244" opacity="0.8"/>
+      <polygon points="12,22 22,37 8,52" fill="#0044aa" opacity="0.6"/>
+      <polygon points="255,18 265,38 250,55" fill="#004400" opacity="0.8"/>
+      <polygon points="258,20 268,40 253,57" fill="#008800" opacity="0.5"/>
+      <!-- 機械平台 -->
+      <rect x="50" y="70" width="180" height="8" fill="#3a2a0a"/>
+      <rect x="50" y="70" width="180" height="2" fill="#6a4a0a"/>
+      <rect x="60" y="72" width="8" height="48" fill="#2a1a06"/>
+      <rect x="90" y="72" width="8" height="48" fill="#2a1a06"/>
+      <rect x="182" y="72" width="8" height="48" fill="#2a1a06"/>
+      <rect x="212" y="72" width="8" height="48" fill="#2a1a06"/>
+      <!-- 齒輪 -->
+      <circle cx="50" cy="70" r="10" fill="#3a2a06" stroke="#5a4a10" stroke-width="2"/>
+      <circle cx="50" cy="70" r="5" fill="#1a1004"/>
+      <circle cx="230" cy="70" r="10" fill="#3a2a06" stroke="#5a4a10" stroke-width="2"/>
+      <circle cx="230" cy="70" r="5" fill="#1a1004"/>
+      <!-- 礦石 -->
+      <polygon points="120,80 130,68 140,80" fill="#0066cc"/>
+      <polygon points="122,80 130,70 138,80" fill="#0088ff" opacity="0.7"/>
+      <polygon points="150,78 160,65 170,78" fill="#ff4400"/>
+      <polygon points="152,78 160,67 168,78" fill="#ff6633" opacity="0.7"/>
+      <!-- 管道 -->
+      <rect x="0" y="45" width="60" height="6" rx="3" fill="#4a3a10"/>
+      <rect x="220" y="38" width="60" height="6" rx="3" fill="#4a3a10"/>
+    </svg>
+    <p class="scene-label">資料礦場洞窟 — 機械+礦物+蒸汽管道融合</p>
+  </div>
+
+</div>
+
+<p style="text-align:center;margin-top:20px;font-size:0.65rem;color:#475569">
+  ↑ 以上皆為 SVG 手繪示意稿。Stable Diffusion 實際生圖風格將以此為基準對齊，細節更豐富。
+</p>
+</body>
+</html>
