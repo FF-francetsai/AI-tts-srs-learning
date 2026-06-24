@@ -78,8 +78,10 @@ body {
 #screen-dialogue {
   background: linear-gradient(180deg, rgba(6,11,19,0.97) 0%, rgba(10,18,35,0.98) 100%);
   justify-content: flex-start;
-  padding: 52px 16px 0;
-  overflow: hidden;
+  align-items: stretch;
+  padding: 52px 0 0;
+  overflow-y: auto; overflow-x: hidden;
+  gap: 0;
 }
 
 .dialogue-header {
@@ -98,8 +100,8 @@ body {
 .dialogue-body {
   display: flex; gap: 16px; align-items: flex-start;
   width: 100%; max-width: 860px;
-  flex-shrink: 0;
-  padding: 8px 0;
+  flex-shrink: 0; align-self: center;
+  padding: 12px 16px;
 }
 
 /* 角色立繪（sprite canvas，同 rpg-preview dp-portrait） */
@@ -247,12 +249,12 @@ body {
 .dlg-scene-wrap {
   width: 100%; flex-shrink: 0;
   border-top: 1px solid var(--border);
-  background: rgba(6,11,19,0.5);
+  background: rgba(4,8,16,0.9);
+  display: flex; justify-content: center;
 }
 #dlg-scene-bg {
-  display: block; width: 100%; height: auto;
+  display: block; width: 100%; max-width: 640px; height: auto;
   image-rendering: pixelated;
-  max-width: 640px; margin: 0 auto;
 }
 
 /* ── 返回按鈕 ── */
