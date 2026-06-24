@@ -55,7 +55,7 @@
 
   <!-- 場景地圖（下方，獨立顯示，同 rpg-preview 的 scene-canvas） -->
   <div class="dlg-scene-wrap">
-    <canvas id="dlg-scene-bg" width="640" height="200"></canvas>
+    <canvas id="dlg-scene-bg" width="640" height="320"></canvas>
   </div>
 </div>
 
@@ -397,7 +397,7 @@ const RPG_UI = {
            style="display:block;image-rendering:pixelated"></canvas>
        </div>
        <div class="char-name-tag" style="color:${scene.charColor};border-color:${scene.charColor}40">${scene.charName}</div>`;
-    _startDlgSprite(domain?.spriteFile || 'Female_01', domain?.spriteDir ?? 2);
+    _startDlgSprite(domain?.spriteFile || 'Female_01', 0); // dir=0 面向玩家（前視）
     if (domain) _startDlgScene(domain);
 
     const textEl    = document.getElementById('dlg-text');
