@@ -111,10 +111,13 @@ class RPGEngine {
 
     // 找到目前進行中的章節
     const doneChapters = this._state.chapters[key] || [];
-    const chapter = domain.chapters.find(c => !doneChapters.includes(c.id));
+    let chapter = domain.chapters.find(c => !doneChapters.includes(c.id));
     if (!chapter) {
-      this._ui.showToast?.(`${domain.name} 已全部完成！`);
-      return;
+      // 已全通關 → 重新挑戰（重置章節紀錄，保留 cleared 與 exp）
+      this._state.chapters[domain.key] = [];
+      this._save();
+      chapter = domain.chapters[0];
+      this._ui.showToast?.(`🔄 重新挑戰「${domain.name}」！`);
     }
 
     this._curChapter = chapter;

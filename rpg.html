@@ -36,20 +36,26 @@
      畫面 2：對話劇情
 ════════════════════════════════════════════════ -->
 <div id="screen-dialogue" class="rpg-screen">
-  <canvas id="dlg-scene-bg"></canvas>
   <div class="dialogue-header">
+    <button class="dlg-back-btn" onclick="RPG_UI.showMap()">← 地圖</button>
     <div class="dialogue-domain-badge" id="dlg-domain">AI 入門星</div>
     <div class="dialogue-progress" id="dlg-progress">第 1 / 2 章</div>
   </div>
 
+  <!-- 對話區：sprite canvas（左）+ 對話框（右），同 rpg-preview.html -->
   <div class="dialogue-body">
     <div class="char-portrait" id="dlg-portrait">
-      <!-- SVG 由 RPG_UI.showDialogue 動態替換 -->
+      <!-- canvas 由 RPG_UI.showDialogue 動態建立 -->
     </div>
     <div class="dialogue-box">
       <div class="dialogue-text" id="dlg-text"></div>
       <div class="dialogue-choices" id="dlg-choices"></div>
     </div>
+  </div>
+
+  <!-- 場景地圖（下方，獨立顯示，同 rpg-preview 的 scene-canvas） -->
+  <div class="dlg-scene-wrap">
+    <canvas id="dlg-scene-bg" width="640" height="200"></canvas>
   </div>
 </div>
 
@@ -384,9 +390,14 @@ const RPG_UI = {
 
     const domain = window._rpgCurDomain;
     const portrait = document.getElementById('dlg-portrait');
+    // 同 rpg-preview：左側用 sprite canvas + 名牌
     portrait.innerHTML =
-      getCharSVG(scene.char, scene.charColor) +
-      `<div class="char-name-tag" style="color:${scene.charColor};border-color:${scene.charColor}40">${scene.charName}</div>`;
+      `<div style="border:2px solid ${scene.charColor}55;border-radius:8px;background:#0a1428;overflow:hidden">
+         <canvas id="dlg-sprite-cvs" width="96" height="96"
+           style="display:block;image-rendering:pixelated"></canvas>
+       </div>
+       <div class="char-name-tag" style="color:${scene.charColor};border-color:${scene.charColor}40">${scene.charName}</div>`;
+    _startDlgSprite(domain?.spriteFile || 'Female_01', domain?.spriteDir ?? 2);
     if (domain) _startDlgScene(domain);
 
     const textEl    = document.getElementById('dlg-text');
@@ -497,87 +508,134 @@ const RPG_UI = {
 window.RPG_UI = RPG_UI;
 
 // ── 工具 ─────────────────────────────────────────────────────────────────
-let _dlgScenRAF = 0;
+let _dlgScenRAF = 0, _dlgSprTimer = null;
 
 function _setScreen(name) {
   if (name !== 'dialogue') {
     cancelAnimationFrame(_dlgScenRAF); _dlgScenRAF = 0;
+    if (_dlgSprTimer) { clearInterval(_dlgSprTimer); _dlgSprTimer = null; }
   }
   document.querySelectorAll('.rpg-screen').forEach(el=>el.classList.remove('active'));
   document.getElementById('screen-'+name)?.classList.add('active');
 }
 
+// sprite canvas 立繪動畫（同 rpg-preview dp-canvas）
+function _startDlgSprite(spriteFile, dir) {
+  if (_dlgSprTimer) { clearInterval(_dlgSprTimer); _dlgSprTimer = null; }
+  const cvs = document.getElementById('dlg-sprite-cvs');
+  if (!cvs) return;
+  const ctx = cvs.getContext('2d');
+  ctx.imageSmoothingEnabled = false;
+  const img = new Image();
+  img.src = `assets/sprites/characters/${spriteFile}-1.png`;
+  let frame = 0;
+  function draw() {
+    ctx.clearRect(0, 0, 96, 96);
+    if (img.complete && img.naturalWidth)
+      ctx.drawImage(img, frame*32, dir*32, 32, 32, 0, 0, 96, 96);
+  }
+  img.onload = draw;
+  _dlgSprTimer = setInterval(() => { frame = (frame+1)%3; draw(); }, 200);
+}
+
+// 場景 canvas（同 rpg-preview initScene，用實際 tileset + NPC + 玩家）
 function _startDlgScene(domain) {
   cancelAnimationFrame(_dlgScenRAF); _dlgScenRAF = 0;
   const cvs = document.getElementById('dlg-scene-bg');
   if (!cvs) return;
   const ctx = cvs.getContext('2d');
   ctx.imageSmoothingEnabled = false;
-  const TS = 32;
+  const TS = 32, COLS = 20, ROWS = 10;
 
-  const tileName  = (domain.sceneTiles && domain.sceneTiles[0]) || 'BaseChip_pipo';
-  const tileImg   = new Image(); tileImg.src  = `assets/sprites/tiles/${tileName}.png`;
-  const npcImg    = new Image(); npcImg.src   = `assets/sprites/characters/${domain.spriteFile || 'Female_01'}-1.png`;
-  const plrImg    = new Image(); plrImg.src   = `assets/sprites/characters/Male_01-1.png`;
+  // tile 地圖（同 rpg-preview MAP）
+  const MAP = [
+    [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
+    [3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3],
+    [3,0,0,1,1,0,0,0,1,1,0,0,0,1,1,0,0,0,0,3],
+    [3,0,1,2,2,1,0,1,2,2,1,0,1,2,2,1,0,0,0,3],
+    [3,0,0,1,1,0,0,0,1,1,0,0,0,1,1,0,0,0,0,3],
+    [3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3],
+    [3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3],
+    [3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3],
+    [3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3],
+    [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
+  ];
 
-  let tick = 0, px = 2, pf = 0, nf = 0;
+  const tileName = (domain.sceneTiles && domain.sceneTiles[0]) || 'Grass_pipo';
+  const tileImg = new Image(); tileImg.src = `assets/sprites/tiles/${tileName}.png`;
+  const npcImg  = new Image(); npcImg.src  = `assets/sprites/characters/${domain.spriteFile||'Female_01'}-1.png`;
+  const plrImg  = new Image(); plrImg.src  = `assets/sprites/characters/Male_01-1.png`;
 
-  function drawSpr(img, frameCol, dir, col, row) {
+  // 色彩 fallback（同 rpg-preview TC）
+  const baseColor = domain.color || '#22d3ee';
+  function hex2rgb(h) {
+    const r = parseInt(h.slice(1,3),16), g = parseInt(h.slice(3,5),16), b = parseInt(h.slice(5,7),16);
+    return [r,g,b];
+  }
+  const [br,bg,bb] = hex2rgb(baseColor.length===7 ? baseColor : '#22d3ee');
+  const TC = {
+    '0': `rgb(${Math.floor(br*0.3)},${Math.floor(bg*0.5)},${Math.floor(bb*0.4)})`,
+    '1': `rgb(${Math.floor(br*0.2)},${Math.floor(bg*0.4)},${Math.floor(bb*0.3)})`,
+    '2': `rgb(${Math.floor(br*0.4)},${Math.floor(bg*0.55)},${Math.floor(bb*0.45)})`,
+    '3': `rgb(${Math.floor(br*0.1)},${Math.floor(bg*0.2)},${Math.floor(bb*0.2)})`,
+  };
+
+  let px = 2, py = 7.5, pf = 0, nf = 0, tick = 0;
+
+  function drawTile(c, r, t) {
+    if (tileImg.complete && tileImg.naturalWidth > 0) {
+      const tw = Math.floor(tileImg.width / TS);
+      const th = Math.floor(tileImg.height / TS);
+      // tile 0=地板主, 1=地板暗, 2=裝飾, 3=牆壁
+      const tx = (t === 3 ? 3 : t === 2 ? 2 : t) % Math.max(tw, 1);
+      const ty = (t === 2 ? 1 : 0) % Math.max(th, 1);
+      ctx.drawImage(tileImg, tx*TS, ty*TS, TS, TS, c*TS, r*TS, TS, TS);
+    } else {
+      ctx.fillStyle = TC[t] || TC['0'];
+      ctx.fillRect(c*TS, r*TS, TS, TS);
+      ctx.strokeStyle = 'rgba(0,0,0,0.15)';
+      ctx.strokeRect(c*TS, r*TS, TS, TS);
+    }
+  }
+
+  function drawSpr(img, sx, sy, dx, dy) {
     if (!img.complete || !img.naturalWidth) return;
     ctx.save();
     ctx.fillStyle = 'rgba(0,0,0,0.18)';
-    ctx.beginPath(); ctx.ellipse(col*TS+16, row*TS+30, 10, 4, 0, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(dx*TS+16, dy*TS+30, 10, 4, 0, 0, Math.PI*2); ctx.fill();
     ctx.restore();
-    ctx.drawImage(img, frameCol*32, dir*32, 32, 32, col*TS, row*TS-6, 32, 32);
+    ctx.drawImage(img, sx*32, sy*32, 32, 32, dx*TS, dy*TS-6, 32, 32);
   }
 
   function loop() {
-    const w = cvs.offsetWidth || 640, h = cvs.offsetHeight || 160;
-    if (cvs.width !== w) cvs.width = w;
-    if (cvs.height !== h) cvs.height = h;
+    ctx.clearRect(0, 0, cvs.width, cvs.height);
+    for (let r = 0; r < ROWS; r++)
+      for (let c = 0; c < COLS; c++)
+        drawTile(c, r, MAP[r][c]);
 
-    const COLS = Math.ceil(w / TS) + 1;
-    const ROWS = Math.ceil(h / TS);
-    const groundRow = ROWS - 1;
-
-    ctx.clearRect(0, 0, w, h);
-
-    // tile 地板
-    if (tileImg.complete && tileImg.naturalWidth) {
-      const tw = Math.floor(tileImg.width / TS), th = Math.floor(tileImg.height / TS);
-      for (let r = 0; r < ROWS; r++) {
-        for (let c = 0; c < COLS; c++) {
-          const tx = (c + r * 2) % Math.min(tw, 4);
-          const ty = r % Math.min(th, 3);
-          ctx.drawImage(tileImg, tx*TS, ty*TS, TS, TS, c*TS, r*TS, TS, TS);
-        }
-      }
-    } else {
-      ctx.fillStyle = (domain.color || '#22d3ee') + '22';
-      ctx.fillRect(0, 0, w, h);
-    }
-
-    // 氛圍光暈
-    const grd = ctx.createRadialGradient(w/2, h/2, 10, w/2, h/2, w*0.4);
-    grd.addColorStop(0, (domain.color||'#22d3ee')+'22');
-    grd.addColorStop(1, 'transparent');
-    ctx.fillStyle = grd; ctx.fillRect(0, 0, w, h);
+    // 氛圍光（同 rpg-preview）
+    const grd = ctx.createRadialGradient(9*TS+16, 4*TS+16, 4, 9*TS+16, 4*TS+16, 56);
+    grd.addColorStop(0, baseColor+'22'); grd.addColorStop(1,'transparent');
+    ctx.fillStyle = grd; ctx.fillRect(0, 0, cvs.width, cvs.height);
 
     tick++;
-    if (tick % 12 === 0) { px += 0.5; if (px > COLS - 2) px = 1; pf = (pf+1)%3; }
-    if (tick % 16 === 0) nf = (nf+1)%3;
+    if (tick % 10 === 0) { px += 0.5; if (px > 17) px = 2; pf = (pf+1)%3; }
+    if (tick % 14 === 0) nf = (nf+1)%3;
 
-    // 守護者 NPC（固定在右側偏中，面向玩家 dir=2）
-    const npcCol = Math.floor(COLS * 0.72);
-    drawSpr(npcImg, nf, 2, npcCol, groundRow);
-
-    // 玩家角色（從左往右走）
-    drawSpr(plrImg, pf, 2, Math.floor(px), groundRow);
+    // 守護者 NPC 站在右側（面向前方 dir=2）
+    drawSpr(npcImg, nf, 0, 12, 7);
+    // 玩家從左走到右
+    drawSpr(plrImg, pf, 2, Math.floor(px), Math.floor(py));
 
     _dlgScenRAF = requestAnimationFrame(loop);
   }
 
-  setTimeout(loop, 80);
+  let loaded = 0;
+  const onLoad = () => { if (++loaded >= 3) loop(); };
+  tileImg.onload = onLoad; npcImg.onload = onLoad; plrImg.onload = onLoad;
+  // 備援：600ms 後強制啟動（部分圖片可能已快取）
+  setTimeout(() => { if (!_dlgScenRAF) loop(); }, 600);
+  [tileImg, npcImg, plrImg].forEach(img => { if (img.complete) onLoad(); });
 }
 
 function _typewriter(el, text, done, speed=28) {
