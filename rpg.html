@@ -36,6 +36,7 @@
      畫面 2：對話劇情
 ════════════════════════════════════════════════ -->
 <div id="screen-dialogue" class="rpg-screen">
+  <canvas id="dlg-scene-bg"></canvas>
   <div class="dialogue-header">
     <div class="dialogue-domain-badge" id="dlg-domain">AI 入門星</div>
     <div class="dialogue-progress" id="dlg-progress">第 1 / 2 章</div>
@@ -379,10 +380,23 @@ const RPG_UI = {
   // 對話場景
   showDialogue(scene) {
     _setScreen('dialogue');
-    document.getElementById('dlg-domain').textContent  = window._rpgCurDomainName || '';
-    document.getElementById('dlg-portrait').innerHTML  =
-      getCharSVG(scene.char, scene.charColor) +
-      `<div class="char-name-tag" style="color:${scene.charColor};border-color:${scene.charColor}40">${scene.charName}</div>`;
+    document.getElementById('dlg-domain').textContent = window._rpgCurDomainName || '';
+
+    const domain = window._rpgCurDomain;
+    const portrait = document.getElementById('dlg-portrait');
+    if (domain && domain.spriteFile) {
+      portrait.innerHTML =
+        `<canvas id="dlg-sprite-cvs" width="96" height="96"
+          style="display:block;image-rendering:pixelated;border-radius:10px;
+                 border:2px solid ${scene.charColor}55;background:#070d1a"></canvas>
+         <div class="char-name-tag" style="color:${scene.charColor};border-color:${scene.charColor}40">${scene.charName}</div>`;
+      _startDlgSprite(domain.spriteFile, domain.spriteDir ?? 2);
+    } else {
+      portrait.innerHTML =
+        getCharSVG(scene.char, scene.charColor) +
+        `<div class="char-name-tag" style="color:${scene.charColor};border-color:${scene.charColor}40">${scene.charName}</div>`;
+    }
+    if (domain) _startDlgScene(domain);
 
     const textEl    = document.getElementById('dlg-text');
     const choiceEl  = document.getElementById('dlg-choices');
@@ -492,9 +506,69 @@ const RPG_UI = {
 window.RPG_UI = RPG_UI;
 
 // ── 工具 ─────────────────────────────────────────────────────────────────
+let _dlgSprTimer = null, _dlgScenRAF = 0;
+
 function _setScreen(name) {
+  if (name !== 'dialogue') {
+    if (_dlgSprTimer) { clearInterval(_dlgSprTimer); _dlgSprTimer = null; }
+    cancelAnimationFrame(_dlgScenRAF); _dlgScenRAF = 0;
+  }
   document.querySelectorAll('.rpg-screen').forEach(el=>el.classList.remove('active'));
   document.getElementById('screen-'+name)?.classList.add('active');
+}
+
+function _startDlgSprite(spriteFile, dir) {
+  if (_dlgSprTimer) { clearInterval(_dlgSprTimer); _dlgSprTimer = null; }
+  const cvs = document.getElementById('dlg-sprite-cvs');
+  if (!cvs) return;
+  const ctx = cvs.getContext('2d');
+  ctx.imageSmoothingEnabled = false;
+  const img = new Image();
+  img.src = `assets/sprites/characters/${spriteFile}-1.png`;
+  let frame = 0;
+  function draw() {
+    ctx.clearRect(0, 0, 96, 96);
+    if (img.complete && img.naturalWidth > 0)
+      ctx.drawImage(img, frame * 32, dir * 32, 32, 32, 0, 0, 96, 96);
+  }
+  img.onload = draw;
+  _dlgSprTimer = setInterval(() => { frame = (frame + 1) % 3; draw(); }, 180);
+}
+
+function _startDlgScene(domain) {
+  cancelAnimationFrame(_dlgScenRAF); _dlgScenRAF = 0;
+  const cvs = document.getElementById('dlg-scene-bg');
+  if (!cvs) return;
+  const ctx = cvs.getContext('2d');
+  ctx.imageSmoothingEnabled = false;
+  const TS = 32;
+  const tileName = (domain.sceneTiles && domain.sceneTiles[0]) || 'BaseChip_pipo';
+  const img = new Image();
+  img.src = `assets/sprites/tiles/${tileName}.png`;
+
+  function loop() {
+    const w = cvs.offsetWidth || 640, h = cvs.offsetHeight || 160;
+    if (cvs.width !== w) cvs.width = w;
+    if (cvs.height !== h) cvs.height = h;
+    ctx.clearRect(0, 0, w, h);
+    if (img.complete && img.naturalWidth > 0) {
+      const tw = Math.floor(img.width / TS), th = Math.floor(img.height / TS);
+      const cols = Math.ceil(w / TS) + 1, rows = Math.ceil(h / TS) + 1;
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const tx = (c + r) % Math.min(tw, 4);
+          const ty = (c * 2 + r * 3) % Math.min(th, 4);
+          ctx.drawImage(img, tx * TS, ty * TS, TS, TS, c * TS, r * TS, TS, TS);
+        }
+      }
+    } else {
+      ctx.fillStyle = (domain.color || '#22d3ee') + '18';
+      ctx.fillRect(0, 0, w, h);
+    }
+    _dlgScenRAF = requestAnimationFrame(loop);
+  }
+  img.onload = loop;
+  setTimeout(loop, 50);
 }
 
 function _typewriter(el, text, done, speed=28) {

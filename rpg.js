@@ -105,6 +105,8 @@ class RPGEngine {
     }
 
     this._curDomain  = domain;
+    window._rpgCurDomain     = domain;
+    window._rpgCurDomainName = domain.name;
     this._npc        = new NPCDialogue(domain);
 
     // 找到目前進行中的章節
