@@ -1,7 +1,7 @@
-// rpg-data.js — AI 星際聯盟 RPG 資料層 v1.0
+// rpg-data.js — AI 星際聯盟 RPG 資料層 v1.1
 // 依賴：data.js（lessonData 全域）
 
-// ── 9 個星域定義 ──────────────────────────────────────────────────────────────
+// ── 10 個星域定義 ─────────────────────────────────────────────────────────────
 const DOMAINS = [
   {
     key: 'INTRO', name: 'AI 入門星', emoji: '🌱', color: '#22d3ee',
@@ -174,6 +174,63 @@ const DOMAINS = [
             choices: [] }
         ],
         quiz: { passScore: 4, reward: { exp: 300, rank: 'AI 聯盟士官' } }
+      }
+    ]
+  },
+  {
+    key: 'CORE', name: '星盟核心星', emoji: '🌐', color: '#f0e6ff',
+    guardian: '星盟議長 · 亞特拉斯', guardianChar: 'atlas', unlockAfter: 'ADV',
+    npcModel: { nvidia: 'google/gemma-3-27b-it', cf: '@cf/google/gemma-3-27b-it', hf: 'google/gemma-3-27b-it' },
+    catFilter: ['AI 基礎', 'AI 分類', '人工智慧', '資料科學', '機器學習', '深度學習', '神經網路', '生成式 AI', '強化學習', '進階', '整合應用'],
+    chapters: [
+      {
+        id: 'core_ch1', title: '九星歸一',
+        scenes: [
+          { char: 'atlas', charName: '亞特拉斯', charColor: '#c4b5fd',
+            lines: [
+              '歡迎來到星盟核心星。',
+              '你走過了九顆星域——入門、礦場、神殿、機庫、荒野、熔爐、創界、競技場、議會。',
+              '這裡是一切的匯聚點，也是 AI 宇宙真正的中心。'
+            ],
+            choices: [] },
+          { char: 'atlas', charName: '亞特拉斯', charColor: '#c4b5fd',
+            lines: [
+              '核心星不屬於任何單一技術，它是所有知識互相連結的場域。',
+              '資料從礦場流入，在神殿與機庫被淬煉，在熔爐鍛造，在創界綻放，在競技場驗證。',
+              '最終，它們在這裡整合成真正有用的智慧。'
+            ],
+            choices: [
+              { text: '我已準備好接受最終考驗', next: null },
+              { text: '這與「AGI」有什麼關係？', next: 'npc' }
+            ] },
+          { char: 'atlas', charName: '亞特拉斯', charColor: '#c4b5fd',
+            lines: [
+              '最終關卡將跨越所有星域的知識。',
+              '通過考核，你將成為星盟正式研究員，有資格進入核心星的常設議會。',
+              '準備好了嗎？'
+            ],
+            choices: [] }
+        ],
+        quiz: { passScore: 4, reward: { exp: 400, rank: '星盟研究員' } }
+      },
+      {
+        id: 'core_ch2', title: '核心星的真相',
+        scenes: [
+          { char: 'atlas', charName: '亞特拉斯', charColor: '#c4b5fd',
+            lines: [
+              '你通過了。恭喜你。',
+              '核心星有一個秘密：它不是終點，它是起點的鏡像。',
+              '最頂層的 AI 研究者，往往又回到最基礎的問題——什麼是智慧？為什麼學習？'
+            ],
+            choices: [] },
+          { char: 'atlas', charName: '亞特拉斯', charColor: '#c4b5fd',
+            lines: [
+              '帶著你在九星習得的技能，這個問題的答案才開始有輪廓。',
+              '星盟等待你繼續探索。旅程從未結束。'
+            ],
+            choices: [] }
+        ],
+        quiz: { passScore: 5, reward: { exp: 500, rank: '星盟首席研究員' } }
       }
     ]
   }
