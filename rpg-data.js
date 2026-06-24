@@ -6,6 +6,8 @@ const DOMAINS = [
   {
     key: 'INTRO', name: 'AI 入門星', emoji: '🌱', color: '#22d3ee',
     guardian: '伊莎貝爾', guardianChar: 'isabel', unlockAfter: null,
+    spriteFile: 'Female_01', spriteDir: 3,
+    sceneTiles: ['Grass_pipo', 'BaseChip_pipo'],
     npcModel: { nvidia: 'google/gemma-3-12b-it', cf: '@cf/google/gemma-3-12b-it', hf: 'google/gemma-3-12b-it' },
     catFilter: ['AI 基礎', 'AI 分類', '人工智慧'],
     chapters: [
@@ -44,6 +46,8 @@ const DOMAINS = [
   {
     key: 'DATA', name: '資料礦場', emoji: '📊', color: '#60a5fa',
     guardian: '達達', guardianChar: 'dada', unlockAfter: 'INTRO',
+    spriteFile: 'Male_03', spriteDir: 3,
+    sceneTiles: ['cave_pipo', 'BaseChip_pipo'],
     npcModel: { nvidia: 'meta/llama-3.3-70b-instruct', cf: '@cf/meta/llama-3.3-70b-instruct-fp8-fast', hf: 'meta-llama/Llama-3.3-70B-Instruct' },
     catFilter: ['資料科學', '資料處理', '統計'],
     chapters: [
@@ -61,6 +65,8 @@ const DOMAINS = [
   {
     key: 'SL', name: '監督神殿', emoji: '🎯', color: '#a78bfa',
     guardian: '凱爾', guardianChar: 'kael', unlockAfter: 'DATA',
+    spriteFile: 'Male_01', spriteDir: 3,
+    sceneTiles: ['stone_temple', 'BaseChip_pipo'],
     npcModel: { nvidia: 'mistralai/mistral-large-3-675b-instruct-2512', cf: null, hf: 'mistralai/Mistral-Large-Instruct-2411' },
     catFilter: ['機器學習', '監督式學習', '分類', '回歸'],
     chapters: [
@@ -78,6 +84,8 @@ const DOMAINS = [
   {
     key: 'DISC', name: '鑑別機庫', emoji: '🔬', color: '#a3e635',
     guardian: '薩拉', guardianChar: 'sara', unlockAfter: 'SL',
+    spriteFile: 'Female_03', spriteDir: 3,
+    sceneTiles: ['metal_floor', 'BaseChip_pipo'],
     npcModel: { nvidia: 'deepseek-ai/deepseek-v4-pro', cf: null, hf: 'deepseek-ai/DeepSeek-V3' },
     catFilter: ['鑑別式', '判別模型', '分類器'],
     chapters: [
@@ -95,6 +103,8 @@ const DOMAINS = [
   {
     key: 'UL', name: '非監督荒野', emoji: '🔍', color: '#34d399',
     guardian: '羅瓦', guardianChar: 'rova', unlockAfter: 'DISC',
+    spriteFile: 'Male_02', spriteDir: 3,
+    sceneTiles: ['wasteland_pipo', 'Grass_pipo'],
     npcModel: { nvidia: 'moonshotai/kimi-k2.6', cf: '@cf/moonshotai/kimi-k2.6', hf: 'moonshotai/Kimi-K2' },
     catFilter: ['非監督式學習', '分群', '降維'],
     chapters: [
@@ -112,6 +122,8 @@ const DOMAINS = [
   {
     key: 'DL', name: '深度熔爐', emoji: '🧠', color: '#fbbf24',
     guardian: '穆恩', guardianChar: 'moon', unlockAfter: 'UL',
+    spriteFile: 'Male_04', spriteDir: 3,
+    sceneTiles: ['lava_floor', 'BaseChip_pipo'],
     npcModel: { nvidia: null, cf: '@cf/deepseek-ai/deepseek-r1-distill-qwen-32b', hf: 'deepseek-ai/DeepSeek-R1-Distill-Qwen-32B' },
     catFilter: ['深度學習', '神經網路', '卷積', '遞迴'],
     chapters: [
@@ -129,6 +141,8 @@ const DOMAINS = [
   {
     key: 'GEN', name: '生成創界', emoji: '✨', color: '#f472b6',
     guardian: '奧菈', guardianChar: 'aura', unlockAfter: 'DL',
+    spriteFile: 'Female_05', spriteDir: 3,
+    sceneTiles: ['magic_floor', 'BaseChip_pipo'],
     npcModel: { nvidia: 'qwen/qwen3.5-122b-a10b', cf: null, hf: null },
     catFilter: ['生成式 AI', '大語言模型', '擴散模型'],
     chapters: [
@@ -146,6 +160,8 @@ const DOMAINS = [
   {
     key: 'RL', name: '強化競技場', emoji: '🎮', color: '#fb923c',
     guardian: '李陽', guardianChar: 'liyang', unlockAfter: 'GEN',
+    spriteFile: 'Male_05', spriteDir: 3,
+    sceneTiles: ['arena_floor', 'BaseChip_pipo'],
     npcModel: { nvidia: 'meta/llama-4-maverick-17b-128e-instruct', cf: '@cf/meta/llama-4-scout-17b-16e-instruct', hf: 'meta-llama/Llama-4-Scout-17B-16E-Instruct' },
     catFilter: ['強化學習', '策略', '獎勵'],
     chapters: [
@@ -163,6 +179,8 @@ const DOMAINS = [
   {
     key: 'ADV', name: '中級議會', emoji: '⚙️', color: '#94a3b8',
     guardian: '長老委員會', guardianChar: 'council', unlockAfter: 'RL',
+    spriteFile: 'Male_01', spriteDir: 3,
+    sceneTiles: ['marble_floor', 'BaseChip_pipo'],
     npcModel: { nvidia: null, cf: '@cf/nvidia/nemotron-3-120b-a12b', hf: null },
     catFilter: ['進階', '中級', '整合應用'],
     chapters: [
@@ -180,6 +198,8 @@ const DOMAINS = [
   {
     key: 'CORE', name: '星盟核心星', emoji: '🌐', color: '#f0e6ff',
     guardian: '星盟議長 · 亞特拉斯', guardianChar: 'atlas', unlockAfter: 'ADV',
+    spriteFile: 'Male_02', spriteDir: 3,
+    sceneTiles: ['star_floor', 'BaseChip_pipo'],
     npcModel: { nvidia: 'google/gemma-3-27b-it', cf: '@cf/google/gemma-3-27b-it', hf: 'google/gemma-3-27b-it' },
     catFilter: ['AI 基礎', 'AI 分類', '人工智慧', '資料科學', '機器學習', '深度學習', '神經網路', '生成式 AI', '強化學習', '進階', '整合應用'],
     chapters: [
