@@ -384,18 +384,9 @@ const RPG_UI = {
 
     const domain = window._rpgCurDomain;
     const portrait = document.getElementById('dlg-portrait');
-    if (domain && domain.spriteFile) {
-      portrait.innerHTML =
-        `<canvas id="dlg-sprite-cvs" width="96" height="96"
-          style="display:block;image-rendering:pixelated;border-radius:10px;
-                 border:2px solid ${scene.charColor}55;background:#070d1a"></canvas>
-         <div class="char-name-tag" style="color:${scene.charColor};border-color:${scene.charColor}40">${scene.charName}</div>`;
-      _startDlgSprite(domain.spriteFile, domain.spriteDir ?? 2);
-    } else {
-      portrait.innerHTML =
-        getCharSVG(scene.char, scene.charColor) +
-        `<div class="char-name-tag" style="color:${scene.charColor};border-color:${scene.charColor}40">${scene.charName}</div>`;
-    }
+    portrait.innerHTML =
+      getCharSVG(scene.char, scene.charColor) +
+      `<div class="char-name-tag" style="color:${scene.charColor};border-color:${scene.charColor}40">${scene.charName}</div>`;
     if (domain) _startDlgScene(domain);
 
     const textEl    = document.getElementById('dlg-text');
@@ -506,33 +497,14 @@ const RPG_UI = {
 window.RPG_UI = RPG_UI;
 
 // ── 工具 ─────────────────────────────────────────────────────────────────
-let _dlgSprTimer = null, _dlgScenRAF = 0;
+let _dlgScenRAF = 0;
 
 function _setScreen(name) {
   if (name !== 'dialogue') {
-    if (_dlgSprTimer) { clearInterval(_dlgSprTimer); _dlgSprTimer = null; }
     cancelAnimationFrame(_dlgScenRAF); _dlgScenRAF = 0;
   }
   document.querySelectorAll('.rpg-screen').forEach(el=>el.classList.remove('active'));
   document.getElementById('screen-'+name)?.classList.add('active');
-}
-
-function _startDlgSprite(spriteFile, dir) {
-  if (_dlgSprTimer) { clearInterval(_dlgSprTimer); _dlgSprTimer = null; }
-  const cvs = document.getElementById('dlg-sprite-cvs');
-  if (!cvs) return;
-  const ctx = cvs.getContext('2d');
-  ctx.imageSmoothingEnabled = false;
-  const img = new Image();
-  img.src = `assets/sprites/characters/${spriteFile}-1.png`;
-  let frame = 0;
-  function draw() {
-    ctx.clearRect(0, 0, 96, 96);
-    if (img.complete && img.naturalWidth > 0)
-      ctx.drawImage(img, frame * 32, dir * 32, 32, 32, 0, 0, 96, 96);
-  }
-  img.onload = draw;
-  _dlgSprTimer = setInterval(() => { frame = (frame + 1) % 3; draw(); }, 180);
 }
 
 function _startDlgScene(domain) {
@@ -542,33 +514,70 @@ function _startDlgScene(domain) {
   const ctx = cvs.getContext('2d');
   ctx.imageSmoothingEnabled = false;
   const TS = 32;
-  const tileName = (domain.sceneTiles && domain.sceneTiles[0]) || 'BaseChip_pipo';
-  const img = new Image();
-  img.src = `assets/sprites/tiles/${tileName}.png`;
+
+  const tileName  = (domain.sceneTiles && domain.sceneTiles[0]) || 'BaseChip_pipo';
+  const tileImg   = new Image(); tileImg.src  = `assets/sprites/tiles/${tileName}.png`;
+  const npcImg    = new Image(); npcImg.src   = `assets/sprites/characters/${domain.spriteFile || 'Female_01'}-1.png`;
+  const plrImg    = new Image(); plrImg.src   = `assets/sprites/characters/Male_01-1.png`;
+
+  let tick = 0, px = 2, pf = 0, nf = 0;
+
+  function drawSpr(img, frameCol, dir, col, row) {
+    if (!img.complete || !img.naturalWidth) return;
+    ctx.save();
+    ctx.fillStyle = 'rgba(0,0,0,0.18)';
+    ctx.beginPath(); ctx.ellipse(col*TS+16, row*TS+30, 10, 4, 0, 0, Math.PI*2); ctx.fill();
+    ctx.restore();
+    ctx.drawImage(img, frameCol*32, dir*32, 32, 32, col*TS, row*TS-6, 32, 32);
+  }
 
   function loop() {
     const w = cvs.offsetWidth || 640, h = cvs.offsetHeight || 160;
     if (cvs.width !== w) cvs.width = w;
     if (cvs.height !== h) cvs.height = h;
+
+    const COLS = Math.ceil(w / TS) + 1;
+    const ROWS = Math.ceil(h / TS);
+    const groundRow = ROWS - 1;
+
     ctx.clearRect(0, 0, w, h);
-    if (img.complete && img.naturalWidth > 0) {
-      const tw = Math.floor(img.width / TS), th = Math.floor(img.height / TS);
-      const cols = Math.ceil(w / TS) + 1, rows = Math.ceil(h / TS) + 1;
-      for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < cols; c++) {
-          const tx = (c + r) % Math.min(tw, 4);
-          const ty = (c * 2 + r * 3) % Math.min(th, 4);
-          ctx.drawImage(img, tx * TS, ty * TS, TS, TS, c * TS, r * TS, TS, TS);
+
+    // tile 地板
+    if (tileImg.complete && tileImg.naturalWidth) {
+      const tw = Math.floor(tileImg.width / TS), th = Math.floor(tileImg.height / TS);
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          const tx = (c + r * 2) % Math.min(tw, 4);
+          const ty = r % Math.min(th, 3);
+          ctx.drawImage(tileImg, tx*TS, ty*TS, TS, TS, c*TS, r*TS, TS, TS);
         }
       }
     } else {
-      ctx.fillStyle = (domain.color || '#22d3ee') + '18';
+      ctx.fillStyle = (domain.color || '#22d3ee') + '22';
       ctx.fillRect(0, 0, w, h);
     }
+
+    // 氛圍光暈
+    const grd = ctx.createRadialGradient(w/2, h/2, 10, w/2, h/2, w*0.4);
+    grd.addColorStop(0, (domain.color||'#22d3ee')+'22');
+    grd.addColorStop(1, 'transparent');
+    ctx.fillStyle = grd; ctx.fillRect(0, 0, w, h);
+
+    tick++;
+    if (tick % 12 === 0) { px += 0.5; if (px > COLS - 2) px = 1; pf = (pf+1)%3; }
+    if (tick % 16 === 0) nf = (nf+1)%3;
+
+    // 守護者 NPC（固定在右側偏中，面向玩家 dir=2）
+    const npcCol = Math.floor(COLS * 0.72);
+    drawSpr(npcImg, nf, 2, npcCol, groundRow);
+
+    // 玩家角色（從左往右走）
+    drawSpr(plrImg, pf, 2, Math.floor(px), groundRow);
+
     _dlgScenRAF = requestAnimationFrame(loop);
   }
-  img.onload = loop;
-  setTimeout(loop, 50);
+
+  setTimeout(loop, 80);
 }
 
 function _typewriter(el, text, done, speed=28) {
