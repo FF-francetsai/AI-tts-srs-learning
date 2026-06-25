@@ -315,41 +315,42 @@ function buildDomainMap(cleared=[]) {
     g.setAttribute('class','domain-node' + (isLocked?' locked':''));
     g.style.cursor = isLocked ? 'default' : 'pointer';
 
-    // 球體 3D 漸層定義
-    const gradId = `orb-g-${d.key}`;
-    const orbGrad = document.createElementNS(ns,'radialGradient');
-    orbGrad.setAttribute('id', gradId);
-    orbGrad.setAttribute('cx','35%'); orbGrad.setAttribute('cy','30%'); orbGrad.setAttribute('r','65%');
-    const col = d.color;
-    const lighten = c => { const n=parseInt(c.slice(1),16); return `#${Math.min(255,((n>>16)&255)+80).toString(16).padStart(2,'0')}${Math.min(255,((n>>8)&255)+80).toString(16).padStart(2,'0')}${Math.min(255,(n&255)+80).toString(16).padStart(2,'0')}`; };
-    const darken  = c => { const n=parseInt(c.slice(1),16); return `#${Math.max(0,((n>>16)&255)-60).toString(16).padStart(2,'0')}${Math.max(0,((n>>8)&255)-60).toString(16).padStart(2,'0')}${Math.max(0,(n&255)-60).toString(16).padStart(2,'0')}`; };
-    [['0%','white',0.85],['18%',lighten(col),0.9],['55%',col,1],['85%',darken(col),1],['100%','#000',0.6]].forEach(([off,c,op])=>{
-      const s=document.createElementNS(ns,'stop');
-      s.setAttribute('offset',off); s.setAttribute('stop-color',c); s.setAttribute('stop-opacity',op);
-      orbGrad.appendChild(s);
-    });
-    if (!defs.querySelector(`#${gradId}`)) defs.appendChild(orbGrad);
+    // clip-path 讓行星圖裁成圓形
+    const clipId = `clip-${d.key}`;
+    if (!defs.querySelector(`#${clipId}`)) {
+      const cp = document.createElementNS(ns,'clipPath');
+      cp.setAttribute('id', clipId);
+      const cpc = document.createElementNS(ns,'circle');
+      cpc.setAttribute('cx', px); cpc.setAttribute('cy', py); cpc.setAttribute('r','18');
+      cp.appendChild(cpc); defs.appendChild(cp);
+    }
 
-    // 光暈
-    const halo=document.createElementNS(ns,'circle');
-    halo.setAttribute('cx',px); halo.setAttribute('cy',py);
-    halo.setAttribute('r','30'); halo.setAttribute('fill',d.color+'22');
-    halo.setAttribute('filter','url(#core-glow)');
-    g.appendChild(halo);
+    // 外發光（星域主色）
+    const glow = document.createElementNS(ns,'circle');
+    glow.setAttribute('cx',px); glow.setAttribute('cy',py); glow.setAttribute('r','22');
+    glow.setAttribute('fill','none');
+    glow.setAttribute('stroke', d.color); glow.setAttribute('stroke-width','4');
+    glow.setAttribute('stroke-opacity', isCleared?'0.85':'0.4');
+    glow.setAttribute('filter','url(#core-glow)');
+    g.appendChild(glow);
 
-    // 星球本體（3D 漸層球體）
-    const orb=document.createElementNS(ns,'circle');
-    orb.setAttribute('cx',px); orb.setAttribute('cy',py); orb.setAttribute('r','18');
-    orb.setAttribute('fill',`url(#${gradId})`);
-    orb.setAttribute('fill-opacity', isCleared?'1':'0.7');
-    orb.setAttribute('class','domain-orb'); g.appendChild(orb);
+    // 行星圖片（SD 生成，圓形裁切）
+    const planetImg = document.createElementNS(ns,'image');
+    planetImg.setAttribute('href', `assets/planets/${d.key}_planet.png`);
+    planetImg.setAttribute('x', px-18); planetImg.setAttribute('y', py-18);
+    planetImg.setAttribute('width','36'); planetImg.setAttribute('height','36');
+    planetImg.setAttribute('clip-path', `url(#${clipId})`);
+    planetImg.setAttribute('opacity', isCleared?'1':'0.6');
+    planetImg.setAttribute('class','domain-orb');
+    g.appendChild(planetImg);
 
-    // 球體高光（上方白點）
-    const shine=document.createElementNS(ns,'ellipse');
-    shine.setAttribute('cx',px-5); shine.setAttribute('cy',py-6);
-    shine.setAttribute('rx','6'); shine.setAttribute('ry','4');
-    shine.setAttribute('fill','rgba(255,255,255,0.35)');
-    g.appendChild(shine);
+    // 鎖定暗罩
+    if (isLocked) {
+      const mask = document.createElementNS(ns,'circle');
+      mask.setAttribute('cx',px); mask.setAttribute('cy',py); mask.setAttribute('r','18');
+      mask.setAttribute('fill','rgba(0,0,0,0.55)');
+      g.appendChild(mask);
+    }
 
     // 通關打勾
     if (isCleared) {
