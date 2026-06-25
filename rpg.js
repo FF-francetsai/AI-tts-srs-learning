@@ -291,6 +291,18 @@ class RPGEngine {
     localStorage.removeItem(RPG_SAVE_KEY);
     this.start();
   }
+
+  // ── 全解鎖預覽模式（開發者用）────────────────────────────────────────────
+  unlockAll() {
+    const allKeys = (typeof DOMAINS !== 'undefined' ? DOMAINS : []).map(d => d.key);
+    this._state.cleared = [...allKeys];
+    this._state.rank = '星盟艦長';
+    this._state.exp = 9999;
+    this._save();
+    this._ui.updatePlayer?.({ rank: this._state.rank, exp: 9999, maxExp: 9999, cleared: allKeys.length });
+    this._ui.showMap?.();
+    return `已解鎖 ${allKeys.length} 個星域：${allKeys.join(', ')}`;
+  }
 }
 
 // 掛到全域，等 RPG_UI 就緒後由 rpg.html 呼叫 new RPGEngine(RPG_UI).start()

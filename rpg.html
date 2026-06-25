@@ -796,9 +796,9 @@ function _startWorldScene(scene, domain) {
     if (dialogueLine < 0) {
       let dx=0, dy=0;
       if (keys['ArrowLeft'] ||keys['a']) { dx=-SPD; player.dir=1; }
-      if (keys['ArrowRight']||keys['d']) { dx= SPD; player.dir=3; }
-      if (keys['ArrowUp']   ||keys['w']) { dy=-SPD; player.dir=2; }
-      if (keys['ArrowDown'] ||keys['s']) { dy= SPD; player.dir=0; }
+      if (keys['ArrowRight']||keys['d']) { dx= SPD; player.dir=2; } // row2=右臉
+      if (keys['ArrowUp']   ||keys['w']) { dy=-SPD; player.dir=3; } // row3=背(上走)
+      if (keys['ArrowDown'] ||keys['s']) { dy= SPD; player.dir=0; } // row0=正面(下走)
       if (dx||dy) {
         const nx=player.wx+dx, ny=player.wy+dy;
         const corners=[[nx+4,ny+20],[nx+28,ny+20],[nx+4,ny+30],[nx+28,ny+30]];
