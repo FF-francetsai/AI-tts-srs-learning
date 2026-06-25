@@ -389,8 +389,8 @@ function buildDomainMap(cleared=[]) {
 
     if (!isLocked) {
       g.addEventListener('click',()=>{ if(window.RPG_ENGINE) RPG_ENGINE.enterDomain(d.key); });
-      g.addEventListener('mouseenter',()=>{ orb.setAttribute('r','21'); });
-      g.addEventListener('mouseleave',()=>{ orb.setAttribute('r','18'); });
+      g.addEventListener('mouseenter',()=>{ planetImg.setAttribute('opacity','1'); glow.setAttribute('stroke-opacity','1'); });
+      g.addEventListener('mouseleave',()=>{ planetImg.setAttribute('opacity', isCleared?'1':'0.85'); glow.setAttribute('stroke-opacity', isCleared?'0.9':'0.5'); });
     }
     svg.appendChild(g);
   });
@@ -579,6 +579,7 @@ function _startWorldScene(scene, domain) {
   }
 
   // ── 圖片與色彩（依星域動態切換）────────────────────────────────────────────
+  const _pKey = domain.guardianChar || 'isabel';  // 必須在 tileset src 之前宣告
   const tileName = (domain.sceneTiles && domain.sceneTiles[0]) || 'Grass_pipo';
   const tileImg = new Image(); tileImg.src = `assets/sprites/tiles/${tileName}.png`;
   // 星域像素 tileset（320×32 PNG，10 tiles × 32px）
@@ -589,7 +590,6 @@ function _startWorldScene(scene, domain) {
   const baseColor = domain.color || '#22d3ee';
 
   // 動態選取地圖與配色（透過 guardianChar 對應 PLANET_MAPS/PLANET_TC）
-  const _pKey = domain.guardianChar || 'isabel';
   const _planetMap = (typeof PLANET_MAPS !== 'undefined' && PLANET_MAPS[_pKey]) || null;
   const _planetTC  = (typeof PLANET_TC  !== 'undefined' && PLANET_TC[_pKey])  || null;
   const _planetBG  = (typeof PLANET_BG  !== 'undefined' && PLANET_BG[_pKey])  || '#1a1a2e';
