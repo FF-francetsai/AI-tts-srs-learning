@@ -214,6 +214,7 @@
 <script src="data.js"></script>
 <script src="rpg-maps.js"></script>
 <script src="rpg-data.js"></script>
+<script src="rpg-design.js"></script>
 
 <!-- ════════════════════════════════════════════════
      RPG_UI — UI 控制層（供 rpg.js 呼叫）
@@ -306,18 +307,18 @@ function buildDomainMap(cleared=[]) {
     [cx, cy+310*0.55],               // 最下（軌道3）
   ];
 
-  // 各星域行星 SVG 配置（純 SVG 繪製，不依賴 SD 圖片）
-  const PLANET_SVG = {
-    'INTRO':{ base:'#0e4d1a', mid:'#1d8c33', hi:'#6eee8c', glow:'#22dd55', seed:1,  freq:'0.42', craters:[[-6,-5,4],[5,6,3],[7,-3,2]] },
-    'DATA': { base:'#020b28', mid:'#0a1f60', hi:'#2a5fdd', glow:'#3399ff', seed:7,  freq:'0.75', craters:[[-5,-6,5],[6,4,4],[-7,5,2]] },
-    'SL':   { base:'#0a1245', mid:'#1a2c90', hi:'#5577ee', glow:'#8899ff', seed:13, freq:'0.52', craters:[[-4,-6,5],[7,3,3],[-6,6,2]] },
-    'DISC': { base:'#200a00', mid:'#4a1c00', hi:'#dd6600', glow:'#ff8800', seed:5,  freq:'0.62', craters:[[5,-5,4],[-6,5,3],[3,7,2]] },
-    'UL':   { base:'#180828', mid:'#48186a', hi:'#cc55ee', glow:'#dd77ff', seed:3,  freq:'0.38', craters:[[-3,-7,3],[7,3,4],[-6,5,2]] },
-    'DL':   { base:'#08001a', mid:'#1a0050', hi:'#5500cc', glow:'#8844ff', seed:11, freq:'0.68', craters:[[-7,-3,5],[4,7,3],[6,-5,4]] },
-    'GEN':  { base:'#281000', mid:'#6a2800', hi:'#ee8800', glow:'#ffbb44', seed:17, freq:'0.48', craters:[[-5,-4,3],[6,6,4],[-3,7,2]] },
-    'RL':   { base:'#100404', mid:'#3a0808', hi:'#aa0000', glow:'#ee2222', seed:9,  freq:'0.82', craters:[[-6,-5,5],[5,4,3],[-4,6,3]] },
-    'ADV':  { base:'#1a1400', mid:'#4a3800', hi:'#ddbb00', glow:'#ffee44', seed:19, freq:'0.44', craters:[[-4,-6,4],[7,4,5],[4,-5,2]] },
-    'CORE': { base:'#030c10', mid:'#082030', hi:'#0e7090', glow:'#00eeff', seed:23, freq:'0.88', craters:[[-7,-4,4],[5,6,3],[-3,-5,3]] },
+  // 各星域行星 SVG 配置（HermesAgent 設計，保留 seed/freq/craters 供紋理用）
+  const _PLANET_SEED = {
+    'INTRO':{ seed:1,  freq:'0.42', craters:[[-6,-5,4],[5,6,3],[7,-3,2]] },
+    'DATA': { seed:7,  freq:'0.75', craters:[[-5,-6,5],[6,4,4],[-7,5,2]] },
+    'SL':   { seed:13, freq:'0.52', craters:[[-4,-6,5],[7,3,3],[-6,6,2]] },
+    'DISC': { seed:5,  freq:'0.62', craters:[[5,-5,4],[-6,5,3],[3,7,2]]  },
+    'UL':   { seed:3,  freq:'0.38', craters:[[-3,-7,3],[7,3,4],[-6,5,2]] },
+    'DL':   { seed:11, freq:'0.68', craters:[[-7,-3,5],[4,7,3],[6,-5,4]] },
+    'GEN':  { seed:17, freq:'0.48', craters:[[-5,-4,3],[6,6,4],[-3,7,2]] },
+    'RL':   { seed:9,  freq:'0.82', craters:[[-6,-5,5],[5,4,3],[-4,6,3]] },
+    'ADV':  { seed:19, freq:'0.44', craters:[[-4,-6,4],[7,4,5],[4,-5,2]] },
+    'CORE': { seed:23, freq:'0.88', craters:[[-7,-4,4],[5,6,3],[-3,-5,3]] },
   };
 
   if (typeof DOMAINS === 'undefined') return;
@@ -325,7 +326,19 @@ function buildDomainMap(cleared=[]) {
     const [px, py] = PLACEMENTS[i] || [cx, cy];
     const isCleared = cleared.includes(d.key);
     const isLocked  = d.unlockAfter && !cleared.includes(d.unlockAfter) && d.key !== 'INTRO';
-    const cfg = PLANET_SVG[d.key] || PLANET_SVG['INTRO'];
+    // 使用 PLANET_DESIGN（HermesAgent）的漸層色，fallback 到舊配色
+    const _pd  = (typeof PLANET_DESIGN !== 'undefined' && PLANET_DESIGN[d.key]) || null;
+    const _ps  = _PLANET_SEED[d.key] || _PLANET_SEED['INTRO'];
+    const cfg  = {
+      hi:      _pd ? _pd.gradient.highlight : '#6eee8c',
+      mid:     _pd ? _pd.gradient.start     : '#1d8c33',
+      base:    _pd ? _pd.gradient.end       : '#0e4d1a',
+      glow:    _pd ? _pd.glowColor          : '#22dd55',
+      ringColor: _pd ? _pd.ringColor        : null,
+      seed:    _ps.seed,
+      freq:    _ps.freq,
+      craters: _ps.craters,
+    };
 
     const g = document.createElementNS(ns,'g');
     g.setAttribute('class','domain-node' + (isLocked?' locked':''));
@@ -423,6 +436,17 @@ function buildDomainMap(cleared=[]) {
     rim.setAttribute('stroke', cfg.glow); rim.setAttribute('stroke-width','2.5');
     rim.setAttribute('stroke-opacity', isCleared?'0.85':'0.45');
     g.appendChild(rim);
+
+    // 行星環（HermesAgent ringColor 特徵）
+    if (cfg.ringColor && !isLocked) {
+      const ring = document.createElementNS(ns,'ellipse');
+      ring.setAttribute('cx',px); ring.setAttribute('cy',py+2);
+      ring.setAttribute('rx','26'); ring.setAttribute('ry','7');
+      ring.setAttribute('fill','none');
+      ring.setAttribute('stroke', cfg.ringColor); ring.setAttribute('stroke-width','3');
+      ring.setAttribute('opacity','0.75');
+      g.insertBefore(ring, rim); // 環在 rim 前方，行星後方
+    }
 
     // 球體高光
     const shine = document.createElementNS(ns,'ellipse');
