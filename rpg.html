@@ -57,12 +57,12 @@
   <!-- 接近 NPC 時的互動提示 -->
   <div id="interact-prompt" class="interact-prompt">💬 點擊 / Enter</div>
 
-  <!-- 手機方向鍵盤 -->
-  <div class="dpad" id="dpad">
-    <button class="dpad-btn" id="dpad-up">▲</button>
-    <button class="dpad-btn" id="dpad-left">◀</button>
-    <button class="dpad-btn" id="dpad-right">▶</button>
-    <button class="dpad-btn" id="dpad-down">▼</button>
+  <!-- 手機虛擬搖桿（雙層圓形） -->
+  <div class="joystick-zone" id="joystick-zone">
+    <div class="joystick-outer" id="joystick-outer">
+      <div class="joystick-mid-ring"></div>
+      <div class="joystick-inner" id="joystick-inner"></div>
+    </div>
   </div>
 </div>
 
@@ -256,15 +256,33 @@ function buildDomainMap(cleared=[]) {
   const ns = 'http://www.w3.org/2000/svg';
   const W=800, H=560, cx=W/2, cy=H/2;
 
-  // 中央 AI 核心太陽
+  // 中央 AI 核心太陽（類太陽風格，脈動光芒）
   const defs = document.createElementNS(ns,'defs');
+
+  // 太陽漸層
   const cg = document.createElementNS(ns,'radialGradient');
   cg.setAttribute('id','core-g'); cg.setAttribute('cx','36%'); cg.setAttribute('cy','32%'); cg.setAttribute('r','68%');
-  [['0%','#fffde8',1],['30%','#fde68a',1],['65%','#f59e0b',0.85],['100%','#78350f',0.3]].forEach(([off,col,op])=>{
+  [['0%','#fffde8',1],['25%','#fef08a',1],['55%','#f59e0b',1],['80%','#d97706',0.9],['100%','#78350f',0.4]].forEach(([off,col,op])=>{
     const s=document.createElementNS(ns,'stop');
     s.setAttribute('offset',off); s.setAttribute('stop-color',col); s.setAttribute('stop-opacity',op); cg.appendChild(s);
   });
-  defs.appendChild(cg); svg.appendChild(defs);
+  defs.appendChild(cg);
+
+  // 外光暈 filter
+  const gfCore = document.createElementNS(ns,'filter');
+  gfCore.setAttribute('id','core-glow'); gfCore.setAttribute('x','-80%'); gfCore.setAttribute('y','-80%');
+  gfCore.setAttribute('width','360%'); gfCore.setAttribute('height','360%');
+  const gbCore = document.createElementNS(ns,'feGaussianBlur');
+  gbCore.setAttribute('stdDeviation','8'); gfCore.appendChild(gbCore); defs.appendChild(gfCore);
+
+  // 光芒 filter（細長，模糊）
+  const rayFlt = document.createElementNS(ns,'filter');
+  rayFlt.setAttribute('id','ray-blur'); rayFlt.setAttribute('x','-100%'); rayFlt.setAttribute('y','-100%');
+  rayFlt.setAttribute('width','400%'); rayFlt.setAttribute('height','400%');
+  const rayGb = document.createElementNS(ns,'feGaussianBlur'); rayGb.setAttribute('stdDeviation','2');
+  rayFlt.appendChild(rayGb); defs.appendChild(rayFlt);
+
+  svg.appendChild(defs);
 
   // 軌道環
   [140,230,310].forEach(r=>{
@@ -278,18 +296,73 @@ function buildDomainMap(cleared=[]) {
 
   // 核心太陽
   const sunG = document.createElementNS(ns,'g');
-  const sunGlow = document.createElementNS(ns,'circle');
-  sunGlow.setAttribute('cx',cx); sunGlow.setAttribute('cy',cy); sunGlow.setAttribute('r','38');
-  sunGlow.setAttribute('fill','rgba(251,191,36,0.12)'); sunG.appendChild(sunGlow);
+
+  // 外層大光暈（最慢脈動，3層疊加）
+  [[70,'rgba(251,191,36,0.06)',4500],[52,'rgba(251,191,36,0.10)',3500],[40,'rgba(253,224,71,0.14)',2800]].forEach(([r,fill,dur],i)=>{
+    const halo = document.createElementNS(ns,'circle');
+    halo.setAttribute('cx',cx); halo.setAttribute('cy',cy); halo.setAttribute('r',r);
+    halo.setAttribute('fill',fill);
+    const anim = document.createElementNS(ns,'animate');
+    anim.setAttribute('attributeName','r'); anim.setAttribute('values',`${r};${r+6};${r}`);
+    anim.setAttribute('dur',`${dur}ms`); anim.setAttribute('repeatCount','indefinite');
+    anim.setAttribute('begin',`${i*900}ms`);
+    halo.appendChild(anim);
+    const anim2 = document.createElementNS(ns,'animate');
+    anim2.setAttribute('attributeName','opacity'); anim2.setAttribute('values','0.7;1;0.7');
+    anim2.setAttribute('dur',`${dur}ms`); anim2.setAttribute('repeatCount','indefinite');
+    anim2.setAttribute('begin',`${i*900}ms`);
+    halo.appendChild(anim2);
+    sunG.appendChild(halo);
+  });
+
+  // 光芒射線（12 條，每條不同長短，緩慢旋轉）
+  const rayG = document.createElementNS(ns,'g');
+  rayG.setAttribute('filter','url(#ray-blur)');
+  for(let i=0; i<12; i++){
+    const ang = (i/12)*Math.PI*2;
+    const isMain = i%3===0;
+    const r1 = isMain ? 28 : 24, r2 = isMain ? 50 : 38;
+    const line = document.createElementNS(ns,'line');
+    line.setAttribute('x1', (cx+r1*Math.cos(ang)).toFixed(1));
+    line.setAttribute('y1', (cy+r1*Math.sin(ang)).toFixed(1));
+    line.setAttribute('x2', (cx+r2*Math.cos(ang)).toFixed(1));
+    line.setAttribute('y2', (cy+r2*Math.sin(ang)).toFixed(1));
+    line.setAttribute('stroke', isMain ? 'rgba(254,240,138,0.75)' : 'rgba(253,224,71,0.45)');
+    line.setAttribute('stroke-width', isMain ? '2.5' : '1.2');
+    line.setAttribute('stroke-linecap','round');
+    rayG.appendChild(line);
+  }
+  // 射線整體緩慢旋轉
+  const rotAnim = document.createElementNS(ns,'animateTransform');
+  rotAnim.setAttribute('attributeName','transform'); rotAnim.setAttribute('type','rotate');
+  rotAnim.setAttribute('from',`0 ${cx} ${cy}`); rotAnim.setAttribute('to',`360 ${cx} ${cy}`);
+  rotAnim.setAttribute('dur','18000ms'); rotAnim.setAttribute('repeatCount','indefinite');
+  rayG.appendChild(rotAnim);
+  sunG.appendChild(rayG);
+
+  // 太陽主體
   const sun = document.createElementNS(ns,'circle');
-  sun.setAttribute('cx',cx); sun.setAttribute('cy',cy); sun.setAttribute('r','22');
+  sun.setAttribute('cx',cx); sun.setAttribute('cy',cy); sun.setAttribute('r','24');
   sun.setAttribute('fill','url(#core-g)'); sun.setAttribute('filter','url(#core-glow)');
+  // 主體輕微脈動
+  const sunAnim = document.createElementNS(ns,'animate');
+  sunAnim.setAttribute('attributeName','r'); sunAnim.setAttribute('values','24;26;24');
+  sunAnim.setAttribute('dur','4200ms'); sunAnim.setAttribute('repeatCount','indefinite');
+  sun.appendChild(sunAnim);
   sunG.appendChild(sun);
+
+  // 球體高光
+  const sunShine = document.createElementNS(ns,'ellipse');
+  sunShine.setAttribute('cx',cx-7); sunShine.setAttribute('cy',cy-7);
+  sunShine.setAttribute('rx','7'); sunShine.setAttribute('ry','5');
+  sunShine.setAttribute('fill','rgba(255,255,255,0.55)'); sunG.appendChild(sunShine);
+
   // AI 文字
   const sunTxt = document.createElementNS(ns,'text');
   sunTxt.setAttribute('x',cx); sunTxt.setAttribute('y',cy+5);
-  sunTxt.setAttribute('text-anchor','middle'); sunTxt.setAttribute('fill','#0a0800');
-  sunTxt.setAttribute('font-size','12'); sunTxt.setAttribute('font-weight','700');
+  sunTxt.setAttribute('text-anchor','middle'); sunTxt.setAttribute('fill','#1a0800');
+  sunTxt.setAttribute('font-size','11'); sunTxt.setAttribute('font-weight','800');
+  sunTxt.setAttribute('letter-spacing','1');
   sunTxt.textContent='AI'; sunG.appendChild(sunTxt);
   svg.appendChild(sunG);
 
@@ -829,16 +902,42 @@ function _startWorldScene(scene, domain) {
     if (distToNPC() < INTERACT_DIST) showSpeechLine(0);
   });
 
-  // 手機 D-pad
-  ['up','down','left','right'].forEach(dir => {
-    const btn = document.getElementById(`dpad-${dir}`);
-    if (!btn) return;
-    const k = {up:'ArrowUp',down:'ArrowDown',left:'ArrowLeft',right:'ArrowRight'}[dir];
-    btn.addEventListener('pointerdown',  () => { keys[k]=true;  });
-    btn.addEventListener('pointerup',    () => { keys[k]=false; });
-    btn.addEventListener('pointerleave', () => { keys[k]=false; });
-    btn.addEventListener('pointercancel',() => { keys[k]=false; });
-  });
+  // 虛擬搖桿
+  (function _setupJoystick() {
+    const zone  = document.getElementById('joystick-zone');
+    const inner = document.getElementById('joystick-inner');
+    if (!zone || !inner) return;
+    const DEAD = 10, MAX_R = 40;
+    let active = false, startX = 0, startY = 0;
+    function applyVec(dx, dy) {
+      keys['ArrowUp']    = dy < -DEAD;
+      keys['ArrowDown']  = dy >  DEAD;
+      keys['ArrowLeft']  = dx < -DEAD;
+      keys['ArrowRight'] = dx >  DEAD;
+      const dist  = Math.sqrt(dx*dx + dy*dy);
+      const clamped = Math.min(dist, MAX_R);
+      const ang = Math.atan2(dy, dx);
+      inner.style.transform = `translate(${(clamped*Math.cos(ang)).toFixed(1)}px,${(clamped*Math.sin(ang)).toFixed(1)}px)`;
+    }
+    function resetAll() {
+      active = false;
+      keys['ArrowUp'] = keys['ArrowDown'] = keys['ArrowLeft'] = keys['ArrowRight'] = false;
+      inner.style.transform = '';
+    }
+    zone.addEventListener('pointerdown', e => {
+      e.preventDefault(); active = true;
+      zone.setPointerCapture(e.pointerId);
+      const r = document.getElementById('joystick-outer').getBoundingClientRect();
+      startX = r.left + r.width/2; startY = r.top + r.height/2;
+      applyVec(e.clientX - startX, e.clientY - startY);
+    }, { passive: false });
+    zone.addEventListener('pointermove', e => {
+      if (!active) return; e.preventDefault();
+      applyVec(e.clientX - startX, e.clientY - startY);
+    }, { passive: false });
+    zone.addEventListener('pointerup',     resetAll);
+    zone.addEventListener('pointercancel', resetAll);
+  })();
 
   // 地面 tile 層
   function drawBg(cam) {
