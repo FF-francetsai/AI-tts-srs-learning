@@ -480,3 +480,14 @@ body {
   0%   { filter: drop-shadow(0 0 8px #ffd700) drop-shadow(0 0 20px #ffaa00); }
   100% { filter: drop-shadow(0 0 14px #ffe680) drop-shadow(0 0 30px #ffcc00); }
 }
+
+/* 戰鬥精靈 - 連對 3 次暴擊特效 */
+#battle-sprite-area { display: flex; align-items: center; }
+canvas.critical {
+  box-shadow: 0 0 12px #ffcc00, 0 0 24px #ff8800;
+  animation: critical-pulse 0.4s ease-in-out infinite alternate;
+}
+@keyframes critical-pulse {
+  from { box-shadow: 0 0 8px #ffcc00, 0 0 16px #ff8800; }
+  to   { box-shadow: 0 0 18px #ffe000, 0 0 36px #ffaa00; }
+}

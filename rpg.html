@@ -104,6 +104,7 @@
 ════════════════════════════════════════════════ -->
 <div id="screen-quiz" class="rpg-screen">
   <div class="quiz-header">
+    <div id="battle-sprite-area"></div>
     <span class="quiz-progress" id="quiz-prog">題目 1 / 5</span>
     <div class="quiz-hp" id="quiz-hp">
       <span class="heart" id="h1">❤️</span>
@@ -648,6 +649,14 @@ const RPG_UI = {
     ['h1','h2','h3'].forEach((id,i)=>{
       document.getElementById(id).className='heart'+(i>=q.hp?' empty':'');
     });
+    // 初始化 / 更新 BattleUI
+    if(!window._battleUI){
+      const container=document.getElementById('battle-sprite-area');
+      const profile=loadCharProfile();
+      const sprite=(profile&&profile.spriteFile)?profile.spriteFile:'Male_01';
+      if(container) window._battleUI=new BattleUI(container,`assets/sprites/characters/${sprite}-1.png`,3);
+    }
+    if(window._battleUI) window._battleUI.updateHP(q.hp,3);
     document.getElementById('quiz-q').textContent = q.text;
     document.getElementById('quiz-hint').textContent = '';
     document.getElementById('quiz-hint').className = 'quiz-hint';
@@ -661,12 +670,15 @@ const RPG_UI = {
       b.addEventListener('click',()=>{
         // 顯示結果
         optEl.querySelectorAll('.quiz-opt').forEach(el=>el.classList.add('disabled'));
-        if(i===q.answer){ b.classList.add('correct'); }
-        else {
+        if(i===q.answer){
+          b.classList.add('correct');
+          if(window._battleUI) window._battleUI.triggerAttack();
+        } else {
           b.classList.add('wrong');
           optEl.children[q.answer]?.classList.add('correct');
           const hint=document.getElementById('quiz-hint');
           hint.textContent='💡 '+q.hint; hint.className='quiz-hint show';
+          if(window._battleUI) window._battleUI.triggerHurt();
         }
         setTimeout(()=>{ if(q.onAnswer) q.onAnswer(i); }, 900);
       });
@@ -1385,6 +1397,79 @@ function _startDlgScene(domain) {
   // 備援：600ms 後強制啟動（部分圖片可能已快取）
   setTimeout(() => { if (!_dlgScenRAF) loop(); }, 600);
   [tileImg, npcImg, plrImg].forEach(img => { if (img.complete) onLoad(); });
+}
+
+// ── OpenClaw 設計：戰鬥精靈動畫系統 ──────────────────────────────────
+class SpriteAnimator {
+  constructor(spriteImage, frameWidth=32, frameHeight=32, framesPerRow=3, row=0, interval=200) {
+    this.image=spriteImage; this.frameWidth=frameWidth; this.frameHeight=frameHeight;
+    this.framesPerRow=framesPerRow; this.row=row; this.interval=interval;
+    this.currentFrame=0; this.timer=null; this.isAnimating=false;
+  }
+  start() {
+    if(this.isAnimating) return;
+    this.isAnimating=true; this.currentFrame=0;
+    this.timer=setInterval(()=>{ this.currentFrame=(this.currentFrame+1)%this.framesPerRow;
+      if(this.onFrameChange) this.onFrameChange(); }, this.interval);
+  }
+  stop() { if(this.timer){clearInterval(this.timer);this.timer=null;} this.isAnimating=false; this.currentFrame=0; }
+  draw(ctx,x,y) {
+    ctx.drawImage(this.image, this.currentFrame*this.frameWidth, this.row*this.frameHeight,
+      this.frameWidth, this.frameHeight, x, y, this.frameWidth, this.frameHeight);
+  }
+}
+
+class BattleUI {
+  constructor(container, spriteSrc, maxHP=3) {
+    this.maxHP=maxHP; this.currentHP=maxHP; this.streak=0;
+    this.canvas=document.createElement('canvas');
+    this.canvas.width=160; this.canvas.height=72;
+    this.canvas.style.cssText='display:block;image-rendering:pixelated;border-radius:6px;';
+    this.ctx=this.canvas.getContext('2d');
+    container.innerHTML=''; container.appendChild(this.canvas);
+    this.spriteX=24; this.spriteY=20; this.shakeOffset=0;
+    this.render=this.render.bind(this);
+    const img=new Image(); img.src=spriteSrc;
+    img.onload=()=>{
+      this.animator=new SpriteAnimator(img,32,32,3,0,200);
+      this.animator.onFrameChange=()=>this.render();
+      this.animator.start(); this.render();
+    };
+  }
+  render() {
+    const {ctx,canvas}=this; ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle='rgba(10,15,30,0.85)'; ctx.fillRect(0,0,canvas.width,canvas.height);
+    this.drawHPBar(ctx, canvas.width-70, 8, 60, 10);
+    if(this.animator) this.animator.draw(ctx, this.spriteX+this.shakeOffset, this.spriteY);
+    else { ctx.fillStyle='#888'; ctx.fillRect(this.spriteX,this.spriteY,32,32); }
+  }
+  drawHPBar(ctx,x,y,w,h) {
+    const pct=this.currentHP/this.maxHP;
+    ctx.fillStyle='#333'; ctx.fillRect(x,y,w,h);
+    ctx.fillStyle=pct>0.5?'#00e060':pct>0.25?'#ffcc00':'#ff3030';
+    ctx.fillRect(x,y,w*pct,h);
+    ctx.strokeStyle='rgba(255,255,255,0.5)'; ctx.lineWidth=1; ctx.strokeRect(x,y,w,h);
+  }
+  triggerAttack() {
+    this.canvas.style.transition='none'; this.canvas.style.transform='translateX(20px)';
+    requestAnimationFrame(()=>{ this.canvas.style.transition='transform 0.12s ease'; this.canvas.style.transform='translateX(0)'; });
+    this.streak++; this.updateStreakEffect();
+  }
+  triggerHurt() { this.shake(8,250); this.streak=0; this.updateStreakEffect(); }
+  shake(intensity=8,duration=250) {
+    const t0=performance.now();
+    const step=()=>{
+      const e=performance.now()-t0;
+      if(e>=duration){this.shakeOffset=0;this.render();return;}
+      const p=e/duration;
+      this.shakeOffset=Math.sin(p*Math.PI*6)*intensity*(1-p);
+      this.render(); requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+  updateStreakEffect() { this.canvas.classList.toggle('critical',this.streak>=3); }
+  updateHP(current,max) { this.currentHP=current; if(max) this.maxHP=max; this.render(); }
+  destroy() { if(this.animator) this.animator.stop(); }
 }
 
 function _typewriter(el, text, done, speed=28) {
