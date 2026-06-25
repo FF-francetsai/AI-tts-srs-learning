@@ -182,12 +182,14 @@ body {
    畫面 3：關卡測驗
 ══════════════════════════════════════════════════════ */
 #screen-quiz {
-  background: radial-gradient(ellipse at 50% 30%, rgba(20,10,40,0.97) 0%, var(--bg) 80%);
-  padding: 20px;
+  background: rgba(6,11,19,0.55);
+  backdrop-filter: blur(2px);
+  padding: 0;
+  justify-content: flex-end;
 }
 
 .quiz-header {
-  position: fixed; top: 0; left: 0; right: 0; height: 50px;
+  position: fixed; top: 0; left: 0; right: 0; height: 90px;
   display: flex; align-items: center; padding: 0 20px; gap: 12px;
   background: rgba(6,11,19,0.92); border-bottom: 1px solid var(--border);
   backdrop-filter: blur(8px); z-index: 20;
@@ -198,8 +200,15 @@ body {
 .heart.empty { opacity: 0.2; }
 
 .quiz-body {
-  width: 100%; max-width: 640px; padding-top: 66px;
+  width: 100%; max-width: 640px;
+  padding: 16px 20px 24px;
+  position: fixed; bottom: 0; left: 0; right: 0; max-height: 70vh;
+  overflow-y: auto;
   display: flex; flex-direction: column; gap: 20px;
+  background: rgba(6,11,19,0.90);
+  border-top: 1px solid rgba(125,211,252,0.2);
+  border-radius: 16px 16px 0 0;
+  margin: 0 auto;
 }
 .quiz-question {
   font-size: 17px; line-height: 1.7; font-weight: 600;
@@ -341,7 +350,7 @@ body {
   .dialogue-text { font-size: 13px; }
   .choice-btn { font-size: 12px; padding: 8px 12px; }
 
-  .quiz-body { padding-top: 56px; gap: 12px; }
+  .quiz-body { padding: 12px 16px 20px; gap: 12px; }
   .quiz-question { font-size: 14px; padding: 14px 16px; }
   .quiz-opt { padding: 11px 14px; font-size: 13px; }
   .result-emoji { font-size: 48px; }
@@ -363,7 +372,7 @@ body {
   .char-portrait { width: 80px; }
   .dialogue-text { font-size: 14px; }
 
-  .quiz-body { max-width: 100%; padding: 0 12px; padding-top: 60px; }
+  .quiz-body { max-width: 100%; padding: 12px 12px 20px; }
   .quiz-question { font-size: 15px; }
 }
 
@@ -482,7 +491,7 @@ body {
 }
 
 /* 戰鬥精靈 - 連對 3 次暴擊特效 */
-#battle-sprite-area { display: flex; align-items: center; }
+#battle-sprite-area { display: flex; align-items: center; height: 100%; overflow: visible; }
 canvas.critical {
   box-shadow: 0 0 12px #ffcc00, 0 0 24px #ff8800;
   animation: critical-pulse 0.4s ease-in-out infinite alternate;

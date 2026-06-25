@@ -38,6 +38,7 @@
     <div class="creation-field" style="margin-top:12px">
       <label class="field-label" for="char-name-input">星際代號</label>
       <input id="char-name-input" type="text" placeholder="輸入你的代號…" maxlength="16" autocomplete="off"/>
+      <div style="font-size:11px;color:rgba(180,200,255,0.5);margin-top:4px">可自行修改，遊戲中可在設定中重新命名</div>
     </div>
 
     <button id="start-adventure-btn" class="start-btn">✨ 開始冒險</button>
@@ -470,8 +471,13 @@ function buildDomainMap(cleared=[]) {
       desat.setAttribute('in','noise'); desat.setAttribute('type','saturate');
       desat.setAttribute('values','0.25'); desat.setAttribute('result','gn');
       flt.appendChild(desat);
+      // clip 噪波到圓形邊界，避免方形 bounding box 洩漏
+      const comp = document.createElementNS(ns,'feComposite');
+      comp.setAttribute('in','gn'); comp.setAttribute('in2','SourceGraphic');
+      comp.setAttribute('operator','in'); comp.setAttribute('result','gn-clip');
+      flt.appendChild(comp);
       const bl = document.createElementNS(ns,'feBlend');
-      bl.setAttribute('in','SourceGraphic'); bl.setAttribute('in2','gn');
+      bl.setAttribute('in','SourceGraphic'); bl.setAttribute('in2','gn-clip');
       bl.setAttribute('mode','overlay');
       flt.appendChild(bl);
       defs.appendChild(flt);
@@ -1272,8 +1278,14 @@ function _setScreen(name) {
     if (_dlgSprTimer) { clearInterval(_dlgSprTimer); _dlgSprTimer = null; }
     if (_worldSceneCleanup) { _worldSceneCleanup(); _worldSceneCleanup = null; }
   }
-  // 回地圖時清除玩家位置（fix3：每次進入星域從起點開始）
   if (name === 'map') _worldPlayerState = null;
+  if (name === 'quiz') {
+    // quiz 以 overlay 方式疊加在目前場景上，不隱藏底層
+    document.getElementById('screen-quiz')?.classList.add('active');
+    return;
+  }
+  // 離開 quiz 時移除 overlay
+  document.getElementById('screen-quiz')?.classList.remove('active');
   document.querySelectorAll('.rpg-screen').forEach(el=>el.classList.remove('active'));
   document.getElementById('screen-'+name)?.classList.add('active');
 }
@@ -1512,6 +1524,10 @@ function initCharCreate() {
     'Male_01','Male_02','Male_03','Male_04','Male_05',
     'Female_01','Female_02','Female_03','Female_04','Female_05'
   ];
+  const PRESET_NAMES = {
+    Male_01:'艾倫', Male_02:'鈞明', Male_03:'浩南', Male_04:'澤恩', Male_05:'凱文',
+    Female_01:'伊菈', Female_02:'璃月', Female_03:'安琪', Female_04:'蒂芙', Female_05:'雪晴'
+  };
   let selectedChar = 'Male_01';
   let activeFilter = 'all';
   let previewFrame = 0;
@@ -1568,7 +1584,11 @@ function initCharCreate() {
         document.querySelectorAll('.char-cell').forEach(c => c.classList.remove('active'));
         cell.classList.add('active');
         selectedChar = name;
-        previewLabel.textContent = name;
+        previewLabel.textContent = PRESET_NAMES[name] || name;
+        const inp = document.getElementById('char-name-input');
+        if (inp && (!inp.value || Object.values(PRESET_NAMES).includes(inp.value))) {
+          inp.value = PRESET_NAMES[name] || '';
+        }
         previewFrame = 0;
         startPreviewAnim(name);
       });
@@ -1597,6 +1617,8 @@ function initCharCreate() {
 
   buildGrid('all');
   startPreviewAnim(selectedChar);
+  const nameInp = document.getElementById('char-name-input');
+  if (nameInp && !nameInp.value) nameInp.value = PRESET_NAMES[selectedChar] || '';
 }
 
 // 初始化
