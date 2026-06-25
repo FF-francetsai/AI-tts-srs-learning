@@ -148,11 +148,12 @@ body {
 /* 手機方向鍵盤 */
 /* 虛擬搖桿（雙層圓形，類 iPhone 搖桿） */
 .joystick-zone {
-  position: fixed; bottom: 24px; left: 24px; z-index: 200;
+  position: fixed; bottom: 80px; left: 20px; z-index: 300;
   display: none; width: 120px; height: 120px;
   touch-action: none; -webkit-user-select: none; user-select: none;
 }
 .layout-mobile .joystick-zone, .layout-tablet .joystick-zone { display: block; }
+@media (max-width: 480px) { .joystick-zone { bottom: 72px; } }
 
 .joystick-outer {
   width: 120px; height: 120px; border-radius: 50%;
