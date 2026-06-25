@@ -16,82 +16,30 @@
 ════════════════════════════════════════════════ -->
 <div id="character-creation-screen" class="creation-overlay">
   <div class="creation-panel">
-    <h1 class="creation-title">🚀 星際聯盟 · 角色創建</h1>
+    <h1 class="creation-title">🚀 星際聯盟 · 選擇角色</h1>
+
+    <!-- 大型預覽（動畫精靈） -->
     <div class="preview-area">
-      <svg id="character-preview-svg" viewBox="0 0 80 100" width="100" height="125">
-        <rect id="skin-body" x="25" y="45" width="30" height="35" rx="10" fill="#f5c6a0"/>
-        <rect id="skin-head" x="28" y="15" width="24" height="24" rx="8" fill="#f5c6a0"/>
-        <rect id="hair" x="25" y="10" width="30" height="18" rx="10" fill="#4a3728"/>
-        <rect id="hair-side-l" x="24" y="13" width="6" height="18" rx="3" fill="#4a3728"/>
-        <rect id="hair-side-r" x="50" y="13" width="6" height="18" rx="3" fill="#4a3728"/>
-        <rect id="outfit" x="26" y="50" width="28" height="34" rx="6" fill="#3b5998"/>
-        <rect id="outfit-accent" x="36" y="55" width="8" height="25" rx="2" fill="#8b9dc3"/>
-        <circle cx="35" cy="26" r="2" fill="#202020"/>
-        <circle cx="45" cy="26" r="2" fill="#202020"/>
-        <rect x="38" y="33" width="4" height="2" rx="1" fill="#202020"/>
-      </svg>
-      <div class="preview-label">預覽</div>
+      <canvas id="char-preview-canvas" width="64" height="64"></canvas>
+      <div class="preview-label" id="char-preview-name">Male_01</div>
     </div>
-    <div class="creation-field">
-      <label class="field-label">性別</label>
-      <div class="gender-selector">
-        <button class="gender-btn active" data-gender="male">
-          <svg viewBox="0 0 32 40" width="36" height="45">
-            <rect x="10" y="4" width="12" height="10" rx="4" fill="#7a9ec0"/>
-            <rect x="8" y="15" width="16" height="20" rx="6" fill="#3b5998"/>
-            <rect x="6" y="18" width="5" height="12" rx="2" fill="#3b5998"/>
-            <rect x="21" y="18" width="5" height="12" rx="2" fill="#3b5998"/>
-          </svg>
-          <span>男性</span>
-        </button>
-        <button class="gender-btn" data-gender="female">
-          <svg viewBox="0 0 32 40" width="36" height="45">
-            <rect x="10" y="4" width="12" height="10" rx="5" fill="#c87090"/>
-            <rect x="9" y="15" width="14" height="18" rx="7" fill="#d87093"/>
-            <rect x="8" y="18" width="4" height="11" rx="2" fill="#d87093"/>
-            <rect x="20" y="18" width="4" height="11" rx="2" fill="#d87093"/>
-            <rect x="10" y="16" width="12" height="3" rx="1" fill="#f0a0b0"/>
-          </svg>
-          <span>女性</span>
-        </button>
-        <button class="gender-btn" data-gender="other">
-          <svg viewBox="0 0 32 40" width="36" height="45">
-            <rect x="10" y="4" width="12" height="10" rx="3" fill="#778"/>
-            <rect x="9" y="15" width="14" height="19" rx="6" fill="#4a7c59"/>
-            <rect x="7" y="18" width="5" height="11" rx="2" fill="#4a7c59"/>
-            <rect x="20" y="18" width="5" height="11" rx="2" fill="#4a7c59"/>
-            <circle cx="16" cy="6" r="3" fill="#aaf"/>
-          </svg>
-          <span>其他</span>
-        </button>
-      </div>
+
+    <!-- 性別篩選 -->
+    <div class="gender-filter">
+      <button class="gf-btn active" data-filter="all">全部</button>
+      <button class="gf-btn" data-filter="Male">男性</button>
+      <button class="gf-btn" data-filter="Female">女性</button>
     </div>
-    <div class="creation-field">
-      <label class="field-label" for="char-name-input">名稱</label>
-      <input id="char-name-input" type="text" placeholder="輸入你的星際代號…" maxlength="16" autocomplete="off"/>
+
+    <!-- 角色選擇格 -->
+    <div class="char-grid" id="char-grid"></div>
+
+    <!-- 名稱 -->
+    <div class="creation-field" style="margin-top:12px">
+      <label class="field-label" for="char-name-input">星際代號</label>
+      <input id="char-name-input" type="text" placeholder="輸入你的代號…" maxlength="16" autocomplete="off"/>
     </div>
-    <div class="creation-field">
-      <label class="field-label">髮色</label>
-      <div class="color-palette" id="hair-color-palette">
-        <span class="color-dot active" data-color="#4a3728" style="background:#4a3728" title="深棕"></span>
-        <span class="color-dot" data-color="#1c1c1c" style="background:#1c1c1c" title="黑"></span>
-        <span class="color-dot" data-color="#c8a96e" style="background:#c8a96e" title="金"></span>
-        <span class="color-dot" data-color="#d45d5d" style="background:#d45d5d" title="紅"></span>
-        <span class="color-dot" data-color="#6b8e23" style="background:#6b8e23" title="綠"></span>
-        <span class="color-dot" data-color="#a0a0ff" style="background:#a0a0ff" title="藍"></span>
-      </div>
-    </div>
-    <div class="creation-field">
-      <label class="field-label">膚色</label>
-      <div class="color-palette" id="skin-color-palette">
-        <span class="color-dot active" data-color="#f5c6a0" style="background:#f5c6a0" title="白皙"></span>
-        <span class="color-dot" data-color="#d4a574" style="background:#d4a574" title="小麥"></span>
-        <span class="color-dot" data-color="#b37b5e" style="background:#b37b5e" title="健康棕"></span>
-        <span class="color-dot" data-color="#8d5524" style="background:#8d5524" title="深褐"></span>
-        <span class="color-dot" data-color="#e0b0ff" style="background:#e0b0ff" title="異星"></span>
-        <span class="color-dot" data-color="#a0d0ff" style="background:#a0d0ff" title="水星"></span>
-      </div>
-    </div>
+
     <button id="start-adventure-btn" class="start-btn">✨ 開始冒險</button>
   </div>
 </div>
@@ -1471,65 +1419,99 @@ function initCharCreate() {
   const screen = document.getElementById('character-creation-screen');
   if (!screen) return;
 
-  // 若已有角色資料，直接跳過創建
   if (loadCharProfile()) { screen.style.display = 'none'; return; }
-
   screen.style.display = 'flex';
 
-  const previewSvg = document.getElementById('character-preview-svg');
-  let selectedGender = 'male';
-  let selectedHair = '#4a3728';
-  let selectedSkin = '#f5c6a0';
+  // 所有可用角色清單
+  const CHARS = [
+    'Male_01','Male_02','Male_03','Male_04','Male_05',
+    'Female_01','Female_02','Female_03','Female_04','Female_05'
+  ];
+  let selectedChar = 'Male_01';
+  let activeFilter = 'all';
+  let previewFrame = 0;
+  let previewTimer = null;
 
-  function updatePreview() {
-    document.getElementById('skin-body').setAttribute('fill', selectedSkin);
-    document.getElementById('skin-head').setAttribute('fill', selectedSkin);
-    document.getElementById('hair').setAttribute('fill', selectedHair);
-    document.getElementById('hair-side-l').setAttribute('fill', selectedHair);
-    document.getElementById('hair-side-r').setAttribute('fill', selectedHair);
-    const outfitColors = { male:'#3b5998', female:'#d87093', other:'#4a7c59' };
-    document.getElementById('outfit').setAttribute('fill', outfitColors[selectedGender] || '#3b5998');
+  const previewCanvas = document.getElementById('char-preview-canvas');
+  const previewCtx = previewCanvas.getContext('2d');
+  const previewLabel = document.getElementById('char-preview-name');
+
+  // 預覽動畫（走路第 0 列 = 面向正面，3 幀）
+  function startPreviewAnim(spriteFile) {
+    if (previewTimer) clearInterval(previewTimer);
+    const img = new Image();
+    img.src = `assets/sprites/characters/${spriteFile}-1.png`;
+    img.onload = () => {
+      const draw = () => {
+        previewCtx.imageSmoothingEnabled = false;
+        previewCtx.clearRect(0, 0, 64, 64);
+        previewCtx.drawImage(img, previewFrame * 32, 0, 32, 32, 0, 0, 64, 64);
+      };
+      draw();
+      previewTimer = setInterval(() => {
+        previewFrame = (previewFrame + 1) % 3;
+        draw();
+      }, 200);
+    };
   }
 
-  // 性別選擇
-  document.querySelectorAll('.gender-btn').forEach(btn => {
+  // 建立角色格
+  function buildGrid(filter) {
+    const grid = document.getElementById('char-grid');
+    grid.innerHTML = '';
+    CHARS.filter(c => filter === 'all' || c.startsWith(filter)).forEach(name => {
+      const cell = document.createElement('div');
+      cell.className = 'char-cell' + (name === selectedChar ? ' active' : '');
+      cell.title = name;
+
+      const cvs = document.createElement('canvas');
+      cvs.width = 32; cvs.height = 32;
+      const img = new Image();
+      img.src = `assets/sprites/characters/${name}-1.png`;
+      img.onload = () => {
+        const ctx2 = cvs.getContext('2d');
+        ctx2.imageSmoothingEnabled = false;
+        ctx2.drawImage(img, 0, 0, 32, 32, 0, 0, 32, 32);
+      };
+      cell.appendChild(cvs);
+
+      const lbl = document.createElement('span');
+      lbl.textContent = name.replace('_', ' ');
+      cell.appendChild(lbl);
+
+      cell.addEventListener('click', () => {
+        document.querySelectorAll('.char-cell').forEach(c => c.classList.remove('active'));
+        cell.classList.add('active');
+        selectedChar = name;
+        previewLabel.textContent = name;
+        previewFrame = 0;
+        startPreviewAnim(name);
+      });
+      grid.appendChild(cell);
+    });
+  }
+
+  // 性別篩選
+  document.querySelectorAll('.gf-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.gf-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      selectedGender = btn.dataset.gender;
-      updatePreview();
-    });
-  });
-
-  // 髮色
-  document.querySelectorAll('#hair-color-palette .color-dot').forEach(dot => {
-    dot.addEventListener('click', () => {
-      document.querySelectorAll('#hair-color-palette .color-dot').forEach(d => d.classList.remove('active'));
-      dot.classList.add('active');
-      selectedHair = dot.dataset.color;
-      updatePreview();
-    });
-  });
-
-  // 膚色
-  document.querySelectorAll('#skin-color-palette .color-dot').forEach(dot => {
-    dot.addEventListener('click', () => {
-      document.querySelectorAll('#skin-color-palette .color-dot').forEach(d => d.classList.remove('active'));
-      dot.classList.add('active');
-      selectedSkin = dot.dataset.color;
-      updatePreview();
+      activeFilter = btn.dataset.filter;
+      buildGrid(activeFilter);
     });
   });
 
   // 開始冒險
   document.getElementById('start-adventure-btn').addEventListener('click', () => {
+    if (previewTimer) clearInterval(previewTimer);
     const name = (document.getElementById('char-name-input').value || '').trim() || '見習士';
-    const profile = { name, gender: selectedGender, hairColor: selectedHair, skinColor: selectedSkin, createdAt: Date.now() };
-    saveCharProfile(profile);
+    const gender = selectedChar.startsWith('Female') ? 'female' : 'male';
+    saveCharProfile({ name, gender, spriteFile: selectedChar, createdAt: Date.now() });
     screen.style.display = 'none';
   });
 
-  updatePreview();
+  buildGrid('all');
+  startPreviewAnim(selectedChar);
 }
 
 // 初始化
