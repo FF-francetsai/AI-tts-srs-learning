@@ -833,67 +833,162 @@ function _startWorldScene(scene, domain) {
         ctx.fillStyle = TC[t]||TC[0];
         ctx.fillRect(sx, sy, TS, TS);
       }
-      // 水域波光動畫疊加
+      // 水域波光動畫
       if(t===4) {
         const wc = TC[4]||'#1a5080';
-        ctx.fillStyle = wc + Math.round((0.15+0.1*Math.sin(tick*0.05+(c+r)*0.8))*255).toString(16).padStart(2,'0');
+        const wa = 0.18+0.08*Math.sin(tick*0.06+(c+r)*0.9);
+        ctx.fillStyle = wc + Math.round(wa*255).toString(16).padStart(2,'0');
         ctx.fillRect(sx,sy,TS,TS);
+        // 波紋閃光（水平弧線動畫）
+        ctx.strokeStyle='rgba(255,255,255,'+( 0.25+0.15*Math.sin(tick*0.08+c*1.2))+')';
+        ctx.lineWidth=1;
+        const wo=(tick*0.5+c*3)%TS;
+        ctx.beginPath();
+        ctx.arc(sx+wo, sy+10, 5, Math.PI, 0); ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(sx+(wo+14)%TS, sy+22, 4, Math.PI, 0); ctx.stroke();
       }
-      // 石板路縫隙
+      // 石板路磚縫
       if(t===6||t===9) {
-        ctx.strokeStyle='rgba(0,0,0,0.15)'; ctx.lineWidth=1;
+        ctx.strokeStyle='rgba(0,0,0,0.18)'; ctx.lineWidth=1;
         ctx.strokeRect(sx+0.5,sy+0.5,TS-1,TS-1);
+        // 石板光澤（左上亮角）
+        ctx.fillStyle='rgba(255,255,255,0.08)';
+        ctx.fillRect(sx,sy,TS/2,TS/2);
       }
-      // 樹木基座陰影
+      // 樹木基座地影（在 bg 層畫地影，overlay 畫樹冠）
       if(t===3) {
-        ctx.fillStyle='rgba(0,0,0,0.3)';
-        ctx.beginPath(); ctx.ellipse(sx+16,sy+26,5,4,0,0,Math.PI*2); ctx.fill();
+        ctx.fillStyle='rgba(0,0,0,0.35)';
+        ctx.beginPath(); ctx.ellipse(sx+16,sy+25,8,4,0,0,Math.PI*2); ctx.fill();
       }
-      // 花朵高光
+      // 花叢：小亮點隨時間閃爍
       if(t===2) {
-        ctx.fillStyle='rgba(255,255,255,0.35)';
-        ctx.beginPath(); ctx.ellipse(sx+10,sy+10,4,4,0,0,Math.PI*2); ctx.fill();
+        const fi = 0.3+0.25*Math.sin(tick*0.07+c*1.5+r*2.1);
+        ctx.fillStyle='rgba(255,255,220,'+fi+')';
+        ctx.beginPath(); ctx.arc(sx+8,sy+8,3,0,Math.PI*2); ctx.fill();
+        ctx.beginPath(); ctx.arc(sx+22,sy+18,2,0,Math.PI*2); ctx.fill();
+      }
+      // 沙地顆粒點（每隔幾 tile 出現微光）
+      if(t===7 && (c*7+r*13)%11<3) {
+        ctx.fillStyle='rgba(255,245,180,0.3)';
+        ctx.beginPath(); ctx.arc(sx+((c*11+r*7)%28)+2, sy+((c*5+r*9)%24)+2, 1, 0, Math.PI*2); ctx.fill();
       }
     }
   }
 
-  // 精靈層上方疊加（樹冠、障礙頂部、建築細節）
+  // 精靈層上方疊加（樹冠、建築牆壁、岩石 3D 立體細節）
   function drawOverlay(cam) {
     const sc=~~(cam.x/TS)-1, ec=~~((cam.x+cvs.width)/TS)+1;
     const sr=~~(cam.y/TS)-1, er=~~((cam.y+cvs.height)/TS)+1;
-    // 決定樹冠/障礙顏色（依星域主色調）
-    const _tc3 = TC[3]||'#2a5018';
-    const _tc3hi = (_pKey==='atlas'||_pKey==='forge') ? '#607d8b' :
-                   (_pKey==='kael') ? '#3f51b5' :
-                   (_pKey==='moon') ? '#4a148c' : '#2a6210';
-    const _tc3lo = (_pKey==='atlas'||_pKey==='forge') ? '#455a64' :
-                   (_pKey==='kael') ? '#283593' :
-                   (_pKey==='moon') ? '#311b92' : '#3a7a18';
+
+    // 是否為科技/室內場景（決定樹型）
+    const isMech = ['atlas','dada','sara','liyang'].includes(_pKey);
+    const isDark  = ['moon','dada','atlas'].includes(_pKey);
+    const baseC   = baseColor||'#22d3ee';
+    const wallLit = isDark ? 'rgba(255,255,255,0.18)' : 'rgba(255,255,255,0.25)';
+    const wallDk  = 'rgba(0,0,0,0.45)';
+
     for(let r=sr;r<=er;r++) for(let c=sc;c<=ec;c++) {
       const cr=Math.max(0,Math.min(ROWS-1,r)), cc=Math.max(0,Math.min(COLS-1,c));
       const t=MAP[cr][cc];
       const sx=c*TS-cam.x, sy=r*TS-cam.y;
-      if(t===3) { // 樹冠 / 障礙頂部（圓形，顏色隨星域）
+
+      if(t===3) {
+        // ── 樹木 / 機械障礙物 ─────────────────────────────────
         ctx.save();
-        ctx.fillStyle=_tc3hi; ctx.shadowColor=_tc3; ctx.shadowBlur=6;
-        ctx.beginPath(); ctx.ellipse(sx+16,sy+4,19,17,0,0,Math.PI*2); ctx.fill();
-        ctx.fillStyle=_tc3lo;
-        ctx.beginPath(); ctx.ellipse(sx+13,sy+0,11,10,0,0,Math.PI*2); ctx.fill();
-        ctx.restore();
-      } else if(t===8) { // 牆 / 機械壁磚紋
-        ctx.fillStyle='rgba(0,0,0,0.22)'; ctx.fillRect(sx,sy,TS,TS);
-        ctx.strokeStyle='rgba(255,255,255,0.12)'; ctx.lineWidth=1;
-        ctx.beginPath();
-        ctx.moveTo(sx,sy+10); ctx.lineTo(sx+TS,sy+10);
-        ctx.moveTo(sx,sy+20); ctx.lineTo(sx+TS,sy+20);
-        ctx.stroke();
-        // 機械鉚釘點（for industrial planets）
-        if(_pKey==='atlas'||_pKey==='forge') {
-          ctx.fillStyle='rgba(150,200,220,0.4)';
-          [[3,3],[3,TS-6],[TS-6,3],[TS-6,TS-6]].forEach(([dx,dy])=>{
-            ctx.beginPath(); ctx.arc(sx+dx,sy+dy,2,0,Math.PI*2); ctx.fill();
+        if(isMech) {
+          // 科技場景：機械柱
+          ctx.fillStyle=TC[8]||'#333';
+          ctx.fillRect(sx+10,sy+2,12,28);
+          // 頂蓋
+          ctx.fillStyle=wallLit;
+          ctx.fillRect(sx+8,sy,16,6);
+          // 發光線
+          ctx.strokeStyle=baseC; ctx.lineWidth=1; ctx.globalAlpha=0.7;
+          ctx.strokeRect(sx+11,sy+4,10,24);
+          // 鉚釘
+          ctx.fillStyle=baseC; ctx.globalAlpha=0.9;
+          [[13,6],[19,6],[13,26],[19,26]].forEach(([dx,dy])=>{
+            ctx.beginPath(); ctx.arc(sx+dx,sy+dy,1.5,0,Math.PI*2); ctx.fill();
           });
+        } else {
+          // 自然場景：三層樹冠
+          const tc = TC[3]||'#1e5010';
+          const hi = TC[2]||'#4a8c28';
+          // 樹幹（從 tileset 已有，加強暗影）
+          ctx.fillStyle='rgba(40,20,10,0.55)';
+          ctx.fillRect(sx+12,sy+20,8,14);
+          // 後層樹冠（陰影）
+          ctx.fillStyle=tc; ctx.shadowBlur=0;
+          ctx.beginPath(); ctx.ellipse(sx+16,sy+10,16,14,0,0,Math.PI*2); ctx.fill();
+          // 中層樹冠
+          ctx.fillStyle=hi;
+          ctx.beginPath(); ctx.ellipse(sx+16,sy+7,13,12,0,0,Math.PI*2); ctx.fill();
+          // 頂部高光
+          ctx.fillStyle='rgba(255,255,255,0.22)';
+          ctx.beginPath(); ctx.ellipse(sx+13,sy+4,6,5,0,0,Math.PI*2); ctx.fill();
+          // 樹冠底部陰影
+          ctx.fillStyle='rgba(0,0,0,0.3)';
+          ctx.beginPath(); ctx.ellipse(sx+16,sy+20,10,5,0,0,Math.PI*2); ctx.fill();
         }
+        ctx.restore();
+
+      } else if(t===8) {
+        // ── 建築牆壁（等角磚塊立體感）─────────────────────────
+        ctx.save();
+        // 正面磚壁（tileset 已畫，加深影）
+        ctx.fillStyle='rgba(0,0,0,0.28)'; ctx.fillRect(sx,sy,TS,TS);
+        // 頂面（3D 屋頂效果）
+        ctx.fillStyle=wallLit;
+        ctx.beginPath();
+        ctx.moveTo(sx,sy); ctx.lineTo(sx+TS,sy);
+        ctx.lineTo(sx+TS,sy+6); ctx.lineTo(sx,sy+6); ctx.closePath();
+        ctx.fill();
+        // 右側面陰影
+        ctx.fillStyle=wallDk;
+        ctx.beginPath();
+        ctx.moveTo(sx+TS-4,sy+6); ctx.lineTo(sx+TS,sy+6);
+        ctx.lineTo(sx+TS,sy+TS); ctx.lineTo(sx+TS-4,sy+TS); ctx.closePath();
+        ctx.fill();
+        // 磚縫線（水平）
+        ctx.strokeStyle=wallLit; ctx.lineWidth=0.8;
+        ctx.globalAlpha=0.5;
+        [sy+12, sy+20, sy+28].forEach(wy=>{
+          ctx.beginPath(); ctx.moveTo(sx+1,wy); ctx.lineTo(sx+TS-1,wy); ctx.stroke();
+        });
+        // 窗口（非邊界牆才加窗）
+        if(cr>0&&cr<ROWS-1&&cc>0&&cc<COLS-1) {
+          const winC = baseC + '99';
+          ctx.fillStyle=winC; ctx.globalAlpha=0.9;
+          ctx.fillRect(sx+8,sy+9,7,6);
+          ctx.fillRect(sx+18,sy+9,7,6);
+          // 窗框
+          ctx.strokeStyle='rgba(255,255,255,0.4)'; ctx.lineWidth=1;
+          ctx.strokeRect(sx+8,sy+9,7,6); ctx.strokeRect(sx+18,sy+9,7,6);
+          // 窗內十字
+          ctx.beginPath();
+          ctx.moveTo(sx+11.5,sy+9); ctx.lineTo(sx+11.5,sy+15);
+          ctx.moveTo(sx+8,sy+12); ctx.lineTo(sx+15,sy+12);
+          ctx.moveTo(sx+21.5,sy+9); ctx.lineTo(sx+21.5,sy+15);
+          ctx.moveTo(sx+18,sy+12); ctx.lineTo(sx+25,sy+12);
+          ctx.stroke();
+        }
+        ctx.restore();
+
+      } else if(t===5) {
+        // ── 岩石（3D 球體立體感）─────────────────────────────────
+        ctx.save();
+        const rc = TC[5]||'#888';
+        const rg = ctx.createRadialGradient(sx+12,sy+10,2,sx+16,sy+16,16);
+        rg.addColorStop(0,'rgba(255,255,255,0.45)');
+        rg.addColorStop(0.4,rc+'cc');
+        rg.addColorStop(1,'rgba(0,0,0,0.6)');
+        ctx.fillStyle=rg;
+        ctx.beginPath(); ctx.ellipse(sx+16,sy+17,13,11,0,0,Math.PI*2); ctx.fill();
+        // 底部陰影
+        ctx.fillStyle='rgba(0,0,0,0.35)';
+        ctx.beginPath(); ctx.ellipse(sx+16,sy+27,12,4,0,0,Math.PI*2); ctx.fill();
+        ctx.restore();
       }
     }
   }
