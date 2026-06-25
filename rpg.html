@@ -306,59 +306,143 @@ function buildDomainMap(cleared=[]) {
     [cx, cy+310*0.55],               // 最下（軌道3）
   ];
 
+  // 各星域行星 SVG 配置（純 SVG 繪製，不依賴 SD 圖片）
+  const PLANET_SVG = {
+    'INTRO':{ base:'#0e4d1a', mid:'#1d8c33', hi:'#6eee8c', glow:'#22dd55', seed:1,  freq:'0.42', craters:[[-6,-5,4],[5,6,3],[7,-3,2]] },
+    'DATA': { base:'#020b28', mid:'#0a1f60', hi:'#2a5fdd', glow:'#3399ff', seed:7,  freq:'0.75', craters:[[-5,-6,5],[6,4,4],[-7,5,2]] },
+    'SL':   { base:'#0a1245', mid:'#1a2c90', hi:'#5577ee', glow:'#8899ff', seed:13, freq:'0.52', craters:[[-4,-6,5],[7,3,3],[-6,6,2]] },
+    'DISC': { base:'#200a00', mid:'#4a1c00', hi:'#dd6600', glow:'#ff8800', seed:5,  freq:'0.62', craters:[[5,-5,4],[-6,5,3],[3,7,2]] },
+    'UL':   { base:'#180828', mid:'#48186a', hi:'#cc55ee', glow:'#dd77ff', seed:3,  freq:'0.38', craters:[[-3,-7,3],[7,3,4],[-6,5,2]] },
+    'DL':   { base:'#08001a', mid:'#1a0050', hi:'#5500cc', glow:'#8844ff', seed:11, freq:'0.68', craters:[[-7,-3,5],[4,7,3],[6,-5,4]] },
+    'GEN':  { base:'#281000', mid:'#6a2800', hi:'#ee8800', glow:'#ffbb44', seed:17, freq:'0.48', craters:[[-5,-4,3],[6,6,4],[-3,7,2]] },
+    'RL':   { base:'#100404', mid:'#3a0808', hi:'#aa0000', glow:'#ee2222', seed:9,  freq:'0.82', craters:[[-6,-5,5],[5,4,3],[-4,6,3]] },
+    'ADV':  { base:'#1a1400', mid:'#4a3800', hi:'#ddbb00', glow:'#ffee44', seed:19, freq:'0.44', craters:[[-4,-6,4],[7,4,5],[4,-5,2]] },
+    'CORE': { base:'#030c10', mid:'#082030', hi:'#0e7090', glow:'#00eeff', seed:23, freq:'0.88', craters:[[-7,-4,4],[5,6,3],[-3,-5,3]] },
+  };
+
   if (typeof DOMAINS === 'undefined') return;
   DOMAINS.forEach((d, i) => {
     const [px, py] = PLACEMENTS[i] || [cx, cy];
     const isCleared = cleared.includes(d.key);
     const isLocked  = d.unlockAfter && !cleared.includes(d.unlockAfter) && d.key !== 'INTRO';
+    const cfg = PLANET_SVG[d.key] || PLANET_SVG['INTRO'];
 
     const g = document.createElementNS(ns,'g');
     g.setAttribute('class','domain-node' + (isLocked?' locked':''));
     g.style.cursor = isLocked ? 'default' : 'pointer';
 
-    // clip-path 讓行星圖裁成圓形
-    const clipId = `clip-${d.key}`;
-    if (!defs.querySelector(`#${clipId}`)) {
-      const cp = document.createElementNS(ns,'clipPath');
-      cp.setAttribute('id', clipId);
-      const cpc = document.createElementNS(ns,'circle');
-      cpc.setAttribute('cx', px); cpc.setAttribute('cy', py); cpc.setAttribute('r','18');
-      cp.appendChild(cpc); defs.appendChild(cp);
+    // ── 每星球獨立 defs ──────────────────────────────────────────
+    // 1. 岩石紋理 filter（feTurbulence）
+    const filtId = `pf-${d.key}`;
+    if (!defs.querySelector(`#${filtId}`)) {
+      const flt = document.createElementNS(ns,'filter');
+      flt.setAttribute('id', filtId);
+      flt.setAttribute('x','-10%'); flt.setAttribute('y','-10%');
+      flt.setAttribute('width','120%'); flt.setAttribute('height','120%');
+      const turb = document.createElementNS(ns,'feTurbulence');
+      turb.setAttribute('type','fractalNoise');
+      turb.setAttribute('baseFrequency', cfg.freq);
+      turb.setAttribute('numOctaves','4');
+      turb.setAttribute('seed', cfg.seed);
+      turb.setAttribute('result','noise');
+      flt.appendChild(turb);
+      const desat = document.createElementNS(ns,'feColorMatrix');
+      desat.setAttribute('in','noise'); desat.setAttribute('type','saturate');
+      desat.setAttribute('values','0.25'); desat.setAttribute('result','gn');
+      flt.appendChild(desat);
+      const bl = document.createElementNS(ns,'feBlend');
+      bl.setAttribute('in','SourceGraphic'); bl.setAttribute('in2','gn');
+      bl.setAttribute('mode','overlay');
+      flt.appendChild(bl);
+      defs.appendChild(flt);
+    }
+    // 2. 球體 3D 漸層
+    const gradId = `pg-${d.key}`;
+    if (!defs.querySelector(`#${gradId}`)) {
+      const gr = document.createElementNS(ns,'radialGradient');
+      gr.setAttribute('id', gradId);
+      gr.setAttribute('cx','36%'); gr.setAttribute('cy','30%'); gr.setAttribute('r','64%');
+      [['0%',cfg.hi,1],['38%',cfg.mid,1],['78%',cfg.base,1],['100%','#000',0.9]].forEach(([o,c,op])=>{
+        const s = document.createElementNS(ns,'stop');
+        s.setAttribute('offset',o); s.setAttribute('stop-color',c); s.setAttribute('stop-opacity',op);
+        gr.appendChild(s);
+      });
+      defs.appendChild(gr);
+    }
+    // 3. 外發光 filter
+    const gfId = `gf-${d.key}`;
+    if (!defs.querySelector(`#${gfId}`)) {
+      const gf = document.createElementNS(ns,'filter');
+      gf.setAttribute('id', gfId);
+      gf.setAttribute('x','-150%'); gf.setAttribute('y','-150%');
+      gf.setAttribute('width','400%'); gf.setAttribute('height','400%');
+      const gb = document.createElementNS(ns,'feGaussianBlur');
+      gb.setAttribute('stdDeviation','7'); gf.appendChild(gb);
+      defs.appendChild(gf);
     }
 
-    // 外發光（星域主色）
-    const glow = document.createElementNS(ns,'circle');
-    glow.setAttribute('cx',px); glow.setAttribute('cy',py); glow.setAttribute('r','24');
-    glow.setAttribute('fill', d.color+'18');
-    glow.setAttribute('stroke', d.color); glow.setAttribute('stroke-width','3');
-    glow.setAttribute('stroke-opacity', isCleared?'0.9':'0.5');
-    glow.setAttribute('filter','url(#core-glow)');
-    g.appendChild(glow);
+    // ── 行星繪製 ──────────────────────────────────────────────────
+    // 外發光暈
+    const outerGlow = document.createElementNS(ns,'circle');
+    outerGlow.setAttribute('cx',px); outerGlow.setAttribute('cy',py); outerGlow.setAttribute('r','26');
+    outerGlow.setAttribute('fill', cfg.glow);
+    outerGlow.setAttribute('opacity', isCleared?'0.4':'0.18');
+    outerGlow.setAttribute('filter',`url(#${gfId})`);
+    g.appendChild(outerGlow);
 
-    // 行星圖片（SD 生成，圓形裁切）
-    const planetImg = document.createElementNS(ns,'image');
-    planetImg.setAttribute('href', `assets/planets/${d.key}_planet.png`);
-    planetImg.setAttribute('x', px-18); planetImg.setAttribute('y', py-18);
-    planetImg.setAttribute('width','36'); planetImg.setAttribute('height','36');
-    planetImg.setAttribute('clip-path', `url(#${clipId})`);
-    planetImg.setAttribute('opacity', isCleared?'1':'0.85');
-    planetImg.setAttribute('class','domain-orb');
-    g.appendChild(planetImg);
+    // 球體主體（漸層 + 岩石紋理）
+    const sphere = document.createElementNS(ns,'circle');
+    sphere.setAttribute('cx',px); sphere.setAttribute('cy',py); sphere.setAttribute('r','18');
+    sphere.setAttribute('fill',`url(#${gradId})`);
+    sphere.setAttribute('filter',`url(#${filtId})`);
+    sphere.setAttribute('class','domain-orb');
+    sphere.setAttribute('opacity', isLocked?'0.7':'1');
+    g.appendChild(sphere);
 
-    // 鎖定暗罩（輕薄，讓行星圖仍可見）
+    // 坑洞（各星球獨立位置）
+    cfg.craters.forEach(([dx,dy,r])=>{
+      // 坑洞暗影
+      const cs = document.createElementNS(ns,'circle');
+      cs.setAttribute('cx',px+dx); cs.setAttribute('cy',py+dy); cs.setAttribute('r',r+1.2);
+      cs.setAttribute('fill','rgba(0,0,0,0.65)'); g.appendChild(cs);
+      // 坑洞底色
+      const cf = document.createElementNS(ns,'circle');
+      cf.setAttribute('cx',px+dx); cf.setAttribute('cy',py+dy); cf.setAttribute('r',r);
+      cf.setAttribute('fill',cfg.base); cf.setAttribute('opacity','0.88'); g.appendChild(cf);
+      // 坑洞亮緣（左上）
+      const cr2 = document.createElementNS(ns,'circle');
+      cr2.setAttribute('cx',px+dx-1); cr2.setAttribute('cy',py+dy-1); cr2.setAttribute('r',r);
+      cr2.setAttribute('fill','none'); cr2.setAttribute('stroke',cfg.hi);
+      cr2.setAttribute('stroke-width','1'); cr2.setAttribute('stroke-opacity','0.45'); g.appendChild(cr2);
+    });
+
+    // 發光邊框（rim）
+    const rim = document.createElementNS(ns,'circle');
+    rim.setAttribute('cx',px); rim.setAttribute('cy',py); rim.setAttribute('r','18');
+    rim.setAttribute('fill','none');
+    rim.setAttribute('stroke', cfg.glow); rim.setAttribute('stroke-width','2.5');
+    rim.setAttribute('stroke-opacity', isCleared?'0.85':'0.45');
+    g.appendChild(rim);
+
+    // 球體高光
+    const shine = document.createElementNS(ns,'ellipse');
+    shine.setAttribute('cx',px-5); shine.setAttribute('cy',py-5);
+    shine.setAttribute('rx','5'); shine.setAttribute('ry','3.5');
+    shine.setAttribute('fill','rgba(255,255,255,0.42)'); g.appendChild(shine);
+
+    // 鎖定暗罩
     if (isLocked) {
-      const mask = document.createElementNS(ns,'circle');
-      mask.setAttribute('cx',px); mask.setAttribute('cy',py); mask.setAttribute('r','18');
-      mask.setAttribute('fill','rgba(0,0,10,0.38)');
-      g.appendChild(mask);
+      const lkMask = document.createElementNS(ns,'circle');
+      lkMask.setAttribute('cx',px); lkMask.setAttribute('cy',py); lkMask.setAttribute('r','18');
+      lkMask.setAttribute('fill','rgba(0,0,8,0.52)'); g.appendChild(lkMask);
     }
 
     // 通關打勾
     if (isCleared) {
       const ck=document.createElementNS(ns,'text');
       ck.setAttribute('x',px); ck.setAttribute('y',py+4);
-      ck.setAttribute('text-anchor','middle'); ck.setAttribute('fill','white');
-      ck.setAttribute('font-size','12'); ck.textContent='✓'; g.appendChild(ck);
+      ck.setAttribute('text-anchor','middle'); ck.setAttribute('fill','rgba(255,255,255,0.9)');
+      ck.setAttribute('font-size','11'); ck.textContent='✓'; g.appendChild(ck);
     }
 
     // 鎖定圖示
@@ -369,11 +453,13 @@ function buildDomainMap(cleared=[]) {
       lk.textContent='🔒'; g.appendChild(lk);
     }
 
-    // emoji
-    const em=document.createElementNS(ns,'text');
-    em.setAttribute('x',px); em.setAttribute('y',isLocked||isCleared?py+5:py+4);
-    em.setAttribute('text-anchor','middle'); em.setAttribute('font-size','13');
-    if (!isLocked && !isCleared) em.textContent=d.emoji; g.appendChild(em);
+    // emoji（未鎖定未通關時）
+    if (!isLocked && !isCleared) {
+      const em=document.createElementNS(ns,'text');
+      em.setAttribute('x',px); em.setAttribute('y',py+4);
+      em.setAttribute('text-anchor','middle'); em.setAttribute('font-size','12');
+      em.textContent=d.emoji; g.appendChild(em);
+    }
 
     // 名稱標籤
     const lbl=document.createElementNS(ns,'text');
@@ -389,8 +475,8 @@ function buildDomainMap(cleared=[]) {
 
     if (!isLocked) {
       g.addEventListener('click',()=>{ if(window.RPG_ENGINE) RPG_ENGINE.enterDomain(d.key); });
-      g.addEventListener('mouseenter',()=>{ planetImg.setAttribute('opacity','1'); glow.setAttribute('stroke-opacity','1'); });
-      g.addEventListener('mouseleave',()=>{ planetImg.setAttribute('opacity', isCleared?'1':'0.85'); glow.setAttribute('stroke-opacity', isCleared?'0.9':'0.5'); });
+      g.addEventListener('mouseenter',()=>{ outerGlow.setAttribute('opacity', isCleared?'0.6':'0.35'); rim.setAttribute('stroke-opacity','1'); });
+      g.addEventListener('mouseleave',()=>{ outerGlow.setAttribute('opacity', isCleared?'0.4':'0.18'); rim.setAttribute('stroke-opacity', isCleared?'0.85':'0.45'); });
     }
     svg.appendChild(g);
   });
