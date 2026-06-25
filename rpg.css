@@ -157,21 +157,24 @@ body {
 
 .joystick-outer {
   width: 120px; height: 120px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(20,30,50,0.72) 0%, rgba(6,11,19,0.60) 100%);
-  border: 2px solid rgba(125,211,252,0.30);
-  box-shadow: 0 0 20px rgba(125,211,252,0.10), inset 0 0 12px rgba(0,0,0,0.4);
+  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.22), rgba(100,130,180,0.08));
+  border: 1.5px solid rgba(255,255,255,0.40);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 -3px 8px rgba(0,0,0,0.15), inset 0 3px 8px rgba(255,255,255,0.25);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
   position: relative;
   display: flex; align-items: center; justify-content: center;
 }
 .joystick-mid-ring {
   position: absolute; width: 78px; height: 78px; border-radius: 50%;
-  border: 1px solid rgba(125,211,252,0.15); pointer-events: none;
+  border: 1px solid rgba(255,255,255,0.55); pointer-events: none;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.35), rgba(150,160,190,0.08));
+  box-shadow: inset 0 1px 4px rgba(255,255,255,0.5), 0 2px 12px rgba(0,0,0,0.1);
 }
 .joystick-inner {
   width: 48px; height: 48px; border-radius: 50%; position: absolute;
-  background: radial-gradient(circle at 38% 32%, rgba(200,240,255,0.40), rgba(80,160,220,0.22));
-  border: 2px solid rgba(125,211,252,0.65);
-  box-shadow: 0 0 12px rgba(125,211,252,0.30), inset 0 1px 4px rgba(255,255,255,0.25);
+  background: radial-gradient(circle at 35% 30%, #f0f4ff, #b0c0e0 80%);
+  border: 1.5px solid rgba(255,255,255,0.70);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.35), inset 0 -3px 6px rgba(0,0,0,0.1), inset 0 2px 6px rgba(255,255,255,0.85);
   pointer-events: none;
 }
 
@@ -368,4 +371,97 @@ body {
 @media (min-width: 769px) {
   .dialogue-body { max-width: 900px; }
   .quiz-body { max-width: 680px; }
+}
+
+/* ══════════════════════════════════════════════════════
+   角色創建畫面（HermesAgent 設計）
+══════════════════════════════════════════════════════ */
+.creation-overlay {
+  position: fixed; top:0; left:0; right:0; bottom:0;
+  background: radial-gradient(ellipse at center, #0a0f1e 0%, #030510 100%);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000;
+}
+.creation-overlay[style*="none"] { display: none !important; }
+
+.creation-panel {
+  background: rgba(20,30,50,0.88);
+  backdrop-filter: blur(16px);
+  border: 2px solid rgba(100,180,255,0.4);
+  border-radius: 20px;
+  padding: 24px 28px;
+  max-width: 420px; width: 92%;
+  box-shadow: 0 16px 48px rgba(0,160,255,0.2), 0 0 80px rgba(80,120,255,0.08);
+  text-align: center;
+  max-height: 90vh; overflow-y: auto;
+}
+
+.creation-title {
+  color: #d0e4ff; font-size: 14px; margin-bottom: 16px;
+  text-shadow: 0 0 12px #4a90ff; letter-spacing: 1px;
+}
+
+.preview-area { margin-bottom: 16px; }
+#character-preview-svg { filter: drop-shadow(0 0 10px rgba(100,200,255,0.4)); transition: all .3s; }
+.preview-label { color: #7a9ec0; font-size: 10px; margin-top: 4px; }
+
+.creation-field { margin-bottom: 14px; text-align: left; }
+.field-label { display: block; color: #7a9ec0; font-size: 10px; margin-bottom: 6px; letter-spacing: 1px; text-transform: uppercase; }
+
+/* 性別選擇 */
+.gender-selector { display: flex; gap: 10px; justify-content: center; }
+.gender-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  background: rgba(255,255,255,0.05); border: 2px solid rgba(100,150,255,0.2);
+  border-radius: 12px; padding: 10px 14px; cursor: pointer; color: #8eb4d0; font-size: 10px;
+  transition: all .2s;
+}
+.gender-btn:hover { border-color: rgba(100,200,255,0.5); background: rgba(100,200,255,0.08); }
+.gender-btn.active { border-color: #4a90ff; background: rgba(74,144,255,0.15); color: #d0e8ff; }
+
+/* 名稱輸入 */
+#char-name-input {
+  width: 100%; padding: 8px 12px; background: rgba(255,255,255,0.06);
+  border: 1.5px solid rgba(100,150,255,0.3); border-radius: 8px;
+  color: #d0e8ff; font-size: 13px; outline: none;
+  transition: border-color .2s;
+}
+#char-name-input:focus { border-color: #4a90ff; }
+#char-name-input::placeholder { color: #4a5a7a; }
+
+/* 色盤 */
+.color-palette { display: flex; gap: 8px; flex-wrap: wrap; }
+.color-dot {
+  width: 26px; height: 26px; border-radius: 50%; cursor: pointer;
+  border: 2px solid transparent; transition: transform .15s, border-color .15s;
+}
+.color-dot:hover { transform: scale(1.15); }
+.color-dot.active { border-color: #fff; box-shadow: 0 0 0 2px #4a90ff; }
+
+/* 開始按鈕 */
+.start-btn {
+  width: 100%; padding: 12px; margin-top: 8px;
+  background: linear-gradient(135deg, #1a4fa0, #0a2060);
+  border: 2px solid rgba(100,180,255,0.5); border-radius: 12px;
+  color: #d0e8ff; font-size: 14px; cursor: pointer; letter-spacing: 1px;
+  box-shadow: 0 4px 20px rgba(0,100,255,0.3);
+  transition: all .2s;
+}
+.start-btn:hover { background: linear-gradient(135deg, #2060c0, #1040a0); transform: translateY(-2px); }
+.start-btn:active { transform: translateY(0); }
+
+/* 太陽進階動畫 */
+@keyframes corona-pulse {
+  0% { transform: scale(0.94); opacity: 0.5; }
+  50% { transform: scale(1.06); opacity: 0.9; }
+  100% { transform: scale(0.96); opacity: 0.6; }
+}
+@keyframes flare-float {
+  0%   { opacity: 0.3; transform: scale(0.7); }
+  50%  { opacity: 1;   transform: scale(1.1); }
+  100% { opacity: 0.2; transform: scale(0.5); }
+}
+@keyframes sun-glow-pulse {
+  0%   { filter: drop-shadow(0 0 8px #ffd700) drop-shadow(0 0 20px #ffaa00); }
+  100% { filter: drop-shadow(0 0 14px #ffe680) drop-shadow(0 0 30px #ffcc00); }
 }
