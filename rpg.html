@@ -315,17 +315,41 @@ function buildDomainMap(cleared=[]) {
     g.setAttribute('class','domain-node' + (isLocked?' locked':''));
     g.style.cursor = isLocked ? 'default' : 'pointer';
 
+    // 球體 3D 漸層定義
+    const gradId = `orb-g-${d.key}`;
+    const orbGrad = document.createElementNS(ns,'radialGradient');
+    orbGrad.setAttribute('id', gradId);
+    orbGrad.setAttribute('cx','35%'); orbGrad.setAttribute('cy','30%'); orbGrad.setAttribute('r','65%');
+    const col = d.color;
+    const lighten = c => { const n=parseInt(c.slice(1),16); return `#${Math.min(255,((n>>16)&255)+80).toString(16).padStart(2,'0')}${Math.min(255,((n>>8)&255)+80).toString(16).padStart(2,'0')}${Math.min(255,(n&255)+80).toString(16).padStart(2,'0')}`; };
+    const darken  = c => { const n=parseInt(c.slice(1),16); return `#${Math.max(0,((n>>16)&255)-60).toString(16).padStart(2,'0')}${Math.max(0,((n>>8)&255)-60).toString(16).padStart(2,'0')}${Math.max(0,(n&255)-60).toString(16).padStart(2,'0')}`; };
+    [['0%','white',0.85],['18%',lighten(col),0.9],['55%',col,1],['85%',darken(col),1],['100%','#000',0.6]].forEach(([off,c,op])=>{
+      const s=document.createElementNS(ns,'stop');
+      s.setAttribute('offset',off); s.setAttribute('stop-color',c); s.setAttribute('stop-opacity',op);
+      orbGrad.appendChild(s);
+    });
+    if (!defs.querySelector(`#${gradId}`)) defs.appendChild(orbGrad);
+
     // 光暈
     const halo=document.createElementNS(ns,'circle');
     halo.setAttribute('cx',px); halo.setAttribute('cy',py);
-    halo.setAttribute('r','28'); halo.setAttribute('fill',d.color+'18');
+    halo.setAttribute('r','30'); halo.setAttribute('fill',d.color+'22');
+    halo.setAttribute('filter','url(#core-glow)');
     g.appendChild(halo);
 
-    // 星球本體
+    // 星球本體（3D 漸層球體）
     const orb=document.createElementNS(ns,'circle');
     orb.setAttribute('cx',px); orb.setAttribute('cy',py); orb.setAttribute('r','18');
-    orb.setAttribute('fill',d.color); orb.setAttribute('fill-opacity', isCleared?'0.95':'0.65');
+    orb.setAttribute('fill',`url(#${gradId})`);
+    orb.setAttribute('fill-opacity', isCleared?'1':'0.7');
     orb.setAttribute('class','domain-orb'); g.appendChild(orb);
+
+    // 球體高光（上方白點）
+    const shine=document.createElementNS(ns,'ellipse');
+    shine.setAttribute('cx',px-5); shine.setAttribute('cy',py-6);
+    shine.setAttribute('rx','6'); shine.setAttribute('ry','4');
+    shine.setAttribute('fill','rgba(255,255,255,0.35)');
+    g.appendChild(shine);
 
     // 通關打勾
     if (isCleared) {
@@ -555,6 +579,9 @@ function _startWorldScene(scene, domain) {
   // ── 圖片與色彩（依星域動態切換）────────────────────────────────────────────
   const tileName = (domain.sceneTiles && domain.sceneTiles[0]) || 'Grass_pipo';
   const tileImg = new Image(); tileImg.src = `assets/sprites/tiles/${tileName}.png`;
+  // 星域像素 tileset（320×32 PNG，10 tiles × 32px）
+  const _planetTilesetImg = new Image();
+  _planetTilesetImg.src = `tiles/${_pKey}_tileset.png`;
   const npcImg  = new Image(); npcImg.src  = `assets/sprites/characters/${domain.spriteFile||'Female_01'}-1.png`;
   const plrImg  = new Image(); plrImg.src  = `assets/sprites/characters/Male_01-1.png`;
   const baseColor = domain.color || '#22d3ee';
@@ -705,29 +732,36 @@ function _startWorldScene(scene, domain) {
   function drawBg(cam) {
     const sc=~~(cam.x/TS)-1, ec=~~((cam.x+cvs.width)/TS)+1;
     const sr=~~(cam.y/TS)-1, er=~~((cam.y+cvs.height)/TS)+1;
+    const useSprite = _planetTilesetImg.complete && _planetTilesetImg.naturalWidth > 0;
     for(let r=sr;r<=er;r++) for(let c=sc;c<=ec;c++) {
       const cr=Math.max(0,Math.min(ROWS-1,r)), cc=Math.max(0,Math.min(COLS-1,c));
       const t = MAP[cr][cc];
       const sx=c*TS-cam.x, sy=r*TS-cam.y;
-      ctx.fillStyle = TC[t]||TC[0];
-      ctx.fillRect(sx, sy, TS, TS);
-      // 水域/能量波光動畫（顏色隨星域）
+      if(useSprite) {
+        // 像素 tileset sprite 繪製
+        ctx.drawImage(_planetTilesetImg, t*32, 0, 32, 32, sx, sy, TS, TS);
+      } else {
+        // fallback：純色方塊
+        ctx.fillStyle = TC[t]||TC[0];
+        ctx.fillRect(sx, sy, TS, TS);
+      }
+      // 水域波光動畫疊加
       if(t===4) {
         const wc = TC[4]||'#1a5080';
         ctx.fillStyle = wc + Math.round((0.15+0.1*Math.sin(tick*0.05+(c+r)*0.8))*255).toString(16).padStart(2,'0');
         ctx.fillRect(sx,sy,TS,TS);
       }
-      // 石板路/地板縫隙
+      // 石板路縫隙
       if(t===6||t===9) {
         ctx.strokeStyle='rgba(0,0,0,0.15)'; ctx.lineWidth=1;
         ctx.strokeRect(sx+0.5,sy+0.5,TS-1,TS-1);
       }
-      // 障礙基座（樹幹 / 岩石基 / 機械底）
+      // 樹木基座陰影
       if(t===3) {
         ctx.fillStyle='rgba(0,0,0,0.3)';
         ctx.beginPath(); ctx.ellipse(sx+16,sy+26,5,4,0,0,Math.PI*2); ctx.fill();
       }
-      // 花朵高光點
+      // 花朵高光
       if(t===2) {
         ctx.fillStyle='rgba(255,255,255,0.35)';
         ctx.beginPath(); ctx.ellipse(sx+10,sy+10,4,4,0,0,Math.PI*2); ctx.fill();
