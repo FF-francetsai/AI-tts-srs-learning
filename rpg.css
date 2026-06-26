@@ -364,6 +364,13 @@ body {
 .layout-mobile .player-card .item-bar,
 .layout-mobile .player-card .item-bar-label { display: none; }
 
+/* 手機版 quiz-body 需讓開 item-bar-mobile 的高度（~64px），避免 D 選項被遮 */
+.layout-mobile .quiz-body {
+  bottom: 64px;
+  padding-bottom: 12px;
+  max-height: calc(70vh - 64px);
+}
+
 /* 平板 (481–768px) */
 @media (min-width: 481px) and (max-width: 768px) {
   .player-card { bottom: 16px; right: 12px; min-width: 160px; }
