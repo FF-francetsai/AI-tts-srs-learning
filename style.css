@@ -339,3 +339,25 @@
     50% { background-position: 100% 50%; transform: scale(1.05); }
     100% { background-position: 0% 50%; transform: scale(1); }
 }
+
+
+/* === RPG 樣式 === */
+/* RPG nav tab 紫色高亮 */
+.domain-nav a[data-cat="rpg"] {
+    color: #c084fc;
+}
+.domain-nav a[data-cat="rpg"]:hover,
+.domain-nav a[data-cat="rpg"]:focus {
+    color: #e879f9;
+    background: rgba(155, 89, 182, 0.2);
+    box-shadow: 0 0 12px rgba(155, 89, 182, 0.6), 0 0 24px rgba(155, 89, 182, 0.3);
+}
+/* RPG feature-card special style */
+.feature-card-rpg {
+    background: linear-gradient(135deg, #0a0a2e, #1a1a4e);
+    border: 2px solid #9b59b6;
+    box-shadow: 0 0 15px rgba(155, 89, 182, 0.3);
+    color: #e0e0ff;
+}
+.feature-card-rpg .card-title { color: #ffd700; }
+.feature-card-rpg .card-text { color: #c0c0ff; }

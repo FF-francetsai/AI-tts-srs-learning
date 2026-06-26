@@ -1,11 +1,12 @@
 <!DOCTYPE html>
+
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iPAS AI 應用規劃師智策網學院</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script type="importmap">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>iPAS AI 應用規劃師智策網學院</title>
+<link href="style.css" rel="stylesheet"/>
+<script type="importmap">
     {
         "imports": {
             "three": "https://unpkg.com/three@0.164.1/build/three.module.js",
@@ -13,7 +14,7 @@
         }
     }
     </script>
-    <style>
+<style>
         /* ── 全局重設 ── */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -388,157 +389,148 @@
     </style>
 </head>
 <body>
-
-    <!-- 載入動畫 -->
-    <div id="loading-overlay">
-        <div class="spinner"></div>
-    </div>
-
-    <!-- Wizard Modal（E）-->
-    <div id="wizardModal" class="wizard-overlay">
-        <div class="wizard-card">
-            <div class="wizard-header">
-                <div class="w-title">🎓 iPAS AI 應用規劃師智策網學院</div>
-                <div class="w-sub">回答 3 個問題，找到最適合你的起點。</div>
-            </div>
-            <div class="wizard-progress">
-                <div class="w-step active" id="wStep0"></div>
-                <div class="w-step"        id="wStep1"></div>
-                <div class="w-step"        id="wStep2"></div>
-            </div>
-            <div id="wizardQ"></div>
-            <div class="wizard-footer">
-                <button class="w-next-btn" id="wizardNext" onclick="wizardNext()">下一步 →</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Three.js 背景 -->
-    <canvas id="bg-canvas"></canvas>
-
-    <!-- 內容層 -->
-    <div class="content-layer">
-
-        <!-- 主標題 -->
-        <div class="hero-title">
-            <h1>🧠 iPAS AI 應用規劃師智策網學院</h1>
-            <p>從新手到專業規劃師，依循漸進掌握人工智慧核心職能</p>
-        </div>
-
-        <!-- B：今日學習目標 -->
-        <div class="daily-goal-wrap">
-            <div class="daily-goal">
-                <div class="goal-title">📅 今日學習目標</div>
-                <div class="goal-bar"><div class="goal-fill" id="goalFill"></div></div>
-                <div class="goal-info">
-                    <span id="goalCount">0 / 10 個術語</span>
-                    <span id="streakCount">🔥 0 天連續</span>
-                </div>
-                <div class="goal-action">
-                    <a href="learn.html" class="goal-btn">開始今日學習</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- 學習路徑導航 → 點擊跳轉至概念星圖並自動過濾 -->
-        <nav class="domain-nav">
-            <a href="atlas.html" data-cat="ml">🤖 機器學習</a>
-            <a href="atlas.html?cat=深度學習" data-cat="dl">🔥 深度學習</a>
-            <a href="atlas.html?cat=神經網路" data-cat="nn">🧩 神經網路</a>
-            <a href="atlas.html?cat=生成式 AI" data-cat="gen">✨ 生成式 AI</a>
-            <a href="atlas.html?cat=電腦視覺" data-cat="cv">👁️ 電腦視覺</a>
-            <a href="atlas.html?cat=NLP" data-cat="nlp">💬 NLP</a>
-            <a href="learn.html" data-cat="srs">📚 SRS 學習</a>
-        </nav>
-
-        <!-- C：四階段 Stage 路線圖 -->
-        <div class="stage-roadmap-wrap">
-            <div class="stage-roadmap">
-                <h3>選擇你的學習起點
-                    <span style="font-size:0.75rem;color:#475569;margin-left:10px;font-weight:400;cursor:pointer;" onclick="reopenWizard()">⟳ 重新測驗</span>
-                </h3>
-                <div class="stage-cards">
-                    <div class="stage-card stage-badge-0" id="stageCard0">
-                        <span class="s-icon">✦</span>
-                        <div class="s-name">AI 入門</div>
-                        <div class="s-count" id="sCount0">— 術語</div>
-                        <a href="learn.html?stage=0" class="s-btn">開始學習</a>
-                    </div>
-                    <div class="stage-arrow">→</div>
-                    <div class="stage-card stage-badge-1" id="stageCard1">
-                        <span class="s-icon">🪐</span>
-                        <div class="s-name">iPAS 初級</div>
-                        <div class="s-count" id="sCount1">— 術語</div>
-                        <a href="learn.html?stage=1" class="s-btn">開始學習</a>
-                    </div>
-                    <div class="stage-arrow">→</div>
-                    <div class="stage-card stage-badge-2" id="stageCard2">
-                        <span class="s-icon">🧠</span>
-                        <div class="s-name">中級技術</div>
-                        <div class="s-count" id="sCount2">— 術語</div>
-                        <a href="learn.html?stage=2" class="s-btn">開始學習</a>
-                    </div>
-                    <div class="stage-arrow">→</div>
-                    <div class="stage-card stage-badge-3" id="stageCard3">
-                        <span class="s-icon">⚡</span>
-                        <div class="s-name">中級數據</div>
-                        <div class="s-count" id="sCount3">— 術語</div>
-                        <a href="learn.html?stage=3" class="s-btn">開始學習</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 4 大功能卡片 -->
-        <div class="feature-cards">
-            <div class="feature-card" onclick="location.href='vocab.html'">
-                <span class="card-icon">📖</span>
-                <div class="card-title">互動詞庫</div>
-                <div class="card-desc">搜尋 631 個術語、朗讀定義、分類篩選、問 AI 深入解析</div>
-            </div>
-            <div class="feature-card" onclick="location.href='atlas.html'">
-                <span class="card-icon">🔮</span>
-                <div class="card-title">知識圖譜</div>
-                <div class="card-desc">神經網路粒子星圖，術語節點關聯視覺化，支援分類篩選與縮放</div>
-            </div>
-            <div class="feature-card" onclick="location.href='learn.html'">
-                <span class="card-icon">📊</span>
-                <div class="card-title">SRS 複習進度</div>
-                <div class="card-desc">間隔重複記憶，TTS 語音朗讀，追蹤掌握程度</div>
-            </div>
-            <div class="feature-card" onclick="location.href='chat.html'">
-                <span class="card-icon">🤖</span>
-                <div class="card-title">AI 即時對話</div>
-                <div class="card-desc">雲端 AI 問答，語音輸入，深度解析術語</div>
-            </div>
-        </div>
-
-        <!-- D：今日精選術語 -->
-        <div class="daily-term-wrap">
-            <div class="daily-term">
-                <div class="dt-label">✨ 今日精選術語</div>
-                <div class="dt-en" id="dtEn"></div>
-                <div class="dt-zh" id="dtZh"></div>
-                <div class="dt-def" id="dtDef"></div>
-                <div class="dt-btns">
-                    <button class="dt-btn-tts" onclick="speakTerm()">🔊 朗讀</button>
-                    <a href="learn.html" class="dt-btn-learn">加入學習 →</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- 頁尾 -->
-        <footer class="site-footer">
-            &copy; 2026 iPAS AI Application Planning Specialist &amp; Strategy Training Network
+<!-- 載入動畫 -->
+<div id="loading-overlay">
+<div class="spinner"></div>
+</div>
+<!-- Wizard Modal（E）-->
+<div class="wizard-overlay" id="wizardModal">
+<div class="wizard-card">
+<div class="wizard-header">
+<div class="w-title">🎓 iPAS AI 應用規劃師智策網學院</div>
+<div class="w-sub">回答 3 個問題，找到最適合你的起點。</div>
+</div>
+<div class="wizard-progress">
+<div class="w-step active" id="wStep0"></div>
+<div class="w-step" id="wStep1"></div>
+<div class="w-step" id="wStep2"></div>
+</div>
+<div id="wizardQ"></div>
+<div class="wizard-footer">
+<button class="w-next-btn" id="wizardNext" onclick="wizardNext()">下一步 →</button>
+</div>
+</div>
+</div>
+<!-- Three.js 背景 -->
+<canvas id="bg-canvas"></canvas>
+<!-- 內容層 -->
+<div class="content-layer">
+<!-- 主標題 -->
+<div class="hero-title">
+<h1>🧠 iPAS AI 應用規劃師智策網學院</h1>
+<p>從新手到專業規劃師，依循漸進掌握人工智慧核心職能</p>
+</div>
+<!-- B：今日學習目標 -->
+<div class="daily-goal-wrap">
+<div class="daily-goal">
+<div class="goal-title">📅 今日學習目標</div>
+<div class="goal-bar"><div class="goal-fill" id="goalFill"></div></div>
+<div class="goal-info">
+<span id="goalCount">0 / 10 個術語</span>
+<span id="streakCount">🔥 0 天連續</span>
+</div>
+<div class="goal-action">
+<a class="goal-btn" href="learn.html">開始今日學習</a>
+</div>
+</div>
+</div>
+<!-- 學習路徑導航 → 點擊跳轉至概念星圖並自動過濾 -->
+<nav class="domain-nav">
+<a data-cat="ml" href="atlas.html">🤖 機器學習</a>
+<a data-cat="dl" href="atlas.html?cat=深度學習">🔥 深度學習</a>
+<a data-cat="nn" href="atlas.html?cat=神經網路">🧩 神經網路</a>
+<a data-cat="gen" href="atlas.html?cat=生成式 AI">✨ 生成式 AI</a>
+<a data-cat="cv" href="atlas.html?cat=電腦視覺">👁️ 電腦視覺</a>
+<a data-cat="nlp" href="atlas.html?cat=NLP">💬 NLP</a>
+<a data-cat="srs" href="learn.html">📚 SRS 學習</a>
+<a data-cat="rpg" href="rpg.html">🚀 RPG 冒險</a></nav>
+<!-- C：四階段 Stage 路線圖 -->
+<div class="stage-roadmap-wrap">
+<div class="stage-roadmap">
+<h3>選擇你的學習起點
+                    <span onclick="reopenWizard()" style="font-size:0.75rem;color:#475569;margin-left:10px;font-weight:400;cursor:pointer;">⟳ 重新測驗</span>
+</h3>
+<div class="stage-cards">
+<div class="stage-card stage-badge-0" id="stageCard0">
+<span class="s-icon">✦</span>
+<div class="s-name">AI 入門</div>
+<div class="s-count" id="sCount0">— 術語</div>
+<a class="s-btn" href="learn.html?stage=0">開始學習</a>
+</div>
+<div class="stage-arrow">→</div>
+<div class="stage-card stage-badge-1" id="stageCard1">
+<span class="s-icon">🪐</span>
+<div class="s-name">iPAS 初級</div>
+<div class="s-count" id="sCount1">— 術語</div>
+<a class="s-btn" href="learn.html?stage=1">開始學習</a>
+</div>
+<div class="stage-arrow">→</div>
+<div class="stage-card stage-badge-2" id="stageCard2">
+<span class="s-icon">🧠</span>
+<div class="s-name">中級技術</div>
+<div class="s-count" id="sCount2">— 術語</div>
+<a class="s-btn" href="learn.html?stage=2">開始學習</a>
+</div>
+<div class="stage-arrow">→</div>
+<div class="stage-card stage-badge-3" id="stageCard3">
+<span class="s-icon">⚡</span>
+<div class="s-name">中級數據</div>
+<div class="s-count" id="sCount3">— 術語</div>
+<a class="s-btn" href="learn.html?stage=3">開始學習</a>
+</div>
+</div>
+</div>
+</div>
+<!-- 4 大功能卡片 -->
+<div class="feature-cards">
+<div class="feature-card" onclick="location.href='vocab.html'">
+<span class="card-icon">📖</span>
+<div class="card-title">互動詞庫</div>
+<div class="card-desc">搜尋 631 個術語、朗讀定義、分類篩選、問 AI 深入解析</div>
+</div>
+<div class="feature-card" onclick="location.href='atlas.html'">
+<span class="card-icon">🔮</span>
+<div class="card-title">知識圖譜</div>
+<div class="card-desc">神經網路粒子星圖，術語節點關聯視覺化，支援分類篩選與縮放</div>
+</div>
+<div class="feature-card" onclick="location.href='learn.html'">
+<span class="card-icon">📊</span>
+<div class="card-title">SRS 複習進度</div>
+<div class="card-desc">間隔重複記憶，TTS 語音朗讀，追蹤掌握程度</div>
+</div>
+<div class="feature-card" onclick="location.href='chat.html'">
+<span class="card-icon">🤖</span>
+<div class="card-title">AI 即時對話</div>
+<div class="card-desc">雲端 AI 問答，語音輸入，深度解析術語</div>
+</div>
+<div class="feature-card feature-card-rpg" onclick="location.href='rpg.html'">
+<span class="card-icon">🚀</span>
+<div class="card-title">AI 星際聯盟 RPG</div>
+<div class="card-desc">角色扮演冒險學習，關卡闖關，在 AI 星際戰役中掌握術語</div>
+</div>
+</div>
+<!-- D：今日精選術語 -->
+<div class="daily-term-wrap">
+<div class="daily-term">
+<div class="dt-label">✨ 今日精選術語</div>
+<div class="dt-en" id="dtEn"></div>
+<div class="dt-zh" id="dtZh"></div>
+<div class="dt-def" id="dtDef"></div>
+<div class="dt-btns">
+<button class="dt-btn-tts" onclick="speakTerm()">🔊 朗讀</button>
+<a class="dt-btn-learn" href="learn.html">加入學習 →</a>
+</div>
+</div>
+</div>
+<!-- 頁尾 -->
+<footer class="site-footer">
+            © 2026 iPAS AI Application Planning Specialist &amp; Strategy Training Network
         </footer>
-
-    </div>
-
-    <!-- 載入術語資料庫（供 stage 計數動態更新使用）-->
-    <script src="data.js"></script>
-
-    <!-- D：今日精選術語 JS -->
-    <script>
+</div>
+<!-- 載入術語資料庫（供 stage 計數動態更新使用）-->
+<script src="data.js"></script>
+<!-- D：今日精選術語 JS -->
+<script>
     (function(){
         var TERM_POOL = [
             {en:'Artificial Intelligence', zh:'人工智慧', def:'賦予機器學習、推理與決策能力的技術總稱'},
@@ -555,9 +547,8 @@
         window.speakTerm = function(){ var u = new SpeechSynthesisUtterance(t.en); u.lang = 'en-US'; speechSynthesis.speak(u); };
     })();
     </script>
-
-    <!-- B：今日學習目標 JS -->
-    <script>
+<!-- B：今日學習目標 JS -->
+<script>
     (function(){
         var todayCount = parseInt(localStorage.getItem('srs_today_count') || '0');
         var dailyGoal  = parseInt(localStorage.getItem('srs_daily_goal')  || '10');
@@ -568,9 +559,8 @@
         document.getElementById('streakCount').textContent = '🔥 ' + streak + ' 天連續';
     })();
     </script>
-
-    <!-- C：Stage 路線圖 JS（動態計算術語數量）-->
-    <script>
+<!-- C：Stage 路線圖 JS（動態計算術語數量）-->
+<script>
     (function(){
         // 動態更新 stage 術語數量（從 lessonData 計算）
         if (typeof lessonData !== 'undefined') {
@@ -601,9 +591,8 @@
         }
     })();
     </script>
-
-    <!-- E：Wizard JS -->
-    <script>
+<!-- E：Wizard JS -->
+<script>
     (function(){
         var questions = [
             { q:'你對 AI 的了解程度？',   opts:['A. 完全零基礎','B. 聽過但沒深入','C. 用過 ChatGPT 等工具','D. 有技術背景'] },
@@ -657,9 +646,8 @@
         }
     })();
     </script>
-
-    <!-- Three.js 神經光粒子背景 -->
-    <script type="module">
+<!-- Three.js 神經光粒子背景 -->
+<script type="module">
         import * as THREE from 'three';
         import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
         import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
@@ -828,6 +816,5 @@
         updateLines();
         animate();
     </script>
-
 </body>
 </html>
