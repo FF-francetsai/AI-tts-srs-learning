@@ -71,10 +71,67 @@ p.note{text-align:center;font-size:11px;color:#475569;margin-bottom:14px}
 <p class="note">32×32 地板 tile · 角色行走動畫</p>
 <div class="scene-wrap"><canvas id="scene-canvas" width="640" height="320"></canvas></div>
 
+<div class="divider"></div>
+
+<h2>⚔️ RO 仙境傳說風格角色（等比顯示）</h2>
+<p class="note">約 60×70px 原生幀・點選切換職業・行走動畫</p>
+<div class="char-row" id="ro-char-row"></div>
+
 <div style="text-align:center;padding:0 20px 28px;font-size:11px;color:#475569">
   素材：PIPOYA FREE RPG Character Sprites 32×32 (CC-BY 4.0) · pipo tileset<br>
+  RO 參考素材：Spriters Resource（Ragnarok Online Classes）<br>
   確認此風格方向 → 指揮官整合進 rpg.html 完整遊戲
 </div>
+
+<script>
+// ── RO 風格角色展示 ──
+const RO_CHARS = [
+  {name:'祭師',    role:'Acolyte',    color:'#fbbf24', file:'assets/sprites/ro_chars/Acolyte_walk_south.png',    frames:3, fw:60, fh:70},
+  {name:'煉金術士',role:'Alchemist',  color:'#34d399', file:'assets/sprites/ro_chars/Alchemist_walk_south.png',  frames:3, fw:60, fh:70},
+  {name:'主教',    role:'ArchBishop', color:'#c084fc', file:'assets/sprites/ro_chars/ArchBishop_walk_south.png', frames:3, fw:60, fh:70},
+  {name:'吟遊詩人',role:'Bard',       color:'#f472b6', file:'assets/sprites/ro_chars/Bard_walk_south.png',       frames:3, fw:60, fh:70},
+];
+
+(function(){
+  const row = document.getElementById('ro-char-row');
+  const SCALE = 3;
+  RO_CHARS.forEach((c, ci) => {
+    const card = document.createElement('div');
+    card.className = 'char-card';
+    const sd = document.createElement('div');
+    sd.className = 'sprite-display';
+    const cvs = document.createElement('canvas');
+    cvs.width  = c.fw * SCALE;
+    cvs.height = c.fh * SCALE;
+    cvs.style.cssText = 'display:block;image-rendering:pixelated';
+    sd.appendChild(cvs);
+    const badge = document.createElement('div');
+    badge.className = 'char-badge';
+    badge.style.color = c.color;
+    badge.style.borderColor = c.color;
+    badge.textContent = c.name;
+    const role = document.createElement('div');
+    role.className = 'char-role';
+    role.textContent = c.role;
+    card.append(sd, badge, role);
+    row.appendChild(card);
+
+    const img = new Image();
+    img.src = c.file;
+    const ctx = cvs.getContext('2d');
+    ctx.imageSmoothingEnabled = false;
+    let frame = 0;
+    img.onload = () => {
+      function draw() {
+        ctx.clearRect(0, 0, cvs.width, cvs.height);
+        ctx.drawImage(img, frame * c.fw, 0, c.fw, c.fh, 0, 0, c.fw * SCALE, c.fh * SCALE);
+      }
+      draw();
+      setInterval(() => { frame = (frame + 1) % c.frames; draw(); }, 200);
+    };
+  });
+})();
+</script>
 
 <script>
 const BASE='assets/sprites/characters/';
