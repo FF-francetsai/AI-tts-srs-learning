@@ -657,12 +657,21 @@ const RPG_UI = {
     ['h1','h2','h3'].forEach((id,i)=>{
       document.getElementById(id).className='heart'+(i>=q.hp?' empty':'');
     });
-    // 初始化 / 更新 BattleUI
+    // 初始化 / 更新 BattleUI（任務 8 武器 + 任務 9 怪物）
     if(!window._battleUI){
       const container=document.getElementById('battle-sprite-area');
       const profile=loadCharProfile();
       const sprite=(profile&&profile.spriteFile)?profile.spriteFile:'Male_01';
-      if(container) window._battleUI=new BattleUI(container,`assets/sprites/characters/${sprite}-1.png`,3);
+      const domKey=window._rpgCurDomain?.key||'INTRO';
+      const monId=DOMAIN_MONSTER_MAP[domKey]||'Mon_HU_01';
+      const weapId=CHAR_WEAPON_MAP[sprite]||'Weap_01';
+      if(container) window._battleUI=new BattleUI(
+        container,
+        `assets/sprites/characters/${sprite}-1.png`,
+        3,
+        { monsterSrc:`assets/sprites/monsters/${monId}.png`,
+          weaponSrc:`assets/sprites/weapons/${weapId}.png` }
+      );
     }
     if(window._battleUI) window._battleUI.updateHP(q.hp,3);
     document.getElementById('quiz-q').textContent = q.text;
@@ -1433,50 +1442,109 @@ class SpriteAnimator {
   }
 }
 
+// 各星域對應的怪物（任務 9）
+const DOMAIN_MONSTER_MAP = {
+  INTRO:'Mon_HU_01', DATA:'Mon_UG_01', MODEL:'Mon_FY_01',
+  ALGORITHM:'Mon_SP_01', NLP:'Mon_HU_06', CV:'Mon_4L_01',
+  ETHICS:'Mon_PL_01', DEPLOY:'Mon_SP_06', ADVANCED:'Mon_UG_10', FINAL:'Mon_HU_15',
+};
+// 角色對應武器（任務 8）
+const CHAR_WEAPON_MAP = {
+  Male_01:'Weap_01',Male_02:'Weap_03',Male_03:'Weap_05',Male_04:'Weap_07',Male_05:'Weap_09',
+  Female_01:'Weap_02',Female_02:'Weap_04',Female_03:'Weap_06',Female_04:'Weap_08',Female_05:'Weap_10',
+};
+
 class BattleUI {
-  constructor(container, spriteSrc, maxHP=3) {
+  constructor(container, spriteSrc, maxHP=3, opts={}) {
     this.maxHP=maxHP; this.currentHP=maxHP; this.streak=0;
     this.canvas=document.createElement('canvas');
-    this.canvas.width=160; this.canvas.height=72;
-    this.canvas.style.cssText='display:block;image-rendering:pixelated;border-radius:6px;';
+    this.canvas.width=280; this.canvas.height=72;
+    this.canvas.style.cssText='display:block;image-rendering:pixelated;border-radius:6px;max-width:100%;';
     this.ctx=this.canvas.getContext('2d');
     container.innerHTML=''; container.appendChild(this.canvas);
-    this.spriteX=24; this.spriteY=20; this.shakeOffset=0;
+    this.spriteX=14; this.spriteY=28; this.shakeOffset=0;
+    this.attackOffset=0; this.showWeap=false;
+    this.monShake=0; this.monHP=3; this.monMaxHP=3;
     this.render=this.render.bind(this);
+    // 玩家角色 sprite
     const img=new Image(); img.src=spriteSrc;
     img.onload=()=>{
       this.animator=new SpriteAnimator(img,32,32,3,0,200);
       this.animator.onFrameChange=()=>this.render();
       this.animator.start(); this.render();
     };
+    // 武器 sprite（任務 8）
+    this.weapImg=null;
+    if(opts.weaponSrc){ const w=new Image(); w.src=opts.weaponSrc; w.onload=()=>{this.weapImg=w; this.render();}; }
+    // 怪物 sprite（任務 9）
+    this.monImg=null;
+    if(opts.monsterSrc){ const m=new Image(); m.src=opts.monsterSrc; m.onload=()=>{this.monImg=m; this.render();}; }
   }
   render() {
     const {ctx,canvas}=this; ctx.clearRect(0,0,canvas.width,canvas.height);
-    ctx.fillStyle='rgba(10,15,30,0.85)'; ctx.fillRect(0,0,canvas.width,canvas.height);
-    this.drawHPBar(ctx, canvas.width-70, 8, 60, 10);
-    if(this.animator) this.animator.draw(ctx, this.spriteX+this.shakeOffset, this.spriteY);
-    else { ctx.fillStyle='#888'; ctx.fillRect(this.spriteX,this.spriteY,32,32); }
+    ctx.fillStyle='rgba(8,12,25,0.92)'; ctx.fillRect(0,0,canvas.width,canvas.height);
+    // VS 分隔線
+    ctx.fillStyle='rgba(255,255,255,0.06)'; ctx.fillRect(canvas.width/2-1,0,2,canvas.height);
+    ctx.fillStyle='rgba(255,200,80,0.7)'; ctx.font='bold 9px monospace';
+    ctx.textAlign='center'; ctx.fillText('VS',canvas.width/2,canvas.height/2+4);
+    // 玩家 HP 條（左上）
+    this._drawHP(ctx,8,6,80,7,this.currentHP,this.maxHP);
+    // 玩家 sprite
+    const px=this.spriteX+this.shakeOffset+this.attackOffset;
+    if(this.animator) this.animator.draw(ctx,px,this.spriteY);
+    else { ctx.fillStyle='#555'; ctx.fillRect(px,this.spriteY,32,32); }
+    // 武器疊圖（任務 8）
+    if(this.showWeap && this.weapImg){
+      ctx.save(); ctx.imageSmoothingEnabled=false; ctx.globalAlpha=0.9;
+      ctx.drawImage(this.weapImg,px+20,this.spriteY-6,22,22);
+      ctx.restore();
+    }
+    // 怪物 HP 條（右上）
+    this._drawHP(ctx,canvas.width-88,6,80,7,this.monHP,this.monMaxHP);
+    // 怪物 sprite（任務 9）
+    const mx=this.monX+(this.monShake||0);
+    if(this.monImg){
+      ctx.save(); ctx.imageSmoothingEnabled=false;
+      ctx.drawImage(this.monImg,mx,this.monY,40,53);
+      ctx.restore();
+    } else {
+      ctx.fillStyle='rgba(80,20,80,0.6)'; ctx.fillRect(mx,8,40,56);
+      ctx.font='28px serif'; ctx.textAlign='center'; ctx.fillText('👾',mx+20,44);
+    }
   }
-  drawHPBar(ctx,x,y,w,h) {
-    const pct=this.currentHP/this.maxHP;
-    ctx.fillStyle='#333'; ctx.fillRect(x,y,w,h);
+  get monX(){ return 228; }
+  get monY(){ return 10; }
+  _drawHP(ctx,x,y,w,h,cur,max){
+    const pct=Math.max(0,cur/max);
+    ctx.fillStyle='#222'; ctx.fillRect(x,y,w,h);
     ctx.fillStyle=pct>0.5?'#00e060':pct>0.25?'#ffcc00':'#ff3030';
     ctx.fillRect(x,y,w*pct,h);
-    ctx.strokeStyle='rgba(255,255,255,0.5)'; ctx.lineWidth=1; ctx.strokeRect(x,y,w,h);
+    ctx.strokeStyle='rgba(255,255,255,0.25)'; ctx.lineWidth=1; ctx.strokeRect(x,y,w,h);
   }
   triggerAttack() {
-    this.canvas.style.transition='none'; this.canvas.style.transform='translateX(20px)';
-    requestAnimationFrame(()=>{ this.canvas.style.transition='transform 0.12s ease'; this.canvas.style.transform='translateX(0)'; });
+    // 玩家衝刺
+    this.attackOffset=24; this.showWeap=true; this.render();
+    setTimeout(()=>{ this.attackOffset=0; this.render(); },130);
+    setTimeout(()=>{ this.showWeap=false; this.render(); },420);
+    // 怪物受擊
+    setTimeout(()=>{
+      if(this.monHP>0) this.monHP--;
+      this._shakeEl('mon',6,180);
+    },200);
     this.streak++; this.updateStreakEffect();
   }
-  triggerHurt() { this.shake(8,250); this.streak=0; this.updateStreakEffect(); }
-  shake(intensity=8,duration=250) {
+  triggerHurt() { this._shakeEl('player',8,250); this.streak=0; this.updateStreakEffect(); }
+  _shakeEl(who,intensity,duration){
     const t0=performance.now();
     const step=()=>{
       const e=performance.now()-t0;
-      if(e>=duration){this.shakeOffset=0;this.render();return;}
+      if(e>=duration){
+        if(who==='player') this.shakeOffset=0; else this.monShake=0;
+        this.render(); return;
+      }
       const p=e/duration;
-      this.shakeOffset=Math.sin(p*Math.PI*6)*intensity*(1-p);
+      const v=Math.sin(p*Math.PI*6)*intensity*(1-p);
+      if(who==='player') this.shakeOffset=v; else this.monShake=v;
       this.render(); requestAnimationFrame(step);
     };
     requestAnimationFrame(step);
