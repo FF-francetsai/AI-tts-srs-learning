@@ -106,44 +106,47 @@ p.note{text-align:center;font-size:11px;color:#475569;margin-bottom:14px}
 </div>
 
 <script>
-const FW=90, FH=115, SCALE=2, FRAMES=3;
+const FW=90, FH=115, MW=130, MH=160, SCALE=2, FRAMES=3;
 const BASE='assets/sprites/ro_chars/';
 
-// 男角：4個舊格式 + 65個新格式
-const MALE_CHARS = [
-  {label:'Acolyte',    file:'Acolyte_full_south.png',    fw:80,fh:105},
-  {label:'Alchemist',  file:'Alchemist_full_south.png',  fw:80,fh:105},
-  {label:'Arch Bishop',file:'ArchBishop_full_south.png', fw:80,fh:105},
-  {label:'Bard',       file:'Bard_full_south.png',       fw:80,fh:105},
-  ...[
-    'Archer','Assassin','Assassin_Cross','Biochemist','Blacksmith','Champion',
-    'Crusader','Doram_Summoner','Game_Master','Genetic','Guillotine_Cross','Gunslinger',
-    'Hanbok','High_Priest','High_Wizard','Hunter','Kagerou','Knight','Lord_Knight',
-    'Maestro','Mage','Mastersmith','Mechanic','Mechanic_Robot','Merchant','Minstrel',
-    'Monk','Ninja','Novice','Octoberfest','Paladin','Priest','Ranger','Ranger_(Warg)',
-    'Rebellion','Rogue','Royal_Guard','Royal_Guard_(Mount)','Rune_Knight',
-    'Rune_Knight_(Alternate)','Rune_Knight_(Ferus)','Rune_Knight_(Ferus,_Alternate)',
-    'Rune_Knight_(Ferus,_Black)','Rune_Knight_(Ferus,_Blue)','Rune_Knight_(Ferus,_Red)',
-    'Rune_Knight_(Ferus,_White)','Sage','Santa','Scholar','Shadow_Chaser','Shura',
-    'Sniper','Sorcerer','Soul_Linker','Stalker','Star_Knight','Summer_Clothes_1',
-    'Summer_Clothes_2','Supernovice','Swordsman','Taekwon','Thief','Warlock','Wedding','Wizard'
-  ].map(k=>({label:k.replace(/_/g,' '), file:`M_${k}_south.png`, fw:FW, fh:FH}))
-];
+const MOUNT_JOBS=new Set(['Royal_Guard_(Mount)','Ranger_(Warg)','Mechanic_Robot']);
 
-const FEMALE_CHARS = [
-  'Acolyte','Alchemist','Arch_Bishop','Archer','Assassin','Assassin_Cross',
-  'Biochemist','Blacksmith','Champion','Crusader','Dancer','Doram_Summoner',
-  'Game_Master','Genetic','Guillotine_Cross','Gunslinger','Gypsy','Hanbok',
-  'High_Priest','High_Wizard','Hunter','Knight','Lord_Knight','Mage','Mastersmith',
-  'Mechanic','Mechanic_Robot','Merchant','Monk','Ninja','Novice','Oboro','Octoberfest',
+function mkChar(k, prefix){
+  const isMnt=MOUNT_JOBS.has(k);
+  return {label:k.replace(/_/g,' '), file:`${prefix}_${k}_south.png`,
+          fw:isMnt?MW:FW, fh:isMnt?MH:FH};
+}
+
+const MALE_CHARS = [
+  'Archer','Assassin','Assassin_Cross','Biochemist','Blacksmith','Champion',
+  'Crusader','Doram_Summoner','Doram_Summoner_Cart','Game_Master','Genetic',
+  'Guillotine_Cross','Gunslinger','Hanbok','High_Priest','High_Wizard','Hunter',
+  'Kagerou','Knight','Lord_Knight','Maestro','Mage','Mastersmith','Mechanic',
+  'Mechanic_Robot','Merchant','Minstrel','Monk','Ninja','Novice','Octoberfest',
   'Paladin','Priest','Ranger','Ranger_(Warg)','Rebellion','Rogue','Royal_Guard',
   'Royal_Guard_(Mount)','Rune_Knight','Rune_Knight_(Alternate)','Rune_Knight_(Ferus)',
   'Rune_Knight_(Ferus,_Alternate)','Rune_Knight_(Ferus,_Black)','Rune_Knight_(Ferus,_Blue)',
   'Rune_Knight_(Ferus,_Red)','Rune_Knight_(Ferus,_White)','Sage','Santa','Scholar',
   'Shadow_Chaser','Shura','Sniper','Sorcerer','Soul_Linker','Stalker','Star_Knight',
   'Summer_Clothes_1','Summer_Clothes_2','Supernovice','Swordsman','Taekwon','Thief',
-  'Wanderer','Warlock','Wedding','Wizard'
-].map(k=>({label:k.replace(/_/g,' '), file:`F_${k}_south.png`, fw:FW, fh:FH}));
+  'Warlock','Wedding','Wizard'
+].map(k=>mkChar(k,'M'));
+
+const FEMALE_CHARS = [
+  'Acolyte','Alchemist','Arch_Bishop','Archer','Assassin','Assassin_Cross',
+  'Biochemist','Blacksmith','Champion','Crusader','Dancer','Doram_Summoner',
+  'Doram_Summoner_Cart','Game_Master','Genetic','Guillotine_Cross','Gunslinger',
+  'Gypsy','Hanbok','High_Priest','High_Wizard','Hunter','Knight','Lord_Knight',
+  'Mage','Mastersmith','Mechanic','Mechanic_Robot','Merchant','Monk','Ninja',
+  'Novice','Oboro','Octoberfest','Paladin','Priest','Ranger','Ranger_(Warg)',
+  'Rebellion','Rogue','Royal_Guard','Royal_Guard_(Mount)','Rune_Knight',
+  'Rune_Knight_(Alternate)','Rune_Knight_(Ferus)','Rune_Knight_(Ferus,_Alternate)',
+  'Rune_Knight_(Ferus,_Black)','Rune_Knight_(Ferus,_Blue)','Rune_Knight_(Ferus,_Red)',
+  'Rune_Knight_(Ferus,_White)','Sage','Santa','Scholar','Shadow_Chaser','Shura',
+  'Sniper','Sorcerer','Soul_Linker','Stalker','Star_Knight','Summer_Clothes_1',
+  'Summer_Clothes_2','Supernovice','Swordsman','Taekwon','Thief','Wanderer',
+  'Warlock','Wedding','Wizard'
+].map(k=>mkChar(k,'F'));
 
 let currentTab='male', searchVal='';
 const grid=document.getElementById('ro-grid');
