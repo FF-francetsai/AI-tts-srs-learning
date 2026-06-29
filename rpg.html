@@ -657,21 +657,27 @@ const RPG_UI = {
     ['h1','h2','h3'].forEach((id,i)=>{
       document.getElementById(id).className='heart'+(i>=q.hp?' empty':'');
     });
-    // 初始化 / 更新 BattleUI（任務 8 武器 + 任務 9 怪物）
-    if(!window._battleUI){
+    // 初始化 / 更新 BattleUI（任務 8 武器 + 任務 9 對手）
+    // 右側顯示當前星域 NPC 守護者，而非隨機怪物
+    const _curDomain=window._rpgCurDomain;
+    const _curDomKey=_curDomain?.key||'INTRO';
+    if(!window._battleUI || window._battleUI._domKey!==_curDomKey){
+      if(window._battleUI) window._battleUI.destroy();
       const container=document.getElementById('battle-sprite-area');
       const profile=loadCharProfile();
       const sprite=(profile&&profile.spriteFile)?profile.spriteFile:'Male_01';
-      const domKey=window._rpgCurDomain?.key||'INTRO';
-      const monId=DOMAIN_MONSTER_MAP[domKey]||'Mon_HU_01';
+      const npcSprite=_curDomain?.spriteFile||'Female_01'; // 星域守護者 sprite
       const weapId=CHAR_WEAPON_MAP[sprite]||'Weap_01';
-      if(container) window._battleUI=new BattleUI(
-        container,
-        `assets/sprites/characters/${sprite}-1.png`,
-        3,
-        { monsterSrc:`assets/sprites/monsters/${monId}.png`,
-          weaponSrc:`assets/sprites/weapons/${weapId}.png` }
-      );
+      if(container){
+        window._battleUI=new BattleUI(
+          container,
+          `assets/sprites/characters/${sprite}-1.png`,
+          3,
+          { opponentSrc:`assets/sprites/characters/${npcSprite}-1.png`,
+            weaponSrc:`assets/sprites/weapons/${weapId}.png` }
+        );
+        window._battleUI._domKey=_curDomKey;
+      }
     }
     if(window._battleUI) window._battleUI.updateHP(q.hp,3);
     document.getElementById('quiz-q').textContent = q.text;
@@ -1478,9 +1484,17 @@ class BattleUI {
     // 武器 sprite（任務 8：角落常駐小圖示）
     this.weapImg=null; this.weapAttack=false;
     if(opts.weaponSrc){ const w=new Image(); w.src=opts.weaponSrc; w.onload=()=>{this.weapImg=w; this.render();}; }
-    // 怪物 sprite（任務 9：右側顯示，64×85 縮放）
-    this.monImg=null;
-    if(opts.monsterSrc){ const m=new Image(); m.src=opts.monsterSrc; m.onload=()=>{this.monImg=m; this.render();}; }
+    // 對手 sprite（任務 9：右側顯示星域守護者，2× 動畫，面向左）
+    this.oppAnimator=null;
+    if(opts.opponentSrc){
+      const m=new Image(); m.src=opts.opponentSrc;
+      m.onload=()=>{
+        // 使用第 0 列（南向走路），水平翻轉面向玩家
+        this.oppAnimator=new SpriteAnimator(m,32,32,3,0,220);
+        this.oppAnimator.onFrameChange=()=>this.render();
+        this.oppAnimator.start(); this.render();
+      };
+    }
   }
   render() {
     const {ctx,canvas}=this; ctx.clearRect(0,0,canvas.width,canvas.height);
@@ -1491,9 +1505,9 @@ class BattleUI {
     // 武器小圖示（左下角，常駐）
     if(this.weapImg){
       ctx.save();
-      ctx.globalAlpha=this.weapAttack?1.0:0.55;
-      ctx.imageSmoothingEnabled=true;
-      const ws=this.weapAttack?26:20;
+      ctx.globalAlpha=this.weapAttack?1.0:0.5;
+      ctx.imageSmoothingEnabled=false;
+      const ws=this.weapAttack?26:18;
       ctx.drawImage(this.weapImg,4,canvas.height-ws-2,ws,ws);
       ctx.restore();
     }
@@ -1510,16 +1524,19 @@ class BattleUI {
     ctx.fillStyle='rgba(255,255,255,0.08)'; ctx.fillRect(CX-1,0,2,canvas.height);
     ctx.fillStyle='rgba(255,200,80,0.8)'; ctx.font='bold 9px monospace';
     ctx.textAlign='center'; ctx.fillText('VS',CX,canvas.height/2+3);
-    // ── 怪物側（右）──
+    // ── 對手側（右，水平翻轉面向玩家）──
     this._drawHP(ctx,CX+4,4,canvas.width-CX-8,7,this.monHP,this.monMaxHP);
-    const mx=CX+6+(this.monShake||0);
-    if(this.monImg){
-      ctx.save(); ctx.imageSmoothingEnabled=true; // 全彩圖用平滑縮放
-      ctx.drawImage(this.monImg, mx, 14, 60, 66);
+    const ox=CX+6+(this.monShake||0);
+    if(this.oppAnimator){
+      ctx.save(); ctx.imageSmoothingEnabled=false;
+      ctx.translate(ox+64, this.spriteY); ctx.scale(-1,1); // 水平翻轉
+      ctx.drawImage(this.oppAnimator.image,
+        this.oppAnimator.currentFrame*32, 0, 32, 32,
+        0, 0, 64, 64);
       ctx.restore();
     } else {
       ctx.font='40px serif'; ctx.textAlign='center';
-      ctx.fillText('👾', mx+30, 58);
+      ctx.fillText('❓', ox+32, 58);
     }
   }
   _drawHP(ctx,x,y,w,h,cur,max){
@@ -1559,7 +1576,7 @@ class BattleUI {
   }
   updateStreakEffect() { this.canvas.classList.toggle('critical',this.streak>=3); }
   updateHP(current,max) { this.currentHP=current; if(max) this.maxHP=max; this.render(); }
-  destroy() { if(this.animator) this.animator.stop(); }
+  destroy() { if(this.animator) this.animator.stop(); if(this.oppAnimator) this.oppAnimator.stop(); }
 }
 
 function _typewriter(el, text, done, speed=28) {
