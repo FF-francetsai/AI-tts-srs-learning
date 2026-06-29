@@ -182,8 +182,7 @@ body {
    畫面 3：關卡測驗
 ══════════════════════════════════════════════════════ */
 #screen-quiz {
-  background: rgba(6,11,19,0.55);
-  backdrop-filter: blur(2px);
+  background: #060b13;
   padding: 0;
   justify-content: flex-end;
 }
