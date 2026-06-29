@@ -150,11 +150,11 @@ const FEMALE_CHARS = [
 
 let currentTab='male', searchVal='';
 const grid=document.getElementById('ro-grid');
-const timers=[];
+const roTimers=[];
 
 function buildGrid(chars){
-  timers.forEach(t=>clearInterval(t));
-  timers.length=0;
+  roTimers.forEach(t=>clearInterval(t));
+  roTimers.length=0;
   grid.innerHTML='';
   const q=searchVal.toLowerCase();
   const filtered=q?chars.filter(c=>c.label.toLowerCase().includes(q)):chars;
@@ -177,7 +177,7 @@ function buildGrid(chars){
         ctx.drawImage(img,frame*c.fw,0,c.fw,c.fh,0,0,c.fw*SCALE,c.fh*SCALE);
       };
       draw();
-      timers.push(setInterval(()=>{frame=(frame+1)%FRAMES;draw();},200));
+      roTimers.push(setInterval(()=>{frame=(frame+1)%FRAMES;draw();},200));
     };
   });
 }
