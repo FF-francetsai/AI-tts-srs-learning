@@ -1458,12 +1458,14 @@ class BattleUI {
   constructor(container, spriteSrc, maxHP=3, opts={}) {
     this.maxHP=maxHP; this.currentHP=maxHP; this.streak=0;
     this.canvas=document.createElement('canvas');
-    this.canvas.width=280; this.canvas.height=72;
-    this.canvas.style.cssText='display:block;image-rendering:pixelated;border-radius:6px;max-width:100%;';
+    // 加寬加高：玩家64px左+中間VS+怪物64px右 共200px寬，84px高
+    this.canvas.width=200; this.canvas.height=84;
+    this.canvas.style.cssText='display:block;image-rendering:pixelated;border-radius:6px;height:84px;width:auto;';
     this.ctx=this.canvas.getContext('2d');
     container.innerHTML=''; container.appendChild(this.canvas);
-    this.spriteX=14; this.spriteY=28; this.shakeOffset=0;
-    this.attackOffset=0; this.showWeap=false;
+    // 玩家位置（左側，64×64 = 原32×32 ×2）
+    this.spriteX=8; this.spriteY=20; this.scale=2;
+    this.shakeOffset=0; this.attackOffset=0;
     this.monShake=0; this.monHP=3; this.monMaxHP=3;
     this.render=this.render.bind(this);
     // 玩家角色 sprite
@@ -1473,64 +1475,70 @@ class BattleUI {
       this.animator.onFrameChange=()=>this.render();
       this.animator.start(); this.render();
     };
-    // 武器 sprite（任務 8）
-    this.weapImg=null;
+    // 武器 sprite（任務 8：角落常駐小圖示）
+    this.weapImg=null; this.weapAttack=false;
     if(opts.weaponSrc){ const w=new Image(); w.src=opts.weaponSrc; w.onload=()=>{this.weapImg=w; this.render();}; }
-    // 怪物 sprite（任務 9）
+    // 怪物 sprite（任務 9：右側顯示，64×85 縮放）
     this.monImg=null;
     if(opts.monsterSrc){ const m=new Image(); m.src=opts.monsterSrc; m.onload=()=>{this.monImg=m; this.render();}; }
   }
   render() {
     const {ctx,canvas}=this; ctx.clearRect(0,0,canvas.width,canvas.height);
-    ctx.fillStyle='rgba(8,12,25,0.92)'; ctx.fillRect(0,0,canvas.width,canvas.height);
-    // VS 分隔線
-    ctx.fillStyle='rgba(255,255,255,0.06)'; ctx.fillRect(canvas.width/2-1,0,2,canvas.height);
-    ctx.fillStyle='rgba(255,200,80,0.7)'; ctx.font='bold 9px monospace';
-    ctx.textAlign='center'; ctx.fillText('VS',canvas.width/2,canvas.height/2+4);
-    // 玩家 HP 條（左上）
-    this._drawHP(ctx,8,6,80,7,this.currentHP,this.maxHP);
-    // 玩家 sprite
-    const px=this.spriteX+this.shakeOffset+this.attackOffset;
-    if(this.animator) this.animator.draw(ctx,px,this.spriteY);
-    else { ctx.fillStyle='#555'; ctx.fillRect(px,this.spriteY,32,32); }
-    // 武器疊圖（任務 8）
-    if(this.showWeap && this.weapImg){
-      ctx.save(); ctx.imageSmoothingEnabled=false; ctx.globalAlpha=0.9;
-      ctx.drawImage(this.weapImg,px+20,this.spriteY-6,22,22);
+    ctx.fillStyle='rgba(8,12,25,0.95)'; ctx.fillRect(0,0,canvas.width,canvas.height);
+    const CX=canvas.width/2; // 中線 x=100
+    // ── 玩家側（左）──
+    this._drawHP(ctx,4,4,72,7,this.currentHP,this.maxHP);
+    // 武器小圖示（左下角，常駐）
+    if(this.weapImg){
+      ctx.save();
+      ctx.globalAlpha=this.weapAttack?1.0:0.55;
+      ctx.imageSmoothingEnabled=true;
+      const ws=this.weapAttack?26:20;
+      ctx.drawImage(this.weapImg,4,canvas.height-ws-2,ws,ws);
       ctx.restore();
     }
-    // 怪物 HP 條（右上）
-    this._drawHP(ctx,canvas.width-88,6,80,7,this.monHP,this.monMaxHP);
-    // 怪物 sprite（任務 9）
-    const mx=this.monX+(this.monShake||0);
-    if(this.monImg){
+    // 玩家 sprite（2×放大）
+    const px=this.spriteX+this.shakeOffset+this.attackOffset;
+    if(this.animator){
       ctx.save(); ctx.imageSmoothingEnabled=false;
-      ctx.drawImage(this.monImg,mx,this.monY,40,53);
+      ctx.drawImage(this.animator.image,
+        this.animator.currentFrame*32, 0, 32, 32,
+        px, this.spriteY, 64, 64);
+      ctx.restore();
+    } else { ctx.fillStyle='#555'; ctx.fillRect(px,this.spriteY,64,64); }
+    // ── VS ──
+    ctx.fillStyle='rgba(255,255,255,0.08)'; ctx.fillRect(CX-1,0,2,canvas.height);
+    ctx.fillStyle='rgba(255,200,80,0.8)'; ctx.font='bold 9px monospace';
+    ctx.textAlign='center'; ctx.fillText('VS',CX,canvas.height/2+3);
+    // ── 怪物側（右）──
+    this._drawHP(ctx,CX+4,4,canvas.width-CX-8,7,this.monHP,this.monMaxHP);
+    const mx=CX+6+(this.monShake||0);
+    if(this.monImg){
+      ctx.save(); ctx.imageSmoothingEnabled=true; // 全彩圖用平滑縮放
+      ctx.drawImage(this.monImg, mx, 14, 60, 66);
       ctx.restore();
     } else {
-      ctx.fillStyle='rgba(80,20,80,0.6)'; ctx.fillRect(mx,8,40,56);
-      ctx.font='28px serif'; ctx.textAlign='center'; ctx.fillText('👾',mx+20,44);
+      ctx.font='40px serif'; ctx.textAlign='center';
+      ctx.fillText('👾', mx+30, 58);
     }
   }
-  get monX(){ return 228; }
-  get monY(){ return 10; }
   _drawHP(ctx,x,y,w,h,cur,max){
     const pct=Math.max(0,cur/max);
-    ctx.fillStyle='#222'; ctx.fillRect(x,y,w,h);
+    ctx.fillStyle='#1a1a2e'; ctx.fillRect(x,y,w,h);
     ctx.fillStyle=pct>0.5?'#00e060':pct>0.25?'#ffcc00':'#ff3030';
     ctx.fillRect(x,y,w*pct,h);
-    ctx.strokeStyle='rgba(255,255,255,0.25)'; ctx.lineWidth=1; ctx.strokeRect(x,y,w,h);
+    ctx.strokeStyle='rgba(255,255,255,0.2)'; ctx.lineWidth=1; ctx.strokeRect(x,y,w,h);
   }
   triggerAttack() {
-    // 玩家衝刺
-    this.attackOffset=24; this.showWeap=true; this.render();
-    setTimeout(()=>{ this.attackOffset=0; this.render(); },130);
-    setTimeout(()=>{ this.showWeap=false; this.render(); },420);
+    // 玩家衝刺 + 武器發光
+    this.attackOffset=20; this.weapAttack=true; this.render();
+    setTimeout(()=>{ this.attackOffset=0; this.render(); },140);
+    setTimeout(()=>{ this.weapAttack=false; this.render(); },500);
     // 怪物受擊
     setTimeout(()=>{
       if(this.monHP>0) this.monHP--;
-      this._shakeEl('mon',6,180);
-    },200);
+      this._shakeEl('mon',8,220);
+    },220);
     this.streak++; this.updateStreakEffect();
   }
   triggerHurt() { this._shakeEl('player',8,250); this.streak=0; this.updateStreakEffect(); }
