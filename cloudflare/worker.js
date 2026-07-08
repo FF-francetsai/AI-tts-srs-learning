@@ -3,6 +3,7 @@
 // 端點：
 //   POST /chat       — AI 對話代理（HF / CF-AI / NVIDIA）
 //   POST /tts        — Google TTS 雲端代理（zh-TW，HTTP GET，無需 key）
+//   POST /npc        — RPG 生成式 NPC（{prompt,maxTokens} → {response}，P0-2）
 //   POST /transcribe — CF Workers AI Whisper 語音轉文字（無需 key）
 // API key 全部存 Worker Secret，永不暴露前端
 // ─────────────────────────────────────────────────────────────────────────────
@@ -146,6 +147,16 @@ export default {
       return jsonResp({ error: 'Invalid JSON' }, 400, origin);
     }
 
+    // ── /npc 端點（P0-2，RPG 生成式 NPC）──────────────────────────
+    // 契約：{prompt, maxTokens} → {response}；沿用下方供應商嘗試鏈
+    const npcMode = (path === '/npc');
+    if (npcMode) {
+      const p = String(body.prompt || '').trim().slice(0, 2000);
+      if (!p) return jsonResp({ error: 'no prompt' }, 400, origin);
+      body.messages   = [{ role: 'user', content: p }];
+      body.max_tokens = Math.min(Number(body.maxTokens) || 120, 300);
+    }
+
     const messages  = withSysTW(body.messages || []);
     const maxTokens = Math.min(Number(body.max_tokens) || 1200, 2000);
 
@@ -172,7 +183,7 @@ export default {
         if (r.ok) {
           const d       = await r.json();
           const content = _clean(d?.choices?.[0]?.message?.content || '');
-          if (content) return jsonResp({ choices: [{ message: { role: 'assistant', content } }], provider: 'hf', model: HF_ID }, 200, origin);
+          if (content) return jsonResp(npcMode ? { response: content, provider: 'hf', model: HF_ID } : { choices: [{ message: { role: 'assistant', content } }], provider: 'hf', model: HF_ID }, 200, origin);
         }
         errors.push(`HF:${r.status}`);
       } catch (e) { errors.push(`HF:${e.message}`); }
@@ -183,7 +194,7 @@ export default {
       try {
         const result = await env.AI.run(CF_ID, { messages, max_tokens: maxTokens });
         const content = _clean(result?.response || result?.choices?.[0]?.message?.content || '');
-        if (content) return jsonResp({ choices: [{ message: { role: 'assistant', content } }], provider: 'cf-ai', model: CF_ID }, 200, origin);
+        if (content) return jsonResp(npcMode ? { response: content, provider: 'cf-ai', model: CF_ID } : { choices: [{ message: { role: 'assistant', content } }], provider: 'cf-ai', model: CF_ID }, 200, origin);
         errors.push('CF-AI:empty');
       } catch (e) { errors.push(`CF-AI:${e.message}`); }
     }
@@ -200,7 +211,7 @@ export default {
         if (r.ok) {
           const d       = await r.json();
           const content = _clean(d?.choices?.[0]?.message?.content || '');
-          if (content) return jsonResp({ choices: [{ message: { role: 'assistant', content } }], provider: 'nvidia', model: NV_ID }, 200, origin);
+          if (content) return jsonResp(npcMode ? { response: content, provider: 'nvidia', model: NV_ID } : { choices: [{ message: { role: 'assistant', content } }], provider: 'nvidia', model: NV_ID }, 200, origin);
         }
         errors.push(`NVIDIA:${r.status}`);
       } catch (e) { errors.push(`NVIDIA:${e.message}`); }

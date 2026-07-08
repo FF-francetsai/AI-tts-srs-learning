@@ -126,6 +126,7 @@
     <div class="result-emoji" id="result-emoji">🌟</div>
     <div class="result-title" id="result-title">通關！</div>
     <div class="result-sub"   id="result-sub"></div>
+    <div class="result-npc"   id="result-npc" style="margin-top:10px;font-size:13px;line-height:1.6;color:var(--accent, #7ec8ff);min-height:1em;"></div>
     <button class="result-btn" id="result-btn" onclick="RPG_UI.showMap()">返回星域地圖</button>
   </div>
 </div>
@@ -730,7 +731,14 @@ const RPG_UI = {
     document.getElementById('result-title').textContent = result.pass?'通關！':'挑戰失敗';
     document.getElementById('result-sub').textContent   =
       `答對 ${result.score} / ${result.total} 題${result.pass?'，繼續前進！':'，再試一次吧！'}`;
+    document.getElementById('result-npc').textContent = '';
     ov.classList.add('show');
+  },
+
+  // 生成式 NPC 評語（Reflection，非同步抵達後補顯示）
+  showNpcComment(text) {
+    const el = document.getElementById('result-npc');
+    if (el) el.textContent = text;
   },
 
   // 技能解鎖
@@ -1593,6 +1601,7 @@ function _typewriter(el, text, done, speed=28) {
 <!-- ════════════════════════════════════════════════
      遊戲引擎
 ════════════════════════════════════════════════ -->
+<script src="rpg-npc-agent.js"></script>
 <script src="rpg.js"></script>
 <script>
 // ── 角色創建系統（HermesAgent 設計）──────────────────────────────

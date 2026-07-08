@@ -2,6 +2,7 @@
 // 依賴：rpg-data.js（DOMAINS, buildQuiz, getDomainSkills）
 
 const RPG_CF_WORKER = 'https://ai-tts-srs-proxy.ai-tts-srs-learning.workers.dev';
+const RPG_NPC_ENDPOINT = RPG_CF_WORKER + '/npc'; // 生成式 NPC 專用（{prompt,maxTokens}→{response}）
 const RPG_SAVE_KEY  = 'rpg_ai_league_progress';
 
 // ── 職階定義 ──────────────────────────────────────────────────────────────────
@@ -177,6 +178,11 @@ class RPGEngine {
     this._quizIdx = 0;
     this._hp      = 3;
     this._score   = 0;
+    // 生成式 NPC（rpg-npc-agent.js Reflection）：記錄答題，結算時由守護者給評語
+    this._npcMemory = { longTerm: [] };
+    this._npcReflection = (typeof Reflection !== 'undefined')
+      ? new Reflection({ llmEndpoint: RPG_NPC_ENDPOINT, npcName: this._curDomain.guardian })
+      : null;
     this._runQuizQuestion();
   }
 
@@ -191,7 +197,9 @@ class RPGEngine {
       progress: { cur: this._quizIdx + 1, total: this._quizQ.length },
       hp: this._hp,
       onAnswer: (idx) => {
-        if (idx === q.answer) {
+        const correct = (idx === q.answer);
+        this._npcMemory?.longTerm.push({ type: 'qa', correct });
+        if (correct) {
           this._score++;
           this._state.exp += 20;
         } else {
@@ -238,6 +246,7 @@ class RPGEngine {
       this._save();
       this._syncUI();
       this._ui.showQuizResult?.({ pass: true, score: this._score, total: this._quizQ.length });
+      this._showNpcReflection();
     } else {
       this._failQuiz();
     }
@@ -245,6 +254,16 @@ class RPGEngine {
 
   _failQuiz() {
     this._ui.showQuizResult?.({ pass: false, score: this._score, total: this._quizQ.length });
+    this._showNpcReflection();
+  }
+
+  // 生成式 NPC 評語（LLM 生成，端點失敗自動回退模組內建模板）
+  async _showNpcReflection() {
+    if (!this._npcReflection || !this._npcMemory?.longTerm.length) return;
+    try {
+      const text = await this._npcReflection.generateReflection(this._npcMemory);
+      if (text) this._ui.showNpcComment?.(`💬 ${this._curDomain.guardian}：${text}`);
+    } catch (e) { console.warn('[RPG NPC-Agent]', e.message); }
   }
 
   // ── 職階計算 ─────────────────────────────────────────────────────────────
