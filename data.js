@@ -4329,31 +4329,6 @@ const lessonData = [
     "subject": "初科二",
     "category": "生成式 AI",
     "principle": "永續發展與福祉",
-    "title": "DALL-E",
-    "eng_name": "DALL-E",
-    "eng_abbr": "—",
-    "def": "DALL-E是由OpenAI開發的生成模型平台。它能根據使用者的自然語言描述，透過擴散模型的逐步去噪技術，自動生成高解析度、創意豐富的圖像，廣泛應用於藝術創作與視覺化設計。",
-    "key_goal": "生成高細節且創意豐富的視覺圖像。",
-    "key_principle": "擴散模型/逐步去噪/文本到圖像轉換",
-    "key_purpose": "根據文字提示快速產出高品質圖像、插畫與視覺素材，協助設計師與行銷團隊降低視覺創作的門檻與時間成本。",
-    "common_apps": "台灣廣告行銷公司運用DALL-E，根據客戶提供的產品文案快速生成多種風格的社群媒體宣傳海報概念圖。",
-    "scenarios": {
-      "weather": "災防單位輸入極端氣候條件或土石流情境的文字描述，生成具體的潛在災情視覺化示意圖，以製作生動的民眾防救災宣導文宣。",
-      "agri": "農業推廣機構輸入在地農特產品特色與品牌調性，快速生成具備獨特藝術風格的農產品包裝概念圖，提升在地品牌視覺吸引力。",
-      "traffic": "交通管理部門根據未來智慧城市的規劃文字，生成無人駕駛運輸系統與智慧站牌的願景概念圖，作為政策說明會的視覺展示素材。",
-      "manuf": "工業設計師在產品初期開發階段，輸入產品材質、功能與外觀意象描述，快速產出多樣化的新產品外觀概念草圖供團隊評估。",
-      "fintech": "醫療衛教團隊輸入複雜的手術流程或病理特徵描述，生成清晰且具親和力的醫療衛教示意圖，協助病患理解治療方案。",
-      "retail": "電商平台行銷團隊根據特定節慶檔期與促銷主題，輸入文案提示快速產出大量符合當季風格的網頁宣傳Banner與客製化廣告配圖。",
-      "fire": "消防宣導單位透過輸入火場逃生或危險化學品外洩情境，生成具警示效果的公共安全教育插畫，用於提升民眾的防災避難意識。"
-    },
-    "detail_explain": "【DALL-E】定義：DALL-E是由OpenAI開發的生成模型平台。它能根據使用者的自然語言描述，透過擴散模型的逐步去噪技術，自動生成高解析度、創意豐富的圖像，廣泛應用於藝術創作與視覺化設計。",
-    "stage": "1"
-  },
-  {
-    "id": "175",
-    "subject": "初科二",
-    "category": "生成式 AI",
-    "principle": "永續發展與福祉",
     "title": "Copilot",
     "eng_name": "Copilot",
     "eng_abbr": "—",
@@ -4375,7 +4350,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "176",
+    "id": "175",
     "subject": "初科二",
     "category": "生成式 AI",
     "principle": "永續發展與福祉",
@@ -4400,7 +4375,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "177",
+    "id": "176",
     "subject": "中科一",
     "category": "生成式 AI",
     "principle": "永續發展與福祉",
@@ -4425,7 +4400,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "178",
+    "id": "177",
     "subject": "初科二",
     "category": "AI 生態",
     "principle": "永續發展與福祉",
@@ -4450,7 +4425,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "179",
+    "id": "178",
     "subject": "中科二",
     "category": "資料科學",
     "principle": "透明與可解釋",
@@ -4475,7 +4450,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "180",
+    "id": "179",
     "subject": "中科一",
     "category": "系統架構",
     "principle": "永續發展與福祉",
@@ -4500,7 +4475,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "181",
+    "id": "180",
     "subject": "中科一/初科二",
     "category": "生成式 AI",
     "principle": "透明與可解釋",
@@ -4525,7 +4500,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "182",
+    "id": "181",
     "subject": "中科一",
     "category": "應用工具",
     "principle": "永續發展與福祉",
@@ -4550,7 +4525,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "183",
+    "id": "182",
     "subject": "中科一",
     "category": "應用場景",
     "principle": "永續發展與福祉",
@@ -4575,7 +4550,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "184",
+    "id": "183",
     "subject": "中科一",
     "category": "應用場景",
     "principle": "永續發展與福祉",
@@ -4600,7 +4575,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "185",
+    "id": "184",
     "subject": "中科一",
     "category": "應用場景",
     "principle": "永續發展與福祉",
@@ -4625,7 +4600,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "186",
+    "id": "185",
     "subject": "中科一",
     "category": "應用場景",
     "principle": "永續發展與福祉",
@@ -4650,7 +4625,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "187",
+    "id": "186",
     "subject": "中科一",
     "category": "應用場景",
     "principle": "永續發展與福祉",
@@ -4675,7 +4650,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "188",
+    "id": "187",
     "subject": "中科一",
     "category": "應用場景",
     "principle": "公平與不歧視",
@@ -4700,7 +4675,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "189",
+    "id": "188",
     "subject": "中科一",
     "category": "應用場景",
     "principle": "隱私與資料保護",
@@ -4725,7 +4700,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "190",
+    "id": "189",
     "subject": "中科一",
     "category": "應用場景",
     "principle": "隱私與資料保護",
@@ -4750,7 +4725,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "191",
+    "id": "190",
     "subject": "中科一",
     "category": "應用場景",
     "principle": "安全與防護",
@@ -4775,7 +4750,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "192",
+    "id": "191",
     "subject": "中科一",
     "category": "應用場景",
     "principle": "永續發展與福祉",
@@ -4800,7 +4775,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "193",
+    "id": "192",
     "subject": "中科一",
     "category": "雲端平台",
     "principle": "永續發展與福祉",
@@ -4825,7 +4800,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "194",
+    "id": "193",
     "subject": "中科一",
     "category": "雲端平台",
     "principle": "永續發展與福祉",
@@ -4850,7 +4825,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "195",
+    "id": "194",
     "subject": "中科一",
     "category": "雲端平台",
     "principle": "永續發展與福祉",
@@ -4875,7 +4850,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "196",
+    "id": "195",
     "subject": "中科一/初科二",
     "category": "雲端平台",
     "principle": "永續發展與福祉",
@@ -4900,7 +4875,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "197",
+    "id": "196",
     "subject": "中科一",
     "category": "模型訓練",
     "principle": "永續發展與福祉",
@@ -4925,7 +4900,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "198",
+    "id": "197",
     "subject": "中科二",
     "category": "大數據 5V",
     "principle": "永續發展與福祉",
@@ -4950,7 +4925,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "199",
+    "id": "198",
     "subject": "中科二",
     "category": "大數據 5V",
     "principle": "永續發展與福祉",
@@ -4975,7 +4950,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "200",
+    "id": "199",
     "subject": "中科二",
     "category": "大數據 5V",
     "principle": "永續發展與福祉",
@@ -5000,7 +4975,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "201",
+    "id": "200",
     "subject": "中科二",
     "category": "大數據 5V",
     "principle": "永續發展與福祉",
@@ -5025,7 +5000,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "202",
+    "id": "201",
     "subject": "中科二",
     "category": "大數據 5V",
     "principle": "透明與可解釋",
@@ -5050,7 +5025,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "203",
+    "id": "202",
     "subject": "中科三",
     "category": "數學基礎",
     "principle": "-",
@@ -5075,7 +5050,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "204",
+    "id": "203",
     "subject": "中科三",
     "category": "數學基礎",
     "principle": "-",
@@ -5100,7 +5075,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "205",
+    "id": "204",
     "subject": "中科三",
     "category": "數學基礎",
     "principle": "-",
@@ -5125,7 +5100,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "206",
+    "id": "205",
     "subject": "中科三",
     "category": "數學基礎",
     "principle": "-",
@@ -5150,7 +5125,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "207",
+    "id": "206",
     "subject": "中科三",
     "category": "數學基礎",
     "principle": "-",
@@ -5175,7 +5150,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "208",
+    "id": "207",
     "subject": "中科三",
     "category": "數學基礎",
     "principle": "透明與可解釋",
@@ -5200,7 +5175,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "209",
+    "id": "208",
     "subject": "中科三",
     "category": "數學基礎",
     "principle": "透明與可解釋",
@@ -5225,7 +5200,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "210",
+    "id": "209",
     "subject": "中科三",
     "category": "數學基礎",
     "principle": "透明與可解釋",
@@ -5250,7 +5225,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "211",
+    "id": "210",
     "subject": "中科二/中科三",
     "category": "數學基礎",
     "principle": "透明與可解釋",
@@ -5275,7 +5250,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "212",
+    "id": "211",
     "subject": "中科二/中科三",
     "category": "數學基礎",
     "principle": "-",
@@ -5300,7 +5275,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "213",
+    "id": "212",
     "subject": "中科三",
     "category": "模型優化",
     "principle": "永續發展與福祉",
@@ -5325,7 +5300,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "214",
+    "id": "213",
     "subject": "中科三",
     "category": "模型優化",
     "principle": "永續發展與福祉",
@@ -5350,7 +5325,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "215",
+    "id": "214",
     "subject": "中科三",
     "category": "模型優化",
     "principle": "永續發展與福祉",
@@ -5375,7 +5350,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "216",
+    "id": "215",
     "subject": "中科三",
     "category": "機器學習",
     "principle": "永續發展與福祉",
@@ -5400,7 +5375,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "217",
+    "id": "216",
     "subject": "中科三",
     "category": "資訊安全",
     "principle": "安全與防護",
@@ -5425,7 +5400,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "218",
+    "id": "217",
     "subject": "中科三",
     "category": "資訊安全",
     "principle": "安全與防護",
@@ -5450,7 +5425,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "219",
+    "id": "218",
     "subject": "中科一",
     "category": "資訊安全",
     "principle": "安全與防護",
@@ -5475,7 +5450,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "220",
+    "id": "219",
     "subject": "中科一",
     "category": "模型監控",
     "principle": "責任與問責",
@@ -5500,7 +5475,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "221",
+    "id": "220",
     "subject": "中科二",
     "category": "系統架構",
     "principle": "永續發展與福祉",
@@ -5525,7 +5500,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "222",
+    "id": "221",
     "subject": "中科二",
     "category": "系統架構",
     "principle": "永續發展與福祉",
@@ -5550,7 +5525,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "223",
+    "id": "222",
     "subject": "中科一",
     "category": "AI 代理人",
     "principle": "永續發展與福祉",
@@ -5575,7 +5550,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "224",
+    "id": "223",
     "subject": "中科一",
     "category": "AI 代理人",
     "principle": "永續發展與福祉",
@@ -5600,7 +5575,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "225",
+    "id": "224",
     "subject": "中科一",
     "category": "應用工具",
     "principle": "隱私與資料保護",
@@ -5625,7 +5600,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "226",
+    "id": "225",
     "subject": "中科一",
     "category": "應用工具",
     "principle": "隱私與資料保護",
@@ -5650,7 +5625,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "227",
+    "id": "226",
     "subject": "中科一",
     "category": "應用工具",
     "principle": "隱私與資料保護",
@@ -5675,7 +5650,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "228",
+    "id": "227",
     "subject": "中科一",
     "category": "治理政策",
     "principle": "永續發展與福祉",
@@ -5700,7 +5675,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "229",
+    "id": "228",
     "subject": "初科二",
     "category": "數位轉型",
     "principle": "永續發展與福祉",
@@ -5725,7 +5700,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "230",
+    "id": "229",
     "subject": "中科一",
     "category": "組織治理",
     "principle": "安全與防護",
@@ -5750,7 +5725,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "231",
+    "id": "230",
     "subject": "初科一",
     "category": "AI 哲學",
     "principle": "永續發展與福祉",
@@ -5775,7 +5750,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "232",
+    "id": "231",
     "subject": "中科一",
     "category": "生成式 AI",
     "principle": "永續發展與福祉",
@@ -5800,7 +5775,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "233",
+    "id": "232",
     "subject": "中科二",
     "category": "系統效能",
     "principle": "永續發展與福祉",
@@ -5825,7 +5800,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "234",
+    "id": "233",
     "subject": "中科一",
     "category": "治理政策",
     "principle": "責任與問責",
@@ -5850,7 +5825,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "235",
+    "id": "234",
     "subject": "中科三",
     "category": "環境保護",
     "principle": "永續發展與福祉",
@@ -5875,7 +5850,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "236",
+    "id": "235",
     "subject": "中科一",
     "category": "系統架構",
     "principle": "永續發展與福祉",
@@ -5900,7 +5875,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "237",
+    "id": "236",
     "subject": "中科三",
     "category": "模型評估",
     "principle": "透明與可解釋",
@@ -5925,7 +5900,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "238",
+    "id": "237",
     "subject": "中科二",
     "category": "資訊檢索",
     "principle": "責任與問責",
@@ -5950,12 +5925,12 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "239",
+    "id": "238",
     "subject": "中科二",
     "category": "資訊檢索",
     "principle": "透明與可解釋",
     "title": "歸一化折損累計增益",
-    "eng_name": "NDCG",
+    "eng_name": "Normalized Discounted Cumulative Gain",
     "eng_abbr": "NDCG",
     "def": "NDCG（歸一化折損累計增益）是一種評估推薦系統或資訊檢索模型離線效能的指標。它不僅考量推薦結果的相關性，更針對位置進行折損加權（排名越後權重越低），並透過歸一化確保不同查詢間具備客觀可比性。",
     "key_goal": "衡量推薦系統或搜尋引擎的排序品質",
@@ -5975,7 +5950,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "240",
+    "id": "239",
     "subject": "中科三",
     "category": "環境保護",
     "principle": "永續發展與福祉",
@@ -6000,7 +5975,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "241",
+    "id": "240",
     "subject": "中科一",
     "category": "財務評估",
     "principle": "永續發展與福祉",
@@ -6025,7 +6000,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "242",
+    "id": "241",
     "subject": "中科三",
     "category": "模型規模",
     "principle": "永續發展與福祉",
@@ -6050,7 +6025,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "243",
+    "id": "242",
     "subject": "中科三",
     "category": "深度學習",
     "principle": "-",
@@ -6075,7 +6050,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "244",
+    "id": "243",
     "subject": "中科一",
     "category": "電腦視覺",
     "principle": "永續發展與福祉",
@@ -6100,7 +6075,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "245",
+    "id": "244",
     "subject": "中科三",
     "category": "深度學習",
     "principle": "-",
@@ -6125,7 +6100,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "246",
+    "id": "245",
     "subject": "中科三",
     "category": "模型訓練",
     "principle": "永續發展與福祉",
@@ -6150,7 +6125,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "247",
+    "id": "246",
     "subject": "中科三",
     "category": "模型評估",
     "principle": "透明與可解釋",
@@ -6175,7 +6150,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "248",
+    "id": "247",
     "subject": "中科三",
     "category": "模型訓練",
     "principle": "永續發展與福祉",
@@ -6200,7 +6175,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "249",
+    "id": "248",
     "subject": "中科一",
     "category": "NLP/搜尋",
     "principle": "透明與可解釋",
@@ -6225,7 +6200,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "250",
+    "id": "249",
     "subject": "中科一",
     "category": "生成式 AI",
     "principle": "永續發展與福祉",
@@ -6250,7 +6225,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "251",
+    "id": "250",
     "subject": "中科一",
     "category": "內容治理",
     "principle": "透明與可解釋",
@@ -6275,7 +6250,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "252",
+    "id": "251",
     "subject": "中科一",
     "category": "資訊安全",
     "principle": "隱私與資料保護",
@@ -6300,7 +6275,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "253",
+    "id": "252",
     "subject": "中科一",
     "category": "模型治理",
     "principle": "責任與問責",
@@ -6325,7 +6300,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "254",
+    "id": "253",
     "subject": "中科一",
     "category": "AI 代理人",
     "principle": "永續發展與福祉",
@@ -6350,7 +6325,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "255",
+    "id": "254",
     "subject": "初科二",
     "category": "生成式 AI",
     "principle": "透明與可解釋",
@@ -6375,7 +6350,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "256",
+    "id": "255",
     "subject": "中科三",
     "category": "模型監控",
     "principle": "責任與問責",
@@ -6400,7 +6375,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "257",
+    "id": "256",
     "subject": "中科一",
     "category": "系統效能",
     "principle": "永續發展與福祉",
@@ -6425,7 +6400,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "258",
+    "id": "257",
     "subject": "初科二",
     "category": "生成式 AI",
     "principle": "永續發展與福祉",
@@ -6450,7 +6425,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "259",
+    "id": "258",
     "subject": "中科一",
     "category": "組織治理",
     "principle": "責任與問責",
@@ -6475,7 +6450,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "260",
+    "id": "259",
     "subject": "中科三",
     "category": "機器學習",
     "principle": "公平與不歧視",
@@ -6500,7 +6475,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "261",
+    "id": "260",
     "subject": "中科一",
     "category": "環境保護",
     "principle": "永續發展與福祉",
@@ -6525,7 +6500,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "262",
+    "id": "261",
     "subject": "中科一",
     "category": "應用場景",
     "principle": "永續發展與福祉",
@@ -6550,7 +6525,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "263",
+    "id": "262",
     "subject": "中科一",
     "category": "生成式 AI",
     "principle": "透明與可解釋",
@@ -6575,7 +6550,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "264",
+    "id": "263",
     "subject": "中科一",
     "category": "推論優化",
     "principle": "永續發展與福祉",
@@ -6600,7 +6575,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "265",
+    "id": "264",
     "subject": "中科一",
     "category": "推論優化",
     "principle": "永續發展與福祉",
@@ -6625,7 +6600,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "266",
+    "id": "265",
     "subject": "中科三",
     "category": "電腦視覺",
     "principle": "透明與可解釋",
@@ -6650,7 +6625,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "267",
+    "id": "266",
     "subject": "中科三",
     "category": "機器學習",
     "principle": "-",
@@ -6675,7 +6650,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "268",
+    "id": "267",
     "subject": "中科三",
     "category": "數據準備",
     "principle": "公平與不歧視",
@@ -6700,7 +6675,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "269",
+    "id": "268",
     "subject": "中科三",
     "category": "模型評估",
     "principle": "透明與可解釋",
@@ -6725,7 +6700,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "270",
+    "id": "269",
     "subject": "中科一",
     "category": "應用開發",
     "principle": "永續發展與福祉",
@@ -6750,7 +6725,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "271",
+    "id": "270",
     "subject": "初科二",
     "category": "生成式 AI",
     "principle": "永續發展與福祉",
@@ -6775,7 +6750,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "272",
+    "id": "271",
     "subject": "中科一",
     "category": "系統部署",
     "principle": "永續發展與福祉",
@@ -6800,7 +6775,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "273",
+    "id": "272",
     "subject": "中科一",
     "category": "系統部署",
     "principle": "隱私與資料保護",
@@ -6825,7 +6800,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "274",
+    "id": "273",
     "subject": "中科一",
     "category": "生成式 AI",
     "principle": "永續發展與福祉",
@@ -6850,7 +6825,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "275",
+    "id": "274",
     "subject": "中科三",
     "category": "數據準備",
     "principle": "公平與不歧視",
@@ -6875,7 +6850,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "276",
+    "id": "275",
     "subject": "中科一",
     "category": "生成式 AI",
     "principle": "永續發展與福祉",
@@ -6900,7 +6875,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "277",
+    "id": "276",
     "subject": "中科一",
     "category": "系統優化",
     "principle": "永續發展與福祉",
@@ -6925,7 +6900,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "278",
+    "id": "277",
     "subject": "中科一",
     "category": "應用平台",
     "principle": "永續發展與福祉",
@@ -6950,7 +6925,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "279",
+    "id": "278",
     "subject": "中科二",
     "category": "大數據架構",
     "principle": "永續發展與福祉",
@@ -6975,7 +6950,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "280",
+    "id": "279",
     "subject": "中科二",
     "category": "大數據架構",
     "principle": "永續發展與福祉",
@@ -7000,7 +6975,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "281",
+    "id": "280",
     "subject": "中科二",
     "category": "大數據架構",
     "principle": "永續發展與福祉",
@@ -7025,7 +7000,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "282",
+    "id": "281",
     "subject": "中科二",
     "category": "軟體工程",
     "principle": "永續發展與福祉",
@@ -7050,7 +7025,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "283",
+    "id": "282",
     "subject": "中科二",
     "category": "數據處理",
     "principle": "永續發展與福祉",
@@ -7075,7 +7050,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "284",
+    "id": "283",
     "subject": "中科二",
     "category": "數據儲存",
     "principle": "永續發展與福祉",
@@ -7100,7 +7075,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "285",
+    "id": "284",
     "subject": "中科二",
     "category": "數據儲存",
     "principle": "永續發展與福祉",
@@ -7125,7 +7100,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "286",
+    "id": "285",
     "subject": "中科二",
     "category": "數據儲存",
     "principle": "永續發展與福祉",
@@ -7150,7 +7125,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "287",
+    "id": "286",
     "subject": "中科二",
     "category": "數據儲存",
     "principle": "永續發展與福祉",
@@ -7175,7 +7150,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "288",
+    "id": "287",
     "subject": "中科二",
     "category": "數據管理",
     "principle": "永續發展與福祉",
@@ -7200,7 +7175,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "289",
+    "id": "288",
     "subject": "中科二",
     "category": "大數據處理",
     "principle": "永續發展與福祉",
@@ -7225,7 +7200,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "290",
+    "id": "289",
     "subject": "中科二",
     "category": "大數據處理",
     "principle": "永續發展與福祉",
@@ -7250,7 +7225,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "291",
+    "id": "290",
     "subject": "中科二",
     "category": "運算架構",
     "principle": "永續發展與福祉",
@@ -7275,7 +7250,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "292",
+    "id": "291",
     "subject": "中科二",
     "category": "統計基礎",
     "principle": "透明與可解釋",
@@ -7300,7 +7275,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "293",
+    "id": "292",
     "subject": "中科二",
     "category": "統計推論",
     "principle": "責任與問責",
@@ -7325,7 +7300,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "294",
+    "id": "293",
     "subject": "中科二",
     "category": "統計推論",
     "principle": "責任與問責",
@@ -7350,7 +7325,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "295",
+    "id": "294",
     "subject": "中科二",
     "category": "統計推論",
     "principle": "透明與可解釋",
@@ -7375,7 +7350,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "296",
+    "id": "295",
     "subject": "中科三",
     "category": "數據準備",
     "principle": "永續發展與福祉",
@@ -7400,7 +7375,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "297",
+    "id": "296",
     "subject": "中科三",
     "category": "數據準備",
     "principle": "-",
@@ -7425,7 +7400,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "298",
+    "id": "297",
     "subject": "中科三",
     "category": "數據準備",
     "principle": "-",
@@ -7450,7 +7425,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "299",
+    "id": "298",
     "subject": "中科三",
     "category": "模型評估",
     "principle": "透明與可解釋",
@@ -7475,7 +7450,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "300",
+    "id": "299",
     "subject": "中科三",
     "category": "模型評估",
     "principle": "透明與可解釋",
@@ -7500,7 +7475,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "301",
+    "id": "300",
     "subject": "中科二",
     "category": "數據管理",
     "principle": "責任與問責",
@@ -7525,7 +7500,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "302",
+    "id": "301",
     "subject": "中科二",
     "category": "數據管理",
     "principle": "透明與可解釋",
@@ -7550,7 +7525,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "303",
+    "id": "302",
     "subject": "中科一",
     "category": "治理政策",
     "principle": "永續發展與福祉",
@@ -7575,7 +7550,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "304",
+    "id": "303",
     "subject": "中科二",
     "category": "大數據處理",
     "principle": "永續發展與福祉",
@@ -7600,7 +7575,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "305",
+    "id": "304",
     "subject": "中科二",
     "category": "大數據處理",
     "principle": "永續發展與福祉",
@@ -7625,7 +7600,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "306",
+    "id": "305",
     "subject": "中科二",
     "category": "大數據架構",
     "principle": "永續發展與福祉",
@@ -7650,7 +7625,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "307",
+    "id": "306",
     "subject": "中科二",
     "category": "任務編排",
     "principle": "透明與可解釋",
@@ -7675,7 +7650,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "308",
+    "id": "307",
     "subject": "中科一",
     "category": "雲端架構",
     "principle": "永續發展與福祉",
@@ -7700,7 +7675,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "309",
+    "id": "308",
     "subject": "中科一",
     "category": "數據遷移",
     "principle": "永續發展與福祉",
@@ -7725,7 +7700,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "310",
+    "id": "309",
     "subject": "中科一",
     "category": "雲端架構",
     "principle": "永續發展與福祉",
@@ -7750,7 +7725,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "311",
+    "id": "310",
     "subject": "中科一",
     "category": "應用場景",
     "principle": "永續發展與福祉",
@@ -7775,7 +7750,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "312",
+    "id": "311",
     "subject": "中科一",
     "category": "推論優化",
     "principle": "永續發展與福祉",
@@ -7800,7 +7775,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "313",
+    "id": "312",
     "subject": "中科一",
     "category": "推論優化",
     "principle": "永續發展與福祉",
@@ -7825,7 +7800,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "314",
+    "id": "313",
     "subject": "中科一",
     "category": "推論優化",
     "principle": "永續發展與福祉",
@@ -7850,7 +7825,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "315",
+    "id": "314",
     "subject": "中科一",
     "category": "推論優化",
     "principle": "永續發展與福祉",
@@ -7875,7 +7850,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "316",
+    "id": "315",
     "subject": "初科二",
     "category": "生成式 AI",
     "principle": "永續發展與福祉",
@@ -7900,7 +7875,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "317",
+    "id": "316",
     "subject": "中科一",
     "category": "應用介面",
     "principle": "永續發展與福祉",
@@ -7925,7 +7900,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "318",
+    "id": "317",
     "subject": "中科一",
     "category": "推論優化",
     "principle": "永續發展與福祉",
@@ -7950,7 +7925,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "319",
+    "id": "318",
     "subject": "中科一",
     "category": "具身智能",
     "principle": "永續發展與福祉",
@@ -7975,7 +7950,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "320",
+    "id": "319",
     "subject": "初科二",
     "category": "生成式 AI",
     "principle": "永續發展與福祉",
@@ -8000,32 +7975,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "321",
-    "subject": "初科二",
-    "category": "生成式 AI",
-    "principle": "透明與可解釋",
-    "title": "產出物管理視窗",
-    "eng_name": "Artifacts",
-    "eng_abbr": "—",
-    "def": "產出物管理視窗（Artifacts）是生成式 AI 工具（如 Anthropic Claude）的進階介面設計，旨在優化人機協作體驗。它將 AI 生成的獨立大型內容（如程式碼、網頁、長篇文件）從對話串中抽離並顯示於獨立視窗，方便使用者進行即時預覽、編輯與版本對照。",
-    "key_goal": "在獨立視窗中檢視與編輯生成式AI的大型產出內容",
-    "key_principle": "雙視窗介面/即時預覽/互動式編輯/版本控制",
-    "key_purpose": "實務上用於軟體開發或文案排版，讓開發者或企劃人員能將 AI 生成的程式碼或草稿直接在側邊獨立視窗中測試與修改。",
-    "common_apps": "台灣新創軟體公司利用生成式 AI 的產出物管理視窗，與 AI 協同開發網頁前端介面，即時預覽程式碼的修改效果。",
-    "scenarios": {
-      "weather": "災防中心人員利用產出物管理視窗生成並即時預覽各縣市防災地圖的互動圖表程式碼，確保資訊標示精確無誤。",
-      "agri": "智慧農業團隊利用此視窗與 AI 共創農產銷售網頁，並直接在側邊視窗調整版面與文案，加速在地農產品上架。",
-      "traffic": "交通行控中心透過此介面請 AI 生成複雜的車流分析數據儀表板，並即時檢視圖表互動呈現效果以利調度決策。",
-      "manuf": "製造廠工程師利用產出物管理視窗與 AI 協作撰寫自動化機台的控制腳本，於獨立介面中進行除錯與版本比對。",
-      "fintech": "金融機構的行銷人員利用此功能請 AI 生成長篇的理財商品說明手冊，並在專屬視窗中進行段落排版與內容修訂。",
-      "retail": "電商平台企劃團隊透過產出物管理視窗，請 AI 生成具備互動設計的促銷活動網頁草稿，並即時預覽活動視覺效果。",
-      "fire": "消防指揮中心利用該視窗生成並檢視長篇的跨區救災標準作業流程（SOP）文件，確保重點排版清晰且易於閱讀。"
-    },
-    "detail_explain": "【產出物管理視窗】定義：產出物管理視窗（Artifacts）是生成式 AI 工具（如 Anthropic Claude）的進階介面設計，旨在優化人機協作體驗。它將 AI 生成的獨立大型內容（如程式碼、網頁、長篇文件）從對話串中抽離並顯示於獨立視窗，方便使用者進行即時預覽、編輯與版本對照。",
-    "stage": "1"
-  },
-  {
-    "id": "322",
+    "id": "320",
     "subject": "中科一",
     "category": "AI 應用",
     "principle": "永續發展與福祉",
@@ -8050,7 +8000,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "323",
+    "id": "321",
     "subject": "中科一",
     "category": "應用開發",
     "principle": "永續發展與福祉",
@@ -8075,7 +8025,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "324",
+    "id": "322",
     "subject": "中科一",
     "category": "AI 技能",
     "principle": "永續發展與福祉",
@@ -8100,7 +8050,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "325",
+    "id": "323",
     "subject": "初科二",
     "category": "生成式 AI",
     "principle": "永續發展與福祉",
@@ -8125,7 +8075,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "326",
+    "id": "324",
     "subject": "中科一",
     "category": "本土模型",
     "principle": "永續發展與福祉",
@@ -8150,7 +8100,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "327",
+    "id": "325",
     "subject": "初科二",
     "category": "生成式 AI",
     "principle": "永續發展與福祉",
@@ -8175,7 +8125,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "328",
+    "id": "326",
     "subject": "中科一",
     "category": "AI 安全",
     "principle": "隱私與資料保護",
@@ -8200,7 +8150,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "329",
+    "id": "327",
     "subject": "中科一",
     "category": "模型治理",
     "principle": "責任與問責",
@@ -8225,7 +8175,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "330",
+    "id": "328",
     "subject": "中科一",
     "category": "推論優化",
     "principle": "永續發展與福祉",
@@ -8250,7 +8200,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "331",
+    "id": "329",
     "subject": "中科三",
     "category": "模型量化",
     "principle": "永續發展與福祉",
@@ -8275,7 +8225,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "332",
+    "id": "330",
     "subject": "中科三",
     "category": "模型量化",
     "principle": "永續發展與福祉",
@@ -8300,7 +8250,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "333",
+    "id": "331",
     "subject": "中科三",
     "category": "數據科學",
     "principle": "-",
@@ -8325,7 +8275,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "334",
+    "id": "332",
     "subject": "中科三",
     "category": "模型壓縮",
     "principle": "永續發展與福祉",
@@ -8350,7 +8300,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "335",
+    "id": "333",
     "subject": "中科一",
     "category": "生成式 AI",
     "principle": "永續發展與福祉",
@@ -8375,7 +8325,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "336",
+    "id": "334",
     "subject": "初科二",
     "category": "生成式 AI",
     "principle": "永續發展與福祉",
@@ -8400,7 +8350,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "337",
+    "id": "335",
     "subject": "中科一",
     "category": "知名平台",
     "principle": "永續發展與福祉",
@@ -8425,7 +8375,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "338",
+    "id": "336",
     "subject": "中科一",
     "category": "開發工具",
     "principle": "永續發展與福祉",
@@ -8450,7 +8400,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "339",
+    "id": "337",
     "subject": "中科一",
     "category": "AI 代理人",
     "principle": "永續發展與福祉",
@@ -8475,7 +8425,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "340",
+    "id": "338",
     "subject": "中科一",
     "category": "系統部署",
     "principle": "永續發展與福祉",
@@ -8500,7 +8450,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "341",
+    "id": "339",
     "subject": "中科三",
     "category": "模型微調",
     "principle": "永續發展與福祉",
@@ -8525,7 +8475,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "342",
+    "id": "340",
     "subject": "中科一",
     "category": "AI 代理人",
     "principle": "永續發展與福祉",
@@ -8550,7 +8500,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "343",
+    "id": "341",
     "subject": "中科一",
     "category": "AI 代理人",
     "principle": "透明與可解釋",
@@ -8575,7 +8525,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "344",
+    "id": "342",
     "subject": "中科一",
     "category": "系統架構",
     "principle": "責任與問責",
@@ -8600,7 +8550,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "345",
+    "id": "343",
     "subject": "中科一",
     "category": "AI 代理人",
     "principle": "永續發展與福祉",
@@ -8625,7 +8575,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "346",
+    "id": "344",
     "subject": "中科一",
     "category": "AI 代理人",
     "principle": "永續發展與福祉",
@@ -8650,7 +8600,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "347",
+    "id": "345",
     "subject": "中科一",
     "category": "AI 代理人",
     "principle": "責任與問責",
@@ -8675,7 +8625,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "348",
+    "id": "346",
     "subject": "中科一",
     "category": "AI 代理人",
     "principle": "永續發展與福祉",
@@ -8700,7 +8650,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "349",
+    "id": "347",
     "subject": "中科一",
     "category": "系統效能",
     "principle": "永續發展與福祉",
@@ -8725,7 +8675,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "350",
+    "id": "348",
     "subject": "中科一",
     "category": "AI 安全",
     "principle": "隱私與資料保護",
@@ -8750,7 +8700,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "351",
+    "id": "349",
     "subject": "中科一",
     "category": "自動化工具",
     "principle": "永續發展與福祉",
@@ -8775,7 +8725,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "352",
+    "id": "350",
     "subject": "中科一",
     "category": "AI 代理人",
     "principle": "永續發展與福祉",
@@ -8800,7 +8750,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "353",
+    "id": "351",
     "subject": "中科三",
     "category": "NLP 歷史",
     "principle": "-",
@@ -8825,7 +8775,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "354",
+    "id": "352",
     "subject": "中科三",
     "category": "NLP 基礎",
     "principle": "-",
@@ -8850,7 +8800,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "355",
+    "id": "353",
     "subject": "中科三",
     "category": "深度學習",
     "principle": "-",
@@ -8875,7 +8825,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "356",
+    "id": "354",
     "subject": "中科三",
     "category": "NLP 模型",
     "principle": "永續發展與福祉",
@@ -8900,7 +8850,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "357",
+    "id": "355",
     "subject": "中科三",
     "category": "NLP 模型",
     "principle": "永續發展與福祉",
@@ -8925,7 +8875,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "358",
+    "id": "356",
     "subject": "中科三",
     "category": "NLP 模型",
     "principle": "永續發展與福祉",
@@ -8950,7 +8900,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "359",
+    "id": "357",
     "subject": "中科一",
     "category": "AI 範式",
     "principle": "透明與可解釋",
@@ -8975,7 +8925,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "360",
+    "id": "358",
     "subject": "中科三",
     "category": "NLP 基礎",
     "principle": "-",
@@ -9000,7 +8950,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "361",
+    "id": "359",
     "subject": "中科三",
     "category": "NLP 模型",
     "principle": "永續發展與福祉",
@@ -9025,7 +8975,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "362",
+    "id": "360",
     "subject": "中科三",
     "category": "模型訓練",
     "principle": "-",
@@ -9050,7 +9000,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "363",
+    "id": "361",
     "subject": "中科三",
     "category": "模型訓練",
     "principle": "-",
@@ -9075,7 +9025,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "364",
+    "id": "362",
     "subject": "中科三",
     "category": "模型微調",
     "principle": "永續發展與福祉",
@@ -9100,7 +9050,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "365",
+    "id": "363",
     "subject": "中科三",
     "category": "模型架構",
     "principle": "-",
@@ -9125,7 +9075,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "366",
+    "id": "364",
     "subject": "中科三",
     "category": "模型壓縮",
     "principle": "永續發展與福祉",
@@ -9150,7 +9100,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "367",
+    "id": "365",
     "subject": "中科一",
     "category": "知名工具",
     "principle": "永續發展與福祉",
@@ -9175,7 +9125,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "368",
+    "id": "366",
     "subject": "中科一",
     "category": "系統架構",
     "principle": "永續發展與福祉",
@@ -9200,7 +9150,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "369",
+    "id": "367",
     "subject": "中科一",
     "category": "系統效能",
     "principle": "永續發展與福祉",
@@ -9225,7 +9175,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "370",
+    "id": "368",
     "subject": "中科一",
     "category": "系統架構",
     "principle": "透明與可解釋",
@@ -9250,7 +9200,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "371",
+    "id": "369",
     "subject": "中科一",
     "category": "系統管理",
     "principle": "責任與問責",
@@ -9275,7 +9225,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "372",
+    "id": "370",
     "subject": "中科三",
     "category": "機器學習",
     "principle": "-",
@@ -9300,7 +9250,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "373",
+    "id": "371",
     "subject": "中科三",
     "category": "機器學習",
     "principle": "-",
@@ -9325,7 +9275,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "374",
+    "id": "372",
     "subject": "中科三",
     "category": "數值優化",
     "principle": "-",
@@ -9350,7 +9300,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "375",
+    "id": "373",
     "subject": "中科三",
     "category": "機器學習",
     "principle": "-",
@@ -9375,7 +9325,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "376",
+    "id": "374",
     "subject": "中科三",
     "category": "機器學習",
     "principle": "-",
@@ -9400,7 +9350,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "377",
+    "id": "375",
     "subject": "中科三",
     "category": "機器學習",
     "principle": "透明與可解釋",
@@ -9425,7 +9375,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "378",
+    "id": "376",
     "subject": "中科三",
     "category": "機器學習",
     "principle": "-",
@@ -9450,7 +9400,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "379",
+    "id": "377",
     "subject": "中科三",
     "category": "機器學習",
     "principle": "-",
@@ -9475,7 +9425,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "380",
+    "id": "378",
     "subject": "中科三",
     "category": "數值優化",
     "principle": "-",
@@ -9500,7 +9450,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "381",
+    "id": "379",
     "subject": "中科三",
     "category": "深度學習",
     "principle": "永續發展與福祉",
@@ -9525,7 +9475,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "382",
+    "id": "380",
     "subject": "中科三",
     "category": "深度學習",
     "principle": "永續發展與福祉",
@@ -9550,7 +9500,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "383",
+    "id": "381",
     "subject": "中科三",
     "category": "深度學習",
     "principle": "-",
@@ -9575,7 +9525,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "384",
+    "id": "382",
     "subject": "中科三",
     "category": "電腦視覺",
     "principle": "永續發展與福祉",
@@ -9600,7 +9550,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "385",
+    "id": "383",
     "subject": "中科三",
     "category": "深度學習",
     "principle": "-",
@@ -9625,7 +9575,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "386",
+    "id": "384",
     "subject": "中科一",
     "category": "知名模型",
     "principle": "永續發展與福祉",
@@ -9650,7 +9600,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "387",
+    "id": "385",
     "subject": "中科一",
     "category": "知名模型",
     "principle": "永續發展與福祉",
@@ -9675,7 +9625,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "388",
+    "id": "386",
     "subject": "中科二",
     "category": "提示工程",
     "principle": "透明與可解釋",
@@ -9700,7 +9650,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "389",
+    "id": "387",
     "subject": "中科一",
     "category": "系統架構",
     "principle": "永續發展與福祉",
@@ -9725,7 +9675,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "390",
+    "id": "388",
     "subject": "中科三",
     "category": "模型架構",
     "principle": "-",
@@ -9750,7 +9700,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "391",
+    "id": "389",
     "subject": "中科三",
     "category": "模型訓練",
     "principle": "永續發展與福祉",
@@ -9775,7 +9725,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "392",
+    "id": "390",
     "subject": "中科一",
     "category": "系統優化",
     "principle": "永續發展與福祉",
@@ -9800,7 +9750,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "393",
+    "id": "391",
     "subject": "中科一",
     "category": "領域模型",
     "principle": "永續發展與福祉",
@@ -9825,7 +9775,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "394",
+    "id": "392",
     "subject": "中科三",
     "category": "模型能力",
     "principle": "永續發展與福祉",
@@ -9850,7 +9800,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "395",
+    "id": "393",
     "subject": "中科三",
     "category": "NLP 基礎",
     "principle": "-",
@@ -9875,7 +9825,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "396",
+    "id": "394",
     "subject": "中科三",
     "category": "NLP 基礎",
     "principle": "-",
@@ -9900,7 +9850,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "397",
+    "id": "395",
     "subject": "中科三",
     "category": "NLP 基礎",
     "principle": "永續發展與福祉",
@@ -9925,7 +9875,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "398",
+    "id": "396",
     "subject": "中科三",
     "category": "NLP 基礎",
     "principle": "-",
@@ -9950,7 +9900,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "399",
+    "id": "397",
     "subject": "中科三",
     "category": "NLP 基礎",
     "principle": "-",
@@ -9975,7 +9925,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "400",
+    "id": "398",
     "subject": "中科三",
     "category": "NLP 基礎",
     "principle": "-",
@@ -10000,7 +9950,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "401",
+    "id": "399",
     "subject": "中科三",
     "category": "深度學習",
     "principle": "-",
@@ -10025,7 +9975,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "402",
+    "id": "400",
     "subject": "中科三",
     "category": "NLP 理論",
     "principle": "-",
@@ -10050,7 +10000,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "403",
+    "id": "401",
     "subject": "中科三",
     "category": "知名技術",
     "principle": "-",
@@ -10075,7 +10025,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "404",
+    "id": "402",
     "subject": "中科三",
     "category": "NLP 基礎",
     "principle": "-",
@@ -10100,7 +10050,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "405",
+    "id": "403",
     "subject": "中科三",
     "category": "模型架構",
     "principle": "-",
@@ -10125,7 +10075,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "406",
+    "id": "404",
     "subject": "中科三",
     "category": "NLP 基礎",
     "principle": "-",
@@ -10150,7 +10100,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "407",
+    "id": "405",
     "subject": "中科三",
     "category": "訓練模式",
     "principle": "-",
@@ -10175,7 +10125,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "408",
+    "id": "406",
     "subject": "中科三",
     "category": "NLP 基礎",
     "principle": "-",
@@ -10200,7 +10150,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "409",
+    "id": "407",
     "subject": "中科三",
     "category": "NLP 基礎",
     "principle": "-",
@@ -10225,7 +10175,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "410",
+    "id": "408",
     "subject": "中科三",
     "category": "知名技術",
     "principle": "-",
@@ -10250,7 +10200,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "411",
+    "id": "409",
     "subject": "中科三",
     "category": "知名技術",
     "principle": "-",
@@ -10275,7 +10225,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "412",
+    "id": "410",
     "subject": "中科三",
     "category": "知名技術",
     "principle": "-",
@@ -10300,7 +10250,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "413",
+    "id": "411",
     "subject": "中科三",
     "category": "數據結構",
     "principle": "-",
@@ -10325,7 +10275,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "414",
+    "id": "412",
     "subject": "中科三",
     "category": "數據結構",
     "principle": "-",
@@ -10350,7 +10300,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "415",
+    "id": "413",
     "subject": "中科三",
     "category": "NLP 挑戰",
     "principle": "-",
@@ -10375,7 +10325,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "416",
+    "id": "414",
     "subject": "中科三",
     "category": "NLP 基礎",
     "principle": "-",
@@ -10400,7 +10350,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "417",
+    "id": "415",
     "subject": "中科三",
     "category": "機器學習",
     "principle": "-",
@@ -10425,7 +10375,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "418",
+    "id": "416",
     "subject": "中科三",
     "category": "NLP 基礎",
     "principle": "永續發展與福祉",
@@ -10450,7 +10400,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "419",
+    "id": "417",
     "subject": "中科三",
     "category": "NLP 基礎",
     "principle": "-",
@@ -10475,7 +10425,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "420",
+    "id": "418",
     "subject": "中科三",
     "category": "NLP 理論",
     "principle": "-",
@@ -10500,7 +10450,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "421",
+    "id": "419",
     "subject": "中科三",
     "category": "NLP 理論",
     "principle": "-",
@@ -10525,7 +10475,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "422",
+    "id": "420",
     "subject": "中科三",
     "category": "NLP 基礎",
     "principle": "-",
@@ -10550,7 +10500,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "423",
+    "id": "421",
     "subject": "中科三",
     "category": "統計分析",
     "principle": "-",
@@ -10575,7 +10525,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "424",
+    "id": "422",
     "subject": "中科三",
     "category": "統計分析",
     "principle": "-",
@@ -10600,7 +10550,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "425",
+    "id": "423",
     "subject": "中科三",
     "category": "NLP 基礎",
     "principle": "永續發展與福祉",
@@ -10625,7 +10575,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "426",
+    "id": "424",
     "subject": "中科三",
     "category": "機器學習",
     "principle": "-",
@@ -10650,7 +10600,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "427",
+    "id": "425",
     "subject": "中科三",
     "category": "數學優化",
     "principle": "-",
@@ -10675,7 +10625,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "428",
+    "id": "426",
     "subject": "中科三",
     "category": "深度學習",
     "principle": "永續發展與福祉",
@@ -10700,7 +10650,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "429",
+    "id": "427",
     "subject": "中科三",
     "category": "NLP 理論",
     "principle": "-",
@@ -10725,7 +10675,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "430",
+    "id": "428",
     "subject": "中科三",
     "category": "數據科學",
     "principle": "永續發展與福祉",
@@ -10750,7 +10700,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "431",
+    "id": "429",
     "subject": "中科三",
     "category": "機器學習",
     "principle": "-",
@@ -10775,7 +10725,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "432",
+    "id": "430",
     "subject": "中科一",
     "category": "知名模型",
     "principle": "永續發展與福祉",
@@ -10800,7 +10750,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "433",
+    "id": "431",
     "subject": "中科三",
     "category": "模型訓練",
     "principle": "-",
@@ -10825,7 +10775,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "434",
+    "id": "432",
     "subject": "中科三",
     "category": "模型架構",
     "principle": "-",
@@ -10850,7 +10800,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "435",
+    "id": "433",
     "subject": "中科三",
     "category": "訓練模式",
     "principle": "永續發展與福祉",
@@ -10875,7 +10825,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "436",
+    "id": "434",
     "subject": "中科三",
     "category": "訓練模式",
     "principle": "-",
@@ -10900,7 +10850,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "437",
+    "id": "435",
     "subject": "中科一",
     "category": "台灣組織",
     "principle": "責任與問責",
@@ -10925,7 +10875,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "438",
+    "id": "436",
     "subject": "中科一",
     "category": "台灣組織",
     "principle": "永續發展與福祉",
@@ -10950,7 +10900,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "439",
+    "id": "437",
     "subject": "中科一",
     "category": "台灣組織",
     "principle": "永續發展與福祉",
@@ -10975,7 +10925,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "440",
+    "id": "438",
     "subject": "中科一",
     "category": "本土模型",
     "principle": "永續發展與福祉",
@@ -11000,7 +10950,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "441",
+    "id": "439",
     "subject": "中科二",
     "category": "數據主權",
     "principle": "永續發展與福祉",
@@ -11025,7 +10975,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "442",
+    "id": "440",
     "subject": "中科三",
     "category": "模型架構",
     "principle": "永續發展與福祉",
@@ -11050,7 +11000,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "443",
+    "id": "441",
     "subject": "中科三",
     "category": "運作機制",
     "principle": "透明與可解釋",
@@ -11075,7 +11025,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "444",
+    "id": "442",
     "subject": "中科三",
     "category": "運作機制",
     "principle": "永續發展與福祉",
@@ -11100,7 +11050,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "445",
+    "id": "443",
     "subject": "中科三",
     "category": "模型微調",
     "principle": "永續發展與福祉",
@@ -11125,7 +11075,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "446",
+    "id": "444",
     "subject": "中科一",
     "category": "系統優化",
     "principle": "永續發展與福祉",
@@ -11150,7 +11100,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "447",
+    "id": "445",
     "subject": "中科一",
     "category": "本土模型",
     "principle": "永續發展與福祉",
@@ -11175,7 +11125,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "448",
+    "id": "446",
     "subject": "中科二",
     "category": "數據處理",
     "principle": "-",
@@ -11200,7 +11150,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "449",
+    "id": "447",
     "subject": "中科一",
     "category": "本土優化",
     "principle": "永續發展與福祉",
@@ -11225,7 +11175,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "450",
+    "id": "448",
     "subject": "中科三",
     "category": "模型訓練",
     "principle": "永續發展與福祉",
@@ -11250,7 +11200,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "451",
+    "id": "449",
     "subject": "中科一",
     "category": "AI 應用",
     "principle": "永續發展與福祉",
@@ -11275,7 +11225,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "452",
+    "id": "450",
     "subject": "中科一/中科三",
     "category": "自然語言處理\n\n深度學習架構",
     "principle": "透明與可解釋",
@@ -11300,7 +11250,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "453",
+    "id": "451",
     "subject": "中科一",
     "category": "多模態人工智慧",
     "principle": "永續發展與福祉",
@@ -11325,7 +11275,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "454",
+    "id": "452",
     "subject": "中科三",
     "category": "深度學習原理",
     "principle": "永續發展與福祉",
@@ -11350,7 +11300,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "455",
+    "id": "453",
     "subject": "中科一",
     "category": "自然語言處理",
     "principle": "透明與可解釋",
@@ -11375,7 +11325,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "456",
+    "id": "454",
     "subject": "初科二/中科一",
     "category": "生成式AI應用\n\n提示工程",
     "principle": "透明與可解釋",
@@ -11400,7 +11350,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "457",
+    "id": "455",
     "subject": "中科一",
     "category": "生成式AI技術",
     "principle": "永續發展與福祉",
@@ -11425,7 +11375,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "458",
+    "id": "456",
     "subject": "初科二/中科一",
     "category": "資料處理與分析\n\nNLP任務",
     "principle": "透明與可解釋",
@@ -11450,7 +11400,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "459",
+    "id": "457",
     "subject": "初科一/初科二",
     "category": "AI 基礎概念\n\n生成式AI工具",
     "principle": "永續發展與福祉",
@@ -11475,7 +11425,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "460",
+    "id": "458",
     "subject": "中科一",
     "category": "自然語言處理",
     "principle": "永續發展與福祉",
@@ -11500,7 +11450,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "461",
+    "id": "459",
     "subject": "初科一/中科三",
     "category": "AI 基礎概論\n\n機器學習原理",
     "principle": "責任與問責",
@@ -11525,7 +11475,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "462",
+    "id": "460",
     "subject": "中科二/中科三",
     "category": "大數據隱私保護\n\n機器學習治理",
     "principle": "隱私與資料保護",
@@ -11550,7 +11500,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "463",
+    "id": "461",
     "subject": "中科二/中科三",
     "category": "大數據隱私保護\n\n機器學習治理",
     "principle": "隱私與資料保護",
@@ -11575,7 +11525,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "464",
+    "id": "462",
     "subject": "中科二/中科三",
     "category": "大數據隱私保護\n\n機器學習治理",
     "principle": "隱私與資料保護",
@@ -11600,7 +11550,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "465",
+    "id": "463",
     "subject": "中科三",
     "category": "演算法偏見",
     "principle": "公平與不歧視",
@@ -11625,7 +11575,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "466",
+    "id": "464",
     "subject": "中科一/中科三",
     "category": "AI 風險管理\n\n機器學習治理",
     "principle": "公平與不歧視",
@@ -11650,7 +11600,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "467",
+    "id": "465",
     "subject": "中科三",
     "category": "機器學習治理",
     "principle": "公平與不歧視",
@@ -11675,7 +11625,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "468",
+    "id": "466",
     "subject": "初科一/中科一",
     "category": "AI 概念\n\nNLP進階應用",
     "principle": "透明與可解釋",
@@ -11700,7 +11650,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "469",
+    "id": "467",
     "subject": "初科二/中科一",
     "category": "生成式AI風險\n\nAI 導入規劃",
     "principle": "透明與可解釋",
@@ -11725,7 +11675,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "470",
+    "id": "468",
     "subject": "中科二/中科三",
     "category": "大數據隱私保護\n\n機器學習治理",
     "principle": "隱私保護\n\n安全穩定",
@@ -11750,7 +11700,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "471",
+    "id": "469",
     "subject": "中科二/中科三",
     "category": "分散式計算\n\n聯邦學習架構",
     "principle": "隱私保護\n\n永續發展與福祉",
@@ -11775,7 +11725,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "472",
+    "id": "470",
     "subject": "中科二",
     "category": "大數據隱私保護",
     "principle": "隱私與資料保護",
@@ -11800,7 +11750,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "473",
+    "id": "471",
     "subject": "中科一",
     "category": "電腦視覺",
     "principle": "透明可解釋",
@@ -11825,7 +11775,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "474",
+    "id": "472",
     "subject": "中科一",
     "category": "多模態",
     "principle": "永續發展",
@@ -11850,7 +11800,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "475",
+    "id": "473",
     "subject": "中科一/初科二",
     "category": "多模態",
     "principle": "永續發展",
@@ -11875,7 +11825,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "476",
+    "id": "474",
     "subject": "中科一",
     "category": "電腦視覺",
     "principle": "安全與問責",
@@ -11900,7 +11850,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "477",
+    "id": "475",
     "subject": "中科一",
     "category": "電腦視覺",
     "principle": "永續發展",
@@ -11925,7 +11875,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "478",
+    "id": "476",
     "subject": "中科一/初科二",
     "category": "生成式 AI",
     "principle": "透明可解釋",
@@ -11950,7 +11900,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "479",
+    "id": "477",
     "subject": "中科一",
     "category": "電腦視覺",
     "principle": "隱私與資料保護",
@@ -11975,7 +11925,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "480",
+    "id": "478",
     "subject": "中科一",
     "category": "電腦視覺",
     "principle": "透明可解釋",
@@ -12000,7 +11950,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "481",
+    "id": "479",
     "subject": "中科一/初科二",
     "category": "生成式 AI",
     "principle": "透明可解釋",
@@ -12025,7 +11975,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "482",
+    "id": "480",
     "subject": "中科一",
     "category": "多模態",
     "principle": "永續發展",
@@ -12050,7 +12000,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "483",
+    "id": "481",
     "subject": "中科一",
     "category": "多模態",
     "principle": "永續發展",
@@ -12075,7 +12025,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "484",
+    "id": "482",
     "subject": "中科一",
     "category": "電腦視覺",
     "principle": "透明可解釋",
@@ -12100,7 +12050,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "485",
+    "id": "483",
     "subject": "中科一",
     "category": "電腦視覺",
     "principle": "透明可解釋",
@@ -12125,7 +12075,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "486",
+    "id": "484",
     "subject": "中科一",
     "category": "電腦視覺",
     "principle": "透明可解釋",
@@ -12150,7 +12100,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "487",
+    "id": "485",
     "subject": "中科一",
     "category": "電腦視覺",
     "principle": "透明可解釋",
@@ -12175,7 +12125,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "488",
+    "id": "486",
     "subject": "初科一/中科三",
     "category": "機器學習",
     "principle": "公平與不歧視",
@@ -12200,7 +12150,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "489",
+    "id": "487",
     "subject": "中科一",
     "category": "電腦視覺",
     "principle": "永續發展",
@@ -12225,7 +12175,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "490",
+    "id": "488",
     "subject": "中科一",
     "category": "電腦視覺",
     "principle": "永續發展",
@@ -12250,7 +12200,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "491",
+    "id": "489",
     "subject": "中科一",
     "category": "電腦視覺",
     "principle": "永續發展",
@@ -12275,7 +12225,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "492",
+    "id": "490",
     "subject": "中科一",
     "category": "電腦視覺",
     "principle": "永續發展",
@@ -12300,7 +12250,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "493",
+    "id": "491",
     "subject": "中科一",
     "category": "電腦視覺",
     "principle": "安全與問責",
@@ -12325,7 +12275,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "494",
+    "id": "492",
     "subject": "中科一",
     "category": "電腦視覺",
     "principle": "安全與問責",
@@ -12350,7 +12300,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "495",
+    "id": "493",
     "subject": "中科一",
     "category": "電腦視覺",
     "principle": "安全與問責",
@@ -12375,7 +12325,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "496",
+    "id": "494",
     "subject": "中科一",
     "category": "電腦視覺",
     "principle": "隱私與資料保護",
@@ -12400,7 +12350,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "497",
+    "id": "495",
     "subject": "中科一",
     "category": "電腦視覺",
     "principle": "安全與問責",
@@ -12425,7 +12375,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "498",
+    "id": "496",
     "subject": "中科一",
     "category": "AI 治理",
     "principle": "社會共融",
@@ -12450,7 +12400,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "499",
+    "id": "497",
     "subject": "中科一",
     "category": "電腦視覺",
     "principle": "透明可解釋",
@@ -12475,7 +12425,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "500",
+    "id": "498",
     "subject": "中科一",
     "category": "數據準備",
     "principle": "隱私與資料保護",
@@ -12500,7 +12450,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "501",
+    "id": "499",
     "subject": "中科一",
     "category": "機器學習",
     "principle": "問責性",
@@ -12525,7 +12475,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "502",
+    "id": "500",
     "subject": "中科一",
     "category": "電腦視覺",
     "principle": "問責性",
@@ -12550,7 +12500,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "503",
+    "id": "501",
     "subject": "中科一/中科二",
     "category": "影像標註",
     "principle": "安全與問責",
@@ -12575,7 +12525,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "504",
+    "id": "502",
     "subject": "中科一",
     "category": "影像標註",
     "principle": "安全與問責",
@@ -12600,7 +12550,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "505",
+    "id": "503",
     "subject": "中科二",
     "category": "影像標註",
     "principle": "永續發展",
@@ -12625,7 +12575,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "506",
+    "id": "504",
     "subject": "中科一",
     "category": "影像標註",
     "principle": "透明可解釋",
@@ -12650,7 +12600,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "507",
+    "id": "505",
     "subject": "中科二",
     "category": "影像標註",
     "principle": "安全與問責",
@@ -12675,7 +12625,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "508",
+    "id": "506",
     "subject": "中科一",
     "category": "影像標註",
     "principle": "永續發展",
@@ -12700,7 +12650,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "509",
+    "id": "507",
     "subject": "中科一",
     "category": "影像標註",
     "principle": "透明可解釋",
@@ -12725,7 +12675,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "510",
+    "id": "508",
     "subject": "中科一",
     "category": "文字辨識",
     "principle": "透明可解釋",
@@ -12750,7 +12700,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "511",
+    "id": "509",
     "subject": "中科一",
     "category": "文字辨識",
     "principle": "透明可解釋",
@@ -12775,7 +12725,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "512",
+    "id": "510",
     "subject": "中科一",
     "category": "影像標註",
     "principle": "問責性",
@@ -12800,7 +12750,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "513",
+    "id": "511",
     "subject": "中科二",
     "category": "影像標註",
     "principle": "永續發展",
@@ -12825,7 +12775,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "514",
+    "id": "512",
     "subject": "中科二",
     "category": "數據治理",
     "principle": "安全與問責",
@@ -12850,7 +12800,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "515",
+    "id": "513",
     "subject": "中科二",
     "category": "數據前處理",
     "principle": "隱私與資料保護",
@@ -12875,7 +12825,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "516",
+    "id": "514",
     "subject": "中科二",
     "category": "數據前處理",
     "principle": "永續發展",
@@ -12900,7 +12850,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "517",
+    "id": "515",
     "subject": "中科二",
     "category": "數據前處理",
     "principle": "透明可解釋",
@@ -12925,7 +12875,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "518",
+    "id": "516",
     "subject": "中科二",
     "category": "數據前處理",
     "principle": "隱私與資料保護",
@@ -12950,7 +12900,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "519",
+    "id": "517",
     "subject": "中科二",
     "category": "數據前處理",
     "principle": "永續發展",
@@ -12975,7 +12925,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "520",
+    "id": "518",
     "subject": "中科一",
     "category": "影像處理",
     "principle": "透明可解釋",
@@ -13000,7 +12950,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "521",
+    "id": "519",
     "subject": "中科一",
     "category": "影像處理",
     "principle": "永續發展",
@@ -13025,7 +12975,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "522",
+    "id": "520",
     "subject": "中科一",
     "category": "影像處理",
     "principle": "透明可解釋",
@@ -13050,7 +13000,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "523",
+    "id": "521",
     "subject": "中科一/中科二",
     "category": "影像處理",
     "principle": "永續發展",
@@ -13075,7 +13025,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "524",
+    "id": "522",
     "subject": "中科一",
     "category": "影像處理",
     "principle": "透明可解釋",
@@ -13100,7 +13050,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "525",
+    "id": "523",
     "subject": "中科二",
     "category": "數據前處理",
     "principle": "永續發展",
@@ -13125,7 +13075,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "526",
+    "id": "524",
     "subject": "中科一",
     "category": "影像處理",
     "principle": "透明可解釋",
@@ -13150,7 +13100,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "527",
+    "id": "525",
     "subject": "中科一",
     "category": "電腦視覺",
     "principle": "透明可解釋",
@@ -13175,7 +13125,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "528",
+    "id": "526",
     "subject": "中科一",
     "category": "影像處理",
     "principle": "永續發展",
@@ -13200,7 +13150,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "529",
+    "id": "527",
     "subject": "中科三",
     "category": "數據準備",
     "principle": "永續發展",
@@ -13225,7 +13175,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "530",
+    "id": "528",
     "subject": "中科二",
     "category": "數據採樣",
     "principle": "公平與不歧視",
@@ -13250,7 +13200,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "531",
+    "id": "529",
     "subject": "中科二",
     "category": "數據前處理",
     "principle": "透明可解釋",
@@ -13275,7 +13225,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "532",
+    "id": "530",
     "subject": "中科一",
     "category": "多模態",
     "principle": "永續發展",
@@ -13300,7 +13250,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "533",
+    "id": "531",
     "subject": "中科三",
     "category": "模型評估",
     "principle": "問責性",
@@ -13325,7 +13275,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "534",
+    "id": "532",
     "subject": "中科三",
     "category": "神經網路",
     "principle": "永續發展",
@@ -13350,7 +13300,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "535",
+    "id": "533",
     "subject": "中科三",
     "category": "神經網路",
     "principle": "透明可解釋",
@@ -13375,7 +13325,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "536",
+    "id": "534",
     "subject": "中科三",
     "category": "神經網路",
     "principle": "永續發展",
@@ -13400,7 +13350,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "537",
+    "id": "535",
     "subject": "中科三",
     "category": "神經網路",
     "principle": "透明可解釋",
@@ -13425,7 +13375,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "538",
+    "id": "536",
     "subject": "中科三",
     "category": "神經網路",
     "principle": "永續發展",
@@ -13450,7 +13400,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "539",
+    "id": "537",
     "subject": "中科三",
     "category": "神經網路",
     "principle": "透明可解釋",
@@ -13475,7 +13425,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "540",
+    "id": "538",
     "subject": "中科三",
     "category": "神經網路",
     "principle": "透明可解釋",
@@ -13500,7 +13450,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "541",
+    "id": "539",
     "subject": "中科一",
     "category": "電腦視覺",
     "principle": "永續發展",
@@ -13525,7 +13475,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "542",
+    "id": "540",
     "subject": "中科一",
     "category": "電腦視覺",
     "principle": "永續發展",
@@ -13550,32 +13500,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "543",
-    "subject": "中科一",
-    "category": "電腦視覺",
-    "principle": "永續發展",
-    "title": "VGG 網路",
-    "eng_name": "VGG",
-    "eng_abbr": "VGG",
-    "def": "係指由牛津大學提出之經典卷積神經網路。特點為使用多個 3x3 小型卷積核重複堆疊以替代大卷積核，藉此加深網路深度（如 VGG16/19）並提升非線性表達能力，在大規模影像辨識任務表現優異。",
-    "key_goal": "增加網路深度並提升非線性特徵提取能力。",
-    "key_principle": "3x3小型卷積核堆疊 / 深度架構 / 權重共享 / 池化層。",
-    "key_purpose": "用於處理大規模影像資料集的分類與特徵提取，常作為遷移學習（轉導學習）中優質的預訓練基礎模型。",
-    "common_apps": "台灣電子製造廠利用 VGG 預訓練模型進行遷移學習，辨識產線零件之多樣化外觀瑕疵。",
-    "scenarios": {
-      "weather": "分析衛星雲圖中細微雲系特徵變化，輔助極端降雨情境之自動化辨識（基於技術原理合理推導）。",
-      "agri": "運用深度卷積結構識別農作物葉片之細微病斑，強化病蟲害自動化檢測精確度。",
-      "traffic": "建置道路監控系統針對不同型號車輛進行細緻分類，協助物流調度管理並精確統計車流量。",
-      "manuf": "應用於智慧工廠之自動光學檢測設備，透過深層特徵學習精確識別精密零件之缺陷。",
-      "fintech": "醫療端輔助判讀 CT 或 MRI 影像，透過深層卷積架構精確識別早期病灶之視覺特徵。",
-      "retail": "在零售應用中進行商品細節辨識，協助電商平台根據商品照片自動產出精準品項標籤。",
-      "fire": "分析城市監視畫面中細微之煙霧與火光特徵，提升火災初期自動偵測與災情研判之準確性（基於技術原理合理推導）。"
-    },
-    "detail_explain": "【VGG 網路】定義：係指由牛津大學提出之經典卷積神經網路。特點為使用多個 3x3 小型卷積核重複堆疊以替代大卷積核，藉此加深網路深度（如 VGG16/19）並提升非線性表達能力，在大規模影像辨識任務表現優異。",
-    "stage": "2"
-  },
-  {
-    "id": "544",
+    "id": "541",
     "subject": "中科三",
     "category": "神經網路",
     "principle": "永續發展",
@@ -13600,7 +13525,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "545",
+    "id": "542",
     "subject": "中科一",
     "category": "數據集",
     "principle": "問責性",
@@ -13625,7 +13550,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "546",
+    "id": "543",
     "subject": "中科一",
     "category": "目標偵測",
     "principle": "安全與問責",
@@ -13650,7 +13575,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "547",
+    "id": "544",
     "subject": "中科一",
     "category": "目標偵測",
     "principle": "永續發展",
@@ -13675,32 +13600,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "548",
-    "subject": "中科一",
-    "category": "影像分割",
-    "principle": "安全與問責",
-    "title": "全卷積網路",
-    "eng_name": "Fully Convolutional Network",
-    "eng_abbr": "FCN",
-    "def": "指一種將傳統卷積神經網路（CNN）中全連結層替換為卷積層之深度學習模型。透過上採樣層（Upsampling Layer）將低解析度特徵圖還原至與原始影像相同大小，以實現像素級別的類別標記，是語意分割（Semantic Segmentation）任務的關鍵技術。",
-    "key_goal": "實現影像的像素級分類以進行語意分割任務",
-    "key_principle": "卷積層替代全連結層 / 上採樣層 / 端到端學習 / 逐像素分類",
-    "key_purpose": "用於對影像中每個像素指定預定義之語意類別，如區分影像中道路、建築、行人等實體之精確邊界。",
-    "common_apps": "台灣自駕車感知系統利用全卷積網路技術，在複雜街景影像中精確辨識可行駛路面與障礙物輪廓。",
-    "scenarios": {
-      "weather": "分析衛星雲圖或無人機航拍影像，逐像素標記受災洪泛區或土石流崩塌熱區，以進行精確的災害面積估算與監測。",
-      "agri": "結合植保機空拍影像進行農田管理，精確分割出農作物與雜草的生長範圍，協助機器人執行精準噴藥任務。",
-      "traffic": "在智慧交通監控中精確標示不同車輛與行人之像素邊界，輔助系統理解複雜路口之環境語意以優化調度。",
-      "manuf": "應用於高精度自動光學檢測（AOI），逐像素標記零件表面微小瑕疵，提升產品品質檢驗之穩定性。",
-      "fintech": "醫療端輔助判讀 MRI 或 CT 影像，利用其精細分割能力標註腫瘤或器官之具體邊界，提供醫師臨床診斷參考。",
-      "retail": "應用於智慧商店之視覺分析，精確分割顧客動線與拿取商品之範圍，產出熱點圖以優化店內陳列布局。",
-      "fire": "智慧城市監控系統透過全卷積網路辨識煙霧位置並精確標示其蔓延範圍，強化火災初期的定位與預警能力。"
-    },
-    "detail_explain": "【全卷積網路】定義：指一種將傳統卷積神經網路（CNN）中全連結層替換為卷積層之深度學習模型。透過上採樣層（Upsampling Layer）將低解析度特徵圖還原至與原始影像相同大小，以實現像素級別的類別標記，是語意分割（Semantic Segmentation）任務的關鍵技術。",
-    "stage": "2"
-  },
-  {
-    "id": "549",
+    "id": "545",
     "subject": "中科一",
     "category": "神經網路",
     "principle": "透明可解釋",
@@ -13725,7 +13625,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "550",
+    "id": "546",
     "subject": "中科三",
     "category": "神經網路",
     "principle": "永續發展",
@@ -13750,7 +13650,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "551",
+    "id": "547",
     "subject": "中科一",
     "category": "影像分割",
     "principle": "安全與問責",
@@ -13775,7 +13675,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "552",
+    "id": "548",
     "subject": "中科三",
     "category": "評估指標",
     "principle": "問責性",
@@ -13800,7 +13700,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "553",
+    "id": "549",
     "subject": "中科一",
     "category": "目標偵測",
     "principle": "透明可解釋",
@@ -13825,7 +13725,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "554",
+    "id": "550",
     "subject": "中科三",
     "category": "幾何運算",
     "principle": "透明可解釋",
@@ -13850,7 +13750,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "555",
+    "id": "551",
     "subject": "中科三",
     "category": "幾何運算",
     "principle": "透明可解釋",
@@ -13875,7 +13775,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "556",
+    "id": "552",
     "subject": "中科一",
     "category": "安防實務",
     "principle": "隱私與資料保護",
@@ -13900,7 +13800,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "557",
+    "id": "553",
     "subject": "中科一",
     "category": "安防實務",
     "principle": "隱私與資料保護",
@@ -13925,7 +13825,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "558",
+    "id": "554",
     "subject": "中科一",
     "category": "安防實務",
     "principle": "安全與問責",
@@ -13950,7 +13850,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "559",
+    "id": "555",
     "subject": "中科一",
     "category": "安防實務",
     "principle": "問責性",
@@ -13975,7 +13875,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "560",
+    "id": "556",
     "subject": "中科一",
     "category": "文字辨識",
     "principle": "透明可解釋",
@@ -14000,7 +13900,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "561",
+    "id": "557",
     "subject": "中科一",
     "category": "文字辨識",
     "principle": "透明可解釋",
@@ -14025,7 +13925,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "562",
+    "id": "558",
     "subject": "中科一",
     "category": "車牌辨識",
     "principle": "透明可解釋",
@@ -14050,7 +13950,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "563",
+    "id": "559",
     "subject": "中科二",
     "category": "資料工程",
     "principle": "隱私與資料保護",
@@ -14075,7 +13975,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "564",
+    "id": "560",
     "subject": "中科一",
     "category": "視覺任務",
     "principle": "安全與問責",
@@ -14100,7 +14000,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "565",
+    "id": "561",
     "subject": "中科一",
     "category": "視覺任務",
     "principle": "問責性",
@@ -14125,7 +14025,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "566",
+    "id": "562",
     "subject": "初科一/中科三",
     "category": "AI 治理",
     "principle": "隱私保護\n\n問責性",
@@ -14150,7 +14050,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "567",
+    "id": "563",
     "subject": "初科一/中科三",
     "category": "AI 治理",
     "principle": "安全與問責",
@@ -14175,7 +14075,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "568",
+    "id": "564",
     "subject": "中科一",
     "category": "系統部署",
     "principle": "安全與問責",
@@ -14200,7 +14100,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "569",
+    "id": "565",
     "subject": "中科一",
     "category": "應用領域",
     "principle": "隱私與資料保護",
@@ -14225,7 +14125,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "570",
+    "id": "566",
     "subject": "中科一",
     "category": "醫學影像",
     "principle": "透明可解釋",
@@ -14250,7 +14150,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "571",
+    "id": "567",
     "subject": "中科一",
     "category": "醫學影像",
     "principle": "安全與問責\n\n隱私保護",
@@ -14275,7 +14175,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "572",
+    "id": "568",
     "subject": "中科一",
     "category": "影像處理",
     "principle": "透明可解釋",
@@ -14300,7 +14200,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "573",
+    "id": "569",
     "subject": "中科一",
     "category": "實務應用",
     "principle": "永續發展",
@@ -14325,7 +14225,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "574",
+    "id": "570",
     "subject": "中科二",
     "category": "商務分析",
     "principle": "透明可解釋",
@@ -14350,7 +14250,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "575",
+    "id": "571",
     "subject": "中科二",
     "category": "商務分析",
     "principle": "隱私與資料保護",
@@ -14375,7 +14275,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "576",
+    "id": "572",
     "subject": "中科一",
     "category": "數據視覺化",
     "principle": "透明可解釋",
@@ -14400,7 +14300,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "577",
+    "id": "573",
     "subject": "中科一",
     "category": "互動技術",
     "principle": "永續發展",
@@ -14425,7 +14325,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "578",
+    "id": "574",
     "subject": "中科一",
     "category": "互動技術",
     "principle": "永續發展",
@@ -14450,7 +14350,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "579",
+    "id": "575",
     "subject": "中科一",
     "category": "實務應用",
     "principle": "安全與問責",
@@ -14475,7 +14375,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "580",
+    "id": "576",
     "subject": "中科一",
     "category": "電腦視覺",
     "principle": "安全與問責",
@@ -14500,7 +14400,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "581",
+    "id": "577",
     "subject": "中科一",
     "category": "多模態",
     "principle": "永續發展",
@@ -14525,7 +14425,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "582",
+    "id": "578",
     "subject": "中科三",
     "category": "模型效能",
     "principle": "永續發展",
@@ -14550,7 +14450,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "583",
+    "id": "579",
     "subject": "中科三",
     "category": "數據前處理",
     "principle": "透明可解釋",
@@ -14575,7 +14475,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "584",
+    "id": "580",
     "subject": "中科三",
     "category": "AI 治理",
     "principle": "隱私與資料保護",
@@ -14600,7 +14500,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "585",
+    "id": "581",
     "subject": "中科三",
     "category": "AI 治理",
     "principle": "公平與不歧視",
@@ -14625,7 +14525,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "586",
+    "id": "582",
     "subject": "中科三",
     "category": "模型評估",
     "principle": "問責性",
@@ -14650,7 +14550,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "587",
+    "id": "583",
     "subject": "中科三",
     "category": "模型評估",
     "principle": "問責性",
@@ -14675,7 +14575,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "588",
+    "id": "584",
     "subject": "中科三",
     "category": "AI 治理",
     "principle": "問責性",
@@ -14700,7 +14600,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "589",
+    "id": "585",
     "subject": "中科三",
     "category": "模型評估",
     "principle": "問責性",
@@ -14725,7 +14625,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "590",
+    "id": "586",
     "subject": "中科一",
     "category": "AI 相關技術",
     "principle": "安全性與韌性\n\n可解釋性",
@@ -14750,7 +14650,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "591",
+    "id": "587",
     "subject": "初科一",
     "category": "機器學習概念",
     "principle": "可解釋性\n\n公平性",
@@ -14775,7 +14675,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "592",
+    "id": "588",
     "subject": "中科一",
     "category": "生成式 AI",
     "principle": "透明度與可解釋性",
@@ -14800,7 +14700,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "593",
+    "id": "589",
     "subject": "中科三",
     "category": "常見演算法",
     "principle": "可解釋性",
@@ -14825,7 +14725,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "594",
+    "id": "590",
     "subject": "初科二",
     "category": "生成式 AI 應用",
     "principle": "安全性\n\n透明度與可解釋性",
@@ -14850,7 +14750,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "595",
+    "id": "591",
     "subject": "初科二",
     "category": "知名工具與平台",
     "principle": "隱私保護\n\n責任與問責",
@@ -14875,7 +14775,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "596",
+    "id": "592",
     "subject": "初科二",
     "category": "生成式 AI 應用",
     "principle": "透明度\n\n尊重智慧財產權",
@@ -14900,7 +14800,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "597",
+    "id": "593",
     "subject": "初科二",
     "category": "生成式 AI 應用",
     "principle": "安全性與實體風險\n\n責任與問責",
@@ -14925,7 +14825,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "598",
+    "id": "594",
     "subject": "初科二",
     "category": "知名工具與平台",
     "principle": "透明度\n\n尊重智慧財產權",
@@ -14950,7 +14850,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "599",
+    "id": "595",
     "subject": "初科二",
     "category": "知名工具與平台",
     "principle": "安全性\n\n責任與問責",
@@ -14975,7 +14875,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "600",
+    "id": "596",
     "subject": "中科一",
     "category": "AI 技術應用",
     "principle": "透明度\n\n可解釋性",
@@ -15000,7 +14900,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "601",
+    "id": "597",
     "subject": "中科三",
     "category": "深度學習",
     "principle": "安全性\n\n責任與問責",
@@ -15025,7 +14925,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "602",
+    "id": "598",
     "subject": "中科三",
     "category": "深度學習",
     "principle": "透明度\n\n安全性",
@@ -15050,7 +14950,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "603",
+    "id": "599",
     "subject": "中科三",
     "category": "深度學習",
     "principle": "尊重智慧財產權",
@@ -15075,7 +14975,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "604",
+    "id": "600",
     "subject": "中科三",
     "category": "機器學習",
     "principle": "透明度\n\n可解釋性",
@@ -15100,7 +15000,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "605",
+    "id": "601",
     "subject": "中科三",
     "category": "機器學習",
     "principle": "技術自主",
@@ -15125,7 +15025,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "606",
+    "id": "602",
     "subject": "初科一",
     "category": "數據處理與分析",
     "principle": "透明度\n\n尊重智慧財產權",
@@ -15150,7 +15050,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "607",
+    "id": "603",
     "subject": "中科一",
     "category": "電腦視覺技術",
     "principle": "安全性\n\n可解釋性",
@@ -15175,7 +15075,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "608",
+    "id": "604",
     "subject": "中科三",
     "category": "深度學習",
     "principle": "安全性\n\n透明度",
@@ -15200,7 +15100,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "609",
+    "id": "605",
     "subject": "中科一",
     "category": "多模態 AI",
     "principle": "責任與問責\n\n公平性",
@@ -15225,7 +15125,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "610",
+    "id": "606",
     "subject": "中科二",
     "category": "知名工具與平台",
     "principle": "責任與問責\n\n安全性",
@@ -15250,7 +15150,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "611",
+    "id": "607",
     "subject": "中科二",
     "category": "系統架構優化",
     "principle": "隱私保護\n\n互通性",
@@ -15275,7 +15175,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "612",
+    "id": "608",
     "subject": "中科一/中科三",
     "category": "AI 系統架構\n\n代理人技術",
     "principle": "問責\n\n安全與可靠",
@@ -15300,7 +15200,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "613",
+    "id": "609",
     "subject": "初科二/中科一",
     "category": "生成式 AI 應用\n\n代理人架構",
     "principle": "永續發展與福祉",
@@ -15325,7 +15225,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "614",
+    "id": "610",
     "subject": "中科一/中科三",
     "category": "邊緣運算\n\n代理人部署",
     "principle": "隱私保護\n\n透明與可解釋",
@@ -15350,7 +15250,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "615",
+    "id": "611",
     "subject": "初科二/中科一",
     "category": "AI 治理與規範\n\n模型說明性",
     "principle": "透明與可解釋",
@@ -15375,7 +15275,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "616",
+    "id": "612",
     "subject": "初科二/中科三",
     "category": "生成式 AI 優化\n\n模型微調",
     "principle": "透明與可解釋\n\n安全與可靠",
@@ -15400,7 +15300,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "617",
+    "id": "613",
     "subject": "初科二/中科一",
     "category": "大型語言模型\n\n開源生態",
     "principle": "永續發展與福祉",
@@ -15425,7 +15325,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "618",
+    "id": "614",
     "subject": "初科二/中科一",
     "category": "AI 技術供應商",
     "principle": "安全與可靠",
@@ -15450,7 +15350,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "619",
+    "id": "615",
     "subject": "初科二/中科三",
     "category": "生成式 AI 模型",
     "principle": "永續發展與福祉",
@@ -15475,7 +15375,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "620",
+    "id": "616",
     "subject": "初科二/中科三",
     "category": "RAG 與長文本處理",
     "principle": "透明與可解釋",
@@ -15500,7 +15400,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "621",
+    "id": "617",
     "subject": "中科二/中科三",
     "category": "模型評估指標\n\n自然語言處理",
     "principle": "公平與不歧視",
@@ -15525,7 +15425,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "622",
+    "id": "618",
     "subject": "中科二/中科三",
     "category": "模型評估指標\n\n文本摘要",
     "principle": "透明與可解釋",
@@ -15550,7 +15450,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "623",
+    "id": "619",
     "subject": "中科二/中科三",
     "category": "文本評估",
     "principle": "-",
@@ -15575,7 +15475,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "624",
+    "id": "620",
     "subject": "中科二/中科三",
     "category": "文本評估",
     "principle": "-",
@@ -15600,7 +15500,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "625",
+    "id": "621",
     "subject": "中科二/中科三",
     "category": "文本評估",
     "principle": "-",
@@ -15625,7 +15525,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "626",
+    "id": "622",
     "subject": "中科二/中科三",
     "category": "模型評估細項",
     "principle": "公平與不歧視",
@@ -15650,7 +15550,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "627",
+    "id": "623",
     "subject": "中科二/中科三",
     "category": "演算法基礎",
     "principle": "透明與可解釋",
@@ -15675,7 +15575,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "628",
+    "id": "624",
     "subject": "中科一",
     "category": "NLP 評估",
     "principle": "透明性與\n\n可解釋性",
@@ -15700,7 +15600,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "629",
+    "id": "625",
     "subject": "中科一",
     "category": "生成式 AI",
     "principle": "安全性與\n\n可控性",
@@ -15725,7 +15625,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "630",
+    "id": "626",
     "subject": "中科一",
     "category": "生成式 AI",
     "principle": "安全性與\n\n可控性",
@@ -15750,7 +15650,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "631",
+    "id": "627",
     "subject": "中科一",
     "category": "生成式 AI",
     "principle": "透明性與\n\n可解釋性",
@@ -15775,7 +15675,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "632",
+    "id": "628",
     "subject": "初科二",
     "category": "生成式 AI 工具",
     "principle": "透明性與可解釋性\n\n責任歸屬",
@@ -15800,7 +15700,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "633",
+    "id": "629",
     "subject": "初科二",
     "category": "生成式 AI 工具",
     "principle": "隱私保護\n\n公平性與非歧視",
@@ -15825,7 +15725,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "634",
+    "id": "630",
     "subject": "中科一",
     "category": "影像處理與規劃",
     "principle": "透明性與可解釋性",
@@ -15850,7 +15750,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "635",
+    "id": "631",
     "subject": "中科一",
     "category": "自然語言處理",
     "principle": "隱私保護\n\n責任歸屬",
@@ -15875,7 +15775,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "636",
+    "id": "632",
     "subject": "中科一",
     "category": "自然語言處理",
     "principle": "隱私保護\n\n透明性",
@@ -15900,7 +15800,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "637",
+    "id": "633",
     "subject": "中科三",
     "category": "深度學習架構",
     "principle": "透明性與可解釋性",
@@ -15925,7 +15825,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "638",
+    "id": "634",
     "subject": "中科一",
     "category": "語音技術架構",
     "principle": "透明性與可解釋性",
@@ -15950,7 +15850,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "639",
+    "id": "635",
     "subject": "中科一",
     "category": "語音技術架構",
     "principle": "隱私保護\n\n責任歸屬",
@@ -15975,7 +15875,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "640",
+    "id": "636",
     "subject": "中科三",
     "category": "深度學習架構",
     "principle": "透明性與可解釋性",
@@ -16000,7 +15900,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "641",
+    "id": "637",
     "subject": "中科一",
     "category": "語音技術架構",
     "principle": "隱私保護\n\n多樣性與包容性",
@@ -16025,7 +15925,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "642",
+    "id": "638",
     "subject": "中科一",
     "category": "語音技術架構",
     "principle": "透明性與可解釋性\n\n公平性",
@@ -16050,7 +15950,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "643",
+    "id": "639",
     "subject": "中科一",
     "category": "自然語言處理",
     "principle": "隱私保護\n\n責任歸屬",
@@ -16075,7 +15975,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "644",
+    "id": "640",
     "subject": "初科二",
     "category": "知名工具與平台",
     "principle": "隱私保護\n\n透明性",
@@ -16100,7 +16000,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "645",
+    "id": "641",
     "subject": "初科二",
     "category": "知名工具與平台",
     "principle": "責任歸屬\n\n公平性",
@@ -16125,7 +16025,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "646",
+    "id": "642",
     "subject": "初科二",
     "category": "知名工具與平台",
     "principle": "隱私保護\n\n透明性",
@@ -16150,7 +16050,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "647",
+    "id": "643",
     "subject": "中科二",
     "category": "機器學習工具",
     "principle": "永續發展與福祉",
@@ -16175,7 +16075,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "648",
+    "id": "644",
     "subject": "中科二",
     "category": "開發工具",
     "principle": "責任與問責",
@@ -16200,7 +16100,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "649",
+    "id": "645",
     "subject": "中科二",
     "category": "開發工具",
     "principle": "透明與可解釋",
@@ -16225,7 +16125,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "650",
+    "id": "646",
     "subject": "中科二",
     "category": "工程實務",
     "principle": "責任與問責",
@@ -16250,7 +16150,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "651",
+    "id": "647",
     "subject": "中科二",
     "category": "工程實務",
     "principle": "責任與問責",
@@ -16275,7 +16175,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "652",
+    "id": "648",
     "subject": "初科一",
     "category": "筆記工具",
     "principle": "永續發展與福祉",
@@ -16300,7 +16200,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "653",
+    "id": "649",
     "subject": "中科三",
     "category": "AI 評測",
     "principle": "責任與問責",
@@ -16325,7 +16225,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "654",
+    "id": "650",
     "subject": "中科三",
     "category": "AI 評測",
     "principle": "責任與問責",
@@ -16350,7 +16250,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "655",
+    "id": "651",
     "subject": "中科三",
     "category": "模型架構",
     "principle": "透明與可解釋",
@@ -16375,7 +16275,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "656",
+    "id": "652",
     "subject": "初科二",
     "category": "模型訓練",
     "principle": "責任與問責",
@@ -16400,7 +16300,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "657",
+    "id": "653",
     "subject": "初科二",
     "category": "資訊安全",
     "principle": "安全與防護",
@@ -16425,7 +16325,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "658",
+    "id": "654",
     "subject": "中科一",
     "category": "多模態 AI",
     "principle": "永續發展與福祉",
@@ -16450,7 +16350,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "659",
+    "id": "655",
     "subject": "中科一",
     "category": "多模態 AI",
     "principle": "透明與可解釋",
@@ -16475,7 +16375,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "660",
+    "id": "656",
     "subject": "中科一",
     "category": "模型訓練",
     "principle": "永續發展與福祉",
@@ -16500,7 +16400,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "661",
+    "id": "657",
     "subject": "中科一",
     "category": "多模態 AI",
     "principle": "永續發展與福祉",
@@ -16525,7 +16425,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "662",
+    "id": "658",
     "subject": "中科一",
     "category": "多模態 AI",
     "principle": "透明與可解釋",
@@ -16550,7 +16450,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "663",
+    "id": "659",
     "subject": "中科一",
     "category": "多模態 AI",
     "principle": "透明與可解釋",
@@ -16575,7 +16475,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "664",
+    "id": "660",
     "subject": "中科一",
     "category": "多模態 AI",
     "principle": "透明與可解釋",
@@ -16600,7 +16500,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "665",
+    "id": "661",
     "subject": "中科一",
     "category": "多模態 AI",
     "principle": "透明與可解釋",
@@ -16625,7 +16525,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "666",
+    "id": "662",
     "subject": "中科一",
     "category": "多模態 AI",
     "principle": "永續發展與福祉",
@@ -16650,7 +16550,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "667",
+    "id": "663",
     "subject": "中科一",
     "category": "多模態 AI",
     "principle": "永續發展與福祉",
@@ -16675,7 +16575,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "668",
+    "id": "664",
     "subject": "中科一",
     "category": "多模態 AI",
     "principle": "永續發展與福祉",
@@ -16700,7 +16600,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "669",
+    "id": "665",
     "subject": "中科一",
     "category": "多模態 AI",
     "principle": "透明與可解釋",
@@ -16725,7 +16625,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "670",
+    "id": "666",
     "subject": "中科一",
     "category": "多模態 AI",
     "principle": "透明與可解釋",
@@ -16750,7 +16650,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "671",
+    "id": "667",
     "subject": "中科一",
     "category": "多模態 AI",
     "principle": "永續發展與福祉",
@@ -16775,7 +16675,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "672",
+    "id": "668",
     "subject": "中科一",
     "category": "語音技術",
     "principle": "永續發展與福祉",
@@ -16800,7 +16700,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "673",
+    "id": "669",
     "subject": "中科一",
     "category": "語言技術",
     "principle": "永續發展與福祉",
@@ -16825,7 +16725,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "674",
+    "id": "670",
     "subject": "中科一",
     "category": "綜合應用",
     "principle": "永續發展與福祉",
@@ -16850,7 +16750,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "675",
+    "id": "671",
     "subject": "中科一",
     "category": "綜合應用",
     "principle": "永續發展與福祉",
@@ -16875,7 +16775,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "676",
+    "id": "672",
     "subject": "中科一",
     "category": "多模態 AI",
     "principle": "透明與可解釋",
@@ -16900,7 +16800,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "677",
+    "id": "673",
     "subject": "中科一",
     "category": "多模態 AI",
     "principle": "透明與可解釋",
@@ -16925,7 +16825,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "678",
+    "id": "674",
     "subject": "中科一",
     "category": "多模態 AI",
     "principle": "永續發展與福祉",
@@ -16950,7 +16850,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "679",
+    "id": "675",
     "subject": "初科一",
     "category": "AI 公司",
     "principle": "永續發展與福祉",
@@ -16975,7 +16875,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "680",
+    "id": "676",
     "subject": "中科一",
     "category": "模型訓練",
     "principle": "永續發展與福祉",
@@ -17000,7 +16900,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "681",
+    "id": "677",
     "subject": "中科二",
     "category": "智慧醫療",
     "principle": "隱私與資料保護",
@@ -17025,7 +16925,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "682",
+    "id": "678",
     "subject": "中科三",
     "category": "AI 評測",
     "principle": "責任與問責",
@@ -17050,7 +16950,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "683",
+    "id": "679",
     "subject": "中科二",
     "category": "資料分析",
     "principle": "透明與可解釋",
@@ -17075,7 +16975,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "684",
+    "id": "680",
     "subject": "初科二",
     "category": "虛擬技術",
     "principle": "永續發展與福祉",
@@ -17100,7 +17000,7 @@ const lessonData = [
     "stage": "1"
   },
   {
-    "id": "685",
+    "id": "681",
     "subject": "中科二",
     "category": "時序分析",
     "principle": "透明與可解釋",
@@ -17125,7 +17025,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "686",
+    "id": "682",
     "subject": "中科三",
     "category": "模型訓練",
     "principle": "永續發展與福祉",
@@ -17150,7 +17050,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "687",
+    "id": "683",
     "subject": "中科一",
     "category": "電腦視覺",
     "principle": "永續發展與福祉",
@@ -17175,7 +17075,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "688",
+    "id": "684",
     "subject": "中科二",
     "category": "資訊安全",
     "principle": "安全與防護",
@@ -17200,7 +17100,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "689",
+    "id": "685",
     "subject": "中科三",
     "category": "模型安全性",
     "principle": "安全與防護",
@@ -17225,7 +17125,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "690",
+    "id": "686",
     "subject": "中科三",
     "category": "模型訓練",
     "principle": "永續發展與福祉",
@@ -17250,7 +17150,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "691",
+    "id": "687",
     "subject": "中科二",
     "category": "數位轉型",
     "principle": "透明與可解釋",
@@ -17275,7 +17175,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "692",
+    "id": "688",
     "subject": "中科二",
     "category": "數位轉型",
     "principle": "永續發展與福祉",
@@ -17300,7 +17200,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "693",
+    "id": "689",
     "subject": "中科二",
     "category": "專案管理",
     "principle": "責任與問責",
@@ -17325,32 +17225,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "694",
-    "subject": "中科二",
-    "category": "數位轉型",
-    "principle": "責任與問責",
-    "title": "關鍵績效指標",
-    "eng_name": "Key Performance Indicators",
-    "eng_abbr": "KPI",
-    "def": "指用來衡量 AI 系統在解決特定業務痛點或達成目標成效的量化指標。在 iPAS 中，其包含系統層級、應用層級與業務層級指標，是用於專案評估、成效驗證與跨部門決策的核心基準。",
-    "key_goal": "量化 AI 導入成效並衡量業務目標達成率。",
-    "key_principle": "數據驅動評估／財務模型／指標分解／目標管理。",
-    "key_purpose": "用於評估 AI 導入後的實質價值與技術可行性。實務上能協助釐清業務瓶頸，並作為模型優化與資源配置的決策依據。",
-    "common_apps": "台灣製造業者在導入 AI 瑕疵檢測時，設定「不良品流出率」由 3% 降至 0.1% 為其關鍵績效指標。",
-    "scenarios": {
-      "weather": "以「災害預警提前時間」與「降雨預報準確率」作為 KPI，衡量 AI 預警系統對減災決策的支撐效能。",
-      "agri": "透過「病蟲害辨識精確率」與「收成量預測誤差（MAPE）」評估智慧農業 AI 方案的導入價值。",
-      "traffic": "建立「配送路徑縮短率」與「車輛稼動率」作為指標，追蹤 AI 智慧調度系統對物流成本的節省效益。",
-      "manuf": "設定「設備無預警停機次數」與「預防性維修成本降低比」衡量 AI 預測維護系統的成效。",
-      "fintech": "金融業以「詐欺攔截率」與「核貸轉換率」為指標；醫療端則以「病灶偵測召回率（Recall）」衡量 AI 輔助診斷效能。",
-      "retail": "以「推薦點擊率（CTR）」與「平均訂單金額提升比」作為 KPI，即時監控 AI 推薦系統的商業價值。",
-      "fire": "設定「受困者熱源辨識準確度」與「救災派遣回應時間」衡量 AI 融合感測系統在火場救援中的表現。"
-    },
-    "detail_explain": "【關鍵績效指標】定義：指用來衡量 AI 系統在解決特定業務痛點或達成目標成效的量化指標。在 iPAS 中，其包含系統層級、應用層級與業務層級指標，是用於專案評估、成效驗證與跨部門決策的核心基準。",
-    "stage": "3"
-  },
-  {
-    "id": "695",
+    "id": "690",
     "subject": "中科二",
     "category": "數據治理",
     "principle": "安全與防護",
@@ -17375,7 +17250,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "696",
+    "id": "691",
     "subject": "中科二",
     "category": "數位轉型",
     "principle": "永續發展與福祉",
@@ -17400,32 +17275,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "697",
-    "subject": "中科二",
-    "category": "財務評估",
-    "principle": "責任與問責",
-    "title": "投資報酬率",
-    "eng_name": "ROI",
-    "eng_abbr": "ROI",
-    "def": "指衡量投資效益的財務指標，計算公式為「(投資回報 - 投資成本) / 投資成本 × 100%」。在 iPAS 語境下，用於評估 AI 專案是否具備足夠經濟回報，並協助管理階層進行決策與資源分配。",
-    "key_goal": "衡量 AI 投資效益並評估專案經濟回報價值。",
-    "key_principle": "財務價值建模 / 投資成本收益比 / 關鍵績效指標轉化。",
-    "key_purpose": "用於量化 AI 專案帶來的商業價值，如成本節省或營收增長。協助企業在多個 AI 導入方案中，根據預期回報率排定實施優先順序。",
-    "common_apps": "台灣某旅遊服務機構評估導入生成式 AI 對話系統，計算每月節省的翻譯成本與系統整合費用之回收期。",
-    "scenarios": {
-      "weather": "評估導入 AI 自動化淹水預警系統所減少的潛在災損成本，與系統建置及維運費用之比例。",
-      "agri": "計算智慧精準施藥系統節省的藥劑與人力成本，對比 AI 影像辨識設備投資之回收效益。",
-      "traffic": "分析 AI 動態路徑優化所降低的燃油與車輛維運成本，並扣除 API 調用與雲端運算資源之投入成本。",
-      "manuf": "量化 AI 視覺檢測減少的不良品流出率與品質成本，並需同步納入無形效益與隱性成本進行整體評估。",
-      "fintech": "金融端計算 AI 授信減少的壞帳損失回報；醫學端評估輔助診斷系統提升的診療效率與病患檢測價值。",
-      "retail": "比較生成式 AI 客服自動回覆節省的人力成本與 API Token 支出，預估系統導入的獲利能力。",
-      "fire": "計算智慧火煙偵測降低的誤報出勤人力損耗，並評估其在預防重大火災財損上的長期經濟貢獻。"
-    },
-    "detail_explain": "【投資報酬率】定義：指衡量投資效益的財務指標，計算公式為「(投資回報 - 投資成本) / 投資成本 × 100%」。在 iPAS 語境下，用於評估 AI 專案是否具備足夠經濟回報，並協助管理階層進行決策與資源分配。",
-    "stage": "3"
-  },
-  {
-    "id": "698",
+    "id": "692",
     "subject": "中科二",
     "category": "財務評估",
     "principle": "責任與問責",
@@ -17450,7 +17300,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "699",
+    "id": "693",
     "subject": "中科二",
     "category": "財務評估",
     "principle": "責任與問責",
@@ -17475,32 +17325,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "700",
-    "subject": "中科二",
-    "category": "財務評估",
-    "principle": "責任與問責",
-    "title": "投資回報",
-    "eng_name": "Return on Investment",
-    "eng_abbr": "ROI",
-    "def": "指衡量投資效益的財務指標，計算公式為「(投資回報 - 投資成本) / 投資成本 × 100%」。在 iPAS 評鑑語境下，用於評估 AI 專案是否具備足夠經濟回報，並協助管理階層進行決策評估與資源分配，確保專案能創造實質商業價值。",
-    "key_goal": "量化 AI 專案經濟效益以評估投資價值",
-    "key_principle": "財務價值建模 / 投資成本收益比 / 績效指標轉化",
-    "key_purpose": "用於量化 AI 導入後的成本節省、效率提升或營收增長等商業價值。協助企業在多個 AI 導入方案中，根據預期回報率排定實施優先順序。",
-    "common_apps": "台灣某旅遊服務機構評估導入生成式 AI 對話系統，計算每月節省的翻譯成本與系統整合費用之比例。",
-    "scenarios": {
-      "weather": "評估導入 AI 自動化淹水預警系統減少的潛在災損成本與系統建置維運費用之比例。",
-      "agri": "計算智慧精準施藥系統節省的農藥藥劑與人力成本，對比 AI 影像辨識設備投資之回收效益。",
-      "traffic": "分析 AI 動態路徑優化所降低的燃油支出與車輛維運成本，對比雲端運算資源投入之回報。",
-      "manuf": "量化 AI 視覺檢測減少的不良品流出率與品質成本，並同步納入無形效益與隱性成本進行整體評估。",
-      "fintech": "金融端計算 AI 授信減少的壞帳損失回報；醫學端評估輔助診斷系統提升的診療效率與病患檢測價值。",
-      "retail": "比較生成式 AI 客服自動回覆節省的人力成本與 API 調用支出，預估系統導入的獲利能力。",
-      "fire": "計算智慧火煙偵測降低的誤報出勤人力損耗，並評估其在預防重大火災財損上的長期經濟貢獻。"
-    },
-    "detail_explain": "【投資回報】定義：指衡量投資效益的財務指標，計算公式為「(投資回報 - 投資成本) / 投資成本 × 100%」。在 iPAS 評鑑語境下，用於評估 AI 專案是否具備足夠經濟回報，並協助管理階層進行決策評估與資源分配，確保專案能創造實質商業價值。",
-    "stage": "3"
-  },
-  {
-    "id": "701",
+    "id": "694",
     "subject": "中科二",
     "category": "數位轉型",
     "principle": "永續發展與福祉",
@@ -17525,7 +17350,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "702",
+    "id": "695",
     "subject": "中科二",
     "category": "數據治理",
     "principle": "責任與問責",
@@ -17550,7 +17375,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "703",
+    "id": "696",
     "subject": "中科二",
     "category": "數位轉型",
     "principle": "責任與問責",
@@ -17575,7 +17400,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "704",
+    "id": "697",
     "subject": "中科二",
     "category": "專案管理",
     "principle": "責任與問責",
@@ -17600,7 +17425,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "705",
+    "id": "698",
     "subject": "中科二",
     "category": "資源管理",
     "principle": "責任與問責",
@@ -17625,7 +17450,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "706",
+    "id": "699",
     "subject": "中科二",
     "category": "專案管理",
     "principle": "責任與問責",
@@ -17650,7 +17475,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "707",
+    "id": "700",
     "subject": "中科三",
     "category": "AI 治理",
     "principle": "責任與問責",
@@ -17675,7 +17500,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "708",
+    "id": "701",
     "subject": "中科三",
     "category": "數據治理",
     "principle": "隱私與資料保護",
@@ -17700,7 +17525,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "709",
+    "id": "702",
     "subject": "中科三",
     "category": "AI 治理",
     "principle": "安全與防護",
@@ -17725,7 +17550,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "710",
+    "id": "703",
     "subject": "中科二",
     "category": "數位轉型",
     "principle": "責任與問責",
@@ -17750,7 +17575,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "711",
+    "id": "704",
     "subject": "中科二",
     "category": "風險管理",
     "principle": "責任與問責",
@@ -17775,7 +17600,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "712",
+    "id": "705",
     "subject": "中科二",
     "category": "風險管理",
     "principle": "責任與問責",
@@ -17800,7 +17625,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "713",
+    "id": "706",
     "subject": "中科二",
     "category": "風險管理",
     "principle": "責任與問責",
@@ -17825,7 +17650,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "714",
+    "id": "707",
     "subject": "中科二",
     "category": "風險管理",
     "principle": "責任與問責",
@@ -17850,7 +17675,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "715",
+    "id": "708",
     "subject": "中科二",
     "category": "風險管理",
     "principle": "責任與問責",
@@ -17875,7 +17700,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "716",
+    "id": "709",
     "subject": "中科二",
     "category": "風險管理",
     "principle": "責任與問責",
@@ -17900,7 +17725,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "717",
+    "id": "710",
     "subject": "中科二",
     "category": "風險管理",
     "principle": "責任與問責",
@@ -17925,7 +17750,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "718",
+    "id": "711",
     "subject": "中科二",
     "category": "風險管理",
     "principle": "責任與問責",
@@ -17950,7 +17775,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "719",
+    "id": "712",
     "subject": "中科二",
     "category": "風險管理",
     "principle": "責任與問責",
@@ -17975,7 +17800,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "720",
+    "id": "713",
     "subject": "中科二",
     "category": "風險管理",
     "principle": "責任與問責",
@@ -18000,7 +17825,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "721",
+    "id": "714",
     "subject": "中科二",
     "category": "風險管理",
     "principle": "責任與問責",
@@ -18025,7 +17850,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "722",
+    "id": "715",
     "subject": "中科二",
     "category": "風險管理",
     "principle": "責任與問責",
@@ -18050,7 +17875,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "723",
+    "id": "716",
     "subject": "中科二",
     "category": "風險管理",
     "principle": "責任與問責",
@@ -18075,7 +17900,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "724",
+    "id": "717",
     "subject": "中科三",
     "category": "專案管理",
     "principle": "責任與問責",
@@ -18100,7 +17925,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "725",
+    "id": "718",
     "subject": "中科二",
     "category": "專案管理",
     "principle": "責任與問責",
@@ -18125,7 +17950,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "726",
+    "id": "719",
     "subject": "中科二",
     "category": "專案管理",
     "principle": "責任與問責",
@@ -18150,7 +17975,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "727",
+    "id": "720",
     "subject": "中科二",
     "category": "敏捷開發",
     "principle": "責任與問責",
@@ -18175,7 +18000,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "728",
+    "id": "721",
     "subject": "中科二",
     "category": "敏捷開發",
     "principle": "責任與問責",
@@ -18200,7 +18025,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "729",
+    "id": "722",
     "subject": "中科二",
     "category": "管理工具",
     "principle": "責任與問責",
@@ -18225,7 +18050,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "730",
+    "id": "723",
     "subject": "中科二",
     "category": "管理工具",
     "principle": "責任與問責",
@@ -18250,32 +18075,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "731",
-    "subject": "中科二",
-    "category": "管理工具",
-    "principle": "責任與問責",
-    "title": "研發管理工具 (JIRA)",
-    "eng_name": "JIRA",
-    "eng_abbr": "—",
-    "def": "在JIRA是專為技術團隊設計的任務追蹤工具，具備問題追蹤、自訂工作流與支援敏捷開發（如Scrum與Kanban）功能，適合由資料科學家與工程師主導的複雜AI專案。",
-    "key_goal": "追蹤AI專案技術任務並支援敏捷開發",
-    "key_principle": "問題追蹤/工作流自訂/敏捷開發/依賴關係管理",
-    "key_purpose": "實務上用於追蹤AI模型開發的技術子任務（如資料分割、參數調整），透過設定優先級、預估工時與依賴關係精準掌控進度。",
-    "common_apps": "台灣醫療AI團隊使用JIRA管理影像辨識模型開發，即時發現資料品質問題並動態調整任務優先級。",
-    "scenarios": {
-      "weather": "災防中心技術團隊使用JIRA追蹤極端天氣預測AI的開發，管理氣象資料清洗與演算法優化的任務相依性。",
-      "agri": "農業生技公司透過JIRA追蹤溫室環控模型的訓練任務，指派工程師修復感測器資料對齊過程中的問題。",
-      "traffic": "智慧車隊開發路徑規劃AI時，利用JIRA的Scrum看板管理歷史軌跡特徵萃取的短衝任務與預估工時。",
-      "manuf": "智慧工廠運用JIRA管理AOI瑕疵檢測專案，追蹤從產線影像收集、模型訓練到邊緣設備部署的技術細節。",
-      "fintech": "金融科技團隊使用JIRA管理防洗錢AI開發，將特徵工程與合規效能測試設為具依賴關係的技術子任務。",
-      "retail": "電商平台開發智能推薦系統時，透過JIRA追蹤演算法微調過程中的技術Bug，並指派資料科學家限期修復。",
-      "fire": "消防局技術小組以JIRA管理火場熱顯像辨識AI的開發，追蹤影像特徵萃取與模型效能壓力測試的執行狀態。"
-    },
-    "detail_explain": "【研發管理工具 (JIRA)】定義：在JIRA是專為技術團隊設計的任務追蹤工具，具備問題追蹤、自訂工作流與支援敏捷開發（如Scrum與Kanban）功能，適合由資料科學家與工程師主導的複雜AI專案。",
-    "stage": "3"
-  },
-  {
-    "id": "732",
+    "id": "724",
     "subject": "中科二",
     "category": "管理工具",
     "principle": "責任與問責",
@@ -18300,7 +18100,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "733",
+    "id": "725",
     "subject": "中科二",
     "category": "敏捷開發",
     "principle": "責任與問責",
@@ -18325,7 +18125,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "734",
+    "id": "726",
     "subject": "中科二",
     "category": "敏捷開發",
     "principle": "透明與可解釋",
@@ -18350,7 +18150,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "735",
+    "id": "727",
     "subject": "中科二",
     "category": "管理工具",
     "principle": "責任與問責",
@@ -18375,7 +18175,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "736",
+    "id": "728",
     "subject": "中科二",
     "category": "專案管理",
     "principle": "責任與問責",
@@ -18400,7 +18200,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "737",
+    "id": "729",
     "subject": "中科二",
     "category": "專案管理",
     "principle": "責任與問責",
@@ -18425,7 +18225,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "738",
+    "id": "730",
     "subject": "中科一",
     "category": "AI 專案管理",
     "principle": "永續發展與福祉",
@@ -18450,7 +18250,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "739",
+    "id": "731",
     "subject": "中科一",
     "category": "AI 專案管理",
     "principle": "問責制與可追溯",
@@ -18475,7 +18275,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "740",
+    "id": "732",
     "subject": "中科一",
     "category": "AI 專案管理",
     "principle": "問責制與可追溯",
@@ -18500,7 +18300,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "741",
+    "id": "733",
     "subject": "中科一",
     "category": "AI 專案管理",
     "principle": "問責制與可追溯",
@@ -18525,7 +18325,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "742",
+    "id": "734",
     "subject": "中科一",
     "category": "AI 專案管理",
     "principle": "以人為本與人類監督",
@@ -18550,7 +18350,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "743",
+    "id": "735",
     "subject": "中科一",
     "category": "資料品質管理",
     "principle": "透明與可解釋",
@@ -18575,7 +18375,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "744",
+    "id": "736",
     "subject": "中科三",
     "category": "資料前處理",
     "principle": "精確性與效能",
@@ -18600,7 +18400,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "745",
+    "id": "737",
     "subject": "中科三",
     "category": "資料品質管理",
     "principle": "精確性與效能",
@@ -18625,7 +18425,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "746",
+    "id": "738",
     "subject": "中科一",
     "category": "模型部署與維運",
     "principle": "透明與可解釋",
@@ -18650,7 +18450,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "747",
+    "id": "739",
     "subject": "中科一",
     "category": "模型部署與維運",
     "principle": "安全與防護",
@@ -18675,7 +18475,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "748",
+    "id": "740",
     "subject": "中科一",
     "category": "AI 模型維運",
     "principle": "精確性與效能",
@@ -18700,7 +18500,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "749",
+    "id": "741",
     "subject": "中科一",
     "category": "AI 專案風險管理",
     "principle": "責任與問責",
@@ -18725,7 +18525,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "750",
+    "id": "742",
     "subject": "中科一",
     "category": "AI 專案風險管理",
     "principle": "永續發展與福祉",
@@ -18750,7 +18550,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "751",
+    "id": "743",
     "subject": "中科一",
     "category": "AI 導入變革管理",
     "principle": "責任與問責",
@@ -18775,7 +18575,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "752",
+    "id": "744",
     "subject": "中科一/中科三",
     "category": "AI 法律風險管理",
     "principle": "責任與問責",
@@ -18800,7 +18600,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "753",
+    "id": "745",
     "subject": "中科三",
     "category": "資料隱私保護",
     "principle": "隱私與資料保護",
@@ -18825,7 +18625,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "754",
+    "id": "746",
     "subject": "中科三",
     "category": "資料隱私保護",
     "principle": "隱私與資料保護",
@@ -18850,7 +18650,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "755",
+    "id": "747",
     "subject": "中科三",
     "category": "資料隱私保護",
     "principle": "隱私與資料保護",
@@ -18875,7 +18675,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "756",
+    "id": "748",
     "subject": "中科三",
     "category": "資料隱私保護",
     "principle": "隱私與資料保護",
@@ -18900,7 +18700,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "757",
+    "id": "749",
     "subject": "中科二",
     "category": "資料增強技術",
     "principle": "精確性與效能",
@@ -18925,7 +18725,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "758",
+    "id": "750",
     "subject": "中科一",
     "category": "模型量化優化",
     "principle": "精確性與效能",
@@ -18950,7 +18750,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "759",
+    "id": "751",
     "subject": "中科一",
     "category": "LLM 推論優化",
     "principle": "精確性與效能",
@@ -18975,7 +18775,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "760",
+    "id": "752",
     "subject": "中科一",
     "category": "系統效能優化",
     "principle": "精確性與效能",
@@ -19000,32 +18800,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "761",
-    "subject": "中科一",
-    "category": "LLM 推論優化",
-    "principle": "精確性與效能",
-    "title": "閃光注意力",
-    "eng_name": "FlashAttention",
-    "eng_abbr": "—",
-    "def": "在Flash Attention 常被用來改善大型語言模型裡 Transformer 注意力機制的運算效率。它透過調整注意力計算與資料處理方式，減少中間結果的儲存需求，進而顯著改善速度與資源使用效率。",
-    "key_goal": "改善注意力運算效率並減少中間結果儲存",
-    "key_principle": "調整注意力計算與資料處理/減少中間結果儲存需求",
-    "key_purpose": "實務上用於加速大型語言模型的訓練與推論過程，解決處理長序列文本時GPU記憶體溢位與運算延遲的硬體瓶頸。",
-    "common_apps": "台灣雲端服務商在訓練企業專屬的大型語言模型時，運用此技術大幅降低處理長文本時的GPU記憶體消耗。",
-    "scenarios": {
-      "weather": "災防中心運用具備此技術的大型語言模型，快速分析長篇極端氣候歷史觀測報告，提升氣象預警產出效率。",
-      "agri": "農業科技平台透過此技術加速長序列溫室感測資料與歷史作物語料的分析，快速生成精準的病蟲害防治建議。",
-      "traffic": "智慧物流車隊在分析長時段的全台即時路況與歷史軌跡日誌時，藉由此優化技術降低系統運算延遲。",
-      "manuf": "智慧工廠導入大型語言模型分析厚重的機台維修手冊與長期感測器日誌時，利用此技術提升推論速度與降低硬體成本。",
-      "fintech": "醫療AI團隊在訓練可分析長篇電子病歷與基因序列的模型時，透過此技術解決記憶體溢位問題並加速開發。",
-      "retail": "電商平台的智能客服處理長達數十輪的歷史客訴對話記錄時，依賴此技術提升長文本上下文的處理效率。",
-      "fire": "消防局建置報案輔助決策系統時，以此技術加速分析大規模歷史報案文字紀錄，確保高併發下能快速生成處理建議。"
-    },
-    "detail_explain": "【閃光注意力】定義：在Flash Attention 常被用來改善大型語言模型裡 Transformer 注意力機制的運算效率。它透過調整注意力計算與資料處理方式，減少中間結果的儲存需求，進而顯著改善速度與資源使用效率。",
-    "stage": "2"
-  },
-  {
-    "id": "762",
+    "id": "753",
     "subject": "中科三",
     "category": "AI 資訊安全",
     "principle": "安全與防護",
@@ -19050,7 +18825,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "763",
+    "id": "754",
     "subject": "中科三",
     "category": "資料加密安全",
     "principle": "安全與防護",
@@ -19075,7 +18850,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "764",
+    "id": "755",
     "subject": "中科三",
     "category": "資訊存取控制",
     "principle": "安全與防護",
@@ -19100,7 +18875,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "765",
+    "id": "756",
     "subject": "中科三",
     "category": "資料安全傳輸",
     "principle": "安全與防護",
@@ -19125,7 +18900,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "766",
+    "id": "757",
     "subject": "中科三",
     "category": "AI 實體安全",
     "principle": "安全與防護",
@@ -19150,7 +18925,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "767",
+    "id": "758",
     "subject": "中科三",
     "category": "AI 系統韌性",
     "principle": "安全與防護",
@@ -19175,7 +18950,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "768",
+    "id": "759",
     "subject": "中科三",
     "category": "AI 治理管理",
     "principle": "責任與問責",
@@ -19200,7 +18975,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "769",
+    "id": "760",
     "subject": "中科三",
     "category": "AI 安全政策",
     "principle": "責任與問責",
@@ -19225,7 +19000,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "770",
+    "id": "761",
     "subject": "中科三",
     "category": "AI 人員安全訓練",
     "principle": "責任與問責",
@@ -19250,7 +19025,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "771",
+    "id": "762",
     "subject": "中科三",
     "category": "AI 風險稽核",
     "principle": "責任與問責",
@@ -19275,7 +19050,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "772",
+    "id": "763",
     "subject": "中科三",
     "category": "金融安全合規",
     "principle": "安全與防護",
@@ -19300,7 +19075,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "773",
+    "id": "764",
     "subject": "中科三",
     "category": "AI 監理沙盒",
     "principle": "責任與問責",
@@ -19325,7 +19100,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "774",
+    "id": "765",
     "subject": "中科三",
     "category": "AI 法律治理",
     "principle": "責任與問責",
@@ -19350,7 +19125,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "775",
+    "id": "766",
     "subject": "中科三",
     "category": "AI 倫理",
     "principle": "永續發展與福祉",
@@ -19375,7 +19150,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "776",
+    "id": "767",
     "subject": "中科三",
     "category": "AI 公平性",
     "principle": "公平與不歧視",
@@ -19400,7 +19175,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "777",
+    "id": "768",
     "subject": "中科二",
     "category": "資料品質處理",
     "principle": "公平與不歧視",
@@ -19425,7 +19200,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "778",
+    "id": "769",
     "subject": "中科三",
     "category": "AI 偏見治理",
     "principle": "公平與不歧視",
@@ -19450,7 +19225,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "779",
+    "id": "770",
     "subject": "中科三",
     "category": "AI 偏見治理",
     "principle": "公平與不歧視",
@@ -19475,7 +19250,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "780",
+    "id": "771",
     "subject": "中科三",
     "category": "AI 問責治理",
     "principle": "責任與問責",
@@ -19500,7 +19275,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "781",
+    "id": "772",
     "subject": "中科三",
     "category": "AI 透明度",
     "principle": "透明與可解釋",
@@ -19525,7 +19300,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "782",
+    "id": "773",
     "subject": "中科三",
     "category": "可解釋 AI",
     "principle": "透明與可解釋",
@@ -19550,7 +19325,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "783",
+    "id": "774",
     "subject": "中科三",
     "category": "AI 倫理指引",
     "principle": "永續發展與福祉",
@@ -19575,7 +19350,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "784",
+    "id": "775",
     "subject": "中科三",
     "category": "AI 國際治理原則",
     "principle": "責任與問責",
@@ -19600,7 +19375,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "785",
+    "id": "776",
     "subject": "中科三",
     "category": "AI 倫理治理",
     "principle": "責任與問責",
@@ -19625,7 +19400,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "786",
+    "id": "777",
     "subject": "中科三",
     "category": "AI 倫理審查",
     "principle": "責任與問責",
@@ -19650,7 +19425,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "787",
+    "id": "778",
     "subject": "中科一",
     "category": "AI 人員培訓",
     "principle": "責任與問責",
@@ -19675,7 +19450,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "788",
+    "id": "779",
     "subject": "中科三",
     "category": "AI 透明溝通",
     "principle": "透明與可解釋",
@@ -19700,7 +19475,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "789",
+    "id": "780",
     "subject": "中科一",
     "category": "AI 專案風險管理",
     "principle": "責任與問責",
@@ -19725,7 +19500,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "790",
+    "id": "781",
     "subject": "中科一",
     "category": "AI 專案風險管理",
     "principle": "責任與問責",
@@ -19750,7 +19525,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "791",
+    "id": "782",
     "subject": "中科一",
     "category": "AI 專案風險管理",
     "principle": "責任與問責",
@@ -19775,7 +19550,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "792",
+    "id": "783",
     "subject": "中科一",
     "category": "AI 模型監控工具",
     "principle": "精確性與效能",
@@ -19800,7 +19575,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "793",
+    "id": "784",
     "subject": "中科一",
     "category": "AI 專案風險管理",
     "principle": "責任與問責",
@@ -19825,7 +19600,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "794",
+    "id": "785",
     "subject": "中科一",
     "category": "AI 專案風險管理",
     "principle": "責任與問責",
@@ -19850,7 +19625,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "795",
+    "id": "786",
     "subject": "中科一",
     "category": "AI 模型維運",
     "principle": "精確性與效能",
@@ -19875,7 +19650,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "796",
+    "id": "787",
     "subject": "中科一/中科二",
     "category": "AI 資料監控",
     "principle": "精確性與效能",
@@ -19900,7 +19675,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "797",
+    "id": "788",
     "subject": "中科一",
     "category": "AI 模型維運",
     "principle": "精確性與效能",
@@ -19925,7 +19700,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "798",
+    "id": "789",
     "subject": "中科一",
     "category": "AI 模型維運",
     "principle": "精確性與效能",
@@ -19950,7 +19725,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "799",
+    "id": "790",
     "subject": "中科一",
     "category": "AI 企業系統整合",
     "principle": "永續發展與福祉",
@@ -19975,7 +19750,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "800",
+    "id": "791",
     "subject": "中科一",
     "category": "AI 企業應用",
     "principle": "永續發展與福祉",
@@ -20000,7 +19775,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "801",
+    "id": "792",
     "subject": "中科二",
     "category": "工業資料分析",
     "principle": "精確性與效能",
@@ -20025,7 +19800,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "802",
+    "id": "793",
     "subject": "中科一/中科二",
     "category": "AI 智慧製造應用",
     "principle": "永續發展與福祉",
@@ -20050,7 +19825,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "803",
+    "id": "794",
     "subject": "中科二",
     "category": "資料前處理",
     "principle": "精確性與效能",
@@ -20075,7 +19850,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "804",
+    "id": "795",
     "subject": "中科二",
     "category": "資料補值方法",
     "principle": "精確性與效能",
@@ -20100,7 +19875,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "805",
+    "id": "796",
     "subject": "中科二",
     "category": "資料補值方法",
     "principle": "精確性與效能",
@@ -20125,7 +19900,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "806",
+    "id": "797",
     "subject": "中科二",
     "category": "資料補值方法",
     "principle": "精確性與效能",
@@ -20150,7 +19925,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "807",
+    "id": "798",
     "subject": "中科二",
     "category": "時序資料前處理",
     "principle": "精確性與效能",
@@ -20175,7 +19950,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "808",
+    "id": "799",
     "subject": "中科二",
     "category": "時序資料前處理",
     "principle": "精確性與效能",
@@ -20200,7 +19975,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "809",
+    "id": "800",
     "subject": "中科二",
     "category": "時序資料前處理",
     "principle": "精確性與效能",
@@ -20225,7 +20000,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "810",
+    "id": "801",
     "subject": "中科二",
     "category": "資料補值方法",
     "principle": "精確性與效能",
@@ -20250,7 +20025,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "811",
+    "id": "802",
     "subject": "中科二",
     "category": "資料品質處理",
     "principle": "精確性與效能",
@@ -20275,7 +20050,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "812",
+    "id": "803",
     "subject": "中科二",
     "category": "資料品質處理",
     "principle": "精確性與效能",
@@ -20300,7 +20075,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "813",
+    "id": "804",
     "subject": "中科二",
     "category": "資料品質維度",
     "principle": "精確性與效能",
@@ -20325,7 +20100,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "814",
+    "id": "805",
     "subject": "中科二",
     "category": "資料品質維度",
     "principle": "精確性與效能",
@@ -20350,7 +20125,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "815",
+    "id": "806",
     "subject": "中科二",
     "category": "資料品質維度",
     "principle": "精確性與效能",
@@ -20375,7 +20150,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "816",
+    "id": "807",
     "subject": "中科二",
     "category": "資料品質維度",
     "principle": "精確性與效能",
@@ -20400,7 +20175,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "817",
+    "id": "808",
     "subject": "中科二",
     "category": "特徵重要性評估",
     "principle": "精確性與效能",
@@ -20425,7 +20200,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "818",
+    "id": "809",
     "subject": "中科二",
     "category": "統計相關性分析",
     "principle": "精確性與效能",
@@ -20450,7 +20225,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "819",
+    "id": "810",
     "subject": "中科二",
     "category": "自動特徵工程",
     "principle": "精確性與效能",
@@ -20475,7 +20250,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "820",
+    "id": "811",
     "subject": "中科二",
     "category": "統計相關性分析",
     "principle": "精確性與效能",
@@ -20500,7 +20275,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "821",
+    "id": "812",
     "subject": "中科二",
     "category": "特徵重要性評估",
     "principle": "精確性與效能",
@@ -20525,7 +20300,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "822",
+    "id": "813",
     "subject": "中科二",
     "category": "不均衡資料處理",
     "principle": "公平與不歧視",
@@ -20550,7 +20325,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "823",
+    "id": "814",
     "subject": "中科二",
     "category": "不均衡資料處理",
     "principle": "公平與不歧視",
@@ -20575,7 +20350,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "824",
+    "id": "815",
     "subject": "中科二",
     "category": "不均衡資料處理",
     "principle": "公平與不歧視",
@@ -20600,7 +20375,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "825",
+    "id": "816",
     "subject": "中科二",
     "category": "不均衡資料處理",
     "principle": "精確性與效能",
@@ -20625,7 +20400,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "826",
+    "id": "817",
     "subject": "中科二",
     "category": "模型決策邊界調整",
     "principle": "精確性與效能",
@@ -20650,7 +20425,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "827",
+    "id": "818",
     "subject": "中科二",
     "category": "集成學習方法",
     "principle": "精確性與效能",
@@ -20675,7 +20450,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "828",
+    "id": "819",
     "subject": "中科二",
     "category": "不均衡資料處理",
     "principle": "精確性與效能",
@@ -20700,7 +20475,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "829",
+    "id": "820",
     "subject": "中科二",
     "category": "異常偵測分析",
     "principle": "精確性與效能",
@@ -20725,32 +20500,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "830",
-    "subject": "中科二",
-    "category": "模型評估方法",
-    "principle": "精確性與效能",
-    "title": "交叉驗證",
-    "eng_name": "Cross Validation",
-    "eng_abbr": "CV",
-    "def": "在機器學習中，交叉驗證為關鍵的模型評估技術。其透過將資料多次切分並反覆進行訓練與測試，以真實衡量模型泛化能力。此法能有效避免單次資料切分所產生的偏誤，常作為模型選擇與參數調校的依據。",
-    "key_goal": "評估模型泛化能力以避免單次切分偏誤",
-    "key_principle": "資料多重切分/反覆訓練與測試/平均效能估計",
-    "key_purpose": "實務上廣泛用於模型選擇與超參數調校階段，藉由觀察模型在不同樣本組合下的穩定性，確保上線後的預測可靠度。",
-    "common_apps": "台灣金融機構在建構信用卡違約預測模型時，利用交叉驗證確保模型在不同客戶樣本組合下的預測穩定性。",
-    "scenarios": {
-      "weather": "氣象單位訓練颱風降雨預測模型時，以交叉驗證確保模型在不同年份氣候資料切分下的預報準確度與穩定性。",
-      "agri": "農業研究單位評估病蟲害辨識模型時，利用交叉驗證避免模型受特定採樣影像影響而產生過度擬合。",
-      "traffic": "智慧物流平台在訓練配送時間預測模型時，透過交叉驗證確認模型在不同路況樣本組合下的預測表現無偏誤。",
-      "manuf": "智慧工廠在挑選機台預測性維護模型時，以交叉驗證客觀評估各演算法在不同機台感測數據上的泛化能力。",
-      "fintech": "醫院在訓練醫學影像輔助診斷系統時，利用交叉驗證確保模型在不同病患群體切分下的診斷一致性，降低漏診風險。",
-      "retail": "電商平台在調校商品推薦模型的超參數時，運用交叉驗證確保推薦演算法對各類消費客群皆具良好的預測成效。",
-      "fire": "消防機關建構火災熱區預測模型時，透過交叉驗證確保預測邏輯不受單一區域極端火警事件切分影響，以利精準調度資源。"
-    },
-    "detail_explain": "【交叉驗證】定義：在機器學習中，交叉驗證為關鍵的模型評估技術。其透過將資料多次切分並反覆進行訓練與測試，以真實衡量模型泛化能力。此法能有效避免單次資料切分所產生的偏誤，常作為模型選擇與參數調校的依據。",
-    "stage": "3"
-  },
-  {
-    "id": "831",
+    "id": "821",
     "subject": "中科二",
     "category": "模型評估方法",
     "principle": "精確性與效能",
@@ -20775,7 +20525,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "832",
+    "id": "822",
     "subject": "中科二",
     "category": "模型評估指標",
     "principle": "精確性與效能",
@@ -20800,7 +20550,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "833",
+    "id": "823",
     "subject": "中科二",
     "category": "集成學習方法",
     "principle": "精確性與效能",
@@ -20825,7 +20575,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "834",
+    "id": "824",
     "subject": "中科二",
     "category": "集成學習方法",
     "principle": "精確性與效能",
@@ -20850,7 +20600,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "835",
+    "id": "825",
     "subject": "中科二",
     "category": "集成學習方法",
     "principle": "精確性與效能",
@@ -20875,7 +20625,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "836",
+    "id": "826",
     "subject": "中科二",
     "category": "集成學習方法",
     "principle": "精確性與效能",
@@ -20900,7 +20650,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "837",
+    "id": "827",
     "subject": "中科二",
     "category": "集成學習方法",
     "principle": "精確性與效能",
@@ -20925,7 +20675,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "838",
+    "id": "828",
     "subject": "中科一",
     "category": "雲端服務模型",
     "principle": "永續發展與福祉",
@@ -20950,7 +20700,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "839",
+    "id": "829",
     "subject": "中科二",
     "category": "模型評估指標",
     "principle": "精確性與效能",
@@ -20975,32 +20725,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "840",
-    "subject": "中科一",
-    "category": "NLP 模型評估",
-    "principle": "精確性與效能",
-    "title": "ROUGE 評估指標",
-    "eng_name": "Recall Oriented Understudy for Gisting Evaluation",
-    "eng_abbr": "ROUGE",
-    "def": "在ROUGE是評估自動摘要、內容生成與問答系統的指標。其比較生成文本與參考文本在n-gram或最長公共子序列上的重疊程度，強調關鍵資訊的召回率。",
-    "key_goal": "衡量生成文本與參考文本間的召回率",
-    "key_principle": "n-gram重疊/最長公共子序列比較/跳躍詞對",
-    "key_purpose": "實務上用於衡量大型語言模型生成的摘要或回答是否涵蓋了標準答案中的重要資訊。",
-    "common_apps": "台灣新聞媒體運用ROUGE指標客觀評估AI自動生成新聞摘要系統的內容完整度。",
-    "scenarios": {
-      "weather": "氣象局使用ROUGE指標評估AI自動生成的颱風防災警報摘要，確保關鍵致災資訊未被遺漏。",
-      "agri": "農業機構利用ROUGE評估病蟲害防治報告的自動摘要系統，確保農藥使用建議被完整保留。",
-      "traffic": "物流平台以ROUGE分數衡量每日即時路況與壅塞事件自動摘要模型的效能，確保司機獲取完整資訊。",
-      "manuf": "智慧工廠運用ROUGE評估機台故障日誌自動摘要系統的品質，確保維修人員能掌握所有關鍵異常紀錄。",
-      "fintech": "醫療院所使用ROUGE指標評估AI生成的電子病歷摘要系統，確保病患的關鍵診斷與用藥紀錄被完整涵蓋以防漏診。",
-      "retail": "電商平台透過ROUGE衡量智慧客服對話摘要模型的表現，確保客訴處理紀錄涵蓋顧客所有的關鍵訴求。",
-      "fire": "消防機關運用ROUGE評估災情通報錄音的自動摘要系統，確保救災地點與受困人數等關鍵資訊被完整檢索與列出。"
-    },
-    "detail_explain": "【ROUGE 評估指標】定義：在ROUGE是評估自動摘要、內容生成與問答系統的指標。其比較生成文本與參考文本在n-gram或最長公共子序列上的重疊程度，強調關鍵資訊的召回率。",
-    "stage": "2"
-  },
-  {
-    "id": "841",
+    "id": "830",
     "subject": "中科一",
     "category": "AI 模型評估",
     "principle": "精確性與效能",
@@ -21025,7 +20750,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "842",
+    "id": "831",
     "subject": "中科二",
     "category": "模型評估方法",
     "principle": "精確性與效能",
@@ -21050,7 +20775,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "843",
+    "id": "832",
     "subject": "初科二/中科一",
     "category": "NLP 語言特性",
     "principle": "精確性與效能",
@@ -21075,7 +20800,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "844",
+    "id": "833",
     "subject": "初科二/中科一",
     "category": "NLP 語言特性",
     "principle": "精確性與效能",
@@ -21100,7 +20825,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "845",
+    "id": "834",
     "subject": "初科二/中科一",
     "category": "NLP 形態分析",
     "principle": "精確性與效能",
@@ -21125,7 +20850,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "846",
+    "id": "835",
     "subject": "初科二/中科一",
     "category": "NLP 詞彙分析",
     "principle": "精確性與效能",
@@ -21150,7 +20875,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "847",
+    "id": "836",
     "subject": "初科二/中科一",
     "category": "NLP 句法分析",
     "principle": "精確性與效能",
@@ -21175,7 +20900,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "848",
+    "id": "837",
     "subject": "初科二/中科一",
     "category": "NLP 語義分析",
     "principle": "精確性與效能",
@@ -21200,7 +20925,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "849",
+    "id": "838",
     "subject": "初科二/中科一",
     "category": "NLP 語用分析",
     "principle": "精確性與效能",
@@ -21225,7 +20950,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "850",
+    "id": "839",
     "subject": "初科二/中科一",
     "category": "NLP 句法剖析",
     "principle": "精確性與效能",
@@ -21250,7 +20975,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "851",
+    "id": "840",
     "subject": "初科二/中科一",
     "category": "NLP 句法分析",
     "principle": "精確性與效能",
@@ -21275,7 +21000,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "852",
+    "id": "841",
     "subject": "初科二/中科一",
     "category": "NLP 成分剖析",
     "principle": "精確性與效能",
@@ -21300,7 +21025,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "853",
+    "id": "842",
     "subject": "初科二/中科一",
     "category": "NLP 依存剖析",
     "principle": "精確性與效能",
@@ -21325,7 +21050,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "854",
+    "id": "843",
     "subject": "初科二/中科一",
     "category": "NLP 詞義消歧",
     "principle": "精確性與效能",
@@ -21350,7 +21075,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "855",
+    "id": "844",
     "subject": "初科二/中科一",
     "category": "NLP 語義角色標注",
     "principle": "精確性與效能",
@@ -21375,7 +21100,7 @@ const lessonData = [
     "stage": "0"
   },
   {
-    "id": "856",
+    "id": "845",
     "subject": "中科一",
     "category": "生成式 AI 模型",
     "principle": "精確性與效能",
@@ -21400,7 +21125,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "857",
+    "id": "846",
     "subject": "中科一",
     "category": "生成式 AI 應用",
     "principle": "精確性與效能",
@@ -21425,7 +21150,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "858",
+    "id": "847",
     "subject": "中科一",
     "category": "擴散模型技術",
     "principle": "精確性與效能",
@@ -21450,7 +21175,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "859",
+    "id": "848",
     "subject": "中科一",
     "category": "生成式 AI 影像編輯",
     "principle": "精確性與效能",
@@ -21475,7 +21200,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "860",
+    "id": "849",
     "subject": "中科一",
     "category": "生成式 AI 應用",
     "principle": "精確性與效能",
@@ -21500,7 +21225,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "861",
+    "id": "850",
     "subject": "中科一",
     "category": "電腦視覺增強",
     "principle": "精確性與效能",
@@ -21525,7 +21250,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "862",
+    "id": "851",
     "subject": "中科一",
     "category": "AI 程式碼生成",
     "principle": "精確性與效能",
@@ -21550,7 +21275,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "863",
+    "id": "852",
     "subject": "中科二",
     "category": "合成資料技術",
     "principle": "精確性與效能",
@@ -21575,7 +21300,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "864",
+    "id": "853",
     "subject": "中科一",
     "category": "提示工程技術",
     "principle": "精確性與效能",
@@ -21600,7 +21325,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "865",
+    "id": "854",
     "subject": "中科一",
     "category": "提示工程技術",
     "principle": "精確性與效能",
@@ -21625,7 +21350,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "866",
+    "id": "855",
     "subject": "中科二",
     "category": "工業感測器資料",
     "principle": "精確性與效能",
@@ -21650,7 +21375,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "867",
+    "id": "856",
     "subject": "中科二",
     "category": "結構化資料處理",
     "principle": "精確性與效能",
@@ -21675,7 +21400,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "868",
+    "id": "857",
     "subject": "中科二",
     "category": "圖形資料處理",
     "principle": "精確性與效能",
@@ -21700,7 +21425,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "869",
+    "id": "858",
     "subject": "中科二",
     "category": "多模態資料融合",
     "principle": "精確性與效能",
@@ -21725,7 +21450,7 @@ const lessonData = [
     "stage": "3"
   },
   {
-    "id": "870",
+    "id": "859",
     "subject": "中科一",
     "category": "多模態學習技術",
     "principle": "精確性與效能",
@@ -21750,7 +21475,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "871",
+    "id": "860",
     "subject": "中科一",
     "category": "多模態融合技術",
     "principle": "精確性與效能",
@@ -21775,7 +21500,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "872",
+    "id": "861",
     "subject": "中科一",
     "category": "多模態融合技術",
     "principle": "精確性與效能",
@@ -21800,7 +21525,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "873",
+    "id": "862",
     "subject": "中科一",
     "category": "多模態融合技術",
     "principle": "精確性與效能",
@@ -21825,7 +21550,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "874",
+    "id": "863",
     "subject": "中科一",
     "category": "多模態融合技術",
     "principle": "精確性與效能",
@@ -21850,7 +21575,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "875",
+    "id": "864",
     "subject": "中科一",
     "category": "多模態融合技術",
     "principle": "精確性與效能",
@@ -21875,7 +21600,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "876",
+    "id": "865",
     "subject": "中科一",
     "category": "多模態融合技術",
     "principle": "精確性與效能",
@@ -21900,7 +21625,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "877",
+    "id": "866",
     "subject": "中科一",
     "category": "多模態表徵學習",
     "principle": "精確性與效能",
@@ -21925,7 +21650,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "878",
+    "id": "867",
     "subject": "中科一",
     "category": "多模態表徵學習",
     "principle": "精確性與效能",
@@ -21950,7 +21675,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "879",
+    "id": "868",
     "subject": "中科一",
     "category": "跨模態生成技術",
     "principle": "精確性與效能",
@@ -21975,7 +21700,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "880",
+    "id": "869",
     "subject": "中科一",
     "category": "跨模態檢索技術",
     "principle": "精確性與效能",
@@ -22000,7 +21725,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "881",
+    "id": "870",
     "subject": "中科一",
     "category": "多模態模型架構",
     "principle": "精確性與效能",
@@ -22025,7 +21750,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "882",
+    "id": "871",
     "subject": "中科一",
     "category": "多模態模型架構",
     "principle": "精確性與效能",
@@ -22050,7 +21775,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "883",
+    "id": "872",
     "subject": "中科一",
     "category": "多模態融合技術",
     "principle": "精確性與效能",
@@ -22075,7 +21800,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "884",
+    "id": "873",
     "subject": "中科一",
     "category": "AI 推論效能",
     "principle": "精確性與效能",
@@ -22100,7 +21825,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "885",
+    "id": "874",
     "subject": "中科三",
     "category": "可解釋 AI",
     "principle": "透明與可解釋",
@@ -22125,7 +21850,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "886",
+    "id": "875",
     "subject": "中科一",
     "category": "AI 專案可行性評估",
     "principle": "責任與問責",
@@ -22150,7 +21875,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "887",
+    "id": "876",
     "subject": "中科一/中科二",
     "category": "AI 專案可行性評估",
     "principle": "責任與問責",
@@ -22175,7 +21900,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "888",
+    "id": "877",
     "subject": "中科一",
     "category": "AI 專案可行性評估",
     "principle": "責任與問責",
@@ -22200,7 +21925,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "889",
+    "id": "878",
     "subject": "中科一",
     "category": "AI 組織可行性",
     "principle": "責任與問責",
@@ -22225,7 +21950,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "890",
+    "id": "879",
     "subject": "中科一",
     "category": "AI 效益評估",
     "principle": "永續發展與福祉",
@@ -22250,7 +21975,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "891",
+    "id": "880",
     "subject": "中科一",
     "category": "AI 效益評估",
     "principle": "永續發展與福祉",
@@ -22275,7 +22000,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "892",
+    "id": "881",
     "subject": "中科一",
     "category": "AI 效益評估",
     "principle": "永續發展與福祉",
@@ -22300,7 +22025,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "893",
+    "id": "882",
     "subject": "中科一",
     "category": "AI 專案風險管理",
     "principle": "責任與問責",
@@ -22325,7 +22050,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "894",
+    "id": "883",
     "subject": "中科三",
     "category": "AI 倫理風險",
     "principle": "永續發展與福祉",
@@ -22350,7 +22075,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "895",
+    "id": "884",
     "subject": "中科三",
     "category": "AI 資安風險",
     "principle": "安全與防護",
@@ -22375,7 +22100,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "896",
+    "id": "885",
     "subject": "中科三",
     "category": "AI 合規風險",
     "principle": "責任與問責",
@@ -22400,7 +22125,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "897",
+    "id": "886",
     "subject": "中科一",
     "category": "AI 影響評估",
     "principle": "責任與問責",
@@ -22425,7 +22150,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "898",
+    "id": "887",
     "subject": "中科一",
     "category": "AI 評估準則",
     "principle": "精確性與效能",
@@ -22450,7 +22175,7 @@ const lessonData = [
     "stage": "2"
   },
   {
-    "id": "899",
+    "id": "888",
     "subject": "初科二/中科一",
     "category": "AI 開源生態",
     "principle": "永續發展與福祉",
@@ -22473,5 +22198,1605 @@ const lessonData = [
     },
     "detail_explain": "【開放原始碼】定義：在開源指將軟體或AI模型的原始碼與權重對外公開，允許開發者依授權條款進行檢視、修改及應用。其能大幅降低開發門檻並促進社群協作創新，但企業導入時須遵守授權規範以避免侵權風險。",
     "stage": "0"
+  },
+  {
+    "id": "889",
+    "subject": "中科一",
+    "category": "生成式 AI",
+    "principle": "精確性與效能",
+    "title": "推理時算力",
+    "eng_name": "Test-Time Compute",
+    "eng_abbr": "TTC",
+    "def": "指模型在推論階段而非訓練階段，透過配置更多運算資源（如多次採樣、路徑搜索）來優化輸出質量的技術。此技術使模型能處理高難度之邏輯、數學或程式任務，是提升生成式 AI 邏輯上限之核心策略。",
+    "key_goal": "透過延長模型思考時間提升複雜問題之推理精準度",
+    "key_principle": "思維鏈 (CoT) / 搜索演算法 / 自我一致性 / 算力擴展",
+    "key_purpose": "用於處理需嚴謹邏輯推演之場景，減少幻覺產出。協助系統在面對未知或複雜指令時，能透過內部反思產出更可靠之解法。",
+    "common_apps": "台灣軟體開發商利用 TTC 技術開發自動化 Code Review 助理，精準抓取深層邏輯漏洞。",
+    "scenarios": {
+      "weather": "延長推論計算以模擬颱風在極端地形下的多重路徑概率，提升路徑預報之穩定度。",
+      "agri": "針對罕見病蟲害之防治策略進行深度邏輯推理，提供具備科學實證基礎的投藥建議。",
+      "traffic": "分析複雜路網之多點配送邏輯，透過推論搜索找出符合多重約束的最優路徑。",
+      "manuf": "分析精密製程中數百項變數之因果關聯，透過深度推理精準定位良率異常點。",
+      "fintech": "輔助醫師進行罕見病灶之鑒別診斷，透過 TTC 強化模型對病歷文本之邏輯推理能力；作為高階理財顧問助理，針對複雜的資產配置需求進行量化分析與風險推演。",
+      "retail": "在智慧客服中透過深度推理處理多條件複雜之顧客申訴案件，產出精確之補償方案。",
+      "fire": "在火災調查中透過 TTC 技術分析多維起火點數據，還原火勢蔓延之邏輯順序。"
+    },
+    "detail_explain": "【推理時算力】定義：指模型在推論階段而非訓練階段，透過配置更多運算資源（如多次採樣、路徑搜索）來優化輸出質量的技術。此技術使模型能處理高難度之邏輯、數學或程式任務，是提升生成式 AI 邏輯上限之核心策略。",
+    "stage": "2"
+  },
+  {
+    "id": "890",
+    "subject": "中科三",
+    "category": "自然語言處理",
+    "principle": "精確性與效能",
+    "title": "遞迴語言模型",
+    "eng_name": "Recursive Language Model",
+    "eng_abbr": "RLM",
+    "def": "指一種能處理具備巢狀或層級結構資料的語言模型。其透過遞迴方式將較小的語意單位結合成較大的結構（如短語結合成句子），適合處理具備明確語法結構的文本，是理解複雜句型關係之進階技術。",
+    "key_goal": "學習文本中層級化結構以強化長序列之語意表達",
+    "key_principle": "循環結構 / 語法樹建模 / 動態規劃 / 層級表示學習",
+    "key_purpose": "用於提升模型對語法依賴與邏輯結構之理解力。協助開發者建構具備深層語意分析能力之 NLP 應用，優化長句翻譯與摘要質量。",
+    "common_apps": "台灣法律科技公司利用 RLM 處理繁瑣之法律條文分析，精準解析複雜的子句依賴關係。",
+    "scenarios": {
+      "weather": "解析氣象觀測報告中之層級描述，精準提取極端氣候下多重環境變數之聯動特徵。",
+      "agri": "分析農業百科中「作物-環境-病害」之層級關聯，建立結構化之智慧農耕知識庫。",
+      "traffic": "解析物流合約中之層級條件與條款，自動化識別跨區域運輸之限制與補償規範。",
+      "manuf": "將設備維修日誌之層級操作紀錄轉化為語法樹，自動產出標準化之技術傳承手冊。",
+      "fintech": "在醫學文獻摘要任務中，精準解析解剖結構與病理特徵間之層級依存關係。",
+      "retail": "用於精確分析顧客反饋中之多層次情緒轉折，提供更貼合真實意圖之客服回應。",
+      "fire": "處理公共安全法規之層級檢核條款，自動化比對建築安檢項目之合規性狀態。"
+    },
+    "detail_explain": "【遞迴語言模型】定義：指一種能處理具備巢狀或層級結構資料的語言模型。其透過遞迴方式將較小的語意單位結合成較大的結構（如短語結合成句子），適合處理具備明確語法結構的文本，是理解複雜句型關係之進階技術。",
+    "stage": "2"
+  },
+  {
+    "id": "891",
+    "subject": "中科一",
+    "category": "生成式 AI",
+    "principle": "透明與可解釋",
+    "title": "上下文工程",
+    "eng_name": "Context Engineering",
+    "eng_abbr": "—",
+    "def": "指在與大型語言模型互動時，透過篩選、排序與結構化輸入內容（如提示詞、檢索文件），以優化模型生成質量的過程。此技術旨在確保模型能在有限的處理視窗中，獲得最具參考價值的資訊，降低無關雜訊干擾。",
+    "key_goal": "精準管理模型輸入之背景資訊以提升生成內容之相關性",
+    "key_principle": "提示工程 (Prompting) / RAG / 長窗口管理 / 資訊摘要",
+    "key_purpose": "用於解決模型長序列處理能力受限或背景知識不足之問題。協助提升 RAG 系統之精準度，確保 AI 回應之事實正確性與邏輯一致性。",
+    "common_apps": "台灣金控業者利用上下文工程優化理財機器人，精準餵入用戶歷史資產狀況以生成客製建議。",
+    "scenarios": {
+      "weather": "整合即時測站感測、雷達回波與歷史路徑資料，為 AI 預報模型構建精準的上下文背景。",
+      "agri": "針對農民詢問之症狀，動態檢索對應作物之生長環境與防治百科，生成精準診斷建議。",
+      "traffic": "整合車隊 GPS、路況 API 與倉儲即時狀態，為 AI 調度系統提供全面之上下文環境。",
+      "manuf": "彙整產線維修日誌、備品庫存與設備手冊，為維修技師提供具備完整背景之排除方案。",
+      "fintech": "在診斷輔助中精準整合病患檢驗數值、病史紀錄與臨床指南，產出高可信度之醫療摘要。",
+      "retail": "整合電商顧客瀏覽行為與近期促銷活動，為智慧客服提供極具相關性之推薦上下文。",
+      "fire": "融合火場動態影像與建築消防紀錄，為現場指揮系統提供完整之救災態勢上下文。"
+    },
+    "detail_explain": "【上下文工程】定義：指在與大型語言模型互動時，透過篩選、排序與結構化輸入內容（如提示詞、檢索文件），以優化模型生成質量的過程。此技術旨在確保模型能在有限的處理視窗中，獲得最具參考價值的資訊，降低無關雜訊干擾。",
+    "stage": "2"
+  },
+  {
+    "id": "892",
+    "subject": "中科一",
+    "category": "生成式 AI",
+    "principle": "隱私與資料保護",
+    "title": "小語言模型",
+    "eng_name": "Small Language Model",
+    "eng_abbr": "SLM",
+    "def": "指參數量較小（通常低於 100 億）但經過特定領域資料優化的語言模型。SLM 具備推論速度快、部署成本低且可於地端執行之優點，是企業實現「AI 邊緣化」與資料私有化應用的重要核心。",
+    "key_goal": "在輕量化硬體上實現具備特定領域能力之高效 AI 推論",
+    "key_principle": "知識蒸餾 / 模型剪枝 / 量化技術 / 參數高效微調",
+    "key_purpose": "用於建構地端智慧助理、終端設備之自動化控制與敏感資料脫敏處理。協助企業在不依賴雲端 API 的前提下，提供低延遲之 AI 互動能力。",
+    "common_apps": "台灣半導體設備商將 SLM 部署於廠區隔離環境，開發具備高度機密性之設備操作問答系統。",
+    "scenarios": {
+      "weather": "在偏遠災防觀測站部署 SLM，實現不依賴網路的本地降雨分析與災情預警廣播。",
+      "agri": "於智慧溫室邊緣裝置部署 SLM，依據即時感測數據自動生成本地化的作物照護指令。",
+      "traffic": "在智慧公車亭部署 SLM，提供具備語音交互能力的離線到站查詢與轉乘路徑建議服務。",
+      "manuf": "整合至產線工業相機，實現邊緣端之瑕疵特徵文字化描述與初步故障原因診斷。",
+      "fintech": "在醫師穿戴裝置部署 SLM，實現病歷摘要之即時語音轉錄與去識別化之輔助筆記。",
+      "retail": "零售業者於門市行動 App 整合 SLM，提供低延遲且離線可用的商品搜尋與導購助理。",
+      "fire": "在救災無人機端執行 SLM，即時解析熱源特徵並透過語音回傳結構化之現場災情摘要。"
+    },
+    "detail_explain": "【小語言模型】定義：指參數量較小（通常低於 100 億）但經過特定領域資料優化的語言模型。SLM 具備推論速度快、部署成本低且可於地端執行之優點，是企業實現「AI 邊緣化」與資料私有化應用的重要核心。",
+    "stage": "2"
+  },
+  {
+    "id": "893",
+    "subject": "中科三",
+    "category": "自然語言處理",
+    "principle": "精確性與效能",
+    "title": "多 Token 預測",
+    "eng_name": "Multi-Token Prediction",
+    "eng_abbr": "MTP",
+    "def": "指模型在單次前向傳播中，同時預測未來多個 Token 而非僅預測下一個 Token 的技術。此方法能顯著提升解碼效率，並使模型在生成時具備更好的「預見性」，有助於產出更具邏輯性的長文本。",
+    "key_goal": "加速生成式 AI 之推論速度並提升文本生成的邏輯連貫性",
+    "key_principle": "並行解碼架構 / 輔助訓練目標 / 自注意力機制 / 預測窗口優化",
+    "key_purpose": "用於優化 LLM 之推論吞吐量與降低生成延遲。協助系統在處理即時對話或長文創作時，能以更流暢、更符合全局語境的方式產出內容。",
+    "common_apps": "台灣金融業者利用 MTP 技術優化其自動化報告生成系統，將合規性摘要之產出時間縮短 30%。",
+    "scenarios": {
+      "weather": "加速氣象通報公文之自動化生成，確保在劇烈天氣變化時能即時產出多語系預警文本。",
+      "agri": "自動化生成大規模作物巡檢週報，提升智慧農業管理平台之資訊產出與決策效率。",
+      "traffic": "優化物流調度指令之即時生成速度，確保司機能在最短時間內獲得更新的配送摘要。",
+      "manuf": "提升產線異常分析報告之產出速度，協助製程工程師快速掌握設備故障之全局特徵。",
+      "fintech": "加速臨床醫學研究摘要與金融市場日評之生成流程，提供更具時效性之專業洞察。",
+      "retail": "提升智慧客服回答長篇諮詢之流暢度，讓個人化行銷文案之生成體驗更貼近即時對話。",
+      "fire": "確保災害現場情資紀錄之快速生成，輔助應變中心即時彙整多方資訊產出行動指引。"
+    },
+    "detail_explain": "【多 Token 預測】定義：指模型在單次前向傳播中，同時預測未來多個 Token 而非僅預測下一個 Token 的技術。此方法能顯著提升解碼效率，並使模型在生成時具備更好的「預見性」，有助於產出更具邏輯性的長文本。",
+    "stage": "2"
+  },
+  {
+    "id": "894",
+    "subject": "中科三",
+    "category": "生成式 AI",
+    "principle": "精確性與效能",
+    "title": "擴散語言模型",
+    "eng_name": "Diffusion Language Model",
+    "eng_abbr": "DLM",
+    "def": "指將擴散模型（Diffusion Model）的原理應用於離散文字生成之技術。模型透過在潛在空間中對文字特徵進行逐步去噪，最終還原出高品質、具備長程一致性之語句，是挑戰傳統自迴歸生成的創新技術。",
+    "key_goal": "透過逐步去噪機制生成具備高度多樣性與一致性之文本內容",
+    "key_principle": "擴散模型 / 逐步去噪 / 離散狀態空間 / 文字特徵重建",
+    "key_purpose": "用於實現更具創意且可控之文字生成任務。協助開發者在文本生成中加入特定屬性約束，如情感基調、特定語法風格或事實性校正。",
+    "common_apps": "台灣行銷科技團隊利用 DLM 技術，為品牌自動生成具備強烈風格且內容不重複之創意廣告文案。",
+    "scenarios": {
+      "weather": "模擬不同災害演進情境下之文字通報腳本，協助防災演練系統產出多樣化的情境劇本。",
+      "agri": "根據特定受災徵兆生成多樣化之作物補償說明，提供農損保險審理時的參考建議。",
+      "traffic": "生成不同交通流量情境下之語音播報文本，為智慧導航系統提供更自然、多變之警示。",
+      "manuf": "模擬多種機台故障情境下之操作對話紀錄，用於訓練產線 AI 助手應對極端異常之能力。",
+      "fintech": "在醫學教育中生成高擬真度之虛擬病患主訴文本，輔助醫學生進行診斷邏輯訓練。",
+      "retail": "為電商產品自動生成具備多種語氣（如幽默、專業）的特色摘要，豐富消費者體驗。",
+      "fire": "生成包含空間維度資訊之消防教育腳本，模擬火場環境風險描述，強化民眾防災意識。"
+    },
+    "detail_explain": "【擴散語言模型】定義：指將擴散模型（Diffusion Model）的原理應用於離散文字生成之技術。模型透過在潛在空間中對文字特徵進行逐步去噪，最終還原出高品質、具備長程一致性之語句，是挑戰傳統自迴歸生成的創新技術。",
+    "stage": "2"
+  },
+  {
+    "id": "895",
+    "subject": "中科三",
+    "category": "自然語言處理",
+    "principle": "精確性與效能",
+    "title": "稀疏注意力機制",
+    "eng_name": "Sparse Attention",
+    "eng_abbr": "—",
+    "def": "指在 Transformer 模型中，僅計算特定位置間而非所有位置間之注意力權重的技術。此機制將原有的平方級運算複雜度降低至近乎線性，使模型能高效處理長達數十萬 Token 之超長文本。",
+    "key_goal": "降低 Transformer 運算開銷以支援極長文本之高效處理",
+    "key_principle": "稀疏矩陣運算 / 固定模式注意力 / 動態稀疏化 / 複雜度優化",
+    "key_purpose": "用於開發需處理長文本（如完整書籍、技術手冊或代碼庫）之 AI 應用。協助提升大型系統之運算效率，實現永續發展與低功耗之 AI 服務。",
+    "common_apps": "台灣資安公司利用稀疏注意力機制，讓模型能一次性分析數萬行之原始碼，找出潛藏漏洞。",
+    "scenarios": {
+      "weather": "處理跨年度之大規模氣象監測時序數據，精準捕捉長週期環境變異對短時預警之影響。",
+      "agri": "分析跨越生長週期的農作物環境感測歷史，識別影響收成質量之長程微小環境因子。",
+      "traffic": "處理全市規模之長時段交通軌跡數據，優化具備長期季節性特徵之物流路徑排程。",
+      "manuf": "一次性解析數千頁之精密機台設計規格與歷史維修全紀錄，提供具備全局視野之故障排除。",
+      "fintech": "分析病患長達數十年之完整病歷與電子病歷數據，提供具備長期時序維度之精準醫療預測。",
+      "retail": "處理顧客完整之生命週期交易紀錄與評論歷史，建構極度精準之長期消費行為預測。",
+      "fire": "解析城市數十萬筆之消防安檢公文與建築圖資，自動識別具備長期安全隱患之高風險場域。"
+    },
+    "detail_explain": "【稀疏注意力機制】定義：指在 Transformer 模型中，僅計算特定位置間而非所有位置間之注意力權重的技術。此機制將原有的平方級運算複雜度降低至近乎線性，使模型能高效處理長達數十萬 Token 之超長文本。",
+    "stage": "2"
+  },
+  {
+    "id": "896",
+    "subject": "中科三",
+    "category": "自然語言處理",
+    "principle": "精確性與效能",
+    "title": "狀態空間模型",
+    "eng_name": "State Space Model",
+    "eng_abbr": "SSM",
+    "def": "係指一種透過狀態變數描述系統動態的數學框架。在 AI 語境下，SSM（如 Mamba）被視為 Transformer 的強效替代方案，能以接近線性時間複雜度處理超長序列，解決自注意力機制運算成本過高之挑戰。",
+    "key_goal": "提升長序列資料處理效率並降低運算複雜度",
+    "key_principle": "線性動態系統 / 狀態演化方程 / 卷積運算 / 遞迴循環",
+    "key_purpose": "用於處理超長文本、長時序感測數據及高解析度影像之建模。協助系統在硬體資源受限的情境下，仍能保有精準的長程語意依賴捕捉能力。",
+    "common_apps": "台灣資安業者利用 SSM 技術分析長達數萬行之伺服器日誌，快速偵測潛藏之滲透行為。",
+    "scenarios": {
+      "weather": "處理跨月度之連續氣象觀測數據，精準捕捉微小氣壓變化對極端天氣生成之長程影響。",
+      "agri": "分析農作物自播種至收成之完整生命週期感測矩陣，自動識別影響產量之關鍵環境節點。",
+      "traffic": "監控城市規模之長時段車流軌跡序列，實現具備全局視野之智慧號誌動態排程與調度。",
+      "manuf": "整合生產線數月之設備振動頻譜紀錄，透過 SSM 建立具備高度預見性之預測性維護模型。",
+      "fintech": "處理病患數十年之完整病歷資料流，輔助醫師從海量病史中識別罕見慢性病之演進徵兆。",
+      "retail": "擔任智慧客服核心，分析顧客長年之互動歷史，生成精準且具備品牌連貫性之個人化回應。",
+      "fire": "處理全市數十萬筆消防設備連線之即時狀態流，在災害發生前識別系統性之安全隱患趨勢。"
+    },
+    "detail_explain": "【狀態空間模型】定義：係指一種透過狀態變數描述系統動態的數學框架。在 AI 語境下，SSM（如 Mamba）被視為 Transformer 的強效替代方案，能以接近線性時間複雜度處理超長序列，解決自注意力機制運算成本過高之挑戰。",
+    "stage": "2"
+  },
+  {
+    "id": "897",
+    "subject": "中科三",
+    "category": "機器學習建模",
+    "principle": "永續發展與福祉",
+    "title": "持續學習",
+    "eng_name": "Continual Learning",
+    "eng_abbr": "—",
+    "def": "指模型在動態環境中，能隨著時間不斷從新資料中獲取知識，且不會遺忘先前已學會任務之技術。此方法旨在克服傳統模型在訓練新任務時產生的「災難性遺忘」現象，是實現 AI 系統長期演進之關鍵。",
+    "key_goal": "使模型隨資料流更新且不丟失既有之學習能力",
+    "key_principle": "增量學習 / 避免災難性遺忘 / 彈性權重固定 / 經驗回放",
+    "key_purpose": "用於實現模型之在線微調與即時知識更新。協助企業在無需重新訓練完整模型的情況下，使系統能快速適應市場變化或新型態之數據特徵。",
+    "common_apps": "台灣金融業者針對交易監控模型導入持續學習，使其能即時識別新興之洗錢手法而無需頻繁重訓。",
+    "scenarios": {
+      "weather": "當感測器技術升級或測站位置變動時，利用持續學習讓預報模型快速適應新環境數據分佈。",
+      "agri": "智慧果園系統隨季節更迭持續學習新病蟲害特徵，確保辨識系統在跨年度應用時之準確性。",
+      "traffic": "物流調度系統隨道路工程變動即時學習新路網權重，優化具備時效性之動態路徑規劃。",
+      "manuf": "生產設備在更換不同零件後，透過持續學習快速校準瑕疵檢測基準，縮短產線調試時間。",
+      "fintech": "醫療輔助診斷系統持續吸收最新發表之臨床醫學文獻，確保輔助建議始終符合當前醫療指引。",
+      "retail": "推薦引擎隨流行趨勢變遷即時更新用戶偏好權重，提供具備時效感之個人化選品建議。",
+      "fire": "智慧安防系統隨建物用途更動持續修正火煙辨識邏輯，降低因場域變化導致之系統誤報率。"
+    },
+    "detail_explain": "【持續學習】定義：指模型在動態環境中，能隨著時間不斷從新資料中獲取知識，且不會遺忘先前已學會任務之技術。此方法旨在克服傳統模型在訓練新任務時產生的「災難性遺忘」現象，是實現 AI 系統長期演進之關鍵。",
+    "stage": "2"
+  },
+  {
+    "id": "898",
+    "subject": "中科一",
+    "category": "生成式 AI",
+    "principle": "透明與可解釋",
+    "title": "推理與行動框架",
+    "eng_name": "ReAct (Reasoning and Acting)",
+    "eng_abbr": "—",
+    "def": "係指一種讓語言模型結合推理（Reasoning）與行動（Acting）的協作框架。模型透過產出思考過程來規劃下一步行動，並根據工具調用後之觀察結果（Observation）進行動態調整，是建構自主 AI 代理之核心技術。",
+    "key_goal": "結合邏輯推演與外部行動以提升 Agent 之任務成功率",
+    "key_principle": "思維鏈 (CoT) / 外部工具調用 / 推理-行動循環 / 觀察回饋",
+    "key_purpose": "用於開發需調用多重外部資源之智慧代理人。協助模型在執行複雜任務時，能透過內部反思與外部資訊驗證，降低幻覺生成並提升回覆之事實正確性。",
+    "common_apps": "台灣法務科技商利用 ReAct 框架建構 AI 助理，能自動檢索多個法規庫並據此撰寫合規建議。",
+    "scenarios": {
+      "weather": "整合氣象站感測數據 API 與防災指引，AI 代理能自主規劃風險評估步驟並生成應變策略。",
+      "agri": "農民詢問防治建議時，AI 代理主動查詢氣象預報與農藥資料庫，生成具備實證基礎之投藥計畫。",
+      "traffic": "物流經理下達調度指令後，AI 代理自主檢查車輛狀態與即時路況，產出最佳化之配送方案摘要。",
+      "manuf": "設備異常時，AI 代理主動調閱維修日誌與備品系統，為技師規劃完整之排除步驟與領料清單。",
+      "fintech": "輔助醫師進行診斷時，AI 代理能自主整合檢驗數值、病史紀錄與臨床指引，產出高可信度摘要。",
+      "retail": "智慧客服整合訂單 API 與促銷活動，能自動執行從身分驗證到優惠補償之端到端處理流程。",
+      "fire": "災害發生時，AI 代理整合火場影像、地圖與搜救能量，自動產出救災動線規劃與資源調度建議。"
+    },
+    "detail_explain": "【推理與行動框架】定義：係指一種讓語言模型結合推理（Reasoning）與行動（Acting）的協作框架。模型透過產出思考過程來規劃下一步行動，並根據工具調用後之觀察結果（Observation）進行動態調整，是建構自主 AI 代理之核心技術。",
+    "stage": "2"
+  },
+  {
+    "id": "899",
+    "subject": "中科一",
+    "category": "生成式 AI",
+    "principle": "責任與問責",
+    "title": "自我反思框架",
+    "eng_name": "Reflexion",
+    "eng_abbr": "—",
+    "def": "指一種讓 AI 代理透過自我評估與反思來優化決策的架構。模型在完成任務後會檢查輸出是否符合目標，若發現失敗則將錯誤原因記錄至長期記憶中，並於下一輪迭代中自我修正，是提升 AI 自主解決問題能力之關鍵技術。",
+    "key_goal": "透過自主錯誤修正機制提升複雜任務之邏輯穩定性",
+    "key_principle": "強化學習回饋 / 自我評估 / 外部環境檢查 / 迭代修正",
+    "key_purpose": "用於優化程式碼生成、數學證明及複雜規劃任務。協助系統在面對高度不確定性之挑戰時，能透過多次自我迭代達成高品質之輸出結果。",
+    "common_apps": "台灣軟體開發團隊利用 Reflexion 技術開發自動除錯助理，能針對報錯結果自主反思並修正程式碼。",
+    "scenarios": {
+      "weather": "預報結果與實際觀測不符時，系統自主反思參數設定之偏差，自動修正下一週期之氣象預警模型。",
+      "agri": "針對智慧農場之環境控制邏輯進行反思，若作物生長不如預期則自主調整參數以優化產量品質。",
+      "traffic": "物流派送出現延誤後，AI 代理自動反思路徑權重之誤差，並在後續規劃中自主避開隱性壅塞路段。",
+      "manuf": "產線瑕疵率升高時，系統自主反思檢測標準之偏移，並引導模型自動校準以提升光學檢測精準度。",
+      "fintech": "分析過往診斷建議之準確性，AI 助理透過自我反思機制識別邏輯盲點，提供更嚴謹之第二醫療意見。",
+      "retail": "客服回覆不滿意度升高時，系統自主反思語氣風格之偏差，並自動生成更貼近品牌價值之回應建議。",
+      "fire": "災害演練後，系統自動反思調度決策之延遲原因，自主優化救災資源配置模型以強化未來應變。"
+    },
+    "detail_explain": "【自我反思框架】定義：指一種讓 AI 代理透過自我評估與反思來優化決策的架構。模型在完成任務後會檢查輸出是否符合目標，若發現失敗則將錯誤原因記錄至長期記憶中，並於下一輪迭代中自我修正，是提升 AI 自主解決問題能力之關鍵技術。",
+    "stage": "2"
+  },
+  {
+    "id": "900",
+    "subject": "中科一",
+    "category": "生成式 AI",
+    "principle": "精確性與效能",
+    "title": "思維樹",
+    "eng_name": "Tree of Thoughts",
+    "eng_abbr": "ToT",
+    "def": "係指一種將思維鏈（CoT）擴展為樹狀結構的推理技術。模型針對一個問題生成多個中間推導節點，並透過評估機制過濾低價值節點後繼續向下搜索，適用於需多步驟探索、具備回溯需求或複雜規劃之邏輯任務。",
+    "key_goal": "透過多路徑平行探索提升複雜邏輯問題之解題上限",
+    "key_principle": "啟發式搜索 / 廣度優先搜索 / 深度優先搜索 / 節點評估",
+    "key_purpose": "用於解決傳統 LLM 難以處理之高難度數學運算、創意寫作規劃與長程戰略決策。協助系統在龐大決策空間中找出最優路徑。",
+    "common_apps": "台灣高科技研發單位利用 ToT 技術進行專利地圖規劃，透過多路徑推演鎖定具市場潛力之技術藍海。",
+    "scenarios": {
+      "weather": "模擬颱風多重演進路徑之機率樹，評估不同登陸點對全台各縣市之影響，提供精準之災防決策。",
+      "agri": "針對複雜病蟲害之防治策略進行多路徑推演，評估藥劑、天候與成本組合出之最優耕作計畫。",
+      "traffic": "規劃跨國多點物流之最優路網，透過 ToT 搜索演算法在複雜限制條件中找出成本最低之調度路徑。",
+      "manuf": "針對精密製程之失效原因進行多維度分析，透過思維樹逐步排查並鎖定影響良率之核心因子。",
+      "fintech": "在罕見病灶之鑒別診斷中，透過 ToT 展現多個可能之發病機制路徑，協助醫療團隊進行嚴謹論證。",
+      "retail": "進行大規模整合行銷規劃時，AI 系統透過思維樹推演多種活動組合之預期成效，優化預算配置。",
+      "fire": "針對特大城市之複合災難進行戰術模擬，推演不同搜救路徑之風險與成功率，輔助現場指揮。"
+    },
+    "detail_explain": "【思維樹】定義：係指一種將思維鏈（CoT）擴展為樹狀結構的推理技術。模型針對一個問題生成多個中間推導節點，並透過評估機制過濾低價值節點後繼續向下搜索，適用於需多步驟探索、具備回溯需求或複雜規劃之邏輯任務。",
+    "stage": "2"
+  },
+  {
+    "id": "901",
+    "subject": "中科一",
+    "category": "生成式 AI",
+    "principle": "安全與防護",
+    "title": "規劃與執行",
+    "eng_name": "Plan-and-Execute",
+    "eng_abbr": "—",
+    "def": "指一種將複雜任務拆解為多步驟計畫，再依序交由執行代理（Executor）完成的 Agent 模式。此架構將「規劃」與「執行」解耦，確保長程任務在每一步都能獲得明確的背景資訊，降低任務偏離目標之風險。",
+    "key_goal": "將複雜長程任務解耦為結構化計畫以降低執行偏差風險",
+    "key_principle": "任務規劃器 / 計畫分解 / 獨立執行代理 / 回饋整合",
+    "key_purpose": "用於執行需高度結構化之業務流程，如自動化報告撰寫、多步驟軟體測試。協助企業將模糊之需求轉化為可落地之具體行動清單。",
+    "common_apps": "台灣製造業者利用「規劃與執行」架構自動產出年度品質稽核報告，從資料彙整到分析皆由 AI 代理執行。",
+    "scenarios": {
+      "weather": "針對地震後之損失評估，AI 系統先規劃資料調取、影像比對與災情彙整之步驟，再依序執行產出分析。",
+      "agri": "自動規劃智慧溫室之週度照護計畫，涵蓋施肥、灌溉與通風順序，並交由自動化設備精準執行。",
+      "traffic": "物流中心下達跨區轉運任務，AI 系統規劃路徑、倉位與人力配置步驟，並監控執行端之達成狀況。",
+      "manuf": "設備大修時，系統自動分解拆卸、更換與測試之 SOP 計畫，並引導技師按步執行維修任務。",
+      "fintech": "處理保險理賠申請時，AI 系統先規劃文件審核、風險比對與核保建議之流程，再逐項完成自動化審查。",
+      "retail": "策劃電商雙 11 促銷時，AI 助理規劃選品、定價與廣告投放計畫，並自動化執行物料上架與預算控制。",
+      "fire": "應對森林火災時，系統先規劃火場空拍、能量偵測與資源調度步驟，再依序執行以產出戰術指令。"
+    },
+    "detail_explain": "【規劃與執行】定義：指一種將複雜任務拆解為多步驟計畫，再依序交由執行代理（Executor）完成的 Agent 模式。此架構將「規劃」與「執行」解耦，確保長程任務在每一步都能獲得明確的背景資訊，降低任務偏離目標之風險。",
+    "stage": "2"
+  },
+  {
+    "id": "902",
+    "subject": "跨科",
+    "category": "生成式 AI",
+    "principle": "透明與可解釋",
+    "title": "代理式工作流",
+    "eng_name": "Agentic Workflow",
+    "eng_abbr": "—",
+    "def": "指由吳恩達等人推動，強調透過多次小步迭代而非單次直接生成的工作模式。其核心在於建構一個包含自我檢查、任務規劃與多 Agent 協作的系統化流程，能使效能較小的模型達成優於大模型之表現。",
+    "key_goal": "透過系統化迭代流程提升模型在特定業務場景之實效",
+    "key_principle": "多步反饋循環 / 任務拆解模式 / 自主工具整合 / 迭代優化",
+    "key_purpose": "用於優化企業內部之 AI 導入價值，將單純的 Chatbot 提升為具備業務邏輯的解決方案。協助開發者在不依賴巨型模型的前提下，實現極高之準確度與穩定性。",
+    "common_apps": "台灣電商平台導入代理式工作流，讓多個 AI 代理分別負責文案撰寫、美編設計與法規檢查之協作。",
+    "scenarios": {
+      "weather": "構建自動化防災公文工作流，由多個 Agent 分別負責數據讀取、警報撰寫與多語系翻譯之自動化校對。",
+      "agri": "建立病蟲害診斷工作流，AI 先反思感測數據之異常，再檢索知識庫並產出經二次驗證之防治計畫。",
+      "traffic": "優化物流路網調度流，由多個專業代理協作處理路況分析、車隊狀態監控與配送優先級排序。",
+      "manuf": "導入工業 4.0 維修工作流，AI 系統在產出維修建議後會自主模擬其可行性，優化排除步驟之安全性。",
+      "fintech": "在醫學研究摘要工作流中，多個 Agent 協作執行文獻檢索、臨床數據比對與風險等級標註之迭代修正。",
+      "retail": "構建個人化行銷工作流，由 AI 代理自主迭代行銷郵件之內容，根據點擊率回饋自動優化後續話術。",
+      "fire": "建立火場即時情資工作流，整合紅外線數據分析、建物空間解析與人員定位 Agent，產出經多方比對之情資。"
+    },
+    "detail_explain": "【代理式工作流】定義：指由吳恩達等人推動，強調透過多次小步迭代而非單次直接生成的工作模式。其核心在於建構一個包含自我檢查、任務規劃與多 Agent 協作的系統化流程，能使效能較小的模型達成優於大模型之表現。",
+    "stage": "1"
+  },
+  {
+    "id": "903",
+    "subject": "跨科",
+    "category": "AI 相關技術應用",
+    "principle": "責任與問責",
+    "title": "子代理",
+    "eng_name": "Subagent",
+    "eng_abbr": "—",
+    "def": "指在多代理系統（Multi-agent System）中，由主代理指派負責特定範疇任務的輔助型 AI。其具備專門工具與知識域，透過與主代理的垂直協作，能有效降低單一模型的認知負載並提升複雜流程的執行成功率。",
+    "key_goal": "執行主代理分配之特定、細分化的專家任務",
+    "key_principle": "任務拆解 / 自主決策 / 階層式架構 / 專用 API 調用",
+    "key_purpose": "用於將大型業務流程分解為可管理的獨立執行單元。協助系統在處理跨領域請求時，能精準調動專精子代理提供具備專業深度之執行結果。",
+    "common_apps": "台灣金融科技公司開發 AI 理財系統，由「資產分析子代理」計算風險，主代理整合建議。",
+    "scenarios": {
+      "weather": "利用子代理分別監測各地區水位，主代理彙整產出全台淹水警報。",
+      "agri": "配置專用子代理進行單一作物病蟲害識別，主代理整合提供完整農場管理建議。",
+      "traffic": "由「車輛狀態子代理」與「路況分析子代理」協作，優化長途貨運調度計畫。",
+      "manuf": "部署瑕疵檢測子代理於特定機台，主代理負責將異常結果即時寫回 MES 系統。",
+      "fintech": "由專門分析心電圖之子代理輔助主診斷 Agent，產出具備實證基礎之心血管風險報告。",
+      "retail": "零售系統中，由「促銷計算子代理」精算折扣，主助理則負責與顧客完成導購對話。",
+      "fire": "消防無人機中，由熱源偵測子代理鎖定受困起火點，主代理規劃避難救援路線。"
+    },
+    "detail_explain": "【子代理】定義：指在多代理系統（Multi-agent System）中，由主代理指派負責特定範疇任務的輔助型 AI。其具備專門工具與知識域，透過與主代理的垂直協作，能有效降低單一模型的認知負載並提升複雜流程的執行成功率。",
+    "stage": "1"
+  },
+  {
+    "id": "904",
+    "subject": "跨科",
+    "category": "AI 導入評估規劃",
+    "principle": "精確性與效能",
+    "title": "超自動化",
+    "eng_name": "Hyperautomation",
+    "eng_abbr": "—",
+    "def": "指結合機器學習、RPA 及各類 AI 技術，針對企業複雜業務流程進行全方位自動化的策略。其核心在於自動識別並優化可自動化的工作節點，透過串聯異質系統達成優於單點自動化的營運效益。",
+    "key_goal": "整合多元 AI 技術以實現端到端業務流程自動化",
+    "key_principle": "RPA / 機器學習 / 低程式碼開發 / 流程採掘 / AI 決策",
+    "key_purpose": "用於解決企業內部繁瑣、跨系統的人工作業瓶頸。協助組織在不更動既有核心架構下，快速提升營運敏捷度與數位轉型之規模化能力。",
+    "common_apps": "台灣大型製造廠導入超自動化，整合 MES 與 AI 偵測，實現無人化生產排程與自動補料。",
+    "scenarios": {
+      "weather": "自動整合衛星、測站與民情數據，即時產出結構化災情摘要並自動發布跨平台預警。",
+      "agri": "串聯溫室監測、生長模型與自動施肥設備，達成基於 AI 決策之無人化精準農耕營運。",
+      "traffic": "整合車隊 GPS、即時路況與倉儲 ERP，自動產出最佳調度單並由系統自動通知司機排程。",
+      "manuf": "連結感測數據與維修系統，當 AI 偵測異常時，自動於 ERP 產生維修工單與零件採購。",
+      "fintech": "整合電子病歷與診斷數據，由 AI 自動產出初步摘要並同步觸發保險理賠之自動核算。",
+      "retail": "自動化處理海量顧客評論與退換貨申請，從情感分析到自動退款通知達成端到端處理流程。",
+      "fire": "結合建物監視、火煙偵測與報警系統，災害發生時 AI 自動規劃並廣播動態避難引導。"
+    },
+    "detail_explain": "【超自動化】定義：指結合機器學習、RPA 及各類 AI 技術，針對企業複雜業務流程進行全方位自動化的策略。其核心在於自動識別並優化可自動化的工作節點，透過串聯異質系統達成優於單點自動化的營運效益。",
+    "stage": "1"
+  },
+  {
+    "id": "905",
+    "subject": "中科一",
+    "category": "生成式 AI 技術與應用",
+    "principle": "隱私與資料保護",
+    "title": "代理式商務",
+    "eng_name": "Agentic Commerce",
+    "eng_abbr": "—",
+    "def": "指利用 AI 代理人代表消費者或企業執行搜尋、比價、談判甚至下單等商務活動的模式。代理能依據用戶長期偏好與預算約束，在確保安全的前提下自主完成交易流程，是電商模式的重大演進。",
+    "key_goal": "代表用戶執行具備自主決策能力的自動化商務交易",
+    "key_principle": "自主決策 / 支付整合 / 個人化偏好建模 / 零信任授權",
+    "key_purpose": "用於優化消費路徑，減少用戶在比價與物流追蹤上的繁瑣負擔。協助零售商提供具備高度個性化且能自動閉環完成的服務體驗。",
+    "common_apps": "台灣跨國電商平台開發 AI 購物助手，代表用戶在限時特價期間自動下單最合適之商品。",
+    "scenarios": {
+      "weather": "代表防災單位自動在供應市場中即時採購並調度緊急物資，縮短災時採購行政延遲。",
+      "agri": "自動分析市場供需與氣象，代農民在最佳時機預訂種子、肥藥並自動簽署預售合約。",
+      "traffic": "代理物流經理在第三方平台自動競標可用運能，根據成本與時效自動完成最優托運決策。",
+      "manuf": "代理製造廠採購，當 AI 偵測原物料庫存低於門檻時，自動向合格供應商詢價並下單。",
+      "fintech": "代表病患管理慢性病用藥，當藥品即將耗盡時，自動向指定藥局預約領藥並完成結帳。",
+      "retail": "代表消費者在各大平台上進行 24 小時監控與比價，並在符合偏好時自動執行購買。",
+      "fire": "自動化公共安全設備巡檢補貨，代機關定期檢視耗材狀態並執行自動化的補充採購。"
+    },
+    "detail_explain": "【代理式商務】定義：指利用 AI 代理人代表消費者或企業執行搜尋、比價、談判甚至下單等商務活動的模式。代理能依據用戶長期偏好與預算約束，在確保安全的前提下自主完成交易流程，是電商模式的重大演進。",
+    "stage": "2"
+  },
+  {
+    "id": "906",
+    "subject": "中科三",
+    "category": "機器學習治理",
+    "principle": "安全與防護",
+    "title": "護欄機制",
+    "eng_name": "Guardrails",
+    "eng_abbr": "—",
+    "def": "指在生成式 AI 系統之輸入與輸出端建立的防護機制。其透過預定義之規則、詞庫或監督模型，防止 AI 產出有害、違法或不符品牌調性之內容，攔截惡意攻擊以落實負責任的人工智慧。",
+    "key_goal": "限制 AI 輸出邊界以確保生成內容之安全性與合規",
+    "key_principle": "內容過濾 / 提示詞注入防禦 / 敏感詞過濾 / 輸出驗證",
+    "key_purpose": "用於在高風險行業（如金融、醫療）部署 AI 時確保符合法規。協助開發者在不頻繁修改底層模型的情況下，提升系統的安全防護能力與決策透明度。",
+    "common_apps": "台灣金控機構針對理財機器人建立安全護欄，攔截可能洩漏內部授信評分規則之請求。",
+    "scenarios": {
+      "weather": "限制氣象機器人僅能輸出官方核定警報，防止模型因幻覺產出錯誤之撤離與防災指引。",
+      "agri": "建立智慧農業系統護欄，防止模型因受惡意誘導而建議非法化學藥劑之施作比例。",
+      "traffic": "在物流 AI 中設置法規邊界，確保系統規劃之配送路徑絕對符合特定路段之限重規定。",
+      "manuf": "工廠 AI 助手設置行為護欄，確保所有推薦之故障排除步驟皆符合 ISO 工安規範。",
+      "fintech": "醫療問答系統設置合規護欄，確保 AI 不直接開立處方箋並自動加註診斷免責聲明。",
+      "retail": "電商客服系統設置敏感詞過濾，防止生成式 AI 在對話中產出具歧視性之促銷或說明。",
+      "fire": "公安調度系統設置關鍵指令驗證護欄，確保 AI 絕不具備單獨關閉消防噴淋設備之權限。"
+    },
+    "detail_explain": "【護欄機制】定義：指在生成式 AI 系統之輸入與輸出端建立的防護機制。其透過預定義之規則、詞庫或監督模型，防止 AI 產出有害、違法或不符品牌調性之內容，攔截惡意攻擊以落實負責任的人工智慧。",
+    "stage": "2"
+  },
+  {
+    "id": "907",
+    "subject": "中科一",
+    "category": "生成式 AI 技術與應用",
+    "principle": "精確性與效能",
+    "title": "工具調用",
+    "eng_name": "Tool Use",
+    "eng_abbr": "—",
+    "def": "指大型語言模型在執行任務時，能自主識別自身知識不足，進而調動外部工具（如計算機、搜尋引擎、數據庫查詢）的技術能力。這使得系統能獲取最新資訊並執行複雜邏輯操作，突破預訓練知識之限制。",
+    "key_goal": "擴展 LLM 能力以存取即時數據並執行精確運算",
+    "key_principle": "函式調用 (FC) / API 整合 / 外部插件串接 / ReAct 框架",
+    "key_purpose": "用於建構能執行實際業務動作之智慧代理人。協助企業整合既有系統之服務介面，讓 AI 具備操作業務軟體、處理實時數據並產出精確結果的能力。",
+    "common_apps": "台灣旅遊新創整合訂位系統 API，讓 AI 助手能為用戶查詢並直接預訂在地化餐廳。",
+    "scenarios": {
+      "weather": "收到災害詢問時，AI 自動調用氣象署 API 獲取最新的衛星雲圖與累積雨量進行分析。",
+      "agri": "農事助理調用專業土壤營養計算工具，依據感測數據精確換算出符合該田區之化肥比例。",
+      "traffic": "物流經理下達指令後，AI 自動調用路況 API 運算多條路徑之預估到達時間供決策參考。",
+      "manuf": "當設備報錯時，AI 自動調用廠商診斷 API 分析錯誤碼，並從手冊中提取對應維修步驟。",
+      "fintech": "醫師查詢建議時，AI 自動調用藥物交互作用資料庫 API 進行臨床安全性核對。",
+      "retail": "智慧客服自動調用後台 API，為顧客即時查詢特定訂單之包裹配送位置與預計到貨時戳。",
+      "fire": "指揮系統自動調用建物 GIS 系統，將災場監控影像與建物內部的 3D 空間結構進行套疊。"
+    },
+    "detail_explain": "【工具調用】定義：指大型語言模型在執行任務時，能自主識別自身知識不足，進而調動外部工具（如計算機、搜尋引擎、數據庫查詢）的技術能力。這使得系統能獲取最新資訊並執行複雜邏輯操作，突破預訓練知識之限制。",
+    "stage": "2"
+  },
+  {
+    "id": "908",
+    "subject": "中科三",
+    "category": "機器學習建模與參數調校",
+    "principle": "透明與可解釋",
+    "title": "直接偏好優化",
+    "eng_name": "Direct Preference Optimization",
+    "eng_abbr": "DPO",
+    "def": "指一種用於將語言模型與人類價值偏好對齊的高效演算法。不同於傳統 RLHF，DPO 直接在偏好數據上優化模型的策略函數，具備更穩定的訓練收斂性，是提升模型輸出品質的重要技術。",
+    "key_goal": "透過簡化流程提升模型與人類偏好之一致性",
+    "key_principle": "偏好建模 / 交叉熵損失 / 無需獎勵模型 (RM) / 策略梯度",
+    "key_purpose": "用於取代複雜的 RLHF 流程以降低模型對齊之算力成本。協助團隊快速訓練出符合特定領域價值觀、語氣風格且具備高度事實準確性之定製化模型。",
+    "common_apps": "台灣繁體中文大模型研發團隊利用 DPO 技術，優化模型產出更貼近在地文化脈絡的回應。",
+    "scenarios": {
+      "weather": "透過 DPO 訓練氣象摘要模型，使其生成之預警報告語氣更符合台灣民眾之溝通習慣。",
+      "agri": "優化農業知識助理，使其建議之文字風格更能被農友理解，並避免過於生硬之專業術語。",
+      "traffic": "調整物流建議模型之決策偏好，使其排程邏輯更符合資深調度員累積之風險規避經驗。",
+      "manuf": "利用偏好數據微調報告生成器，使其產出之產線瑕疵分析文字更符合工程師之專業格式。",
+      "fintech": "於醫療模型中導入 DPO 對齊訓練，使其回答風格更具備臨床同理心並符合醫療倫理準則。",
+      "retail": "優化推薦話術模型，使其生成之個人化廣告文案在不具侵略性的前提下有效提升點擊率。",
+      "fire": "訓練公安預警系統，使其輸出的避難引導文本更具語意清晰度與權威感，提升疏散效率。"
+    },
+    "detail_explain": "【直接偏好優化】定義：指一種用於將語言模型與人類價值偏好對齊的高效演算法。不同於傳統 RLHF，DPO 直接在偏好數據上優化模型的策略函數，具備更穩定的訓練收斂性，是提升模型輸出品質的重要技術。",
+    "stage": "2"
+  },
+  {
+    "id": "909",
+    "subject": "中科三",
+    "category": "機器學習與深度學習",
+    "principle": "精確性與效能",
+    "title": "群體相對策略優化",
+    "eng_name": "Group Relative Policy Optimization",
+    "eng_abbr": "GRPO",
+    "def": "指一種高效的強化學習演算法。其透過在同一個提示下生成一組樣本，並以該組樣本的平均得分作為基準來衡量個別表現，取代了傳統 PPO 需要額外訓練獎勵模型（RM）的需求，是提升模型推理能力與穩定性的關鍵技術。",
+    "key_goal": "降低強化學習成本並提升推理模型之邏輯對齊",
+    "key_principle": "群體相對評分 / 均值基準比較 / 無需獨立獎勵模型 / 強化學習",
+    "key_purpose": "用於解決大型模型在複雜推理任務中的訓練不穩定問題。協助研發團隊在缺乏大量算力資源的情境下，仍能透過自我對齊提升模型在數學、程式碼等邏輯場景的表現。",
+    "common_apps": "台灣 AI 研發團隊利用 GRPO 技術優化在地繁體中文推理模型，顯著提升其在邏輯解題上的精準度。",
+    "scenarios": {
+      "weather": "在氣象模式評估中，透過群體比較不同參數下的路徑預測結果，自動優化具備高可信度的預報策略。",
+      "agri": "針對智慧農場多種生長參數組合進行相對優化，找出能使產量高於群體平均的最優環境控制策略。",
+      "traffic": "優化物流調度代理人之決策邏輯，透過群組任務執行成功率的相對評分，自動修正配送優先級排程。",
+      "manuf": "針對精密製程中多組參數實驗進行相對效能評分，自動收斂出良率表現優於基準值的生產參數配置。",
+      "fintech": "在金融量化交易中，透過多組策略表現的群體比較，自動對齊出具備更佳風險回報比的交易模型建議。",
+      "retail": "優化智慧客服之意圖辨識回應，透過群體回應滿意度基準，提升 AI 處理複雜顧客申訴的邏輯一致性。",
+      "fire": "在災害演習模擬中，對齊不同搜救路徑規劃的相對成功率，自動優化符合消防戰術基準的最佳派遣邏輯。"
+    },
+    "detail_explain": "【群體相對策略優化】定義：指一種高效的強化學習演算法。其透過在同一個提示下生成一組樣本，並以該組樣本的平均得分作為基準來衡量個別表現，取代了傳統 PPO 需要額外訓練獎勵模型（RM）的需求，是提升模型推理能力與穩定性的關鍵技術。",
+    "stage": "2"
+  },
+  {
+    "id": "910",
+    "subject": "中科三",
+    "category": "機器學習治理",
+    "principle": "安全與防護",
+    "title": "憲法人工智慧",
+    "eng_name": "Constitutional AI",
+    "eng_abbr": "CAI",
+    "def": "指一種讓 AI 系統依據一組預定義的「憲法」準則（如安全性、無害性）進行自我評估與修正的技術。透過模型對模型的監督，減少對大量人工標註的依賴，並確保生成內容符合倫理與合規要求，是負責任 AI 的重要實踐。",
+    "key_goal": "透過預定義準則引導模型實現自動化安全對齊",
+    "key_principle": "憲法準則引導 / 模型自我監督 / 自我批評與修正 / 強化學習",
+    "key_purpose": "用於在缺乏人工複核的情境下，大規模確保生成式 AI 之輸出安全性。協助企業在部署 LLM 應用時，自動過濾具偏見、有害或違反品牌政策的內容。",
+    "common_apps": "台灣跨國科技公司導入 CAI 框架，讓內部的 AI 助理依據在地法規憲章進行自我審查，確保輸出合規。",
+    "scenarios": {
+      "weather": "建立氣象資訊發布憲章，確保 AI 在生成預警文本時，絕對遵循官方術語規範與避難指引流程。",
+      "agri": "在農業知識庫中植入生態保護憲則，防止 AI 代理產出違反環境永續或過量農藥使用的技術建議。",
+      "traffic": "針對物流 AI 設置法規合規準則，確保系統在自動規劃路徑時，始終優先遵循交通限重與工安規範。",
+      "manuf": "導入工業 4.0 安全憲則，確保 AI 維修助手所推薦的步驟絕對符合 ISO 工安標準與操作禁忌。",
+      "fintech": "在醫療問答系統中設置倫理憲章，確保 AI 回覆時自動標註專業免責聲明並攔截非法的處方建議。",
+      "retail": "針對電商行銷 AI 設置公平性準則，防止系統在生成促銷內容時出現針對特定性別或年齡之歧視性言論。",
+      "fire": "在公安預警系統中植入問責憲則，確保 AI 生成的避難指引文本具備語意清晰度且不引發公眾恐慌。"
+    },
+    "detail_explain": "【憲法人工智慧】定義：指一種讓 AI 系統依據一組預定義的「憲法」準則（如安全性、無害性）進行自我評估與修正的技術。透過模型對模型的監督，減少對大量人工標註的依賴，並確保生成內容符合倫理與合規要求，是負責任 AI 的重要實踐。",
+    "stage": "2"
+  },
+  {
+    "id": "911",
+    "subject": "中科一",
+    "category": "生成式 AI 技術與應用",
+    "principle": "精確性與效能",
+    "title": "代理式檢索增強生成",
+    "eng_name": "Agentic Retrieval-Augmented Generation",
+    "eng_abbr": "Agentic RAG",
+    "def": "係指將 AI 代理（Agent）的決策能力整合進檢索增強生成（RAG）流程的技術。系統不再僅是單次檢索，而是能自主判斷是否需要更多資訊、從何處檢索、並在生成後反思檢索結果是否足以回答問題，是 RAG 技術的進階演進。",
+    "key_goal": "賦予檢索流程推理能力以解決複雜知識問答需求",
+    "key_principle": "檢索路徑規劃 / 多輪迭代檢索 / 自我驗證機制 / 外部工具調用",
+    "key_purpose": "用於處理需跨多個知識庫、具備多步驟依賴關係的專業查詢任務。協助企業將靜態的知識檢索提升為動態、具備糾錯能力的智慧問答服務。",
+    "common_apps": "台灣金融業者利用 Agentic RAG 建置法務助理，能自主跨越不同年份的規章資料庫完成合規性對比。",
+    "scenarios": {
+      "weather": "針對突發災害情資，Agentic RAG 能自主檢索最新的氣象數據與地形圖資，迭代修正受災區域預測報告。",
+      "agri": "當農民描述罕見病徵時，系統能自主規劃檢索路徑，調閱歷史文獻與即時環境數據產出精準診斷。",
+      "traffic": "物流經理下達複雜調度指令後，系統自主檢索車隊分布、路況與倉儲量，多輪迭代產出最優配送方案。",
+      "manuf": "設備報錯時，AI 代理自主檢索機台編號、維修紀錄與零件手冊，驗證故障原因後產出經核對的排除方案。",
+      "fintech": "在醫學研究摘要中，Agentic RAG 能自主比對多篇文獻證據，並反思數據一致性，產出具備實證支持的報告。",
+      "retail": "智慧客服整合訂單系統與促銷規則，能自主檢索用戶歷史偏好並動態核算最優折扣回饋方案。",
+      "fire": "消防指揮官下達任務後，系統自主調閱建築 GIS、危險品清冊與水源位置，產出具備空間連動的救援計畫。"
+    },
+    "detail_explain": "【代理式檢索增強生成】定義：係指將 AI 代理（Agent）的決策能力整合進檢索增強生成（RAG）流程的技術。系統不再僅是單次檢索，而是能自主判斷是否需要更多資訊、從何處檢索、並在生成後反思檢索結果是否足以回答問題，是 RAG 技術的進階演進。",
+    "stage": "2"
+  },
+  {
+    "id": "912",
+    "subject": "中科三",
+    "category": "深度學習原理與框架",
+    "principle": "永續發展與福祉",
+    "title": "混合專家模型",
+    "eng_name": "Mixture of Experts",
+    "eng_abbr": "MoE",
+    "def": "係指一種透過門控網路在推論時僅激活模型部分參數的深度學習架構。模型由多個專精的子網路（專家）組成，每次運算僅挑選最相關的專家參與，能實現具備巨量知識容量但計算效率極高的「稀疏」模型。",
+    "key_goal": "在極大規模參數下維持極低之推論算力消耗",
+    "key_principle": "門控網路 (Gating) / 專家網路 (Experts) / 稀疏激活 / 負載均衡",
+    "key_purpose": "用於建構具備極大規模參數的大語言模型，同時降低伺服器端的能耗與延遲。協助企業在硬體資源受限的前提下，部署具備高度通識能力的基礎模型。",
+    "common_apps": "台灣硬體廠商整合 MoE 模型於伺服器解決方案中，提供在地客戶兼具高效能與節能效益的生成式 AI 服務。",
+    "scenarios": {
+      "weather": "處理多樣化氣象數據時，模型自動分派給降雨預測專家與風場分析專家，提升極端天氣研判精確度。",
+      "agri": "智慧農業系統利用 MoE 架構，分別由土壤專家、害蟲專家子網路協作，提供具備專業深度的農事建議。",
+      "traffic": "在城市交通調度中，MoE 模型分派專家處理離峰車流與尖峰壅塞不同情境，優化即時號誌控制邏輯。",
+      "manuf": "生產線監控模型分派不同「專家」處理不同機台型號的異常偵測，實現兼具泛用性與專精度的品質控管。",
+      "fintech": "醫療診斷 AI 利用 MoE 技術，分別啟用影像專科與病歷文本專家子網路，產出具備多模態深度的診斷摘要。",
+      "retail": "客服系統依據顧客情緒與詢問類別（如退貨、新購），動態激活對應風格的專家子網路生成回應。",
+      "fire": "在複合災難現場，模型分派給結構安全專家與火勢蔓延專家，協助應變中心產出多維度的救災計畫。"
+    },
+    "detail_explain": "【混合專家模型】定義：係指一種透過門控網路在推論時僅激活模型部分參數的深度學習架構。模型由多個專精的子網路（專家）組成，每次運算僅挑選最相關的專家參與，能實現具備巨量知識容量但計算效率極高的「稀疏」模型。",
+    "stage": "2"
+  },
+  {
+    "id": "913",
+    "subject": "中科三",
+    "category": "機器學習建模與參數調校",
+    "principle": "精確性與效能",
+    "title": "參數高效微調",
+    "eng_name": "Parameter-Efficient Fine-Tuning",
+    "eng_abbr": "PEFT",
+    "def": "指一系列旨在僅更新少量參數而非完整模型權重，就能使預訓練大型模型適應特定下游任務的技術。此方法能顯著降低微調所需的算力與存儲空間，是企業實現 AI 私有化部署與快速場景適配的核心策略。",
+    "key_goal": "實現大型模型在特定業務場景的低成本、高效能適配",
+    "key_principle": "部分參數更新 / 權重凍結 / 外部模組插入 / 遷移學習",
+    "key_purpose": "用於解決訓練巨型模型成本過高之挑戰。協助開發者在不更動模型主體的前提下，透過 PEFT 技術快速為模型注入特定產業知識或語氣風格。",
+    "common_apps": "台灣製造業者利用 PEFT 技術微調開源大模型，將其改造為專屬於產線機台維修的知識問答系統。",
+    "scenarios": {
+      "weather": "透過微調少量參數，讓基礎模型快速學習特定縣市之微氣候特徵，提升地區性豪雨預警之精準度。",
+      "agri": "利用 PEFT 讓農業助理學習特定熱帶作物的生長規律與病徵，快速建構具備在地化知識的耕作助手。",
+      "traffic": "讓物流模型在低算力環境下微調特定路網之權重，快速適應新型態的城市配送路徑優化需求。",
+      "manuf": "僅需少量製程資料即可微調出專屬瑕疵分類器，協助半導體產線快速適應新產品的品質檢測。",
+      "fintech": "在確保醫療隱私前提下，透過 PEFT 為醫療模型注入罕見病例診斷知識，提升臨床決策支援效能。",
+      "retail": "零售業者利用此技術快速微調生成式行銷模型，使其產出的促銷文案能精準對齊當季品牌語調。",
+      "fire": "透過 PEFT 技術讓救災模型快速適應老舊建物之特定空間結構，優化動態避難引導之文本生成品質。"
+    },
+    "detail_explain": "【參數高效微調】定義：指一系列旨在僅更新少量參數而非完整模型權重，就能使預訓練大型模型適應特定下游任務的技術。此方法能顯著降低微調所需的算力與存儲空間，是企業實現 AI 私有化部署與快速場景適配的核心策略。",
+    "stage": "2"
+  },
+  {
+    "id": "914",
+    "subject": "跨科",
+    "category": "AI 相關技術應用",
+    "principle": "精確性與效能",
+    "title": "睡眠時算力",
+    "eng_name": "Sleep-Time Compute",
+    "eng_abbr": "—",
+    "def": "指模型在非推論閒置期間，利用後台算力進行反思、自校準或產出高品質合成資料的技術。這能讓 AI 在無外部輸入時持續精進，是提升模型在特定場景表現上限的關鍵進階策略。",
+    "key_goal": "利用閒置時間進行模型自優化與知識整理",
+    "key_principle": "離線訓練 / 知識蒸餾 / 自我博弈 / 資料回放",
+    "key_purpose": "用於在離線環境下進行模型在線微調與知識架構重組。協助系統在不影響即時服務的前提下，消化當日推論經驗並優化權重，實現自我演進。",
+    "common_apps": "台灣新創公司利用睡眠時算力讓客服機器人於凌晨自動反思當日誤判案例，優化翌日回覆準確度。",
+    "scenarios": {
+      "weather": "在夜間閒置時段自動跑完多重極端氣候模擬路徑，優化隔日晨間之預警精準度。",
+      "agri": "利用溫室夜間閒置算力分析當日作物發育影像，自動生成次日精準施肥之優化策略。",
+      "traffic": "物流調度中心於非繁忙時段，利用此技術對當日路況資料進行自我博弈，優化次日路徑預測模型。",
+      "manuf": "工廠關燈後，AI 系統自動對全日之瑕疵影像進行弱監督式標註與模型更新，持續提升檢測精度。",
+      "fintech": "醫療系統於非高峰期自動彙整罕見病歷特徵並執行內部知識對齊，強化輔助診斷之邏輯穩定性。",
+      "retail": "零售平台利用離線時間分析顧客點擊流與庫存變動關聯，產出更精確的個人化行銷預測模型。",
+      "fire": "智慧安防系統於離線時段分析歷史虛警影像，自動修正火煙辨識門檻，降低翌日之誤報率。"
+    },
+    "detail_explain": "【睡眠時算力】定義：指模型在非推論閒置期間，利用後台算力進行反思、自校準或產出高品質合成資料的技術。這能讓 AI 在無外部輸入時持續精進，是提升模型在特定場景表現上限的關鍵進階策略。",
+    "stage": "1"
+  },
+  {
+    "id": "915",
+    "subject": "中科二",
+    "category": "數據處理技術與工具",
+    "principle": "安全與防護",
+    "title": "記憶鞏固",
+    "eng_name": "Memory Consolidation",
+    "eng_abbr": "—",
+    "def": "指 AI 代理將單次任務習得的短期背景（Context）過濾、摘要並存入長期知識庫的過程。此機制仿照大腦機制解決上下文窗口限制，確保 Agent 具備長期的經驗傳承與跨任務一致性。",
+    "key_goal": "將短期推論資訊轉化為長期穩定之知識結構",
+    "key_principle": "經驗回放 / 階層式儲存 / 權重更新 / 資訊去冗餘",
+    "key_purpose": "用於建構具備長期記憶的智慧代理系統。協助企業將海量散亂的對話或操作紀錄轉化為結構化的企業知識資產，防止關鍵經驗流失。",
+    "common_apps": "台灣資深醫師助手 AI 透過記憶鞏固技術，將每日門診心得轉化為診斷指南之長期知識。",
+    "scenarios": {
+      "weather": "透過鞏固每場豪雨之災害應變情資，建立特定地區易淹點之長期空間知識地圖。",
+      "agri": "智慧農場系統鞏固跨年度之病蟲害演進規律，將短期感測變動轉化為穩定的節氣耕作指引。",
+      "traffic": "物流系統鞏固極端路況下的調度經驗，建立包含突發事故應變邏輯的長期配送策略庫。",
+      "manuf": "工廠 AI 助理將散亂的維修日誌鞏固為標準作業程序 (SOP)，實現技術經驗的自動化數位傳承。",
+      "fintech": "鞏固病患長期之生理監測特徵，將零碎數據轉化為具備診斷價值之慢性病演進趨勢報告。",
+      "retail": "零售系統將顧客短期瀏覽意圖鞏固為長期偏好畫像，提供更精準之年度個人化選品建議。",
+      "fire": "消防系統將各場火災之關鍵引導數據鞏固為建物風險模組，持續優化長期安檢之權重配置。"
+    },
+    "detail_explain": "【記憶鞏固】定義：指 AI 代理將單次任務習得的短期背景（Context）過濾、摘要並存入長期知識庫的過程。此機制仿照大腦機制解決上下文窗口限制，確保 Agent 具備長期的經驗傳承與跨任務一致性。",
+    "stage": "3"
+  },
+  {
+    "id": "916",
+    "subject": "跨科",
+    "category": "生成式 AI 技術與應用",
+    "principle": "精確性與效能",
+    "title": "代理人群集",
+    "eng_name": "Agent Swarm",
+    "eng_abbr": "—",
+    "def": "指由大量具備單一功能、專精化之 AI 代理組成的協作體系。透過分散式協商與任務指派，該群體能以「群體智慧」解決單一巨型模型難以處理的複雜並行任務，如全城調度或供應鏈協調。",
+    "key_goal": "透過大規模協作代理人達成複雜分布任務之處理",
+    "key_principle": "多代理系統 / 分散式協作 / 自組織架構 / 群體智慧",
+    "key_purpose": "用於處理需高度並行、多場景協作之大型業務流程。協助企業建立自動化、具備容錯能力之任務執行網路，大幅提升資源分配效率。",
+    "common_apps": "台灣物流大廠導入蜂群代理系統，讓數百個代理分別負責個別車輛與轉運站之即時優化。",
+    "scenarios": {
+      "weather": "配置數千個區域微氣候代理人進行分佈式模擬，主群體彙整產出超高解析度之全台淹水警報。",
+      "agri": "智慧果園中，由植保、灌溉、採收等多種代理組成的群集，自主協商出最優之每日自動化營運排程。",
+      "traffic": "全市規模之自駕車調度代理群集，透過 V2X 通訊協作，達成全區路口之零等待綠燈流動。",
+      "manuf": "工廠內數百台設備代理組成群集，自主協調產線負荷與能源配置，達成全廠電力負載平衡之極致優化。",
+      "fintech": "醫療聯盟中，多個去識別化代理協作執行跨院病例比對，在不洩漏個資下產出具備群體共識之罕見診斷。",
+      "retail": "電商平台部署大量微型行銷代理，針對個別顧客之即時行為，自主生成百萬種差異化之促銷方案組合。",
+      "fire": "森林火災現場，由多台探勘無人機代理組成的群集，自主分工掃描火場，產出全區域態勢圖。"
+    },
+    "detail_explain": "【代理人群集】定義：指由大量具備單一功能、專精化之 AI 代理組成的協作體系。透過分散式協商與任務指派，該群體能以「群體智慧」解決單一巨型模型難以處理的複雜並行任務，如全城調度或供應鏈協調。",
+    "stage": "1"
+  },
+  {
+    "id": "917",
+    "subject": "中科三",
+    "category": "深度學習原理與框架",
+    "principle": "精確性與效能",
+    "title": "流體神經網路",
+    "eng_name": "Liquid Neural Network",
+    "eng_abbr": "LNN",
+    "def": "指一種權重與突觸能隨時間連續變化的高靈活性遞迴神經網路。LNN 在處理高動態、連續時序資料（如物理感知或飛行控制）時具備優異適應力，且能以極小規模參數量達成大模型的預測精準度。",
+    "key_goal": "實現能隨環境動態調整權重的高適應性連續建模",
+    "key_principle": "連續時間建模 / 神經常微分方程 / 動態權重 / 參數效率",
+    "key_purpose": "用於邊緣裝置、移動機器人與即時感測流之預測任務。協助系統在環境劇烈變動（如風速突變、光照劇增）的情境下，仍能保持穩定且低延遲的決策能力。",
+    "common_apps": "台灣自駕車零組件廠利用 LNN 技術開發車道維持系統，在惡劣天氣下仍能動態穩定駕駛。",
+    "scenarios": {
+      "weather": "處理變動極快之強對流雲系雷達回波流，即時預測未來十分鐘之極端短時強降雨趨勢。",
+      "agri": "智慧溫室中，根據瞬間陽光與雲層遮蔽之連續光照流，即時連動調整遮蔭與噴霧系統，穩定生長環境。",
+      "traffic": "邊緣監控設備利用 LNN 對路口連續影像進行高動態分析，即便在光照不穩時仍能精準捕捉違規行為。",
+      "manuf": "精密機械手臂感測器整合 LNN，即時感應摩擦力與應力之連續變化，實現精微組裝中之動態回饋修正。",
+      "fintech": "穿戴式設備利用 LNN 連續處理心電圖波形，能即時捕捉生理訊號中之微小動態偏移以預警心律不整。",
+      "retail": "智慧零售監視器連續處理顧客之肢體動作與視覺焦點流，即時辨識顧客之潛在導購意圖與挫折感。",
+      "fire": "救災無人機利用 LNN 在濃煙紊流環境中連續調整姿態與熱源識別策略，確保搜索路徑之動態穩定。"
+    },
+    "detail_explain": "【流體神經網路】定義：指一種權重與突觸能隨時間連續變化的高靈活性遞迴神經網路。LNN 在處理高動態、連續時序資料（如物理感知或飛行控制）時具備優異適應力，且能以極小規模參數量達成大模型的預測精準度。",
+    "stage": "2"
+  },
+  {
+    "id": "918",
+    "subject": "中科三",
+    "category": "機器學習原理與技術",
+    "principle": "透明與可解釋",
+    "title": "神經符號 AI",
+    "eng_name": "Neurosymbolic AI",
+    "eng_abbr": "—",
+    "def": "指一種結合深度神經網路（負責特徵感知與辨識）與傳統符號運算（負責邏輯推理與知識規則）的混合系統。該架構旨在解決純深度學習「黑盒子」的缺點，使 AI 決策具備嚴格的邏輯自洽性與人類可讀的解釋路徑。",
+    "key_goal": "結合深度學習感知力與符號邏輯之嚴謹推理力",
+    "key_principle": "感知-邏輯融合 / 知識圖譜整合 / 規則引導學習 / 可解釋推理",
+    "key_purpose": "用於需高度安全性與合規審查之場景，如金融審貸或法律輔助。協助開發者在發揮大數據感知優勢的同時，確保系統產出始終遵循既有的業務規範與科學定律。",
+    "common_apps": "台灣銀行業利用神經符號 AI 建置授信系統，結合行為預測與金管會法規規則進行自動審核。",
+    "scenarios": {
+      "weather": "結合衛星影像辨識（神經）與物理氣候方程式（符號），產出既符合數據趨勢又遵循物理定律之防災預測。",
+      "agri": "辨識作物病徵影像的同時，強制套用農業用藥法規與植物病理規則，產出絕對合規之防治建議。",
+      "traffic": "在物流調度中，結合需求預測與嚴格的交通法規限制（如特定路段限重），產出具法律合規性之路線。",
+      "manuf": "將影像瑕疵偵測與 ISO 生產規範庫結合，讓 AI 在辨識缺陷後能依據專業規範產出具備依據之改善指引。",
+      "fintech": "輔助診斷時，結合醫學影像判讀（神經）與醫學臨床指南規則（符號），產出具備醫學邏輯之處方建議。",
+      "retail": "智慧客服在生成回覆時同步調用品牌行銷規範與消保規則，確保生成內容具創意且不違反承諾。",
+      "fire": "在公安指揮系統中，結合即時監控辨識與消防戰術手冊規則，自動產出符合救援邏輯之戰術指令。"
+    },
+    "detail_explain": "【神經符號 AI】定義：指一種結合深度神經網路（負責特徵感知與辨識）與傳統符號運算（負責邏輯推理與知識規則）的混合系統。該架構旨在解決純深度學習「黑盒子」的缺點，使 AI 決策具備嚴格的邏輯自洽性與人類可讀的解釋路徑。",
+    "stage": "2"
+  },
+  {
+    "id": "919",
+    "subject": "中科一",
+    "category": "生成式 AI 技術與應用",
+    "principle": "安全與防護",
+    "title": "思維鏈監控",
+    "eng_name": "Chain-of-Thought Monitoring",
+    "eng_abbr": "CoTM",
+    "def": "指在生成式 AI 產出過程中，針對模型「中間思考過程」（思維鏈）進行即時監測與過濾的機制。旨在預防模型在邏輯推導初期即發生偏差或產生有害意圖，是提升高風險決策可信度的關鍵技術。",
+    "key_goal": "檢測並引導模型中間推理過程之準確性與安全性",
+    "key_principle": "內部一致性檢查 / 護欄機制 / 邏輯偏差檢測 / 實時干預",
+    "key_purpose": "用於在高風險行業（如法律、醫療）部署 AI 時進行決策過程稽核。協助管理團隊識別模型是否存在「對的答案，錯的邏輯」情形，並即時攔截具備潛在風險的推導分支。",
+    "common_apps": "台灣軟體商於 AI 程式開發工具內建 CoTM，確保代碼生成的每一步推理皆符合資安規範。",
+    "scenarios": {
+      "weather": "監控防災預警模型之推理路徑，若發現其在數據處理階段發生邏輯跳躍或幻覺，即時重置模型預警建議。",
+      "agri": "監控智慧農耕助理之防治邏輯，確保其在建議藥劑配比時，推理過程有確實參考當前濕度與節氣。",
+      "traffic": "監控物流排程之規劃邏輯，攔截那些忽略了司機勞動時數限制但卻得出「低成本」之不合規路徑。",
+      "manuf": "監控預測性維護之推論鏈，若模型因雜訊而得出錯誤之停機建議，系統能從推理過程中及早辨識出偏差。",
+      "fintech": "在醫療輔助中即時審核 AI 的臨床推理，確保診斷摘要之產出皆建立在確實的病歷特徵與文獻比對上。",
+      "retail": "智慧客服與顧客溝通時，監控其禮貌與合規推理，防止模型在多輪對話後產生情緒化或具偏見之推導。",
+      "fire": "監控消防派遣 AI 之決策過程，確保其調度建議皆建立在最優化之空間邏輯與資源優先權考量上。"
+    },
+    "detail_explain": "【思維鏈監控】定義：指在生成式 AI 產出過程中，針對模型「中間思考過程」（思維鏈）進行即時監測與過濾的機制。旨在預防模型在邏輯推導初期即發生偏差或產生有害意圖，是提升高風險決策可信度的關鍵技術。",
+    "stage": "2"
+  },
+  {
+    "id": "920",
+    "subject": "中科三",
+    "category": "機器學習治理",
+    "principle": "責任與問責",
+    "title": "可擴展監督",
+    "eng_name": "Scalable Oversight",
+    "eng_abbr": "—",
+    "def": "指當 AI 能力與資料規模超越人類處理上限時，利用「模型監督模型」的方式協助評估輸出的策略。這確保了在大規模自動化環境中，人類仍能透過 AI 工具對複雜決策進行有效的最終治理與引導。",
+    "key_goal": "利用 AI 輔助人類對複雜模型進行有效率之大規模監督",
+    "key_principle": "AI 輔助標註 / 遞迴獎勵 / 模型自我監督 / 人機協作",
+    "key_purpose": "用於解決巨型模型難以人工審核的問題。協助管理團隊建立可擴展的自動化稽核管線，在不增加人力負擔的前提下，維持系統的合規性與精確度。",
+    "common_apps": "台灣大型電商平台利用監督模型對海量 AI 生成之個人化文案進行自動化公平性與真實性審查。",
+    "scenarios": {
+      "weather": "建立自動化稽核代理，同時審核全台數千個氣象感測點之預警日誌，確保所有 AI 通報皆符合法規基準。",
+      "agri": "利用專門模型監控大規模智慧農場之環境控制紀錄，自動識別並通報任何偏離永續原則之 AI 操作。",
+      "traffic": "自動化監督全城規模之智慧調度建議，透過 AI 輔助人類快速篩選出符合交管合規性之核心路徑決策。",
+      "manuf": "在大規模智慧工廠中，利用監督 AI 同步檢核數千條產線之自動化排程與良率分析，確保符合 ISO 標準。",
+      "fintech": "建立醫療 AI 稽核系統，利用專門模型大規模交叉驗證輔助診斷建議與臨床文獻之一致性，降低誤診風險。",
+      "retail": "零售平台利用監督 Agent 大規模審查個人化推薦之行為，防止推薦系統在無人監管下產生偏見或誘導消費。",
+      "fire": "在智慧城市安防中，利用監督 AI 自動化盤點全市之消防安檢日誌，確保 AI 評級之準確性與無偏性。"
+    },
+    "detail_explain": "【可擴展監督】定義：指當 AI 能力與資料規模超越人類處理上限時，利用「模型監督模型」的方式協助評估輸出的策略。這確保了在大規模自動化環境中，人類仍能透過 AI 工具對複雜決策進行有效的最終治理與引導。",
+    "stage": "2"
+  },
+  {
+    "id": "921",
+    "subject": "跨科",
+    "category": "AI 相關技術應用",
+    "principle": "永續發展與福祉",
+    "title": "模型福祉",
+    "eng_name": "Model Welfare",
+    "eng_abbr": "—",
+    "def": "係指在 AI 系統之全生命週期中，確保其發展策略與執行能與永續發展原則相結合。其目的在於減少經濟與社會不平等、保護自然環境、降低數位焦慮，從而促進整體社會的包容性成長與人類福祉。",
+    "key_goal": "確保 AI 運作符合社會公平、生態責任與包容性成長",
+    "key_principle": "永續發展原則 / 降低數位落差 / 能源效率優化 / 社會影響評估",
+    "key_purpose": "用於指導企業在數位轉型時，兼顧環境保護與一般員工之轉型權益。協助組織在追求效率的同時，履行社會責任，確保 AI 技術能惠及包含數位弱勢在內之所有利害關係人。",
+    "common_apps": "台灣金融機構導入普惠金融 AI 助理，透過提供數位體驗與簡化流程，協助高齡族群降低數位落差。",
+    "scenarios": {
+      "weather": "透過優化氣象模式演算法，減少大規模災害預演時之水電能源消耗，實現環境友善之防災預警。",
+      "agri": "在智慧農耕推廣中，提供直觀的語音介面，降低偏鄉農民操作科技設備的數位焦慮。",
+      "traffic": "於偏鄉接駁系統導入 AI 預約功能，優化交通資源分配，減少城鄉移動之不平等現象。",
+      "manuf": "實施關燈工廠 AI 監控，在提升產能的同時，透過即時能效管理降低整體溫室氣體排放。",
+      "fintech": "醫療院所透過 AI 輔助遠距醫療診斷，縮短城鄉醫療資源落差，確保偏遠地區居民獲得同等品質之醫療服務。",
+      "retail": "零售平台利用 AI 分析顧客屬性，提供個人化且具備包容性之優惠方案，提升數位弱勢族群之消費福祉。",
+      "fire": "於公共安全系統中導入負責任 AI 架構，確保災害預警資訊能以多元語系與淺白用語觸及所有族群。"
+    },
+    "detail_explain": "【模型福祉】定義：係指在 AI 系統之全生命週期中，確保其發展策略與執行能與永續發展原則相結合。其目的在於減少經濟與社會不平等、保護自然環境、降低數位焦慮，從而促進整體社會的包容性成長與人類福祉。",
+    "stage": "1"
+  },
+  {
+    "id": "922",
+    "subject": "中科三",
+    "category": "機器學習治理",
+    "principle": "責任與問責",
+    "title": "審議式對齊",
+    "eng_name": "Deliberative Alignment",
+    "eng_abbr": "—",
+    "def": "係指一種進階的模型對齊技術，讓 AI 系統在產出最終決策前，先進行內部的邏輯思辨或多輪模擬推理。此方法能有效處理複雜且具備倫理衝突的指令，確保輸出結果更貼近人類的核心價值觀與專業標準。",
+    "key_goal": "透過多層次推理與價值思辨提升模型決策之穩定性",
+    "key_principle": "思維鏈 (CoT) / 強化學習 / 倫理準則引導 / 多輪反思循環",
+    "key_purpose": "用於高風險、高複雜度的決策場景，如法律審閱或臨床診斷。協助開發者降低模型的幻覺風險，在缺乏明確標準答案的情境下，引導 AI 產出具備邏輯自洽性之回應。",
+    "common_apps": "台灣跨國軟體公司利用審議式對齊技術優化 AI 程式助理，使其在撰寫代碼前先反思潛在的資安漏洞風險。",
+    "scenarios": {
+      "weather": "防災模型在發布預警前，先思辨多個測站之數據矛盾點，產出經內部驗證、邏輯更嚴謹之災害情資。",
+      "agri": "智慧農場 AI 針對極端氣候下的灌溉計畫進行價值思辨，平衡「作物產量」與「水源保護」之決策權重。",
+      "traffic": "物流調度 Agent 針對突發路況進行多輪路徑思辨，在追求「最低成本」的同時反思「司機過勞」之倫理風險。",
+      "manuf": "預測性維護系統在建議停機檢修前，先對感測雜訊與設備壽命進行內部辯證，降低因幻覺導致的誤停機損失。",
+      "fintech": "輔助醫療診斷時，AI 模型透過多輪反思比對臨床指南與病患體徵，產出具備嚴謹思維路徑之第二醫療意見。",
+      "retail": "智慧客服處理複雜糾紛時，先審議品牌政策與顧客情緒，生成具備同理心且符合法規邊界之補償方案。",
+      "fire": "指揮系統對複合災害之搜救路徑進行審議對齊，優先思辨人員安全與資源可達性之邏輯優先權。"
+    },
+    "detail_explain": "【審議式對齊】定義：係指一種進階的模型對齊技術，讓 AI 系統在產出最終決策前，先進行內部的邏輯思辨或多輪模擬推理。此方法能有效處理複雜且具備倫理衝突的指令，確保輸出結果更貼近人類的核心價值觀與專業標準。",
+    "stage": "2"
+  },
+  {
+    "id": "923",
+    "subject": "初科二",
+    "category": "生成式 AI 導入評估規劃",
+    "principle": "安全與防護",
+    "title": "AI 終止開關",
+    "eng_name": "AI Kill Switch",
+    "eng_abbr": "—",
+    "def": "係指一種預防性之安全防護技術，確保在 AI 系統發生意外、產生不可控之行為或遇到嚴重不良事件時，人類能立即介入並安全地關閉該系統。此機制旨在維持人類對技術之最終控制權，落實以人為本之 AI 治理。",
+    "key_goal": "提供人工即時介入並安全關閉 AI 系統之緊急控制機制",
+    "key_principle": "人在迴圈上 (HOTL) / 故障保險機制 / 即時權限截斷 / 緊急斷電邏輯",
+    "key_purpose": "用於防範高風險自動化系統（如自駕、智慧工廠）因故障或惡意攻擊而失控。協助管理者在偵測到系統偏移預設目標或產生危害人權之行為時，能迅速執行風險規避。",
+    "common_apps": "台灣半導體廠在自動化傳送系統中建立硬體層級的 AI 終止開關，確保人員能在機台判讀異常時立即停機。",
+    "scenarios": {
+      "weather": "氣象單位在全自動預警發布流程中設置人工終止閥，防止模型因幻覺發布大規模誤導性撤離資訊。",
+      "agri": "智慧溫室環控系統設有遠端緊急停止開關，防止 AI 因感測器故障造成施肥量失控而損毀作物。",
+      "traffic": "物流自動化倉庫之移動機器人配備物理停止按鈕，當 AI 避障邏輯失效時能由現場人員立即切斷動力。",
+      "manuf": "產線機械手臂與安全光柵連動建立 AI 終止開關，一旦人員闖入工作區即強制關閉 AI 控制權限。",
+      "fintech": "金融交易系統設有 AI 熔斷機制，當偵測到模型產出異常高頻之異常下單行為時自動終止交易執行。",
+      "retail": "智慧客服在涉及敏感隱私對話時若偵測到保護護欄失效，即刻由人工監控端執行終止並接管服務。",
+      "fire": "公共安全監控系統若因惡意攻擊而產生身分誤認風險，由應變中心啟動 AI 終止開關以防止錯誤執法行動。"
+    },
+    "detail_explain": "【AI 終止開關】定義：係指一種預防性之安全防護技術，確保在 AI 系統發生意外、產生不可控之行為或遇到嚴重不良事件時，人類能立即介入並安全地關閉該系統。此機制旨在維持人類對技術之最終控制權，落實以人為本之 AI 治理。",
+    "stage": "1"
+  },
+  {
+    "id": "924",
+    "subject": "中科一",
+    "category": "生成式 AI 技術與應用",
+    "principle": "精確性與效能",
+    "title": "鍵值快取",
+    "eng_name": "Key-Value Cache",
+    "eng_abbr": "KV Cache",
+    "def": "係指在大型語言模型之自迴歸生成過程中，將先前已計算過之 Key 與 Value 向量儲存於記憶體中的技術。此舉能避免模型每生成一個新 Token 都需重新計算整個序列之注意力矩陣，是提升 LLM 推論速度與支援長上下文之關鍵優化手段。",
+    "key_goal": "減少生成式模型在多輪對話中之重複運算開銷",
+    "key_principle": "緩存機制 / 自注意力優化 / TurboQuant 壓縮 / 記憶體節省",
+    "key_purpose": "用於解決長文本處理時 GPU 記憶體需求過高之問題。透過如 TurboQuant 等壓縮技術，可實現在不犧牲準確率的前提下，將 KV 快取空間縮小 6 倍以上。",
+    "common_apps": "台灣雲端 AI 平台利用 KV Cache 壓縮技術，在現有 GPU 資源下部署百億參數之繁體中文長文本法律分析模型。",
+    "scenarios": {
+      "weather": "氣象局以優化之 KV Cache 技術處理長達數十萬 Token 之歷史氣象記錄分析，提升預報模式之運算效率。",
+      "agri": "農業研究機構利用 KV Cache 支援長上下文視窗，讓 AI 能在讀取完整耕作手冊後即時回答複雜的防治問題。",
+      "traffic": "智慧交通系統處理連續多日之路況影像特徵序列，透過 KV Cache 減少跨時段分析之重複計算延遲。",
+      "manuf": "工廠製造知識庫利用此技術緩存設備維修日誌之運算中間態，使技師在查詢手冊時能獲得毫秒級回應。",
+      "fintech": "金融機構在分析厚達數百頁之年度財報與合規文件時，利用 KV Cache 縮短大模型之總體推論時間。",
+      "retail": "電商平台透過 KV Cache 加速長對話情境下之客服回應，確保在高峰期仍能提供低延遲之自動化導購。",
+      "fire": "消防應變系統處理建物 GIS 與消防法規長文本，利用快取技術加速災場情資之綜合推理產出。"
+    },
+    "detail_explain": "【鍵值快取】定義：係指在大型語言模型之自迴歸生成過程中，將先前已計算過之 Key 與 Value 向量儲存於記憶體中的技術。此舉能避免模型每生成一個新 Token 都需重新計算整個序列之注意力矩陣，是提升 LLM 推論速度與支援長上下文之關鍵優化手段。",
+    "stage": "2"
+  },
+  {
+    "id": "925",
+    "subject": "中科二",
+    "category": "數據處理技術與工具",
+    "principle": "精確性與效能",
+    "title": "語意快取",
+    "eng_name": "Semantic Caching",
+    "eng_abbr": "—",
+    "def": "係指一種透過向量比對技術儲存並複用模型生成結果的緩存機制。不同於傳統精確比對（Exact Match），語意快取會判斷新請求與過往紀錄在語意空間中的距離，若相似度極高則直接返回緩存結果，能顯著降低 API 成本與回應延遲。",
+    "key_goal": "透過相似性檢索減少對大型語言模型之重複運算請求",
+    "key_principle": "向量資料庫 / 語意相似度計算 / 緩存管理 / 命中率優化",
+    "key_purpose": "用於提升大規模 RAG 系統之吞吐量與穩定性。協助企業在高併發查詢場景（如熱門常見問題）中，減少重複調用昂貴大模型的頻率。",
+    "common_apps": "台灣電商平台針對促銷期間之大量重複諮詢導入語意快取，將 60% 之常見客服問題由快取直接回覆。",
+    "scenarios": {
+      "weather": "防災問答系統緩存特定地震區域之撤離指引，當多人詢問相似位置時可即時回傳相同結果。",
+      "agri": "智慧農業助理緩存當季流行病害之防治建議，加速農民對於共通病徵查詢之回應速度。",
+      "traffic": "物流查詢系統語意快取「包裹延遲原因」等重複查詢，降低尖峰時刻後台 API 之負載壓力。",
+      "manuf": "製造廠維修助手緩存標準錯誤代碼之排除步驟，確保維修工程師能瞬間獲取已驗證過之解決方案。",
+      "fintech": "金融業將常見之開戶法規諮詢結果存入語意快取，在確保合規前提下提升理財諮詢之即時性。",
+      "retail": "零售 APP 緩存商品特色摘要之生成結果，減少對同品項不同顧客點擊時之重複模型推論開銷。",
+      "fire": "消防教育系統緩存特定火災逃生 SOP 之語意向量，快速回應大量學生於線上教育平台之相似詢問。"
+    },
+    "detail_explain": "【語意快取】定義：係指一種透過向量比對技術儲存並複用模型生成結果的緩存機制。不同於傳統精確比對（Exact Match），語意快取會判斷新請求與過往紀錄在語意空間中的距離，若相似度極高則直接返回緩存結果，能顯著降低 API 成本與回應延遲。",
+    "stage": "3"
+  },
+  {
+    "id": "926",
+    "subject": "中科一",
+    "category": "生成式 AI 技術與應用",
+    "principle": "精確性與效能",
+    "title": "約束解碼",
+    "eng_name": "Constrained Decoding",
+    "eng_abbr": "—",
+    "def": "係指在生成式模型進行解碼時，透過限制下一個 Token 的機率分佈，強制模型產出內容遵循特定結構（如 JSON、YAML、Python 代碼或特定詞表）的技術。此技術能解決 LLM 輸出不穩定之問題，確保產出結果可供下游系統直接解析。",
+    "key_goal": "強制 AI 輸出符合預定義之格式、語法或業務規則",
+    "key_principle": "Logits 偏差調整 / 有限狀態機 (FSM) / 正則表達式導引 / 結構化抽樣",
+    "key_purpose": "用於將非結構化文本自動轉化為結構化數據庫記錄。協助開發者實作穩健的系統整合，防止 AI 產出無法被程式碼處理的「閒聊文字」或格式錯誤。",
+    "common_apps": "台灣新創團隊利用約束解碼技術，確保 AI 自動從合約中提取之簽約日期與金額皆符合精確之 JSON 格式。",
+    "scenarios": {
+      "weather": "氣象系統自動撰寫警報公文時，強制其輸出符合公務機關之特定標準格式與專業術語子集。",
+      "agri": "智慧農業系統提取病蟲害特徵時，約束模型僅能從預定義之化學藥劑清單中選擇品項名稱。",
+      "traffic": "物流排程 AI 生成調度指令時，強制輸出符合 XML 格式，以便直接寫回 WMS 倉儲管理系統。",
+      "manuf": "設備瑕疵檢測 AI 生成報告時，約束模型產出的「故障原因」必須對應至 ISO 規範之代碼表。",
+      "fintech": "金融審貸系統利用約束解碼強制 AI 生成授信報告之結構，確保所有風險因子皆被條列式呈現且不遺漏。",
+      "retail": "零售客服系統在建立訂單摘要時，強制生成符合 API 定義之鍵值對（Key-Value），方便串接物流後台。",
+      "fire": "消防調度系統自動生成災情報告時，約束其經緯度座標與威脅等級之表達格式，加速 GIS 系統之套疊顯示。"
+    },
+    "detail_explain": "【約束解碼】定義：係指在生成式模型進行解碼時，透過限制下一個 Token 的機率分佈，強制模型產出內容遵循特定結構（如 JSON、YAML、Python 代碼或特定詞表）的技術。此技術能解決 LLM 輸出不穩定之問題，確保產出結果可供下游系統直接解析。",
+    "stage": "2"
+  },
+  {
+    "id": "927",
+    "subject": "中科一",
+    "category": "生成式 AI 技術與應用",
+    "principle": "精確性與效能",
+    "title": "多代理人辯論",
+    "eng_name": "Multi-Agent Debate",
+    "eng_abbr": "MAD",
+    "def": "指讓多個 AI 代理針對同一個問題提出不同見解，並透過多輪互相質詢與辯駁，最終達成共識或產出最優解的技術。此框架利用「群體智慧」與「批判性檢查」，能顯著降低單一模型的幻覺風險並強化複雜任務之決策穩定性。",
+    "key_goal": "透過多模型視角博弈提升推論之事實準確性與邏輯品質",
+    "key_principle": "多輪對話機制 / 自我一致性 / 衝突辨識 / 知識對齊",
+    "key_purpose": "用於解決具備高度歧義或需嚴謹驗證之任務。協助開發者在法律、財務等容錯率低之領域，藉由模型間的交叉檢核來產出更具公信力之結果。",
+    "common_apps": "台灣軟體公司利用 MAD 框架建構 AI 代碼審查系統，由多個 Agent 分別扮演開發與安測角色進行辯論優化。",
+    "scenarios": {
+      "weather": "在極端天氣預警發布前，啟動多模型辯論機制，由降雨、風場與地形專家 Agent 交叉核對，產出更穩健之防災通報。",
+      "agri": "針對作物病蟲害防治，由生物學與化學藥劑代理人辯論投藥劑量之副作用，產出兼顧產量與生態之農事建議。",
+      "traffic": "分析物流路網調度時，由路況預測與配送效率代理人辯論路徑優劣，避開隱性壅塞熱點並產出最佳調度方案。",
+      "manuf": "在精密製程良率異常診斷中，由不同機台參數代理人辯論失效原因，透過衝突辨識精準鎖定核心製程因子。",
+      "fintech": "在罕見病灶鑑定中，由影像診斷與臨床指南代理人辯論病理特徵，協助醫師獲得具備多重論證基礎之第二意見。",
+      "retail": "智慧客服在處理複雜顧客賠償糾紛時，由品牌規範與法律條文代理人辯論補償方案，產出合理且合規之對話回覆。",
+      "fire": "在災害現場資源分派中，由搜救能量與空間風險代理人辯論派遣路徑之安全性，輔助產出符合消防戰術邏輯之指令。"
+    },
+    "detail_explain": "【多代理人辯論】定義：指讓多個 AI 代理針對同一個問題提出不同見解，並透過多輪互相質詢與辯駁，最終達成共識或產出最優解的技術。此框架利用「群體智慧」與「批判性檢查」，能顯著降低單一模型的幻覺風險並強化複雜任務之決策穩定性。",
+    "stage": "2"
+  },
+  {
+    "id": "928",
+    "subject": "中科三",
+    "category": "機器學習建模與參數調校",
+    "principle": "精確性與效能",
+    "title": "知識編輯",
+    "eng_name": "Knowledge Editing",
+    "eng_abbr": "—",
+    "def": "係指在不進行全模型重新訓練的前提下，針對大型語言模型中特定的錯誤事實或過時資訊進行精確修正的技術。透過局部修改模型權重或利用外部知識模組，使 AI 能快速適應新事實，是維護模型時效性與正確性的高效手段。",
+    "key_goal": "精準修正模型內特定事實知識而不影響整體預測能力",
+    "key_principle": "權重局部更新 / 元學習 / 外部記憶插件 / 權重映射修正",
+    "key_purpose": "用於即時更新模型知識、修正產出的幻覺事實。協助企業降低維護巨型模型之算力負擔，確保 AI 系統提供之資訊始終符合當前真實狀況。",
+    "common_apps": "台灣金融科技業者利用知識編輯技術，即時更新 AI 助理中最新之金管會授信法規，確保合規建議之即時性。",
+    "scenarios": {
+      "weather": "當特定氣象感測站經校準後，透過知識編輯修正模型對該站時空相關性之預測，提升短時預警精確度。",
+      "agri": "智慧農業系統針對新發現之害蟲抗藥性，利用知識編輯即時更新防治模型中之用藥建議，無需重新訓練全廠模型。",
+      "traffic": "物流調度模型隨道路基礎設施之永久性變更，利用知識編輯修正路網權重矩陣，維持路徑規劃之準確性。",
+      "manuf": "生產線引進新型機台後，利用知識編輯技術將新設備之公差範圍注入現有品管模型中，加速產線調試。",
+      "fintech": "醫療輔助系統隨最新臨床試驗結果發布，透過知識編輯即時修正舊有之藥物配伍禁忌，提升用藥安全性。",
+      "retail": "零售平台隨流行語彙變遷，利用知識編輯修正 AI 文案生成器中之詞彙情感權重，產出更具時效感之宣傳文本。",
+      "fire": "消防單位隨建築法規修正，透過知識編輯將新版建物安檢門檻注入風險評估模型，確保公安評級之合法性。"
+    },
+    "detail_explain": "【知識編輯】定義：係指在不進行全模型重新訓練的前提下，針對大型語言模型中特定的錯誤事實或過時資訊進行精確修正的技術。透過局部修改模型權重或利用外部知識模組，使 AI 能快速適應新事實，是維護模型時效性與正確性的高效手段。",
+    "stage": "2"
+  },
+  {
+    "id": "929",
+    "subject": "中科三",
+    "category": "機器學習原理與技術",
+    "principle": "精確性與效能",
+    "title": "災難性遺忘",
+    "eng_name": "Catastrophic Forgetting",
+    "eng_abbr": "—",
+    "def": "指神經網路在學習新任務或新數據分佈後，導致先前學習到之知識被徹底覆蓋且效能驟降的現象。這是機器學習邁向持續學習（Continual Learning）之核心挑戰，通常需透過保留關鍵權重或回放歷史樣本來緩解。",
+    "key_goal": "克服模型在增量訓練時完全喪失過往知識的現象",
+    "key_principle": "持續學習 / 經驗回放 / 彈性權重固定 / 參數隔離",
+    "key_purpose": "用於在動態環境下開發需長期演進之 AI 系統。協助研發人員識別模型失效風險，並透過技術手段確保系統在不斷吸收新產業資訊的同時，仍保有穩定的基礎判斷力。",
+    "common_apps": "台灣資安公司在更新病毒偵測特徵時，透過緩解遺忘技術確保 AI 仍能辨識出多年前之舊型惡意程式。",
+    "scenarios": {
+      "weather": "防災預警模型在針對本年度梅雨特徵微調後，需避免遺忘歷史極端颱風之降雨分佈特徵，維持穩定預報。",
+      "agri": "智慧溫室系統學習新引進品種之照護邏輯時，須避免遺忘原有作物之病蟲害辨識基準，確保全廠穩定。",
+      "traffic": "物流調度模型在適應特定節慶高峰後，須確保其非繁忙時段之常態排程能力未因權重偏移而消失。",
+      "manuf": "精密製造模型在適應新產線瑕疵標註時，須透過保留關鍵特徵防止遺忘對舊有典型瑕疵之偵測能力。",
+      "fintech": "醫療診斷助理在吸收最新醫學期刊知識後，須避免遺忘基礎解剖學與穩定病理特徵之判斷邏輯。",
+      "retail": "推薦引擎在適應當前爆款商品趨勢後，須確保對用戶長期穩定的興趣偏好畫像仍具備精準之辨識力。",
+      "fire": "消防預警系統在針對特定新開發區域進行優化後，須防止其對老舊市區火災風險模式之辨識能力產生退化。"
+    },
+    "detail_explain": "【災難性遺忘】定義：指神經網路在學習新任務或新數據分佈後，導致先前學習到之知識被徹底覆蓋且效能驟降的現象。這是機器學習邁向持續學習（Continual Learning）之核心挑戰，通常需透過保留關鍵權重或回放歷史樣本來緩解。",
+    "stage": "2"
+  },
+  {
+    "id": "930",
+    "subject": "中科三",
+    "category": "機器學習建模與參數調校",
+    "principle": "精確性與效能",
+    "title": "自我蒸餾",
+    "eng_name": "Self-Distillation",
+    "eng_abbr": "—",
+    "def": "係指一種特殊的知識蒸餾技術，模型將自身較深層的特徵或較強的預測分佈作為「教師」，指導其較淺層或較弱的狀態進行學習。此技術無需額外的大型教師模型，即可在不增加算力的前提下，提升單一模型之準確度與泛化能力。",
+    "key_goal": "利用模型自身資訊優化並精簡預測表現",
+    "key_principle": "知識蒸餾 / 內部特徵對齊 / 軟標籤學習 / 模型壓縮",
+    "key_purpose": "用於在有限硬體下開發更高效能之模型架構。協助開發團隊在缺乏外部大型基準模型時，仍能透過內部對齊來優化模型穩定性，縮短推論時間。",
+    "common_apps": "台灣新創團隊利用自我蒸餾技術優化邊緣端手勢辨識模型，成功在低功耗晶片上達成流暢之互動體驗。",
+    "scenarios": {
+      "weather": "壓縮氣象模式之特徵表示，使預報模型在維持高精度的同時，能更快速地產出短時強降雨之空間熱點。",
+      "agri": "農業 AI 助理透過自我蒸餾精簡病害特徵提取器，使其能更輕量化地部署於農友之手持行動設備中。",
+      "traffic": "優化物流路徑預測模型之推論效率，透過內部知識對齊減少決策延遲，支援超大規模車隊之即時調度。",
+      "manuf": "產線光學檢測模型利用自我蒸餾提升對微小瑕疵特徵之敏感度，在不增加模型層數下強化檢測良率。",
+      "fintech": "醫療模型將長病歷之精煉語意自我蒸餾至小型摘要模組，協助醫師在診間快速獲取去冗餘之關鍵體徵。",
+      "retail": "為智慧零售 App 提供低延遲之視覺搜尋功能，透過自我蒸餾技術減少商品圖片辨識時之記憶體占用。",
+      "fire": "救災無人機中之火煙辨識模組，利用自我蒸餾維持在惡劣氣候下之邊緣推論精度與低能耗表現。"
+    },
+    "detail_explain": "【自我蒸餾】定義：係指一種特殊的知識蒸餾技術，模型將自身較深層的特徵或較強的預測分佈作為「教師」，指導其較淺層或較弱的狀態進行學習。此技術無需額外的大型教師模型，即可在不增加算力的前提下，提升單一模型之準確度與泛化能力。",
+    "stage": "2"
+  },
+  {
+    "id": "931",
+    "subject": "中科一",
+    "category": "生成式 AI 技術與應用",
+    "principle": "隱私與資料保護",
+    "title": "情節記憶",
+    "eng_name": "Episodic Memory",
+    "eng_abbr": "—",
+    "def": "指 AI 代理（Agent）中負責記錄並檢索過往特定時間、地點與具體事件經歷的記憶模組。相較於模型原有的語意知識，情節記憶側重於用戶專屬的互動歷史，是實現個人化服務與長程對話邏輯一致性的關鍵。",
+    "key_goal": "儲存並擷取特定歷史互動細節以維持對話連貫性",
+    "key_principle": "向量資料庫檢索 / 短期背景擷取 / 關聯記憶 / RAG 整合",
+    "key_purpose": "用於建構具備人性化關懷之智慧助理，使其能記住用戶先前提過的特定偏好或生活細節。協助企業在保護隱私之前提下，透過記憶調用提供具備深度溫度的個人化互動。",
+    "common_apps": "台灣長照新創開發之陪伴機器人利用情節記憶，能與高齡者聊起昨日提及之散步路線或服藥狀況。",
+    "scenarios": {
+      "weather": "記錄每場極端暴雨之現場回報細節，當下一次類似情境發生時，AI 能主動檢索歷史情節提供精準預警建議。",
+      "agri": "智慧農業助理記住農民上週針對特定田區之施肥紀錄，在後續對話中自動關聯前置作業提供防治建議。",
+      "traffic": "物流調度 Agent 記住特定司機在特定路段之慣性應變行為，在後續路徑規劃中提供更貼合人性之排程。",
+      "manuf": "工廠設備助理記住技師上次維修時之具體操作手感與報錯情節，輔助診斷本次是否為相關衍生故障。",
+      "fintech": "醫療助理記住病患前次門診中對特定症狀之口語描述，在本次問診摘要中提供具備情節連續性之病歷參考。",
+      "retail": "智慧客服記住顧客上次抱怨之商品包裝問題，在本次導購對話中主動提供具備針對性之售後關懷與推薦。",
+      "fire": "災害應變中心記住各避難所前次演練之具體疏散瓶頸情節，在真實災害發生時即時提示指揮官重點防範區。"
+    },
+    "detail_explain": "【情節記憶】定義：指 AI 代理（Agent）中負責記錄並檢索過往特定時間、地點與具體事件經歷的記憶模組。相較於模型原有的語意知識，情節記憶側重於用戶專屬的互動歷史，是實現個人化服務與長程對話邏輯一致性的關鍵。",
+    "stage": "2"
+  },
+  {
+    "id": "932",
+    "subject": "中科一",
+    "category": "AI 導入評估規劃",
+    "principle": "責任與問責",
+    "title": "代理式流程自動化",
+    "eng_name": "Agentic Process Automation",
+    "eng_abbr": "—",
+    "def": "係指將具備推理與工具調用能力的 AI 代理整合進傳統流程自動化（RPA）中的技術。在 iPAS 語境下，APA 不僅執行預定義規則，更能根據環境觀察動態調整行動路徑，是超自動化實現動態業務邏輯的核心。",
+    "key_goal": "結合代理自主決策以達成端到端業務自動化。",
+    "key_principle": "RPA / 代理式工作流 / 任務規劃 / 自主決策。",
+    "key_purpose": "用於處理需跨系統且具備決策判斷的長程業務流程。協助系統自動識別並優化可自動化的工作節點，達成端到端之營運效益。",
+    "common_apps": "台灣製造大廠導入 APA 整合 MES 與 AI 偵測，實現無人化生產排程與自動補料。",
+    "scenarios": {
+      "weather": "自動整合衛星、測站與民情數據，即時產出災情摘要並自動發布跨平台預警。",
+      "agri": "串聯溫室監測、生長模型與自動施肥設備，達成基於 AI 決策之無人化精準農耕。",
+      "traffic": "整合車隊 GPS 與倉儲 ERP，自動產出最佳調度單並由系統自動通知司機排程。",
+      "manuf": "連結感測數據與維修系統，當 AI 偵測異常時，自動於 ERP 產生維修工單。",
+      "fintech": "整合電子病歷與診斷數據，由 AI 自動產出初步摘要並觸發保險理賠自動核算。",
+      "retail": "自動化處理海量顧客評論與退換貨申請，從情感分析到自動退款達成全流程自動化。",
+      "fire": "結合建物監視與火煙偵測，災害發生時 AI 代理自動規劃並廣播動態避難引導。"
+    },
+    "detail_explain": "【代理式流程自動化】定義：係指將具備推理與工具調用能力的 AI 代理整合進傳統流程自動化（RPA）中的技術。在 iPAS 語境下，APA 不僅執行預定義規則，更能根據環境觀察動態調整行動路徑，是超自動化實現動態業務邏輯的核心。",
+    "stage": "2"
+  },
+  {
+    "id": "933",
+    "subject": "跨科",
+    "category": "AI 相關技術應用",
+    "principle": "精確性與效能",
+    "title": "多代理人編排",
+    "eng_name": "Multi-Agent Orchestration",
+    "eng_abbr": "—",
+    "def": "指由大量具備單一功能、專精化之 AI 代理組成的協作體系。透過主代理指派子代理負責特定範疇任務，能有效降低單一模型的認知負載並提升複雜流程的執行成功率。",
+    "key_goal": "協調管理多個專精代理以解決複雜並行任務。",
+    "key_principle": "多代理系統 / 分散式協作 / 群體智慧 / 任務指派。",
+    "key_purpose": "用於處理需高度並行、多場景協作之大型業務流程。協助企業建立自動化、具備容錯能力之任務執行網路。",
+    "common_apps": "台灣物流大廠導入代理群集系統，讓數百個代理分別負責個別車輛與轉運站之即時優化。",
+    "scenarios": {
+      "weather": "配置數千個區域微氣候代理人進行分佈式模擬，主群體彙整產出超高解析度之全台預警。",
+      "agri": "智慧果園中由植保、灌溉、採收等多種代理組成群集，自主協商出最優之自動化營運排程。",
+      "traffic": "全市規模之自駕車調度代理群集，透過 V2X 通訊協作，達成路口之零等待綠燈流動。",
+      "manuf": "工廠內數百台設備代理組成群集，自主協調產線負荷與能源配置，達成負載平衡優化。",
+      "fintech": "醫療聯盟中多個去識別化代理協作執行跨院病例比對，在不洩漏個資下產出群體共識診斷。",
+      "retail": "電商平台部署大量微型行銷代理，針對個別顧客行為自主生成百萬種差異化促銷方案。",
+      "fire": "森林火災現場由多台探勘無人機代理組成群集，自主分工掃描火場，產出全區域態勢圖。"
+    },
+    "detail_explain": "【多代理人編排】定義：指由大量具備單一功能、專精化之 AI 代理組成的協作體系。透過主代理指派子代理負責特定範疇任務，能有效降低單一模型的認知負載並提升複雜流程的執行成功率。",
+    "stage": "1"
+  },
+  {
+    "id": "934",
+    "subject": "中科三",
+    "category": "機器學習技術與應用",
+    "principle": "精確性與效能",
+    "title": "自我演進語言模型",
+    "eng_name": "Self-Improving Language Models",
+    "eng_abbr": "—",
+    "def": "指模型利用閒置時間進行反思、自校準或產出高品質合成資料的技術。模型將自身較強的預測分佈作為教師引導自身學習，是提升模型在特定場景表現上限的關鍵進階策略。",
+    "key_goal": "透過自主反思與合成數據持續提升模型性能。",
+    "key_principle": "自我博弈 / 知識蒸餾 / 睡眠時算力 / 迭代修正。",
+    "key_purpose": "用於在不影響即時服務的前提下，實現模型之在線微調與自我演進。協助系統消化推論經驗並優化權重，提升模型在特定業務場景之實效。",
+    "common_apps": "台灣新創公司利用此技術讓客服機器人於凌晨自動反思當日誤判案例，優化翌日回覆準確度。",
+    "scenarios": {
+      "weather": "在夜間閒置時段自動跑完多重極端氣候模擬路徑，優化隔日晨間之預警精準度。",
+      "agri": "利用溫室夜間閒置算力分析當日作物發育影像，自動生成次日精準施肥之優化策略。",
+      "traffic": "物流調度中心利用此技術對當日路況資料進行自我博弈，優化次日路徑預測模型。",
+      "manuf": "工廠關燈後系統自動對全日之瑕疵影像進行弱監督式標註與模型更新，持續提升精度。",
+      "fintech": "醫療系統於非高峰期自動彙整罕見病歷特徵並執行內部對齊，強化輔助診斷邏輯穩定性。",
+      "retail": "零售平台利用離線時間分析顧客點擊流與庫存變動關聯，產出更精確的個人化行銷預測。",
+      "fire": "智慧安防系統於離線時段分析歷史虛警影像，自動修正火煙辨識門檻，降低翌日誤報率。"
+    },
+    "detail_explain": "【自我演進語言模型】定義：指模型利用閒置時間進行反思、自校準或產出高品質合成資料的技術。模型將自身較強的預測分佈作為教師引導自身學習，是提升模型在特定場景表現上限的關鍵進階策略。",
+    "stage": "2"
+  },
+  {
+    "id": "935",
+    "subject": "中科一",
+    "category": "生成式 AI 技術與應用",
+    "principle": "精確性與效能",
+    "title": "長上下文理解",
+    "eng_name": "Long Context Understanding",
+    "eng_abbr": "—",
+    "def": "指 AI 模型能跨越極長之 Token 序列（數萬至百萬級）進行統一推理的能力。透過分頁注意力與 KV 快取優化技術，系統能解決顯存碎片化問題，在不升級硬體下提高處理長文本的吞吐量。",
+    "key_goal": "於超長文本序列中精準提取資訊並執行推理。",
+    "key_principle": "稀疏注意力 / 鍵值快取 / 分頁注意力 / 狀態空間模型。",
+    "key_purpose": "用於解析完整書籍、技術手冊或跨多個分頁的資訊整合。讓研究員或醫師能在多個資訊頁同時開啟時獲取 AI 整合分析，大幅提升處理效率。",
+    "common_apps": "台灣股票分析師同時開啟多個財報與法說會逐字稿，AI 自動生成跨公司比較分析報告。",
+    "scenarios": {
+      "weather": "處理跨區域之大規模衛星影像時空描述序列，透過優化快取減少海量數據分析時之顯存占用。",
+      "agri": "農業研究機構分析長年之耕作技術百科與文獻，利用此技術支援多路徑之智慧問答檢索。",
+      "traffic": "物流系統在面對數萬名客戶同時查詢包裹狀態時，透過分頁優化確保對話回應之低延遲。",
+      "manuf": "製造廠智慧手冊系統支持多位技師同時查詢不同設備之 3D 結構圖文，優化算力分配。",
+      "fintech": "輔助醫師同時分析多位病患之長時序電子病歷，確保系統在多任務下不因顯存不足而崩潰。",
+      "retail": "電商平台在雙 11 期間利用此技術處理海量顧客之個人化導購，穩定提供生成式對話服務。",
+      "fire": "在重大災害指揮中支援多個分隊同時存取空間解析模型，透過分頁管理確保情資即時性。"
+    },
+    "detail_explain": "【長上下文理解】定義：指 AI 模型能跨越極長之 Token 序列（數萬至百萬級）進行統一推理的能力。透過分頁注意力與 KV 快取優化技術，系統能解決顯存碎片化問題，在不升級硬體下提高處理長文本的吞吐量。",
+    "stage": "2"
+  },
+  {
+    "id": "936",
+    "subject": "中科一",
+    "category": "AI 相關技術應用",
+    "principle": "精確性與效能",
+    "title": "多模態推理",
+    "eng_name": "Multimodal Reasoning",
+    "eng_abbr": "—",
+    "def": "指模型能同時處理並整合來自不同感知源（如影像、文字、聲音、感測訊號）的訊息並作出綜合判斷之技術。透過將異質資料映射至統一向量空間，實現更高層次的跨模態理解，提升系統對複雜情境的感知能力。",
+    "key_goal": "跨感知模態整合異質資料以進行深層邏輯理解。",
+    "key_principle": "聯合嵌入空間 / 跨模態對齊 / 交叉注意力 / 知識對齊。",
+    "key_purpose": "用於視覺問答、情感辨識與語音影像協同分析。協助 AI 在處理多源資訊判斷任務中展現更高的精準度與穩定性。",
+    "common_apps": "台灣電商以視覺語言模型開發智慧商品搜尋系統，讓顧客以自然語言精準搜尋商品圖文。",
+    "scenarios": {
+      "weather": "氣象研究機構運用多模態技術整合衛星雲圖與文字報告，自動產出結構化颱風強度分析。",
+      "agri": "農民拍攝作物病徵照片後，系統整合影像特徵與農業知識庫，生成具體之防治建議。",
+      "traffic": "交通監控系統以跨模態翻譯技術，將監視影像即時轉化為結構化文字事件描述輔助調度。",
+      "manuf": "工廠維修助手同步分析機台異音、振動訊號與紅外線影像，大幅提升隱性故障發現率。",
+      "fintech": "醫療影像中心整合 X 光影像與電子病歷文字，模型自動生成診斷摘要輔助醫師判讀。",
+      "retail": "智慧零售門市整合顧客動線、語音意圖及互動數據，提供轉換率更高之情境感知推薦。",
+      "fire": "消防搜救無人機整合熱顯像與音訊，在煙霧遮蔽視覺的情境下仍能精準定位受困者。"
+    },
+    "detail_explain": "【多模態推理】定義：指模型能同時處理並整合來自不同感知源（如影像、文字、聲音、感測訊號）的訊息並作出綜合判斷之技術。透過將異質資料映射至統一向量空間，實現更高層次的跨模態理解，提升系統對複雜情境的感知能力。",
+    "stage": "2"
+  },
+  {
+    "id": "937",
+    "subject": "跨科",
+    "category": "AI 相關技術應用",
+    "principle": "安全與防護",
+    "title": "視覺-語言-行動模型",
+    "eng_name": "Vision-Language Action Models",
+    "eng_abbr": "—",
+    "def": "指一種能將視覺輸入與自然語言指令直接映射至動作序列（如機械臂運動或軟體操作）的 AI 模型。在 iPAS 語境下，VLA 具備在真實世界移動與操控之「物理 AI」特性，是驅動 AI 機器人與自駕車的核心。",
+    "key_goal": "將視覺與語言感知直接轉換為實體或數位行動指令。",
+    "key_principle": "物理 AI / 跨模態遷移 / 強化學習 / 動作鏈審計。",
+    "key_purpose": "用於實現具備自主決策能力的機器人控制與智慧代理。協助系統從環境觀察（Vision）與任務理解（Language）直接生成具體的執行動作（Action）。",
+    "common_apps": "台灣自駕系統業者利用 VLA 模型結合感測影像與路徑指令，實現高可靠性之避障決策。",
+    "scenarios": {
+      "weather": "災防中心利用 VLA 驅動之偵查無人機，接收「搜尋水位異常點」指令後自動規劃飛行路徑 [504, 原理推導]。",
+      "agri": "部署具備 VLA 能力的採收機器人，依據視覺辨識果實成熟度並自主執行精準夾取動作 [143, 原理推導]。",
+      "traffic": "自駕物流車隊在突發事故時，AI 指揮系統直接根據影像情資改變配送路線之決策動作。",
+      "manuf": "精密機械手臂透過 VLA 學習在組裝過程中即時感測應力回饋並調整夾取力道 [493, 原理推導]。",
+      "fintech": "醫療 AI 代理根據視覺影像與病歷紀錄，自動模擬並執行醫療設備之精確給藥流程 [101, 原理推導]。",
+      "retail": "智慧商店之自駕配送小車在校園內規畫避障路徑，將零售商品精準送達顧客指定處。",
+      "fire": "消防指揮系統留存 VLA 代理跨區調度救災資源的動作鏈紀錄，供後續稽核與派遣優化。"
+    },
+    "detail_explain": "【視覺-語言-行動模型】定義：指一種能將視覺輸入與自然語言指令直接映射至動作序列（如機械臂運動或軟體操作）的 AI 模型。在 iPAS 語境下，VLA 具備在真實世界移動與操控之「物理 AI」特性，是驅動 AI 機器人與自駕車的核心。",
+    "stage": "1"
+  },
+  {
+    "id": "938",
+    "subject": "中科三",
+    "category": "機器學習原理與技術",
+    "principle": "透明與可解釋",
+    "title": "因果人工智慧",
+    "eng_name": "Causal AI",
+    "eng_abbr": "—",
+    "def": "指不僅能識別數據相關性，更能理解事件背後「因果律」的 AI 技術。在 iPAS 語境中，它透過分析干預效果與反事實場景，解決純關聯模型在分布偏移下的失準問題，是實現可解釋決策的核心。",
+    "key_goal": "識別數據間的因果關係以提升決策之解釋力。",
+    "key_principle": "因果推論 / 貝氏網路 / 反事實分析 / 結構方程模型。",
+    "key_purpose": "用於從關聯中抽離因果，協助決策者理解「若改變變數 A，結果 B 會如何變動」的干預效果。協助系統在動態環境下維持高穩健性。",
+    "common_apps": "台灣半導體製程團隊利用因果 AI 分析數百項變數之因果關聯，精準定位影響良率的異常點。",
+    "scenarios": {
+      "weather": "分析極端降雨與地形、氣壓之因果連動，提升土石流預警模型之物理自洽性與預測精準度。",
+      "agri": "釐清環境參數對作物產量之物理因果影響，協助農民在多變氣候下優化精準灌溉之經濟效益。",
+      "traffic": "運輸系統分析路況偏差之因果，而非僅靠相關性預測，優化事故後之動態路徑排程決策。",
+      "manuf": "製造廠分析精密製程變數與產品缺陷之因果路徑，由 AI 產出具備邏輯依據之製程調整建議。",
+      "fintech": "醫療端用於分析藥物反應之因果路徑以實現精準醫療；金融端則輔助信用評分，釐清財務特徵與違約之因果權重。",
+      "retail": "零售平台利用離線時間分析顧客點擊流與庫存變動之因果關聯，產出更精確之個人化行銷預測模型。",
+      "fire": "在火災調查中透過因果分析技術處理多維數據，還原火勢蔓延與現場環境之邏輯因果順序。"
+    },
+    "detail_explain": "【因果人工智慧】定義：指不僅能識別數據相關性，更能理解事件背後「因果律」的 AI 技術。在 iPAS 語境中，它透過分析干預效果與反事實場景，解決純關聯模型在分布偏移下的失準問題，是實現可解釋決策的核心。",
+    "stage": "2"
+  },
+  {
+    "id": "939",
+    "subject": "初科一",
+    "category": "AI 治理概念",
+    "principle": "安全與防護",
+    "title": "AI 安全與防護",
+    "eng_name": "AI Safety",
+    "eng_abbr": "—",
+    "def": "係指旨在使 AI 系統免於非預期行為、惡意攻擊或產生不當內容的技術與治理框架。在 iPAS 考試語境下，其涵蓋模型魯棒性、對齊性與沙盒防護，是確保 AI 在各產業落地時符合倫理與法規的關鍵守衛。",
+    "key_goal": "確保 AI 系統行為符合預期並防止對人類造成損害。",
+    "key_principle": "護欄機制 / 對抗性測試 / 模型對齊 / 沙盒執行 / 魯棒性驗證。",
+    "key_purpose": "用於防範 AI 產生偏見、虛假資訊或受控失靈。協助企業建立安全的應用邊界，攔截惡意提示注入或數據洩漏風險。",
+    "common_apps": "台灣政府機關導入行政院使用 AI 參考指引，建立安全防護與內控機制，不得完全信任生成資訊。",
+    "scenarios": {
+      "weather": "建立氣象預警之護欄機制，防止 AI 因資料雜訊或幻覺發布錯誤之撤離與防災指引。",
+      "agri": "建立智慧農業系統護欄，防止模型因受惡意誘導而建議非法或過量之化學藥劑施作比例。",
+      "traffic": "自駕系統透過對抗性測試評估在極端天候或惡意干擾下的魯棒性，確保行車安全與穩定運作。",
+      "manuf": "產線機械手臂與安全光柵連動建立 AI 終止開關，一旦偵測到碰撞風險即強制關閉 AI 控制權限。",
+      "fintech": "醫療問答系統設置合規護欄，確保 AI 回覆時自動加註專業免責聲明並攔截非法處方建議。",
+      "retail": "台灣金控機構針對理財機器人建立安全護欄，攔截可能洩漏內部授信評分規則之惡意提示請求。",
+      "fire": "救災無人機利用沙盒化權限隔離執行環境，確保代理模型遭攻擊後無法橫向移動至關鍵公共安全系統。"
+    },
+    "detail_explain": "【AI 安全與防護】定義：係指旨在使 AI 系統免於非預期行為、惡意攻擊或產生不當內容的技術與治理框架。在 iPAS 考試語境下，其涵蓋模型魯棒性、對齊性與沙盒防護，是確保 AI 在各產業落地時符合倫理與法規的關鍵守衛。",
+    "stage": "1"
+  },
+  {
+    "id": "940",
+    "subject": "中科一",
+    "category": "AI 相關技術應用",
+    "principle": "精確性與效能",
+    "title": "草稿鏈寫作",
+    "eng_name": "Chain-of-Draft Writing",
+    "eng_abbr": "CoD",
+    "def": "係指一種生成式 AI 的寫作技術，模型在產出最終結果前，先自主產生數個具備不同側重點或結構之草稿。模型透過對中間草稿的反思與修潤，解決單次生成易產出的邏輯鬆散問題，確保長文具備高度的一致性與專業深度。",
+    "key_goal": "透過自主產出多層次草稿以提升長文生成品質。",
+    "key_principle": "自我迭代 / 文本摘要 / 批判性修正 / 提示鏈。",
+    "key_purpose": "用於撰寫複雜之公文、技術手冊或企劃書。協助使用者在不進行繁瑣人工修改的前提下，獲取經模型自我優化後的的高品質初稿，提升行政與創作效率。",
+    "common_apps": "台灣軟體公司利用 CoD 技術協助公部門自動撰寫行政公文草案，並在草稿階段自動檢查格式合規性。",
+    "scenarios": {
+      "weather": "針對極端氣候事件自動產出多版本之應變報告草稿，經內部邏輯比對後產出最詳盡之預警公文。",
+      "agri": "智慧農場系統利用此技術自動產出年度耕作計畫草稿，根據不同氣候模擬預測迭代出最優化之農事策略。",
+      "traffic": "物流業者利用草稿鏈自動生成跨境報關文件摘要，確保在正式提交前已透過內部迭代修正錯誤資訊。",
+      "manuf": "整合生產線瑕疵紀錄，自動產出製程改善建議報告，透過多層次草稿修正解決數據描述之斷點。",
+      "fintech": "醫療端用於自動生成病歷摘要草案，經模型內部比對檢查一致性；金融端則輔助撰寫具備多重風險考量之信貸評估報告。",
+      "retail": "電商平台利用此技術為新產品生成多風格之文案草稿，經自我篩選後產出最具轉化率之行銷文本。",
+      "fire": "災害應變中心利用草稿鏈快速產出救災任務簡報草案，確保在混亂環境下仍能邏輯嚴謹地分配資源。"
+    },
+    "detail_explain": "【草稿鏈寫作】定義：係指一種生成式 AI 的寫作技術，模型在產出最終結果前，先自主產生數個具備不同側重點或結構之草稿。模型透過對中間草稿的反思與修潤，解決單次生成易產出的邏輯鬆散問題，確保長文具備高度的一致性與專業深度。",
+    "stage": "2"
+  },
+  {
+    "id": "941",
+    "subject": "跨科",
+    "category": "AI 相關技術應用",
+    "principle": "精確性與效能",
+    "title": "混合代理人架構",
+    "eng_name": "Mixture of Agents",
+    "eng_abbr": "MoA",
+    "def": "係指一種由多個 LLM 代理人組成的協作架構。透過第一層多個模型分別生成候選答案，再由第二層強大模型進行聚合、優化與事實查核，旨在利用群體智慧克服單一模型的知識死角與幻覺問題。",
+    "key_goal": "整合多個模型優勢以產出超越單一模型之結果。",
+    "key_principle": "階層式架構 / 候選答案聚合 / 交叉驗證 / 算力分配。",
+    "key_purpose": "用於處理需高度精確度與跨領域知識之複雜決策。協助企業在不依賴單一巨型昂貴模型的前提下，透過整合數個輕量化模型達成同等級甚至更優之表現。",
+    "common_apps": "台灣科技業者利用 MoA 架構整合國產 TAIDE 與多個開源模型，處理需在地化知識與技術深度之研發文獻。",
+    "scenarios": {
+      "weather": "整合多個氣象模型代理人之預測路徑，由主代理人進行權重聚合，產出具備群體共識之極端天氣警報。",
+      "agri": "智慧果園中由病蟲害、土壤與氣候專家代理人共同辯論，產出具備多維度論證之精準施肥建議。",
+      "traffic": "物流調度系統由路況預測代理與車隊狀態代理協作，主代理聚合資訊以產出具備容錯能力之動態路徑。",
+      "manuf": "工廠品質監控系統由視覺檢測代理與聲響分析代理共同產出異常判斷，提升製程瑕疵識別之魯棒性。",
+      "fintech": "醫療影像中心整合多個診斷代理人對罕見病例進行博弈與辯論，產出具備多方論據之臨床輔助診斷建議。",
+      "retail": "智慧零售系統整合情感分析與庫存預測代理，產出具備情感溫度且符合物流限制之個人化促銷方案。",
+      "fire": "消防指揮系統整合煙霧辨識、熱顯像與空間解析代理，主代理聚合產出具備最高可信度之火場態勢感知圖。"
+    },
+    "detail_explain": "【混合代理人架構】定義：係指一種由多個 LLM 代理人組成的協作架構。透過第一層多個模型分別生成候選答案，再由第二層強大模型進行聚合、優化與事實查核，旨在利用群體智慧克服單一模型的知識死角與幻覺問題。",
+    "stage": "1"
+  },
+  {
+    "id": "942",
+    "subject": "中科三",
+    "category": "深度學習原理與框架",
+    "principle": "精確性與效能",
+    "title": "大型概念模型",
+    "eng_name": "Large Concept Models",
+    "eng_abbr": "LCM",
+    "def": "不同於傳統以 Token（詞元）為基本運算單位的語言模型，LCM 直接在抽象之「概念空間」中進行運算。其透過將輸入映射至高階語意表示，旨在提升跨語言的一致性與複雜邏輯的推理能力，是次世代 LLM 的重要發展方向。",
+    "key_goal": "跨越 Token 限制直接以抽象概念進行生成與推理。",
+    "key_principle": "潛在概念空間 / 跨模態嵌入 / 高階推理 / 語意對齊。",
+    "key_purpose": "用於處理需深層語意理解之跨語言任務與高階決策建議。協助系統擺脫字面限制，在抽象層級進行創意聯想與邏輯推演，產出更具智慧感之內容。",
+    "common_apps": "台灣設計新創利用 LCM 進行跨語言之產品設計概念轉換，確保品牌核心價值在不同文化文本中保持一致。",
+    "scenarios": {
+      "weather": "氣象研究機構運用 LCM 處理海量測站數據，將非結構化資料轉為抽象天氣「概念」，提升極端氣候預警之語意理解。",
+      "agri": "農業諮詢助理利用概念空間推理，將農民口語化之病徵描述轉為病理概念，提供更精準之跨區域防治建議。",
+      "traffic": "運輸調度系統在概念層級處理配送需求與地理限制，產出更符合人類邏輯之物流策略規劃。",
+      "manuf": "智慧工廠維修系統透過 LCM 理解設備故障之抽象模式，協助技師在未見過之零件組合下進行邏輯推理排錯。",
+      "fintech": "醫療 AI 利用 LCM 整合跨模態檢查數據為統一臨床概念，輔助醫師從抽象層級理解罕見病演進路徑。",
+      "retail": "零售推薦系統透過 LCM 分析消費者潛在購買概念，在不依賴特定關鍵字下提供更具洞察力之導購體驗。",
+      "fire": "消防單位利用 LCM 處理多源災情描述，將散亂情資轉化為抽象災害態勢，支援更高層級之指揮決策。"
+    },
+    "detail_explain": "【大型概念模型】定義：不同於傳統以 Token（詞元）為基本運算單位的語言模型，LCM 直接在抽象之「概念空間」中進行運算。其透過將輸入映射至高階語意表示，旨在提升跨語言的一致性與複雜邏輯的推理能力，是次世代 LLM 的重要發展方向。",
+    "stage": "2"
+  },
+  {
+    "id": "943",
+    "subject": "中科三",
+    "category": "機器學習治理",
+    "principle": "透明與可解釋",
+    "title": "稀疏自編碼器激活操控",
+    "eng_name": "Sparse Autoencoders for Activation Steering",
+    "eng_abbr": "—",
+    "def": "係指運用稀疏自編碼器（SAE）解構神經網路內部激活狀態，將「黑箱」激活轉化為人類可理解之單一特徵（如：誠實、憤怒、技術細節）。透過手動增強或抑制這些特徵向量，可實現對模型行為之底層精確引導。",
+    "key_goal": "透過識別內部特徵實現對模型行為之精確操控。",
+    "key_principle": "特徵解構 / 神經激活操控 / 機械性可解釋性 / 特徵工程。",
+    "key_purpose": "用於提升 AI 系統之安全性與透明度。協助開發者在不重新訓練模型的前提下，透過「方向盤」式操控，攔截惡意產出或增強特定之專業性表現。",
+    "common_apps": "台灣資安中心利用此技術操控 AI 模型的「惡意意圖」激活特徵，使其在面對誘導攻擊時能從底層拒絕生成病毒碼。",
+    "scenarios": {
+      "weather": "氣象預警系統中激活「極端預警」特徵，確保模型在接收到微小數據變動時能維持高度之預警敏感度。",
+      "agri": "採收機器人視覺系統強化「成熟度」與「色澤」激活特徵，使機器在複雜背景下能更精準地操控機械臂動作。",
+      "traffic": "抑制自駕系統對「動態陰影」的過度敏感激活，優化模型在動態環境下之行駛穩定性。",
+      "manuf": "生產輔助 AI 透過操控「ISO 安全規範」特徵，確保產出之所有製程建議皆嚴格符合工安約束。",
+      "fintech": "醫療診斷 AI 操控輸出特徵，確保在產出結果時具備高度之「臨床嚴謹性」，減少非專業術語之誤用。",
+      "retail": "智慧客服系統操控「品牌同理心」特徵，使 AI 即使在處理顧客怒火時仍能維持穩定之情緒安撫能力。",
+      "fire": "公安監控系統中抑制特定之「刻板印象」激活特徵，防止 AI 在預警犯罪風險時產生隱性歧視。"
+    },
+    "detail_explain": "【稀疏自編碼器激活操控】定義：係指運用稀疏自編碼器（SAE）解構神經網路內部激活狀態，將「黑箱」激活轉化為人類可理解之單一特徵（如：誠實、憤怒、技術細節）。透過手動增強或抑制這些特徵向量，可實現對模型行為之底層精確引導。",
+    "stage": "2"
+  },
+  {
+    "id": "944",
+    "subject": "中科三",
+    "category": "機器學習治理",
+    "principle": "透明與可解釋",
+    "title": "表示工程",
+    "eng_name": "Representation Engineering",
+    "eng_abbr": "RepE",
+    "def": "係指一種從「表示層」出發的 AI 治理與操控方法。其核心在於量化模型內部如何表示真實、偏見、情感等高階概念。透過監控這些表示，企業可即時偵測模型是否正在「撒謊」或「產生偏見」，是實現負責任 AI 的關鍵技術。",
+    "key_goal": "從模型內部表示層級偵測並修正潛在風險與偏誤。",
+    "key_principle": "特徵讀取器 / 概念提取 / 模型對齊 / 安全監控。",
+    "key_purpose": "用於建立 AI 系統之內控與合規檢查機制。協助企業在高風險決策中（如貸款審核），確保 AI 之決策邏輯未受到隱性敏感屬性（如種族、性別）之影響。",
+    "common_apps": "台灣金融業利用 RepE 技術監控信貸核貸模型之內部表示，確保模型決策過程符合公平與不歧視原則。",
+    "scenarios": {
+      "weather": "建立氣象預警之真實性監控機制，偵測模型內部表示是否產生虛假之災害情資，防止系統發布幻覺警報。",
+      "agri": "智慧農耕助理利用表示工程確保其防治建議不含特定農藥商之隱性行銷偏好，維護農業建議之公正性。",
+      "traffic": "監控自動化調度系統之內部決策表示，防止 AI 在路徑規劃中因隱性效率偏好而犧牲司機之法定休息時間。",
+      "manuf": "工廠安全監控系統利用 RepE 讀取器識別 AI 是否產生「忽略小異常」之偏誤傾向，強化預測性維護之安全性。",
+      "fintech": "醫療 AI 利用 RepE 監控診斷過程中是否產生對特定族裔之隱性不公平表示，確保精準醫療之普及性與公平性。",
+      "retail": "零售平台利用此技術監控推薦系統之「誘導消費」表示強度，確保 AI 行銷行為符合消保法規與倫理。",
+      "fire": "消防指揮系統運用 RepE 驗證搜救資源分配之「邏輯自洽性」，確保救援順序不因數據雜訊而產生表示偏差。"
+    },
+    "detail_explain": "【表示工程】定義：係指一種從「表示層」出發的 AI 治理與操控方法。其核心在於量化模型內部如何表示真實、偏見、情感等高階概念。透過監控這些表示，企業可即時偵測模型是否正在「撒謊」或「產生偏見」，是實現負責任 AI 的關鍵技術。",
+    "stage": "2"
+  },
+  {
+    "id": "945",
+    "subject": "中科三",
+    "category": "機器學習建模與參數調校",
+    "principle": "精確性與效能",
+    "title": "隱性獎勵建模",
+    "eng_name": "Implicit Reward Modeling",
+    "eng_abbr": "—",
+    "def": "係指一種不依賴顯性數值標註之獎勵函數學習技術。其透過直接在人類偏好排序（如：答案 A 優於 B）資料上進行優化，隱式地引導模型學習「好的結果」之特徵。這解決了傳統獎勵模型難以訓練與容易受損之痛點，是當前高效模型對齊之核心。",
+    "key_goal": "從偏好數據中自動習得獎勵邏輯以優化模型。",
+    "key_principle": "直接偏好優化 / 無需獎勵模型 / 數據對齊 / 概率校準。",
+    "key_purpose": "用於在缺乏專業評分員的情境下，利用用戶之反饋行為（如點擊、點讚）自動優化 AI 表現。協助企業以低成本實現模型之個人化與專業化調整。",
+    "common_apps": "台灣電商平台從用戶點擊與轉化行為中進行隱性獎勵建模，自動優化推薦排序模型之邏輯而無需人工打分。",
+    "scenarios": {
+      "weather": "氣象單位根據專家對不同預報版本之滿意度排序，利用隱性建模自動校準颱風強度預估之模型偏差。",
+      "agri": "智慧農業助理從農民採納建議之歷史行為中習得隱性獎勵，優化更符合在地實務之農事指導邏輯。",
+      "traffic": "物流調度系統根據調度員對路徑選擇之偏好歷史，隱式建模產出更符合風險規避經驗之排程計畫。",
+      "manuf": "製造廠瑕疵檢測系統從資深品管員對爭議樣本之判定結果中學習隱性獎勵，自動對齊專家之判斷標準。",
+      "fintech": "醫療問答系統從醫師修正回應之習慣中習得獎勵邏輯，隱式地提升診斷摘要之事實準確度與臨床實用性。",
+      "retail": "零售平台利用離線時間分析顧客與客服對話之偏好流，透過隱性建模產出更具轉化效率之個人化話術。",
+      "fire": "公安預警系統根據指揮官對情資報告之採納偏好，隱性優化災害情境感知模型之產出優先級。"
+    },
+    "detail_explain": "【隱性獎勵建模】定義：係指一種不依賴顯性數值標註之獎勵函數學習技術。其透過直接在人類偏好排序（如：答案 A 優於 B）資料上進行優化，隱式地引導模型學習「好的結果」之特徵。這解決了傳統獎勵模型難以訓練與容易受損之痛點，是當前高效模型對齊之核心。",
+    "stage": "2"
+  },
+  {
+    "id": "946",
+    "subject": "中科一",
+    "category": "AI 相關技術應用",
+    "principle": "精確性與效能",
+    "title": "具語法約束的結構化生成",
+    "eng_name": "Structured Generation with Grammar Constraints",
+    "eng_abbr": "—",
+    "def": "係指在推論過程中利用形式語法（如 JSON 或 SQL）作為硬性約束，引導模型解碼路徑之技術。其核心在於將解碼空間限制在合法的語法樹內，旨在確保生成內容能被下游系統直接解析，避免格式錯誤導致系統崩潰。",
+    "key_goal": "強制模型輸出符合特定程式或資料格式。",
+    "key_principle": "有限狀態機 / Logits 偏差 / 形式語法 / 正規表達式。",
+    "key_purpose": "用於將非結構化文本精確轉化為結構化數據庫記錄。協助開發者實作穩健的系統整合，防止 AI 產出無法被程式碼處理的「閒聊文字」。",
+    "common_apps": "台灣新創團隊利用此技術提取合約資訊，確保生成的簽約日期與金額皆符合精確之 JSON 格式。",
+    "scenarios": {
+      "weather": "自動撰寫氣象警報公文時，強制輸出符合公務標準格式與專業術語子集。",
+      "agri": "智慧農業系統提取病徵時，約束模型僅能從預定義之化學藥劑清單中選擇品項名稱。",
+      "traffic": "物流排程 AI 生成調度指令時，強制輸出符合 XML 格式，以便直接寫回倉儲管理系統。",
+      "manuf": "瑕疵檢測 AI 生成報告時，約束模型產出的故障原因必須對應至 ISO 規範代碼表。",
+      "fintech": "金融審貸系統利用此技術強制生成條列式風險因子，確保授信報告之結構完整。",
+      "retail": "零售客服系統在建立訂單摘要時，強制生成符合 API 定義之鍵值對，方便串接物流後台。",
+      "fire": "消防調度系統自動生成災情報告時，約束其經緯度座標表達格式，加速 GIS 系統套疊顯示。"
+    },
+    "detail_explain": "【具語法約束的結構化生成】定義：係指在推論過程中利用形式語法（如 JSON 或 SQL）作為硬性約束，引導模型解碼路徑之技術。其核心在於將解碼空間限制在合法的語法樹內，旨在確保生成內容能被下游系統直接解析，避免格式錯誤導致系統崩潰。",
+    "stage": "2"
+  },
+  {
+    "id": "947",
+    "subject": "中科二",
+    "category": "大數據分析方法與工具",
+    "principle": "透明與可解釋",
+    "title": "無綱構自然語言轉 SQL",
+    "eng_name": "Schemaless Text-to-SQL",
+    "eng_abbr": "—",
+    "def": "指模型在未獲取詳細資料庫綱構（Schema）說明的情境下，僅憑自然語言查詢與資料庫摘要即能產生正確 SQL 之能力。這類技術透過模型的通識推理能力辨識欄位關聯，旨在降低傳統 Text-to-SQL 對繁瑣 Prompt 工程與架構定義的依賴。",
+    "key_goal": "在不預定義資料庫架構下將口語轉為查詢指令。",
+    "key_principle": "綱構推理 / 語意映射 / 零樣本學習 / 大語言模型。",
+    "key_purpose": "用於動態資料環境下之即時資料查詢。協助非技術人員在面對結構頻繁變動的資料庫時，仍能以口語獲取精確之統計結果。",
+    "common_apps": "台灣軟體開發商利用無綱構技術讓企業主管能直接對著通訊軟體詢問複雜之跨表業務報表。",
+    "scenarios": {
+      "weather": "在劇烈天氣發生時，救災人員以口語查詢散亂之臨時測站數據庫，由 AI 自動推論欄位關聯產出統計。",
+      "agri": "農場管理員直接詢問「去年收成最好的是哪區」，AI 自動從無定義的歷史試算表中對齊欄位並生成 SQL。",
+      "traffic": "運輸調度員對著未定義綱構的臨時車隊日誌詢問「目前在台北區的司機清單」，由模型自主推論欄位含義。",
+      "manuf": "工廠主管詢問「上週停機時間最長的機台」，AI 自動解析 MES 原始日誌結構並生成對應查詢語句。",
+      "fintech": "銀行分析師詢問「高風險客戶在不同分行的分布狀況」，AI 自主連結異質分行系統之原始欄位。",
+      "retail": "零售店長詢問「哪些產品在下午時段點擊率最高」，模型自動從非結構化日誌中對齊 POS 資料。",
+      "fire": "公安指揮官詢問「鄰近火場區域的所有水源位置」，模型自動從臨時整合的地籍資料中產出精確 SQL。"
+    },
+    "detail_explain": "【無綱構自然語言轉 SQL】定義：指模型在未獲取詳細資料庫綱構（Schema）說明的情境下，僅憑自然語言查詢與資料庫摘要即能產生正確 SQL 之能力。這類技術透過模型的通識推理能力辨識欄位關聯，旨在降低傳統 Text-to-SQL 對繁瑣 Prompt 工程與架構定義的依賴。",
+    "stage": "3"
+  },
+  {
+    "id": "948",
+    "subject": "中科二",
+    "category": "大數據處理技術與工具",
+    "principle": "精確性與效能",
+    "title": "異質來源查詢規劃",
+    "eng_name": "Query Planning over Heterogeneous Sources",
+    "eng_abbr": "—",
+    "def": "指針對儲存在不同系統（如 SQL 資料庫、NoSQL 向量庫、API 介面）中之異質資料，由 AI 代理自動規劃最優檢索路徑與整合順序之技術。其核心在於透過元數據理解不同來源的關聯，確保跨系統查詢之效率與一致性。",
+    "key_goal": "協調並整合多個不同型態資料源之查詢路徑。",
+    "key_principle": "聯邦查詢 / 分散式執行計畫 / 元數據對齊 / 查詢重寫。",
+    "key_purpose": "用於企業超自動化場景中之複雜數據整合。協助系統自動拆解跨系統之查詢請求，並優化異質資料之融合過程以達成端到端之營運效益。",
+    "common_apps": "台灣製造大廠導入此技術整合 MES 與 ERP，實現自動化跨系統生產排程與資源調度。",
+    "scenarios": {
+      "weather": "自動規劃衛星雲圖（非結構化）與地面測站數據（結構化）之整合路徑，即時產出災情分析。",
+      "agri": "規劃跨越溫室感測器（串流）與作物生長百科（文本）之查詢計畫，達成精準農耕決策。",
+      "traffic": "整合車隊 GPS（即時）與倉儲庫存系統（批次），自動產出最佳化之配送優先級排程。",
+      "manuf": "當檢測到瑕疵時，AI 自動規劃查詢產線參數與維修零件庫存，於 ERP 產生維修工單。",
+      "fintech": "整合電子病歷（文本）與檢驗數值（數值），自動產出初步診斷摘要並觸發理賠核算。",
+      "retail": "自動化整合顧客評論（非結構化）與交易紀錄（結構化），產出多維度之消費行為洞察。",
+      "fire": "結合建物監視影像與 3D 空間圖資，在災害發生時規劃救援路徑之綜合查詢計畫。"
+    },
+    "detail_explain": "【異質來源查詢規劃】定義：指針對儲存在不同系統（如 SQL 資料庫、NoSQL 向量庫、API 介面）中之異質資料，由 AI 代理自動規劃最優檢索路徑與整合順序之技術。其核心在於透過元數據理解不同來源的關聯，確保跨系統查詢之效率與一致性。",
+    "stage": "3"
+  },
+  {
+    "id": "949",
+    "subject": "中科一",
+    "category": "AI 相關技術應用",
+    "principle": "精確性與效能",
+    "title": "工具增強語言模型",
+    "eng_name": "Tool Augmented Language Models",
+    "eng_abbr": "TALM",
+    "def": "指將語言模型與外部計算或資訊檢索工具（如計算機、搜尋引擎、資料庫）深度整合之架構。模型在執行任務時能主動識別自身知識侷限，進而發起工具調用以獲取最新事實或執行精確運算，是建構智慧代理之核心基礎。",
+    "key_goal": "透過調用外部工具擴展模型之計算與事實獲取能力。",
+    "key_principle": "函式調用 / API 整合 / ReAct 框架 / 外部儲存。",
+    "key_purpose": "用於建構能執行實際業務動作之智慧代理人。協助企業整合既有系統服務介面，讓 AI 具備操作軟體、處理實時數據並產出精確結果的能力。",
+    "common_apps": "台灣旅遊新創整合訂位系統 API，讓 AI 助手能為用戶查詢並直接預訂在地化餐廳。",
+    "scenarios": {
+      "weather": "收到災害詢問時，AI 自動調用氣象署 API 獲取最新的衛星雲圖與累積雨量進行分析。",
+      "agri": "農事助理調用專業土壤營養計算工具，依據感測數據精確換算出符合該田區之化肥比例。",
+      "traffic": "物流經理下達指令後，AI 自動調用路況 API 運算多條路徑之預估到達時間供決策參考。",
+      "manuf": "當設備報錯時，AI 自動調用廠商診斷 API 分析錯誤碼，並從手冊中提取對應維修步驟。",
+      "fintech": "醫師查詢建議時，AI 自動調用藥物交互作用資料庫 API 進行臨床安全性核對。",
+      "retail": "智慧客服自動調用後台 API，為顧客即時查詢特定訂單之包裹配送位置與預計到貨時戳。",
+      "fire": "指揮系統自動調用建物 GIS 系統，將災場監控影像與建物內部的 3D 結構進行套疊。"
+    },
+    "detail_explain": "【工具增強語言模型】定義：指將語言模型與外部計算或資訊檢索工具（如計算機、搜尋引擎、資料庫）深度整合之架構。模型在執行任務時能主動識別自身知識侷限，進而發起工具調用以獲取最新事實或執行精確運算，是建構智慧代理之核心基礎。",
+    "stage": "2"
+  },
+  {
+    "id": "950",
+    "subject": "中科三",
+    "category": "機器學習技術與應用",
+    "principle": "永續發展與福祉",
+    "title": "用於蛋白質設計的流匹配技術",
+    "eng_name": "Flow Matching for Protein Design",
+    "eng_abbr": "—",
+    "def": "指一種基於流匹配（Flow Matching）生成機制的蛋白質結構設計技術。其透過學習連續的概率路徑將隨機分佈轉化為具備生物活性的蛋白質構型，旨在達成優於擴散模型的結構生成效率。在生技領域，這是從分子層級實現精準藥物開發與生物材料設計的核心。",
+    "key_goal": "透過連續向量場建模生成具特定功能之蛋白質結構。",
+    "key_principle": "生成式模型 / 常微分方程 / 連續時間流 / 結構表徵學習。",
+    "key_purpose": "用於自動化開發新藥分子或特殊功能蛋白。協助研發團隊在極大搜索空間中找出符合特定物理性質之結構，縮短實驗室篩選週期。",
+    "common_apps": "台灣生技公司利用流匹配技術進行標靶藥物之蛋白質結合位點設計，提升新藥研發之成功率。",
+    "scenarios": {
+      "weather": "研發能分解塑膠或汙染物之環保蛋白質，透過流匹配優化其催化效率以促進環境永續發展。",
+      "agri": "設計能抗寒或耐乾旱之新型作物蛋白結構，透過 AI 生成模型輔助育種以因應極端氣候。",
+      "traffic": "用於研發具備高性能之生物基燃料蛋白，優化物流能源之永續替代方案。",
+      "manuf": "在生醫材料生產中，利用 AI 設計具備高穩定性之工業用酶結構，提升發酵製程良率。",
+      "fintech": "醫學端應用於設計特異性更高之抗體蛋白，針對罕見疾病產出具備精準治療潛力之分子結構。",
+      "retail": "零售端應用於研發具備天然保鮮功能之食品級蛋白，優化生活消費品之永續保存期。",
+      "fire": "設計能偵測極微量有毒化學物質之生物感測蛋白結構，強化消防人員於危害現場之偵測能力。"
+    },
+    "detail_explain": "【用於蛋白質設計的流匹配技術】定義：指一種基於流匹配（Flow Matching）生成機制的蛋白質結構設計技術。其透過學習連續的概率路徑將隨機分佈轉化為具備生物活性的蛋白質構型，旨在達成優於擴散模型的結構生成效率。在生技領域，這是從分子層級實現精準藥物開發與生物材料設計的核心。",
+    "stage": "2"
+  },
+  {
+    "id": "951",
+    "subject": "中科三",
+    "category": "機器學習技術與應用",
+    "principle": "精確性與效能",
+    "title": "用於領域自適應的神經最優傳輸",
+    "eng_name": "Neural Optimal Transport for Domain Adaptation",
+    "eng_abbr": "—",
+    "def": "係指利用神經網路模擬最優傳輸映射，解決來源域與目標域間資料分佈偏移之技術。其透過最小化傳輸成本將模型在已知領域習得的特徵遷移至未知目標領域，是提升模型泛化能力的關鍵數學架構。這使 AI 能在標註資料稀缺的新場景中維持高精準度。",
+    "key_goal": "實現跨領域資料分佈的精準映射與特徵遷移。",
+    "key_principle": "最優傳輸理論 / 沃瑟斯坦距離 / 遷移學習 / 生成模型。",
+    "key_purpose": "用於解決訓練與測試環境不一致導致的效能衰退問題。協助企業將通用模型快速校準至特定場域，大幅降低新場景的資料標註成本。",
+    "common_apps": "台灣半導體廠利用此技術將模擬環境的缺陷特徵映射至實際產線影像，提升瑕疵檢測之自適應力。",
+    "scenarios": {
+      "weather": "將歷史極端氣候模型的分佈映射至局部微氣候地形，提升特定區域的淹水預警精度。",
+      "agri": "將溫室作物的生長特徵遷移至露天環境，克服環境雜訊差異以穩定病蟲害辨識模型。",
+      "traffic": "使自駕感知系統在晴天習得的辨識能力，透過神經映射適應至大雨或霧區等極端天候。",
+      "manuf": "實現跨機台、跨批次的感測數據對齊，確保預測性維護模型能泛化應用於不同規格之設備。",
+      "fintech": "醫療端用於跨院區醫學影像的風格規範化；金融端則用於將歷史信貸特徵適應至當前經濟波動分佈。",
+      "retail": "將線上消費行為模式遷移至線下店面分佈，建立具備跨通路自適應能力的推薦系統。",
+      "fire": "將實驗室模擬的火煙擴散路徑映射至真實建築空間影像，提升避難導引的空間準確度。"
+    },
+    "detail_explain": "【用於領域自適應的神經最優傳輸】定義：係指利用神經網路模擬最優傳輸映射，解決來源域與目標域間資料分佈偏移之技術。其透過最小化傳輸成本將模型在已知領域習得的特徵遷移至未知目標領域，是提升模型泛化能力的關鍵數學架構。這使 AI 能在標註資料稀缺的新場景中維持高精準度。",
+    "stage": "2"
+  },
+  {
+    "id": "952",
+    "subject": "中科一",
+    "category": "生成式 AI 技術與應用",
+    "principle": "精確性與效能",
+    "title": "語意路徑整合",
+    "eng_name": "Semantic Route Integration",
+    "eng_abbr": "—",
+    "def": "指在代理式架構中將使用者語意意圖與多重執行路徑進行動態對齊之技術。系統能理解複雜指令中的邏輯分歧並自動挑選最適合的執行序列，確保 AI 在處理多步驟任務時具備高度的語境連貫性。這是建構具備導航異質系統能力之智慧代理的核心。",
+    "key_goal": "協調語意意圖與執行路徑以達成精準任務執行。",
+    "key_principle": "語意索引 / 意圖辨識 / 路徑規劃 / 外部工具調用。",
+    "key_purpose": "用於處理具備多重解法之複雜業務請求。協助系統將口語意圖轉化為精確的數位行動，消除 AI 與業務流程間的銜接斷點。",
+    "common_apps": "台灣電商平台利用語意路徑整合，將顧客查詢自動導向售後、查單或導購等不同執行管線。",
+    "scenarios": {
+      "weather": "整合民眾口語化災情通報與地理位置意圖，自動導向最優先的搜救或物資調度路徑。",
+      "agri": "依據農民對作物病徵的語意描述，自動整合氣象與藥劑庫之路徑，給出綜合防治建議。",
+      "traffic": "將客戶的「緊急度」語意整合進動態路線規劃路徑，實現具備優先權的自動化物流排程。",
+      "manuf": "整合操作員語音意圖與機台代碼路徑，自動從 MES 系統中整合出最相關的維修程序。",
+      "fintech": "醫療端整合醫師診斷意圖與科別執行路徑；金融端則將理財目標整合進各類商品配置管線。",
+      "retail": "智慧客服根據顧客情緒語意整合問題解答與專人接管路徑，提升解決效率與滿意度。",
+      "fire": "整合火場語音描述與 3D 空間路徑，自動產出最安全的動態避難導引指令。"
+    },
+    "detail_explain": "【語意路徑整合】定義：指在代理式架構中將使用者語意意圖與多重執行路徑進行動態對齊之技術。系統能理解複雜指令中的邏輯分歧並自動挑選最適合的執行序列，確保 AI 在處理多步驟任務時具備高度的語境連貫性。這是建構具備導航異質系統能力之智慧代理的核心。",
+    "stage": "2"
   }
 ];
