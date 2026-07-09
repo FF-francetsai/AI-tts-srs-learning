@@ -479,6 +479,27 @@
 <a class="s-btn" href="learn.html?stage=3">開始學習</a>
 </div>
 </div>
+<!-- 章節導讀（content/stage_chapter_guides.json，內容自主更新循環維護） -->
+<div id="stage-guides" style="margin-top:14px;"></div>
+<script>
+    (function(){
+        fetch('content/stage_chapter_guides.json').then(function(r){ return r.json(); }).then(function(g){
+            var box = document.getElementById('stage-guides');
+            var names = {stage1:'🪐 iPAS 初級', stage2:'🧠 中級技術', stage3:'⚡ 中級數據'};
+            ['stage1','stage2','stage3'].forEach(function(k){
+                if (!g[k]) return;
+                var d = document.createElement('details');
+                d.style.cssText = 'margin:6px 0;padding:8px 12px;border:1px solid rgba(148,163,184,.25);border-radius:10px;';
+                var chapters = g[k].map(function(c,i){
+                    return '<div style="margin:8px 0;"><strong>第 '+(i+1)+' 章：'+c.chapter+'</strong>'+
+                           '<div style="font-size:.85rem;opacity:.85;margin-top:2px;">'+c.intro+'</div></div>';
+                }).join('');
+                d.innerHTML = '<summary style="cursor:pointer;font-weight:600;">'+names[k]+'　章節導讀（'+g[k].length+' 章）</summary>'+chapters;
+                box.appendChild(d);
+            });
+        }).catch(function(){ /* 導讀載入失敗不影響頁面 */ });
+    })();
+    </script>
 </div>
 </div>
 <!-- 4 大功能卡片 -->
@@ -529,16 +550,20 @@
 </div>
 <!-- 載入術語資料庫（供 stage 計數動態更新使用）-->
 <script src="data.js"></script>
+<!-- 每日精選池（tools/build_daily_pool_js.py 自動產生，88+ 詞分階段策展） -->
+<script src="daily_pool.js"></script>
 <!-- D：今日精選術語 JS -->
 <script>
     (function(){
-        var TERM_POOL = [
+        var FALLBACK_POOL = [
             {en:'Artificial Intelligence', zh:'人工智慧', def:'賦予機器學習、推理與決策能力的技術總稱'},
             {en:'Machine Learning', zh:'機器學習', def:'AI 的分支，強調不需顯式編程，而是透過經驗改進表現'},
             {en:'Large Language Model', zh:'大型語言模型', def:'基於海量文本訓練，具備自然語言理解與生成能力的大型模型'},
             {en:'Transformer', zh:'變壓器架構', def:'基於注意力機制拋棄循環結構，可並行處理序列數據的現代架構'},
             {en:'Prompt Engineering', zh:'提示工程', def:'透過精確設計輸入提示來引導 LLM 產生高品質輸出的過程'}
         ];
+        var TERM_POOL = (window.DAILY_TERM_POOL && window.DAILY_TERM_POOL.length >= 5)
+            ? window.DAILY_TERM_POOL : FALLBACK_POOL;
         var idx = Math.floor(Date.now() / 86400000) % TERM_POOL.length;
         var t = TERM_POOL[idx];
         document.getElementById('dtEn').textContent = t.en;

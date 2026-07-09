@@ -1,0 +1,141 @@
+1|人工智慧|Artificial Intelligence
+2|狹義人工智慧|Narrow AI
+3|通用人工智慧|Artificial General Intelligence
+4|超級人工智慧|Artificial Super Intelligence
+5|圖靈測試|Turing Test
+6|符號人工智慧|Symbolic AI
+7|專家系統|Expert System
+8|數位分身|Digital Twin
+9|大型語言模型|Large Language Model
+11|推理模型|Reasoning Models
+22|深偽技術|Deepfake
+23|個人識別資訊|Personally Identifiable Information
+24|去識別化|De-identification
+25|匿名化|Anonymization
+31|大數據|Big Data
+34|探索性資料分析|Exploratory Data Analysis
+36|資料清洗|Data Cleaning
+39|主成分分析|Principal Component Analysis
+42|監督式學習|Supervised Learning
+43|非監督式學習|Unsupervised Learning
+44|強化學習|Reinforcement Learning
+46|分類|Classification
+47|迴歸|Regression
+48|分群|Clustering
+58|準確度|Accuracy
+59|精確率|Precision
+60|召回率|Recall
+61|F1 分數|F1-Score
+65|遷移學習|Transfer Learning
+70|卷積神經網路|Convolutional Neural Network
+75|變壓器架構|Transformer
+76|自注意力機制|Self-Attention
+78|生成對抗網絡|Generative Adversarial Net
+79|擴散模型|Diffusion Model
+83|影像分類|Image Classification
+85|人臉辨識|Face Recognition
+87|自然語言理解|Natural Language Understanding
+88|自然語言生成|Natural Language Generation
+94|情感分析|Sentiment Analysis
+95|機器翻譯|Machine Translation
+109|數位轉型|Digital Transformation
+110|價值主張|Value Proposition
+112|投資報酬率|Return on Investment
+113|最小可行性產品|Minimum Viable Product
+114|關鍵績效指標|Key Performance Indicators
+120|概念驗證|Proof of Concept
+132|基座模型|Foundation Model
+133|幻覺|Hallucination
+134|標記|Token
+135|溫度參數|Temperature
+136|Top-K 採樣|Top-K Sampling
+137|核採樣|Top-P / Nucleus Sampling
+138|上下文視窗|Context Window
+140|提示工程|Prompt Engineering
+141|思維鏈|Chain-of-Thought
+142|零樣本學習|Zero-shot Learning
+143|少樣本學習|Few-shot Learning
+144|少樣本提示|Few-shot Prompting
+145|人格/角色提示|Persona Prompting
+147|檢索增強生成|Retrieval-Augmented Generation
+153|微調|Fine-tuning
+159|外掛程式|Plugins
+161|越獄|Jailbreaking
+162|提示注入攻擊|Prompt Injection
+163|內容安全過濾|Content Safety Filtering
+166|開源模型|Open-source Models
+167|閉源/專有模型|Proprietary Models
+168|ChatGPT|ChatGPT
+169|Claude|Claude
+170|Gemini|Gemini
+171|Llama|Llama
+172|Stable Diffusion|Stable Diffusion
+173|Midjourney|Midjourney
+174|Copilot|Copilot
+175|Dify|Dify
+177|Hugging Face|Hugging Face
+180|NotebookLM|NotebookLM
+195|OpenAI Application Programming Interface|OpenAI Application Programming Interface
+228|數位轉型 2.0|DX 2.0 / AI-First
+230|共生智能|Symbiotic Intelligence
+254|知識截止點|Knowledge Cutoff
+257|原生多模態|Native Multimodal
+270|氣氛程式碼|Vibe Coding
+315|生成物 / 工件|Artifacts
+319|反重力機制|Google Antigravity
+323|克勞德反重力|Claude Antigravity
+325|開源 Claude 接口|Open Claude (非官方)
+334|氣氛部署|Vibe Deploying
+454|基於提示的|Prompt-based
+456|文本分類|Text Classification
+457|對話機器人|Chatbot
+459|機器學習|Machine Learning
+466|常識推理|Common Sense Reasoning
+467|模型幻覺|Model Hallucination
+473|影像描述生成|Image Captioning
+476|擴散模型|Diffusion Models
+479|影像生成與合成|Image Generation & Synthesis
+486|K-近鄰演算法|K-Nearest Neighbors
+562|一般資料保護規範|General Data Protection Regulation
+563|醫療保險流通與責任法案|Health Insurance Portability and Accountability Act
+587|鑑別式 AI|Discriminative Artificial Intelligence
+590|音訊生成|Audio Generation
+591|ElevenLabs|ElevenLabs
+592|MusicLM|MusicLM
+593|影片生成|Video Generation
+594|Runway|Runway
+595|Sora|Sora
+602|MNIST|Modified National Institute of Standards and Technology
+609|客戶端代理人|Client Agent
+611|代理人名片|Agent Card
+612|指令微調|Instruction Tuning
+613|大語言模型後設 AI|Large Language Model Meta AI
+614|後設人工智慧|Meta Artificial Intelligence
+615|Mistral 人工智慧|Mistral AI
+616|指令式-R|Command-R
+628|Canva AI (神奇設計)|Canva Artificial Intelligence
+629|Adobe Firefly|Adobe Firefly
+640|Microsoft Azure TTS|Microsoft Azure Text-to-Speech
+641|Google Cloud TTS|Google Cloud Text-to-Speech
+642|Amazon Polly|Amazon Polly
+648|黑曜石筆記|obsidian
+652|人類回饋強化學習|Reinforcement Learning with Human Feedback
+653|紅隊演練|Red Teaming
+675|深思人工智慧|DeepMind
+680|虛擬化身|Avatar
+832|歧義性|Ambiguity
+833|語境依賴性|Context Dependence
+834|形態分析|Morphological Analysis
+835|詞彙分析|Lexical Analysis
+836|句法分析|Syntactic Analysis
+837|語義分析|Semantic Analysis
+838|語用分析|Pragmatic Analysis
+839|句法剖析|Syntactic Parsing
+840|句法分析與剖析|Syntactic Analysis/Parsing
+841|成分句法剖析|Constiuency Parsing
+842|依存句法剖析|Dependency Parsing
+843|詞義消歧|Word Sense Disambiguation
+844|語義角色標注|Semantic Role Labeling
+888|開放原始碼|Open Source
+923|AI 終止開關|AI Kill Switch
+939|AI 安全與防護|AI Safety

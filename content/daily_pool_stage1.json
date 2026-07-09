@@ -1,0 +1,212 @@
+[
+ {
+  "id": "1",
+  "zh": "人工智慧",
+  "en": "Artificial Intelligence",
+  "def": "讓機器模擬人類思考與學習行為的科學技術。",
+  "stage": 1
+ },
+ {
+  "id": "459",
+  "zh": "機器學習",
+  "en": "Machine Learning",
+  "def": "讓電腦從資料中自動找規律並做出預測的方法。",
+  "stage": 1
+ },
+ {
+  "id": "42",
+  "zh": "監督式學習",
+  "en": "Supervised Learning",
+  "def": "提供標註答案的訓練資料讓模型學會對應關係。",
+  "stage": 1
+ },
+ {
+  "id": "43",
+  "zh": "非監督式學習",
+  "en": "Unsupervised Learning",
+  "def": "不給標籤,讓模型自行從資料中找出隱藏結構。",
+  "stage": 1
+ },
+ {
+  "id": "44",
+  "zh": "強化學習",
+  "en": "Reinforcement Learning",
+  "def": "透過試錯與獎勵機制,讓代理人學會最佳行動策略。",
+  "stage": 1
+ },
+ {
+  "id": "46",
+  "zh": "分類",
+  "en": "Classification",
+  "def": "將資料分到預先定義的類別中,常見的監督式任務。",
+  "stage": 1
+ },
+ {
+  "id": "47",
+  "zh": "迴歸",
+  "en": "Regression",
+  "def": "預測連續數值,例如房價或溫度等數值型輸出。",
+  "stage": 1
+ },
+ {
+  "id": "48",
+  "zh": "分群",
+  "en": "Clustering",
+  "def": "把相似的資料自動聚成幾群,不需要事先標籤。",
+  "stage": 1
+ },
+ {
+  "id": "58",
+  "zh": "準確度",
+  "en": "Accuracy",
+  "def": "模型預測正確的比例,是最直覺的評估指標。",
+  "stage": 1
+ },
+ {
+  "id": "59",
+  "zh": "精確率",
+  "en": "Precision",
+  "def": "預測為正當中真的為正的比例,衡量查得準不準。",
+  "stage": 1
+ },
+ {
+  "id": "60",
+  "zh": "召回率",
+  "en": "Recall",
+  "def": "真正為正的樣本被成功找出的比例,衡量覆蓋率。",
+  "stage": 1
+ },
+ {
+  "id": "61",
+  "zh": "F1 分數",
+  "en": "F1-Score",
+  "def": "精確率與召回率的調和平均,平衡兩者的綜合指標。",
+  "stage": 1
+ },
+ {
+  "id": "9",
+  "zh": "大型語言模型",
+  "en": "Large Language Model",
+  "def": "經海量文本訓練,具備理解與生成語言能力的巨型模型。",
+  "stage": 1
+ },
+ {
+  "id": "132",
+  "zh": "基座模型",
+  "en": "Foundation Model",
+  "def": "經大規模預訓練,可作為多種下游任務基礎的通用模型。",
+  "stage": 1
+ },
+ {
+  "id": "75",
+  "zh": "變壓器架構",
+  "en": "Transformer",
+  "def": "以自注意力為核心的深度學習架構,LLM 主流基礎。",
+  "stage": 1
+ },
+ {
+  "id": "76",
+  "zh": "自注意力機制",
+  "en": "Self-Attention",
+  "def": "讓模型自行決定句子中哪些詞彼此相關的重要機制。",
+  "stage": 1
+ },
+ {
+  "id": "70",
+  "zh": "卷積神經網路",
+  "en": "Convolutional Neural Network",
+  "def": "擅長處理影像的深度神經網路,能自動擷取空間特徵。",
+  "stage": 1
+ },
+ {
+  "id": "140",
+  "zh": "提示工程",
+  "en": "Prompt Engineering",
+  "def": "設計輸入指令的技巧,讓AI模型輸出更符合需求的結果。",
+  "stage": 1
+ },
+ {
+  "id": "141",
+  "zh": "思維鏈",
+  "en": "Chain-of-Thought",
+  "def": "引導模型逐步推理的提示技巧,可提升複雜題正確率。",
+  "stage": 1
+ },
+ {
+  "id": "142",
+  "zh": "零樣本學習",
+  "en": "Zero-shot Learning",
+  "def": "不給任何範例,直接要求模型完成從未看過的任務。",
+  "stage": 1
+ },
+ {
+  "id": "144",
+  "zh": "少樣本提示",
+  "en": "Few-shot Prompting",
+  "def": "在提示中提供少量範例,引導模型學會任務的格式。",
+  "stage": 1
+ },
+ {
+  "id": "147",
+  "zh": "檢索增強生成",
+  "en": "Retrieval-Augmented Generation",
+  "def": "先從知識庫找資料再交給模型回答,可減少幻覺。",
+  "stage": 1
+ },
+ {
+  "id": "133",
+  "zh": "幻覺",
+  "en": "Hallucination",
+  "def": "模型自信地編造看似合理但其實錯誤內容的現象。",
+  "stage": 1
+ },
+ {
+  "id": "138",
+  "zh": "上下文視窗",
+  "en": "Context Window",
+  "def": "模型單次對話能容納的最大文字長度上限。",
+  "stage": 1
+ },
+ {
+  "id": "134",
+  "zh": "標記",
+  "en": "Token",
+  "def": "模型處理文字的最小單位,可能是字、詞或子詞片段。",
+  "stage": 1
+ },
+ {
+  "id": "168",
+  "zh": "ChatGPT",
+  "en": "ChatGPT",
+  "def": "OpenAI 推出的對話式大型語言模型,帶動生成式 AI 風潮。",
+  "stage": 1
+ },
+ {
+  "id": "169",
+  "zh": "Claude",
+  "en": "Claude",
+  "def": "Anthropic 推出的對話式AI助手,以安全與長文本見長。",
+  "stage": 1
+ },
+ {
+  "id": "170",
+  "zh": "Gemini",
+  "en": "Gemini",
+  "def": "Google 推出的原生多模態大型語言模型系列產品。",
+  "stage": 1
+ },
+ {
+  "id": "172",
+  "zh": "Stable Diffusion",
+  "en": "Stable Diffusion",
+  "def": "開源的文字生圖模型,大幅降低AI繪圖門檻。",
+  "stage": 1
+ },
+ {
+  "id": "153",
+  "zh": "微調",
+  "en": "Fine-tuning",
+  "def": "在已訓練好的模型上,用自己的資料再訓練以適應任務。",
+  "stage": 1
+ }
+]

@@ -1,0 +1,444 @@
+14|負責任的人工智慧|Responsible AI
+15|可解釋人工智慧|Explainable AI
+16|局部可解釋模型|Local Interpretable Model-agnostic Explanations
+17|反事實說明|Counterfactual Explanation
+19|人類監督模式|Human-over-the-loop
+20|人機共作|Human-in-the-loop
+21|演算法偏見|Algorithmic Bias
+26|差分隱私|Differential Privacy
+27|聯邦學習|Federated Learning
+28|零信任架構|Zero Trust Architecture
+29|同態加密|Homomorphic Encryption
+30|零知識證明|Zero-Knowledge Proof
+32|資料科學|Data Science
+33|擷取轉換載入|Extract, Transform, Load
+35|資料標註|Data Labeling
+37|插補法|Imputation
+38|特徵工程|Feature Engineering
+40|標準化|Standardization
+41|正規化|Normalization
+45|半監督式學習|Semi-supervised Learning
+49|決策樹|Decision Tree
+50|隨機森林|Random Forest
+51|支持向量機|Support Vector Machine
+52|損失函數|Loss Function
+53|過度擬合|Overfitting
+54|擬合不足|Underfitting
+55|正則化|Regularization
+56|超參數|Hyperparameter
+57|交叉驗證|Cross-Validation
+62|混淆矩陣|Confusion Matrix
+63|梯度下降|Gradient Descent
+64|學習率|Learning Rate
+66|神經元|Neuron
+67|激活函數|Activation Function
+68|反向傳播|Backpropagation
+69|多層感知器|Multi-Layer Perceptron
+73|梯度消失|Gradient Vanishing
+89|詞嵌入|Word Embedding
+90|斷詞/標記化|Tokenization
+91|停用詞移除|Stop Words Removal
+96|敘述性統計|Descriptive Statistics
+97|推論統計|Inferential Statistics
+98|假設檢定|Hypothesis Testing
+99|P 值|P-value
+100|相關係數|Correlation Coefficient
+101|多重共線性|Multicollinearity
+102|資料分佈|Data Distribution
+103|異常值檢測|Outlier Detection
+104|維度災難|Curse of Dimensionality
+105|特徵選擇|Feature Selection
+106|自動化機器學習|Automated Machine Learning
+128|模型漂移|Model Drift
+150|餘弦相似度|Cosine Similarity
+151|文本分塊|Chunking
+154|低秩適配|Low-Rank Adaptation
+165|人類回饋強化學習|Reinforcement Learning from Human Feedback
+178|筆記本 (編程環境)|Notebook (Jupyter)
+197|資料價值|Value
+198|數據量|Volume
+199|數據多樣性|Variety
+200|數據時效性|Velocity
+201|數據真實性|Veracity
+202|純量|Scalar
+203|向量|Vector
+204|矩陣|Matrix
+205|張量|Tensor
+206|線性代數|Linear Algebra
+207|微積分|Calculus
+208|鏈式法則|Chain Rule
+209|貝氏定理|Bayes' Theorem
+210|常態分佈|Normal Distribution
+211|歐幾里得距離|Euclidean Distance
+212|知識蒸餾|Knowledge Distillation
+213|剪枝|Pruning
+214|量化|Quantization
+215|神經架構搜索|Neural Architecture Search
+216|對稱加密|Symmetric Encryption
+217|非對稱加密|Asymmetric Encryption
+220|資料湖|Data Lake
+221|資料倉儲|Data Warehouse
+232|冷啟動問題|Cold Start Problem
+234|綠色人工智慧|Green AI
+236|困惑度|Perplexity
+237|Recall@K|Recall@K
+238|歸一化折損累計增益|Normalized Discounted Cumulative Gain
+239|碳足跡|Carbon Footprint
+241|參數量|Parameter Count
+242|人工神經網路|Artificial Neural Network
+244|全連接層|Fully Connected Layer
+245|批次大小|Batch Size
+246|學習曲線|Learning Curve
+247|早停法|Early Stopping
+255|幻覺率|Hallucination Rate
+259|偏見緩解|Bias Mitigation
+265|顯著圖|Saliency Map
+266|結構化預測|Structured Prediction
+267|合成少數類過採樣技術|Synthetic Minority Over-sampling Technique
+268|夏普利加性解釋|Shapley Additive Explanations
+274|資料不平衡|Data Imbalance
+278|Lambda 架構|Lambda Architecture
+279|Kappa 架構|Kappa Architecture
+280|資料管線|Data Pipeline
+281|面向數據設計|Data-Oriented
+282|異動資料擷取|Change Data Capture
+283|水平擴展|Scale-out / Horizontal Scaling
+284|垂直擴展|Scale-up / Vertical Scaling
+285|列式儲存|Columnar Storage
+286|資料市集|Data Mart
+287|資料分層儲存|Data Tiering
+288|MapReduce|MapReduce
+289|彈性分散式資料集|Resilient Distributed Datasets
+290|節點 / 集群|Node / Cluster
+291|中央極限定理|Central Limit Theorem
+292|第一型錯誤 (Alpha)|Type I Error
+293|第二型錯誤 (Beta)|Type II Error
+294|顯著水準|Significance Level
+295|特徵縮放|Feature Scaling
+296|獨熱編碼|One-Hot Encoding
+297|標籤編碼|Label Encoding
+298|均方誤差|Mean Squared Error
+299|受試者工作特徵曲線|Receiver Operating Characteristic
+300|資料血緣|Data Lineage
+301|資料字典|Data Dictionary
+303|Hadoop|Hadoop
+304|Spark|Spark
+305|Kafka|Kafka
+306|Airflow|Airflow
+329|TurboQuant|TurboQuant
+330|PolarQuant|PolarQuant
+331|量化 JL 轉換|Quantized Johnson-Lindenstrauss
+332|無損量化|Lossless Quantization
+339|適配器層|Adapter Layer
+351|伊莉莎|ELIZA
+352|N 元語法|N-gram
+353|閘道循環單元|Gated Recurrent Unit
+354|Robustly Optimized BERT Approach|Robustly Optimized BERT Approach
+355|Text-to-Text Transfer Transformer|Text-to-Text Transfer Transformer
+356|來自變換器的雙向編碼器表徵|Bidirectional Encoder Representations from Transformers
+358|統計語言模型|Statistical Language Models
+359|預訓練語言模型|Pre-trained Language Models
+360|遮罩語言模型|Masked Language Model
+361|下一句預測|Next Sentence Prediction
+362|下游任務微調|Fine-tuning for Downstream Tasks
+363|混合嵌入層|Token + Position + Segment Embeddings
+364|蒸餾版 BERT|Distilled BERT
+370|隱馬可夫模型|Hidden Markov Model
+371|隱藏狀態|Hidden States
+372|維特比演算法|Viterbi Algorithm
+373|轉移機率|Transition Probability
+374|發射機率|Emission Probability
+375|條件隨機場|Conditional Random Field
+376|判別式模型|Discriminative Model
+377|生成式模型|Generative Model
+378|全域最佳解|Global Optimum
+379|卷積循環神經網路|Convolutional Recurrent Neural Network
+380|卷積長短期記憶網路|Convolutional LSTM
+381|聯結主義時間分類|Connectionist Temporal Classification
+382|空間特徵提取|Spatial Feature Extraction
+383|時間依賴建模|Temporal Dependency Modeling
+386|思維鏈提示|Chain-of-Thought Prompting
+388|稠密僅解碼變換器|Dense Decoder-only Transformer
+389|多語言預訓練|Multilingual Pre-training
+392|推理與編碼熟練度|Reasoning & Coding Proficiency
+393|字幹提取|Stemming
+394|詞形還原|Lemmatization
+395|停用詞移除|Stopword Removal
+396|文本正規化|Text Normalization
+397|詞袋模型|Bag of Words
+398|詞向量化|Word Vectorization
+399|表徵學習|Representation Learning
+400|分佈假說|Distributional Hypothesis
+401|Word2Vec|Word2Vec
+402|靜態嵌入|Static Embeddings
+403|BERT 嵌入|BERT Embeddings
+404|上下文相關嵌入|Contextualized Embeddings
+405|跳字模型|Skip-gram
+406|N 元組|N-grams
+407|詞頻-逆文件頻率|Term Frequency-Inverse Document Frequency
+408|全局向量|Global Vectors for Word Representation
+409|FastText|FastText
+410|來自語言模型的嵌入|Embeddings from Language Models
+411|稀疏向量|Sparse Vector
+412|稠密向量|Dense Vector
+413|未登錄詞|Out-of-Vocabulary
+414|共現矩陣|Co-occurrence Matrix
+415|判別式加權|Discriminative Weighting
+416|上下文表徵|Contextual Representation
+417|非上下文表徵|Non-contextual Representation
+418|分散式表徵|Distributed Representation
+419|非分散式表徵|Non-distributed Representation
+420|向量空間模型|Vector Space Model
+421|詞頻|Term Frequency
+422|逆文件頻率|Inverse Document Frequency
+423|常用詞抑制|Common Word Suppression
+424|TF-IDF 加權|TF-IDF Weighting
+425|對數縮放|Logarithmic Scaling
+426|分散式詞嵌入|Distributed Word Embedding
+427|線性關係特性|Linear Relational Property
+428|降維技術|Dimensionality Reduction
+429|語意相似度空間|Semantic Similarity Space
+431|自回歸預測|Autoregressive Prediction
+432|因果遮蔽|Causal Masking
+433|預訓練與微調|Pre-training & Fine-tuning
+434|下一個標記預測|Next Token Prediction
+439|在地資料訓練|Local Data Training
+440|台灣專家混合模型|TAiwan Mixture of Experts
+441|門控網路|Gating Network
+442|稀疏啟用|Sparse Activation
+443|領域專家微調|Domain-specific Expert Fine-tuning
+446|領域專用語料庫|Domain-specific Corpus
+448|持續預訓練|Continual Pre-training
+452|分層語言模型|Hierarchical Language Model
+460|假名化|Pseudonymization
+461|資料泛化|Data Generalization
+462|遮蔽|Masking
+463|資料偏見|Data Bias
+465|詞嵌入關聯測試|Word Embedding Association Test
+468|隨機化|Randomization
+469|聚合|Aggregation
+470|隨機化聚合|Randomization Aggregation
+503|影像模型平台|Roboflow
+505|超級標註平台|SuperAnnotate
+511|自動標註|Auto-labeling
+512|標註準則|Annotation Guideline
+513|影像數據前處理|Preprocessing for Image Data
+514|尺寸調整|Resize
+515|填充|Padding
+516|裁剪|Cropping
+517|像素歸一化|Pixel Normalization
+523|通道降維|Channel Reduction
+527|數據增強|Data Augmentation
+528|分層採樣|Stratified Sampling
+529|編碼|Encoding
+531|前五名錯誤率|Top-5 Error
+532|卷積層|Convolutional Layer
+533|特徵圖|Feature Map
+534|最大池化|Max Pooling
+535|激活層|Activation Layer
+536|線性整流單元|Rectified Linear Unit
+537|S 型函數|Sigmoid
+538|歸一化指數函數|Softmax
+541|殘差連接|Residual Connection
+546|跳躍連接|Skip Connections
+548|交併比|Intersection over Union
+550|交集|Intersection
+551|聯集|Union
+559|前處理|Pre-processing
+570|產品行為分析|Product Behavior Analysis
+571|客戶行為追蹤|Customer Behavior Tracking
+578|泛化能力|Generalization
+579|雜訊添加|Noise Addition
+580|K-匿名化|K-Anonymity
+581|偏誤|Bias
+582|偽陽性 (誤報)|False Positive
+583|偽陰性 (漏報)|False Negative
+584|偏誤稽核|Bias Audit
+585|線下面積|Area Under Curve
+589|邏輯迴歸|Logistic regression
+597|深度卷積生成對抗網路|Deep Convolutional Generative Adversarial Networks
+598|StyleGAN|StyleGAN
+599|CycleGAN|CycleGAN
+600|潛在分布|Latent Distribution
+601|變分推斷|Variational Inference
+604|去噪擴散機率模型|Denoising Diffusion Probabilistic Models
+606|自主代理|Autonomous Agent
+607|代理對代理|Agentic To Agentic
+617|雙語評估替補|Bilingual Evaluation Understudy
+618|面向召回率的摘要評估|Recall-Oriented Understudy for Gisting Evaluation
+619|n-gram 召回率|ROUGE-N
+620|最長公共子序列召回率|ROUGE-Longest Common Subsequence
+621|跳詞二元組召回率|ROUGE-Skip-bigram Co-occurrence
+622|短句懲罰|Brevity Penalty
+623|最長公共子序列|Longest Common Subsequence
+633|序列到序列模型|Sequence-to-Sequence
+636|非自迴歸模型|Non-Autoregressive Model
+643|谷歌自動化機器學習|Google Automated Machine Learning
+644|Claude 程式測試框架|Claude Code harness
+645|Claude 說明文件|Claude Code md
+646|測試平台工程|Harness Engineering
+647|自動化部署平台|Harness
+649|平均意見分數|Mean Opinion Score
+650|字錯率|Word Error Rate
+651|位置嵌入|Positional Embedding
+677|電子病歷|Electronic Medical Records
+678|偽陽性率|False Positive Rate
+679|商業智慧儀表板|BI Dashboard
+681|動態時間規整|Dynamic Time Warping
+682|弱監督學習|Weakly Supervised Learning
+684|端對端加密|End-to-End Encryption
+685|對抗訓練|Adversarial Training
+686|自我監督學習|Self-supervised Learning
+687|現狀分析|As-Is
+688|願景藍圖|To-Be
+689|利害關係人|Stakeholders
+690|資料品質|Data Quality
+691|IT 資源與系統整合|IT Resources, System Integration
+692|淨現值|Net Present Value
+693|回收期|Payback Period
+694|數位成熟度|Digital Maturity
+695|數據治理|Data Governance
+696|組織能力|Organizational Capability
+697|跨部門協作|Cross-functional Collaboration
+698|資源盤點|Resource Inventory
+699|導入條件|Implementation Conditions
+700|法律合規|Legal Compliance
+701|數據隱私|Data Privacy
+702|模型穩定性|Model Stability
+703|組織變革|Organizational Change
+704|風險矩陣|Risk Matrix
+705|可能性|Likelihood
+706|風險等級|Risk Level
+707|罕見機率|Rare Probability
+708|可能機率|Possible Probability
+709|高度機率|Likely Probability
+710|輕微影響|Minor Impact
+711|主要影響|Major Impact
+712|嚴重影響|Critical Impact
+713|低風險|Low Risk
+714|中風險|Medium Risk
+715|高風險|High Risk
+716|風險緩解|Risk Mitigation
+717|性能指標|Performance Metrics
+718|用戶回饋|User Feedback
+719|工作分解結構|Work Breakdown Structure
+720|衝刺/開發週期|Sprint
+721|敏捷開發|Agile Development
+722|看板工具 (Trello)|Trello
+723|企業管理工具 (Asana)|Asana
+724|議題追蹤|Issue Tracking
+725|敏捷框架 (Scrum)|Scrum
+726|看板法|Kanban
+727|專案協作工具 (ClickUp)|ClickUp
+728|檢核表|Checklist
+729|里程碑|Milestone
+736|缺失資料|Missing Data
+737|錯誤標注|Incorrect Labeling
+745|被遺忘權（刪除權）|Right to Erasure
+746|被遺忘權|Right to be Forgotten
+747|刪除權與被遺忘權|Right to Erasure / Right to be Forgotten
+748|更正權|Right to Rectification
+749|旋轉增強|Rotation
+753|技術保護措施|Technical Safeguards
+754|加密|Encryption
+755|存取控制|Access Control
+756|安全傳輸與儲存|Secure Transmission and Storage
+757|實體保護措施|Physical Safeguards
+758|備份與災難復原|Backup & Disaster Recovery
+759|行政保護措施|Administrative Safeguards
+760|安全政策與程序|Security Policy and Procedure
+761|安全教育訓練|Security Training
+762|風險評估與稽核|Risk Assessment & Audit
+763|支付卡產業安全標準委員會|PCI Security Standards Council
+764|金融科技監理沙盒|FinTech Sandbox
+765|智慧財產法|Intellectual Property Law
+766|倫理|Ethics
+767|公平性|Fairness
+768|不均衡資料|Imbalanced Data
+769|歷史偏見|Historical Bias
+770|標注偏見|Labeling Bias
+771|問責|Accountability
+772|透明性|Transparency
+773|可解釋性|Explainability
+774|可信賴 AI 倫理指南|Ethics Guidelines for Trustworthy AI
+775|OECD AI 原則|OECD Principles on Artificial Intelligence
+776|倫理委員會|Ethics Committee
+777|倫理審查流程|Ethical Review Process
+779|公開溝通|Public Communication
+792|機器資料|Machine Data
+794|缺失值|Missing Values
+795|平均值填補|Mean Imputation
+796|中位數填補|Median Imputation
+797|均值/中位數填補|Mean/Median Imputation
+798|前向填補|Forward Fill
+799|後向填補|Backward Fill
+800|前後向填補|Forward/Backward Fill
+801|插值法|Interpolation
+802|重複值|Duplicate Values
+803|異常值（離群點）|Outliers
+804|完整性|Completeness
+805|一致性|Consistency
+806|時效性|Timeliness
+807|唯一性|Uniqueness
+808|資訊增益|Information Gain
+809|皮爾森相關係數|Pearson Correlation Coefficient
+810|自動特徵工程|Auto Feature Engineering
+811|相關矩陣|Correlation Matrix
+812|特徵重要性|Frature Importance
+813|重採樣|Resampling
+814|過採樣|Oversampling
+815|欠採樣|Undersampling
+816|加權損失函數|Weighted Loss Function
+817|調整分類門檻|Adjustiong Classification Threshold
+818|集成方法|Ensemble Methods
+819|焦點損失函數|Focal Loss
+820|異常偵測|Anomaly Detection
+821|分層交叉驗證|Stratified Cross Validation
+822|精確率召回率曲線|Precision Recall Curve
+823|集成學習|Ensemble Learniing
+824|堆疊集成|Stacking
+825|投票集成|Voting
+826|硬投票|Hard Voting
+827|軟投票|Soft Voting
+829|評估指標|Evaluation Metrics
+831|K 折交叉驗證|K-Fold Cross-Validation
+852|合成資料生成|Synthetic Data Generation
+855|感測器資料|Sensor Data
+856|表格/結構化資料|Tabular/Structured Data
+857|圖形資料|Graph Data
+858|異質性|Heterogeneity
+874|可解讀性|Interpretability
+883|倫理風險|Ethical Risk
+884|安全風險|Security Risk
+885|合規風險|Compliance Risk
+890|遞迴語言模型|Recursive Language Model
+893|多 Token 預測|Multi-Token Prediction
+894|擴散語言模型|Diffusion Language Model
+895|稀疏注意力機制|Sparse Attention
+896|狀態空間模型|State Space Model
+897|持續學習|Continual Learning
+906|護欄機制|Guardrails
+908|直接偏好優化|Direct Preference Optimization
+909|群體相對策略優化|Group Relative Policy Optimization
+910|憲法人工智慧|Constitutional AI
+912|混合專家模型|Mixture of Experts
+913|參數高效微調|Parameter-Efficient Fine-Tuning
+915|記憶鞏固|Memory Consolidation
+917|流體神經網路|Liquid Neural Network
+918|神經符號 AI|Neurosymbolic AI
+920|可擴展監督|Scalable Oversight
+922|審議式對齊|Deliberative Alignment
+925|語意快取|Semantic Caching
+928|知識編輯|Knowledge Editing
+929|災難性遺忘|Catastrophic Forgetting
+930|自我蒸餾|Self-Distillation
+934|自我演進語言模型|Self-Improving Language Models
+938|因果人工智慧|Causal AI
+942|大型概念模型|Large Concept Models
+943|稀疏自編碼器激活操控|Sparse Autoencoders for Activation Steering
+944|表示工程|Representation Engineering
+945|隱性獎勵建模|Implicit Reward Modeling
+947|無綱構自然語言轉 SQL|Schemaless Text-to-SQL
+948|異質來源查詢規劃|Query Planning over Heterogeneous Sources
+950|用於蛋白質設計的流匹配技術|Flow Matching for Protein Design
+951|用於領域自適應的神經最優傳輸|Neural Optimal Transport for Domain Adaptation

@@ -1,0 +1,212 @@
+[
+ {
+  "id": "12",
+  "zh": "歐盟人工智慧法案",
+  "en": "EU AI Act",
+  "def": "全球首部AI專法，規範AI系統風險分級",
+  "stage": 2
+ },
+ {
+  "id": "18",
+  "zh": "監理沙盒",
+  "en": "Regulatory Sandbox",
+  "def": "受監管環境內測試創新AI產品",
+  "stage": 2
+ },
+ {
+  "id": "258",
+  "zh": "人工智慧治理",
+  "en": "AI Governance",
+  "def": "企業管理AI倫理、風險與合規框架",
+  "stage": 2
+ },
+ {
+  "id": "116",
+  "zh": "AI 專案經理",
+  "en": "AI Project Manager",
+  "def": "統籌AI專案時程、團隊與交付成果",
+  "stage": 2
+ },
+ {
+  "id": "117",
+  "zh": "範圍定義",
+  "en": "Scope Definition",
+  "def": "明確專案邊界、功能與非目標項目",
+  "stage": 2
+ },
+ {
+  "id": "118",
+  "zh": "利害關係人分析",
+  "en": "Stakeholder Analysis",
+  "def": "識別並分類專案相關人員與影響",
+  "stage": 2
+ },
+ {
+  "id": "111",
+  "zh": "可行性評估",
+  "en": "Feasibility Study",
+  "def": "分析技術資料與組織面執行可能",
+  "stage": 2
+ },
+ {
+  "id": "127",
+  "zh": "機器學習營運",
+  "en": "Machine Learning Operations",
+  "def": "機器學習模型開發部署與維運整合",
+  "stage": 2
+ },
+ {
+  "id": "129",
+  "zh": "A/B 測試",
+  "en": "A/B Testing",
+  "def": "比較兩版本成效以決定採用方案",
+  "stage": 2
+ },
+ {
+  "id": "121",
+  "zh": "容器化",
+  "en": "Containerization",
+  "def": "將應用與相依套件打包成可攜容器",
+  "stage": 2
+ },
+ {
+  "id": "130",
+  "zh": "模型壓縮",
+  "en": "Model Compression",
+  "def": "縮減模型體積以加速推論並降成本",
+  "stage": 2
+ },
+ {
+  "id": "107",
+  "zh": "邊緣人工智慧",
+  "en": "Edge AI",
+  "def": "在終端裝置本地執行AI推論減少延遲",
+  "stage": 2
+ },
+ {
+  "id": "155",
+  "zh": "代理人人工智慧",
+  "en": "Agentic AI",
+  "def": "能自主規劃並執行多步驟任務的AI",
+  "stage": 2
+ },
+ {
+  "id": "156",
+  "zh": "多代理人系統",
+  "en": "Multi-Agent System",
+  "def": "多個AI代理人協作完成複雜任務",
+  "stage": 2
+ },
+ {
+  "id": "157",
+  "zh": "模型上下文協定",
+  "en": "Model Context Protocol",
+  "def": "標準化代理人與工具溝通的協定",
+  "stage": 2
+ },
+ {
+  "id": "158",
+  "zh": "函式調用",
+  "en": "Function Calling",
+  "def": "模型以結構化方式觸發外部工具",
+  "stage": 2
+ },
+ {
+  "id": "149",
+  "zh": "向量資料庫",
+  "en": "Vector Database",
+  "def": "儲存與高效搜尋高維向量嵌入",
+  "stage": 2
+ },
+ {
+  "id": "148",
+  "zh": "向量嵌入",
+  "en": "Vector Embedding",
+  "def": "將文字轉為語意向量以利比對",
+  "stage": 2
+ },
+ {
+  "id": "262",
+  "zh": "混合檢索增強生成",
+  "en": "Hybrid RAG",
+  "def": "結合多種檢索策略的擴增生成架構",
+  "stage": 2
+ },
+ {
+  "id": "196",
+  "zh": "預訓練",
+  "en": "Pre-training",
+  "def": "用大規模資料事先訓練模型基礎能力",
+  "stage": 2
+ },
+ {
+  "id": "164",
+  "zh": "指令微調",
+  "en": "Instruction Fine-tuning",
+  "def": "用指令資料讓模型學會遵循任務",
+  "stage": 2
+ },
+ {
+  "id": "125",
+  "zh": "推論延遲",
+  "en": "Inference Latency",
+  "def": "模型從輸入到輸出所花費的時間",
+  "stage": 2
+ },
+ {
+  "id": "126",
+  "zh": "吞吐量",
+  "en": "Throughput",
+  "def": "系統單位時間可處理的推論請求量",
+  "stage": 2
+ },
+ {
+  "id": "80",
+  "zh": "物件偵測",
+  "en": "Object Detection",
+  "def": "影像中標出物件位置與類別的技術",
+  "stage": 2
+ },
+ {
+  "id": "451",
+  "zh": "視覺語言模型",
+  "en": "Vision-Language Model",
+  "def": "同時理解影像與文字的多模態模型",
+  "stage": 2
+ },
+ {
+  "id": "229",
+  "zh": "影子人工智慧",
+  "en": "Shadow AI",
+  "def": "員工未經核准私下使用的AI工具",
+  "stage": 2
+ },
+ {
+  "id": "227",
+  "zh": "主權人工智慧",
+  "en": "Sovereign AI",
+  "def": "由國家自主研發掌控的AI技術",
+  "stage": 2
+ },
+ {
+  "id": "271",
+  "zh": "具身智能",
+  "en": "Embodied AI",
+  "def": "AI透過機器人等實體與世界互動",
+  "stage": 2
+ },
+ {
+  "id": "250",
+  "zh": "幻覺偵測器",
+  "en": "Hallucination Detector",
+  "def": "辨識模型生成內容虛構錯誤的機制",
+  "stage": 2
+ },
+ {
+  "id": "260",
+  "zh": "永續人工智慧",
+  "en": "Sustainable AI",
+  "def": "兼顧環保節能與社會責任的AI發展",
+  "stage": 2
+ }
+]

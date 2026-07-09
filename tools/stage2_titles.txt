@@ -1,0 +1,358 @@
+10|多模態人工智慧|Multimodal Artificial Intelligence
+12|歐盟人工智慧法案|EU AI Act
+13|人工智慧基本法|AI Basic Act
+18|監理沙盒|Regulatory Sandbox
+71|池化層|Pooling Layer
+72|遞歸神經網路|Recurrent Neural Network
+74|長短期記憶網路|Long Short-Term Memory
+77|編碼器-解碼器|Encoder-Decoder
+80|物件偵測|Object Detection
+81|語義分割|Semantic Segmentation
+82|實例分割|Instance Segmentation
+84|光學字元辨識|Optical Character Recognition
+86|YOLO 演算法|You Only Look Only
+92|詞性標註|Part-of-Speech Tagging
+93|命名實體識別|Named Entity Recognition
+107|邊緣人工智慧|Edge AI
+108|知識圖譜|Knowledge Graph
+111|可行性評估|Feasibility Study
+115|變革管理|Change Management
+116|AI 專案經理|AI Project Manager
+117|範圍定義|Scope Definition
+118|利害關係人分析|Stakeholder Analysis
+119|差異分析/差距分析|Gap Analysis
+121|容器化|Containerization
+122|微服務|Microservices
+123|推論|Inference
+124|延遲 / 遲滯|Latency
+125|推論延遲|Inference Latency
+126|吞吐量|Throughput
+127|機器學習營運|Machine Learning Operations
+129|A/B 測試|A/B Testing
+130|模型壓縮|Model Compression
+131|API 閘道|API Gateway
+139|參數|Parameters
+146|自我一致性|Self-Consistency
+148|向量嵌入|Vector Embedding
+149|向量資料庫|Vector Database
+152|重新排名|Reranking
+155|代理人人工智慧|Agentic AI
+156|多代理人系統|Multi-Agent System
+157|模型上下文協定|Model Context Protocol
+158|函式調用|Function Calling
+160|思維圖|Graph of Thoughts
+164|指令微調|Instruction Fine-tuning
+176|LangChain|LangChain
+179|LM Studio|LM Studio
+181|Flowise|Flowise
+182|數位員工|Digital Employee
+183|智慧客服|Intelligent Customer Service
+184|程式碼自動補全|Code Autocomplete
+185|自動會議記錄|Automated Meeting Minutes
+186|內容行銷生成|Content Marketing Generation
+187|個性化學習助手|Personalized Learning Assistant
+188|法律合約審閱|Legal Contract Review
+189|醫療病歷分析|Medical Record Analysis
+190|金融詐欺偵測|Financial Fraud Detection
+191|虛擬試穿|Virtual Try-on
+192|Vertex AI|Vertex AI
+193|Azure AI|Azure AI
+194|Bedrock|Bedrock
+196|預訓練|Pre-training
+218|多因子驗證|Multi-Factor Authentication
+219|模型退化|Model Degradation
+222|Auto-GPT|Auto-GPT
+223|CrewAI|CrewAI
+224|Ollama|Ollama
+225|AnythingLLM|AnythingLLM
+226|Open WebUI|Open WebUI
+227|主權人工智慧|Sovereign AI
+229|影子人工智慧|Shadow AI
+231|長期記憶|Long-term Memory
+233|合規人工智慧|Compliant AI
+235|模組化人工智慧|Modular AI
+240|推論成本|Inference Cost
+243|池化層|Pooling
+248|嵌入 / 向量化|Embedding
+249|自適應提示|Adaptive Prompting
+250|幻覺偵測器|Hallucination Detector
+251|隱私計算|Privacy Computing
+252|對齊|Alignment
+253|自主工作流|Autonomous Workflow
+256|上下文切換|Context Switching
+258|人工智慧治理|AI Governance
+260|永續人工智慧|Sustainable AI
+261|情感 AI|Affective AI / EQ AI
+262|混合檢索增強生成|Hybrid RAG
+263|閃電注意力|Flash Attention
+264|KV 快取|KV Cache
+269|基於感測器的決策|Sensor-based Decision
+271|具身智能|Embodied AI
+272|裝置端推論|On-device Inference
+273|長上下文處理|Long Context Handling
+275|世界模型|World Models
+276|Groq 處理器|Groq
+277|空間 / 畫布模式|Spaces
+302|數據主權|Data Sovereignty
+307|無伺服器運算|Serverless Computing
+308|數據庫遷移服務|Database Migration Service
+309|彈性負載平衡|Elastic Load Balancing
+310|預測性維護|Predictive Maintenance
+311|水母 (解碼優化)|Medusa
+312|投機性解碼|Speculative Decoding
+313|樹狀注意力|Tree-based Attention
+314|分頁注意力|PagedAttention
+316|計算機使用 (代理人能力)|Computer Use
+317|龍蝦架構 / 脫殼機器人|Lobster / Moltbot
+318|開放爪協議|Open Claw Protocol
+320|管理員視角|Manager View
+321|超完備自動補全|Supercomplete
+322|技能庫|Skills
+324|開源中文語言福利 / 優化|Open Chinese Language Welfare
+326|沙盒執行|Sandbox Execution
+327|意圖對齊監測|Intent Alignment Monitoring
+328|提示詞快取|Prompt Caching
+333|上下文視窗縮放|Context Window Scaling
+335|Lovable|Lovable
+336|Replit|Replit
+337|Replit Agent|Replit Agent
+338|藍綠部署|Blue-Green Deployment
+340|動作空間|Action Space
+341|透明指令集|Transparent Instruction Set
+342|去中心化代理人註冊表|Decentralized Agent Registry
+343|系統級代理人|System-level Agent
+344|螢幕解析與點擊|Screen Parsing & Clicking
+345|動作鏈審計|Action Chain Auditing
+346|跨視窗上下文|Cross-window Context
+347|低延遲反饋環|Low-latency Feedback Loop
+348|沙盒化權限|Sandboxed Permissions
+349|無頭瀏覽器控制|Headless Browser Control
+350|自癒腳本|Self-healing Scripts
+357|基於規則的系統|Rule-based Systems
+365|克勞德調度器|Claude Dispatch
+366|動態模型路由|Dynamic Model Routing
+367|任務負載平衡|Task Load Balancing
+368|基於意圖的調度|Intent-based Dispatching
+369|調度審計日誌|Dispatch Audit Logs
+384|路徑語言模型|Pathways Language Model
+385|路徑語言模型 2|Pathways Language Model 2
+387|路徑架構|Pathways
+390|模型尺度擴展 (壁虎至獨角獸)|Model Scaling (Gecko to Unicorn)
+391|醫療 / 安全專用 PaLM|Med-PaLM 2 / Sec-PaLM
+430|生成式預訓練變換器|Generative Pre-trained Transformer
+435|人工智慧評測中心|Artificial Intelligence Evaluation Center
+436|台灣 AI 雲|Taiwan AI Cloud
+437|國家科學及技術委員會|National Science and Technology Council
+438|台版大型語言模型|Trustworthy AI Dialogue Engine
+444|算力成本優化|Compute Cost Optimization
+445|醫學大模型計畫|Project TAME
+447|繁體中文優化|Traditional Chinese Optimization
+449|工業級部署|Industrial Deployment
+450|遮罩自注意力機制|Masked Self-Attention
+451|視覺語言模型|Vision-Language Model
+453|人類語言模型|Human Language Model
+455|提示學習|Prompt-based Learning
+458|文本生成與摘要|Text Generation & Summarization
+464|模型偏見|Model Bias
+471|手動特徵提取|Handcrafted Features
+472|多模態學習|Multimodal Learning
+474|區域卷積網路|Region-based Convolutional Neural Network
+475|視覺變換器|Vision Transformer
+477|影像處理|Image Processing
+478|模式識別|Pattern Recognition
+480|語言-影像預訓練|Contrastive Language-Image Pre-Training
+481|雙向語言-影像預訓練|Bootstrapping Language-Image Pre-training
+482|邊緣檢測算子|Canny Edge Detection
+483|尺度不變特徵轉換|Scale-Invariant Feature Transform
+484|加速穩健特徵|Speeded Up Robust Features
+485|定向快速旋轉特徵|Oriented FAST and Rotated BRIEF
+487|卷積神經網路|Visual Geometry Group Network
+488|谷歌網路|GoogLeNet (Inception)
+489|殘差網路|Residual Network
+490|密集連接網路|Densely Connected Network
+491|更快區域卷積網路|Faster R-CNN
+492|全卷積網路|Fully Convolutional Network
+493|U型網路|U-Net
+494|臉部辨識網路|FaceNet
+495|萬物分割模型|Segment Anything Model
+496|普遍性|Universality
+497|影像標註|Image Annotation
+498|資料前處理|Data Preprocessing
+499|基本事實|Ground Truth
+500|影像標註工具|LabelImg
+501|標註工作室|Label Studio
+502|電腦視覺標註工具|Computer Vision Annotation Tool
+504|影像標註工具|LabelMe
+506|VGG 影像標註器|VGG Image Annotator
+507|COCO 格式標註器|COCO Annotator
+508|文字辨識訓練器|Tesseract Trainer
+509|標註影像文字辨識|LabelImg OCR
+510|邊界框|Bounding Box
+518|直方圖均衡化|Histogram Equalization
+519|平滑濾波|Smoothing Filtering
+520|邊緣保留濾波|Edge-Preserving Filtering
+521|灰階轉換|Grayscale Conversion
+522|彩色空間|Red-Green-Blue
+524|色彩模型|Hue, Saturation, Value
+525|色調|Hue
+526|飽和度與明度|Saturation & Value
+530|CLIP 嵌入向量|CLIP embeddings
+539|LeNet 網路|LeNet
+540|AlexNet 網路|AlexNet
+542|影像網路|ImageNet
+543|區域建議網路|Region Proposal Network
+544|單次偵測器|Single Shot Multibox Detector
+545|上採樣層|Upsampling Layer
+547|遮罩區域卷積網路|Mask R-CNN
+549|預測框|Predicted Box
+552|監控與安防|Surveillance & Security
+553|監控|Surveillance
+554|安全|Security
+555|自動化車牌辨識|Automatic Number Plate Recognition
+556|字元切割|Character Segmentation
+557|字元辨識|Character Recognition
+558|車牌定位|License Plate Localization
+560|檢測|Detection
+561|辨識|Recognition
+564|即時推論|Real-time Inference
+565|醫學影像|Medical Imaging
+566|電腦斷層掃描|Computed Tomography Scan
+567|磁振造影|Magnetic Resonance Imaging
+568|多序列影像|Multi-sequence Imaging
+569|工業瑕疵檢測|Industrial Defect Detection
+572|熱點圖|Heatmap
+573|擴增實境|Augmented Reality
+574|虛擬實境|Virtual Reality
+575|自動駕駛|Autonomous Driving
+576|車道線偵測|Lane Detection
+577|多模態融合|Multimodal Fusion
+586|物理人工智慧|Physical Artificial Intelligence
+588|變分自編碼器|Variational Autoencoder
+596|多模態生成|Multimodal Generation
+603|去噪|Denoising
+605|Flamingo|Flamingo
+608|代理人間通訊協定|Agent-to-Agent Protocol
+610|遠端代理人|Remote Agent
+624|流暢度|Fluency
+625|大規模生成對抗網路|Big Large-scale GAN
+626|控制網網路|ControlNet
+627|指令式影像編輯|InstructPix2Pix
+630|預視覺化|Pre-Visualization
+631|語音合成|Voice Synthesis
+632|語音合成 (TTS)|Text-to-Speech
+634|Tacotron 2|Tacotron 2
+635|FastSpeech 2|FastSpeech 2
+637|變分推論語音合成|Variational Inference Text-to-Speech
+638|Whisper|OpenAI Whisper
+639|語音轉文字|Speech-to-Text
+654|跨感官融合框架|ImageBind
+655|語義對齊|Semantic Alignment
+656|融合學習|Fusion Learning
+657|模態|Modality
+658|跨模態嵌入|Cross-modal Embeddings
+659|對比學習|Contrastive Learning
+660|特徵拼接|Feature Concatenation
+661|融合層|Fusion Layer
+662|多模態深度學習|Multimodal Deep Learning
+663|掩碼多模態自動編碼器|Masked Multimodal Autoencoder
+664|視覺語言融合|Vision-Language Fusion
+665|對比損失|Contrastive Loss
+666|影像文本匹配|Image-Text Matching
+667|影像文本檢索|Image-Text Retrieval
+668|自動語音辨識|Automatic Speech Recognition
+669|神經機器翻譯|Neural Machine Translation
+670|語音轉文字+翻譯|TTS + Neural Machine Translation
+671|感測器融合|Sensor Fusion
+672|早期融合|Early Fusion
+673|後期融合|Late Fusion
+674|視覺問答|Visual Question Answering
+676|掩碼預訓練|Masked Pre-training
+683|輕量化神經網絡|MobileNet
+730|快速迭代|Rapid Iteration
+731|實施計畫書|Implementation Plan Document
+732|規劃摘要|Planning Summary
+733|甘特圖與時程表|Gantt Chart and Timeline
+734|利害關係人審查|Stakeholder Review
+735|資料品質風險|Data Quality Risk
+738|資料漂移|Data Drift
+739|模型穩定性風險|Model Stability Risk
+740|概念漂移|Concept Drift
+741|跨部門溝通風險|Cross-functional Communication Risk
+742|技能缺口風險|Skill Gap Risk
+743|變革阻力風險|Change Resistance Risk
+744|侵權風險|Infringement Risk
+750|Google TurboQuant|Google TurboQuant
+751|KV 快取壓縮|KV Cache Compression
+752|分層快取|Hierarchical Caching
+778|內部教育訓練|Internal Training
+780|風險迴避|Avoidance
+781|風險移轉|Transfer
+782|風險緩解|Mitigation
+783|TensorBoard|TensorBoard
+784|風險接受|Acceptance
+785|風險管理計畫|Risk Management Plan
+786|模型漂移監控|Model Drift Monitoring
+787|資料漂移監控|Data Drift Monitoring
+788|效能異常警示|Performance Anomaly Alerting
+789|自動重訓|Auto-retraining
+790|企業資源規劃（ERP）|Enterprise Resource Planning
+791|客戶關係管理（CRM）|Customer Relationship Management
+793|智慧製造|Smart Manufacturing
+828|軟體即服務（SaaS）|Software as a Service
+830|人工評估|Human Evaluation
+845|文字轉圖像模型|Text-to-Image Models
+846|文字轉圖像生成|Text-to-Image Generation
+847|逆向過程|Reverse Process
+848|圖像修補與擴展|Inpainting/Outpainting
+849|風格遷移|Style Transfer
+850|超解析度|Super-Resolution
+851|程式碼生成|Code Generation
+853|零樣本提示|Zero-shot Prompting
+854|思維鏈提示|Cot-Chain-of-Thought Prompting
+859|協同學習/翻譯|Co-learning/Translation
+860|混合融合|Hybrid Fusion
+861|特徵層融合|Feature-level Fusion
+862|決策層融合|Decision-level Fusion
+863|特徵拼接|Concatenation
+864|張量融合|Tensor Fusion
+865|注意力融合|Attention-based-Fusion
+866|聯合表徵|Joint Representation
+867|協同表徵|Coordinated Representation
+868|跨模態生成/翻譯|Cross-modal Generation/Translation
+869|跨模態檢索|Cross-modal Retrieval
+870|視覺編碼器|Vision Encoder
+871|語言編碼器|Language Encode
+872|融合機制|Fusion Mechanism
+873|推論速度|Inference Speed
+875|技術可行性|Technical Feasibility
+876|資料可行性|Data Feasibility
+877|資源可行性|Resource Feasibility
+878|組織可行性與準備度|Organizational Feasibility/Readiness
+879|有形效益|Tangible Benefits
+880|無形效益|Intangible Benefits
+881|機會成本|Opportunity Cost
+882|風險識別|Risk Identification
+886|影響|Impact
+887|評估準則|Evaluation Criteria
+889|推理時算力|Test-Time Compute
+891|上下文工程|Context Engineering
+892|小語言模型|Small Language Model
+898|推理與行動框架|ReAct (Reasoning and Acting)
+899|自我反思框架|Reflexion
+900|思維樹|Tree of Thoughts
+901|規劃與執行|Plan-and-Execute
+905|代理式商務|Agentic Commerce
+907|工具調用|Tool Use
+911|代理式檢索增強生成|Agentic Retrieval-Augmented Generation
+919|思維鏈監控|Chain-of-Thought Monitoring
+924|鍵值快取|Key-Value Cache
+926|約束解碼|Constrained Decoding
+927|多代理人辯論|Multi-Agent Debate
+931|情節記憶|Episodic Memory
+932|代理式流程自動化|Agentic Process Automation
+935|長上下文理解|Long Context Understanding
+936|多模態推理|Multimodal Reasoning
+940|草稿鏈寫作|Chain-of-Draft Writing
+946|具語法約束的結構化生成|Structured Generation with Grammar Constraints
+949|工具增強語言模型|Tool Augmented Language Models
+952|語意路徑整合|Semantic Route Integration
