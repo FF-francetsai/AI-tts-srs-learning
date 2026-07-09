@@ -1,0 +1,210 @@
+{
+ "assets": [
+  {
+   "zh_name": "玩家見習士（男）",
+   "design_note": "穿著輕便冒險裝的新手劍士。藍色頭帶與皮革肩甲是主要識別，表情帶點稚氣與決心。",
+   "gen_prompt": "pipoya style chibi pixel sprite, 2-head-tall proportion, black outline, flat colors, white background, front view, full body, blue headband, brown leather vest, short sword, young male adventurer",
+   "style_preset": "pipoya_character",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "玩家見習士（女）",
+   "design_note": "懷抱夢想的少女見習士，粉色蝴蝶結與紅色短披肩展現溫柔下的勇氣，手持輕巧短劍。",
+   "gen_prompt": "pipoya style chibi pixel sprite, 2-head-tall proportion, black outline, flat colors, white background, front view, full body, pink ribbon, red shoulder cape, short sword, young female adventurer",
+   "style_preset": "pipoya_character",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "Isabel",
+   "design_note": "溫柔引導者的化身，潔白長袍與頭頂的柔和光環散發神聖的包容感，手持療癒手杖。",
+   "gen_prompt": "pipoya style chibi pixel sprite, 2-head-tall proportion, black outline, flat colors, white background, front view, full body, white robe, floating golden halo, healing staff",
+   "style_preset": "pipoya_character",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "Dada",
+   "design_note": "散發務實氣息的工匠角色，棕色圍裙與腰間工具袋一眼就能看出手作職人的身分，戴著圓框眼鏡。",
+   "gen_prompt": "pipoya style chibi pixel sprite, 2-head-tall proportion, black outline, flat colors, white background, front view, full body, brown apron, tool belt, round glasses, warm smile",
+   "style_preset": "pipoya_character",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "Kael",
+   "design_note": "嚴肅正直的騎士指揮官，銀色輕鎧與後揚的紅色披風凸顯權威，直立長劍散發不可冒犯的氣場。",
+   "gen_prompt": "pipoya style chibi pixel sprite, 2-head-tall proportion, black outline, flat colors, white background, front view, full body, silver armor, red cape, longsword, stern expression",
+   "style_preset": "pipoya_character",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "Sara",
+   "design_note": "重度書卷氣的分析學者，藍色長斗篷遮住半身，手上厚書與單片眼鏡清楚強調理性與博學特質。",
+   "gen_prompt": "pipoya style chibi pixel sprite, 2-head-tall proportion, black outline, flat colors, white background, front view, full body, blue cloak, thick book, monocle, calm gaze",
+   "style_preset": "pipoya_character",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "Rova",
+   "design_note": "不受拘束的吟遊說書人，葉綠色披肩與羽毛筆體現自由比喻的靈魂，腰間掛著一把小豎琴。",
+   "gen_prompt": "pipoya style chibi pixel sprite, 2-head-tall proportion, black outline, flat colors, white background, front view, full body, green leaf mantle, feather quill, tiny harp, carefree smile",
+   "style_preset": "pipoya_character",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "Moon",
+   "design_note": "沉浸於深邃思維的哲人，深紫斗篷與胸前月亮吊墜是黑夜智慧的印記，手中水晶球旋繞微光。",
+   "gen_prompt": "pipoya style chibi pixel sprite, 2-head-tall proportion, black outline, flat colors, white background, front view, full body, deep purple hooded cloak, crescent moon pendant, crystal orb",
+   "style_preset": "pipoya_character",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "Aura",
+   "design_note": "情感豐沛的詩意少女，鮮花編織的頭冠與隨風飄動的透紗裙襬，身旁浮著一顆發光小精靈。",
+   "gen_prompt": "pipoya style chibi pixel sprite, 2-head-tall proportion, black outline, flat colors, white background, front view, full body, flower crown, translucent skirt, floating light orb, gentle smile",
+   "style_preset": "pipoya_character",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "Liyang",
+   "design_note": "元氣滿滿的運動教練，紅色頭巾綁在額前、穿著運動背心，手上戴著拳擊手套，隨時準備帶動訓練。",
+   "gen_prompt": "pipoya style chibi pixel sprite, 2-head-tall proportion, black outline, flat colors, white background, front view, full body, red headband, athletic tank top, boxing gloves, energetic grin",
+   "style_preset": "pipoya_character",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "Council",
+   "design_note": "擁有博學智慧的老議長，濃密白鬍鬚與尖頂帽散發長者威嚴，手中卷軸權杖象徵匯聚眾多知識的總結之力。",
+   "gen_prompt": "pipoya style chibi pixel sprite, 2-head-tall proportion, black outline, flat colors, white background, front view, full body, long white beard, pointy hat, scroll scepter, wise elderly",
+   "style_preset": "pipoya_character",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "遺忘魔",
+   "design_note": "頭部為遺忘雲霧，手持空白書本象徵記憶流失；紫藍配色傳達失落感，Q版二頭身保持可愛。",
+   "gen_prompt": "pipoya style chibi pixel sprite, 2-head-tall proportion, black outline, flat colors, white background, front view, full body, small demon, cloud-shaped head, blank book, tiny horns, sad eyes, purple body",
+   "style_preset": "pipoya_monster",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "過擬合怪",
+   "design_note": "身體佈滿過度複雜的曲線紋路，打叉雙眼代表模型陷入過擬合；綠色黏液化讓錯誤具象化。",
+   "gen_prompt": "pipoya style chibi pixel sprite, 2-head-tall proportion, black outline, flat colors, white background, front view, full body, slime monster, complex writhing patterns, crossed-out eyes, green ooze body, tentacle bumps",
+   "style_preset": "pipoya_monster",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "梯度幽靈",
+   "design_note": "階梯狀身軀表現梯度下降，手持向下箭頭追尋最低點；鬼魂造型暗示難以捉摸的最優解。",
+   "gen_prompt": "pipoya style chibi pixel sprite, 2-head-tall proportion, black outline, flat colors, white background, front view, full body, ghost, staircase-patterned body, holding downward arrow, wispy tail, blue and white",
+   "style_preset": "pipoya_monster",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "爆炸元素怪",
+   "design_note": "滿身裂痕的火球，頂冒黑煙，代表梯度爆炸；怒眼與橘色強化爆炸的危險警示。",
+   "gen_prompt": "pipoya style chibi pixel sprite, 2-head-tall proportion, black outline, flat colors, white background, front view, full body, small fireball, cracks on body, smoke puff on top, angry eyes, orange",
+   "style_preset": "pipoya_monster",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "震盪史萊姆",
+   "design_note": "波浪邊緣與正弦波圖樣，暈眩眼神刻畫參數震盪；淺藍透明感表現史萊姆特性。",
+   "gen_prompt": "pipoya style chibi pixel sprite, 2-head-tall proportion, black outline, flat colors, white background, front view, full body, slime, wavy edge, sine wave pattern, dizzy eyes, light blue",
+   "style_preset": "pipoya_monster",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "偏見巨像",
+   "design_note": "單眼鏡與放大鏡手代表偏見放大，鎚子手與腳鐐象徵頑固偏誤；矮胖巨像可愛化批判。",
+   "gen_prompt": "pipoya style chibi pixel sprite, 2-head-tall proportion, black outline, flat colors, white background, front view, full body, small chibi giant, monocle, magnifying glass hand, hammer hand, chain on foot, gray",
+   "style_preset": "pipoya_monster",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "記憶結晶",
+   "design_note": "六角晶體儲存並強化長期記憶，藍紫光澤代表智慧的凝聚；尖銳切面暗示記憶的精確切片。",
+   "gen_prompt": "pipoya style chibi pixel sprite, 2-head-tall proportion, black outline, flat colors, white background, front view, full body, no character, single object icon, centered, glowing hexagonal crystal, blue-purple, sharp facets",
+   "style_preset": "icon_item",
+   "size": "64x64"
+  },
+  {
+   "zh_name": "專注沙漏",
+   "design_note": "發光沙粒象徵專注力的流動，頂端星星標記學習目標；金色框架強調時間的珍貴。",
+   "gen_prompt": "pipoya style chibi pixel sprite, 2-head-tall proportion, black outline, flat colors, white background, front view, full body, no character, single object icon, centered, hourglass, glowing sand, star on top, golden frame",
+   "style_preset": "icon_item",
+   "size": "64x64"
+  },
+  {
+   "zh_name": "梯度藥水",
+   "design_note": "藥瓶內分層液體可視化梯度大小，箭頭標籤指向最佳更新方向；玻璃光澤增添物品質感。",
+   "gen_prompt": "pipoya style chibi pixel sprite, 2-head-tall proportion, black outline, flat colors, white background, front view, full body, no character, single object icon, centered, potion bottle, color-layered liquid, arrow label, glass shine",
+   "style_preset": "icon_item",
+   "size": "64x64"
+  },
+  {
+   "zh_name": "泛化之書",
+   "design_note": "書頁網格圖樣從訓練資料抽取出一般規律，發光書緣表示知識的遷移能力；藍色書皮沉穩可靠。",
+   "gen_prompt": "pipoya style chibi pixel sprite, 2-head-tall proportion, black outline, flat colors, white background, front view, full body, no character, single object icon, centered, open book, grid pattern on pages, glowing, blue cover",
+   "style_preset": "icon_item",
+   "size": "64x64"
+  },
+  {
+   "zh_name": "加速晶片",
+   "design_note": "箭頭形晶片加速學習收斂，電路紋路代表運算效能；綠金配色兼具科技與精準。",
+   "gen_prompt": "pipoya style chibi pixel sprite, 2-head-tall proportion, black outline, flat colors, white background, front view, full body, no character, single object icon, centered, chip, arrow shape, circuit lines, green and gold",
+   "style_preset": "icon_item",
+   "size": "64x64"
+  },
+  {
+   "zh_name": "平衡天秤",
+   "design_note": "天秤左腦右心，權衡理性與感性偏差，平衡狀態為最佳學習；金屬質感表現公正無私。",
+   "gen_prompt": "pipoya style chibi pixel sprite, 2-head-tall proportion, black outline, flat colors, white background, front view, full body, no character, single object icon, centered, balance scale, brain on left pan, heart on right pan, balanced",
+   "style_preset": "icon_item",
+   "size": "64x64"
+  },
+  {
+   "zh_name": "認知護盾",
+   "design_note": "盾牌內嵌大腦圖案抵禦錯誤資訊，邊緣波動為認知防禦場；銀藍色系傳達冷靜防護。",
+   "gen_prompt": "pipoya style chibi pixel sprite, 2-head-tall proportion, black outline, flat colors, white background, front view, full body, no character, single object icon, centered, shield with brain emblem, defensive waves on edge, silver and blue",
+   "style_preset": "icon_item",
+   "size": "64x64"
+  },
+  {
+   "zh_name": "靈感火花",
+   "design_note": "金色火花簇碰撞迸發創造力，為突破學習瓶頸的關鍵瞬間；明亮點狀表現靈光一閃。",
+   "gen_prompt": "pipoya style chibi pixel sprite, 2-head-tall proportion, black outline, flat colors, white background, front view, full body, no character, single object icon, centered, cluster of golden sparks, star-like collision, bright",
+   "style_preset": "icon_item",
+   "size": "64x64"
+  },
+  {
+   "zh_name": "入門草原",
+   "design_note": "新手初始草原，遍布簡單標記的訓練石與輕柔微風。適合熟悉基本操作。",
+   "gen_prompt": "Top-down pixel art grassland tiles for RPG. Simple beginner plains with training stones, soft green grass, sunny sky vibe. 512x512.",
+   "style_preset": "rpg_tile_topdown",
+   "size": "512x512"
+  },
+  {
+   "zh_name": "資料森林",
+   "design_note": "資訊密集的迷宮森林，樹木枝葉皆記錄著資料流向，小徑充滿預處理挑戰。",
+   "gen_prompt": "Top-down RPG forest tiles with data streams flowing through trees. Pixel art, dense woods with digital patterns, mysterious atmosphere.",
+   "style_preset": "rpg_tile_topdown",
+   "size": "512x512"
+  },
+  {
+   "zh_name": "神經網路星城",
+   "design_note": "高維度城市，建築物模仿神經元結構，傳送門連結不同層級，是訓練與推理的主場。",
+   "gen_prompt": "Top-down futuristic city tiles resembling neural network nodes and connections. Sci-fi pixel art, glowing synapses, starry background.",
+   "style_preset": "rpg_tile_topdown",
+   "size": "512x512"
+  },
+  {
+   "zh_name": "數據深淵",
+   "design_note": "充滿高維度雜訊的深淵，環境不斷變形，僅有強韌模型才能抵達底層的終極考驗場。",
+   "gen_prompt": "Top-down abyss tiles with chaotic data noise, deep purple and black. Pixel art, dizzying patterns, glowing red edges, dangerous feel.",
+   "style_preset": "rpg_tile_topdown",
+   "size": "512x512"
+  }
+ ],
+ "designer": "HermesAgent 主腦親自 v2",
+ "note": "v1 遭使用者否決；v2 PIPOYA 錨定＋守護者名單；場景沿用 v1",
+ "date": "2026-07-09"
+}
