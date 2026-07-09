@@ -124,6 +124,33 @@ export default {
       }
     }
 
+    // ── /vision 端點：CF Workers AI 視覺理解（sprite QA 等）─────────────
+    // 契約：{image_b64, prompt, max_tokens?} → {text, model}
+    if (path === '/vision') {
+      let body;
+      try { body = await request.json(); } catch {
+        return jsonResp({ error: 'Invalid JSON' }, 400, origin);
+      }
+      const image_b64 = (body.image_b64 || '').trim();
+      const vprompt   = String(body.prompt || 'Describe this image.').slice(0, 2000);
+      if (!image_b64) return jsonResp({ error: 'no image_b64' }, 400, origin);
+      if (!env.AI)    return jsonResp({ error: 'AI binding not available' }, 503, origin);
+      try {
+        const bin   = atob(image_b64);
+        const bytes = new Uint8Array(bin.length);
+        for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+        const VMODEL = '@cf/llava-hf/llava-1.5-7b-hf';
+        const result = await env.AI.run(VMODEL, {
+          image: [...bytes],
+          prompt: vprompt,
+          max_tokens: Math.min(Number(body.max_tokens) || 256, 512),
+        });
+        return jsonResp({ text: result.description || result.text || '', model: VMODEL }, 200, origin);
+      } catch (e) {
+        return jsonResp({ error: 'Vision failed: ' + e.message }, 500, origin);
+      }
+    }
+
     // ── /tts 端點：Edge TTS 雲端代理 ──────────────────────────────────
     if (path === '/tts') {
       let body;

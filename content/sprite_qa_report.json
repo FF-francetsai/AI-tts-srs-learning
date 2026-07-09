@@ -1,0 +1,245 @@
+{
+ "pipeline": {
+  "設計": "HermesAgent 主腦親自（direct_task）",
+  "產圖": "本地 sd_bridge（SD1.5 dreamshaper-8，RTX 3060）",
+  "視覺通道": "CF Workers AI @cf/llava-hf/llava-1.5-7b-hf",
+  "判定": "HermesAgent 主腦親自（批次比對設計 vs 實見）"
+ },
+ "date": "2026-07-09 10:20:07",
+ "pass": 2,
+ "total": 29,
+ "results": [
+  {
+   "zh_name": "玩家見習士（男）",
+   "file": "00_pipoya_character_young_male_cadet_in_acad.png",
+   "seen": "The sprite is a cartoon character with a black and white col",
+   "score": 1,
+   "verdict": "重製",
+   "reason": "實際為黑白配色且無學院制服與數據板，主體與設計理念完全不符。"
+  },
+  {
+   "zh_name": "玩家見習士（女）",
+   "file": "01_pipoya_character_young_female_cadet_in_ac.png",
+   "seen": "The sprite is a cartoon-like character with a blue shirt and",
+   "score": 1,
+   "verdict": "重製",
+   "reason": "持槍而非水晶杖，無馬尾與鑲金邊制服，不符合女見習士設計。"
+  },
+  {
+   "zh_name": "Isabel（溫柔引導）",
+   "file": "02_pipoya_character_gentle_female_guardian.png",
+   "seen": "The sprite is a cartoon character with a pink face and a bla",
+   "score": 1,
+   "verdict": "重製",
+   "reason": "黑白服裝與手提包，無長袍與光球，無法辨識為溫柔引導者。"
+  },
+  {
+   "zh_name": "Dada（務實）",
+   "file": "03_pipoya_character_practical_male_guardian.png",
+   "seen": "The sprite is a cartoon character with a yellow shirt and bl",
+   "score": 1,
+   "verdict": "重製",
+   "reason": "黃衫藍褲持劍，與褐色夾克工程師形象完全不符。"
+  },
+  {
+   "zh_name": "Kael（嚴格正式）",
+   "file": "04_pipoya_character_strict_male_guardian_in.png",
+   "seen": "The sprite is a young woman with long black hair and a black",
+   "score": 2,
+   "verdict": "重製",
+   "reason": "雖有黑衣元素，但無肩章星徽等軍官特徵，不符合嚴格軍官設計。"
+  },
+  {
+   "zh_name": "Sara（理性分析）",
+   "file": "05_pipoya_character_rational_female_guardian.png",
+   "seen": "The sprite is a black and white checkered pattern, possibly ",
+   "score": 1,
+   "verdict": "重製",
+   "reason": "呈現棋盤格圖案而非理性分析家，主體錯誤。"
+  },
+  {
+   "zh_name": "Rova（自由比喻）",
+   "file": "06_pipoya_character_free_spirited_female_gua.png",
+   "seen": "The sprite is a young girl with pink hair, wearing a black a",
+   "score": 1,
+   "verdict": "重製",
+   "reason": "黑白裙子且無畫筆法杖，與彩色長裙藝術家設計不符。"
+  },
+  {
+   "zh_name": "Moon（深沉哲學）",
+   "file": "07_pipoya_character_deep_philosopher_male_gu.png",
+   "seen": "The sprite is a woman wearing a black dress and a blue scarf",
+   "score": 1,
+   "verdict": "重製",
+   "reason": "持黃傘且無長袍與書卷，無法對應深沉哲人形象。"
+  },
+  {
+   "zh_name": "Aura（詩意感性）",
+   "file": "08_pipoya_character_poetic_female_guardian.png",
+   "seen": "The sprite is a woman with blonde hair and a black and white",
+   "score": 1,
+   "verdict": "重製",
+   "reason": "黑白裙子且無光點與銀河長髮，不符合詩意感性的夢幻設計。"
+  },
+  {
+   "zh_name": "Liyang（活力教練）",
+   "file": "09_pipoya_character_energetic_male_guardian.png",
+   "seen": "The sprite is a cartoon-like character with red hair and a r",
+   "score": 2,
+   "verdict": "重製",
+   "reason": "紅色跑步服裝非橙白輕甲，無頭帶與握拳蓄能，活力元素雖在但整體不符。"
+  },
+  {
+   "zh_name": "Council（博學總結）",
+   "file": "10_pipoya_character_wise_council_guardian_t.png",
+   "seen": "The sprite is a cartoon character with a yellow head, wearin",
+   "score": 1,
+   "verdict": "重製",
+   "reason": "黑黃服色與無卷軸多臂，與紫金長袍智者完全不符。"
+  },
+  {
+   "zh_name": "遺忘魔",
+   "file": "11_pipoya_monster_A_monster_made_of_dissol.png",
+   "seen": "The skeleton is wearing a purple shirt and has a red stick.",
+   "score": 1,
+   "verdict": "重製",
+   "reason": "呈現為骷髏而非半溶解書頁怪，主體錯誤。"
+  },
+  {
+   "zh_name": "過擬合怪",
+   "file": "12_pipoya_monster_A_creature_covered_in_ta.png",
+   "seen": "The sprite is a green and purple object with a black outline",
+   "score": 1,
+   "verdict": "重製",
+   "reason": "頭形戴帽物體而非數據雕塑，無法對應過擬合怪設計。"
+  },
+  {
+   "zh_name": "梯度幽靈",
+   "file": "13_pipoya_monster_A_translucent_ghost_fadi.png",
+   "seen": "The sprite is a green and yellow object with a shape resembl",
+   "score": 1,
+   "verdict": "重製",
+   "reason": "形似瓶子而非半透明霧狀幽靈，主體錯誤。"
+  },
+  {
+   "zh_name": "爆炸元素怪",
+   "file": "14_pipoya_monster_An_unstable_elemental_cr.png",
+   "seen": "The sprite is a person wearing a black shirt and yellow pant",
+   "score": 1,
+   "verdict": "重製",
+   "reason": "普通人形而非不穩定元素生物，完全不符。"
+  },
+  {
+   "zh_name": "震盪史萊姆",
+   "file": "15_pipoya_monster_A_bouncy_slime_monster_o.png",
+   "seen": "The object is a green and black bird with a yellow beak. It ",
+   "score": 1,
+   "verdict": "重製",
+   "reason": "呈現為鳥而非彈性膠質史萊姆，主體錯誤。"
+  },
+  {
+   "zh_name": "偏見巨像",
+   "file": "16_pipoya_monster_A_massive_stone_golem_ca.png",
+   "seen": "A woman in a pink shirt and black skirt is standing with her",
+   "score": 1,
+   "verdict": "重製",
+   "reason": "女性角色而非巨石像，主體錯誤。"
+  },
+  {
+   "zh_name": "記憶結晶",
+   "file": "17_icon_item_A_glowing_blue_crystal_w.png",
+   "seen": "The sprite is blue and has a shape that resembles a person. ",
+   "score": 1,
+   "verdict": "重製",
+   "reason": "人形而非藍色晶體，主體錯誤。"
+  },
+  {
+   "zh_name": "專注沙漏",
+   "file": "18_icon_item_A_magical_hourglass_with.png",
+   "seen": "The image is a pixel art of a person wearing a black shirt a",
+   "score": 1,
+   "verdict": "重製",
+   "reason": "人物圖像而非沙漏，主體錯誤。"
+  },
+  {
+   "zh_name": "梯度藥水",
+   "file": "19_icon_item_A_potion_bottle_filled_w.png",
+   "seen": "The sprite is a red and white checkered pattern, with a red ",
+   "score": 1,
+   "verdict": "重製",
+   "reason": "棋盤格圖案而非玻璃藥水瓶，主體錯誤。"
+  },
+  {
+   "zh_name": "泛化之書",
+   "file": "20_icon_item_An_open_spellbook_with_p.png",
+   "seen": "The sprite is a person wearing a white shirt and black pants",
+   "score": 1,
+   "verdict": "重製",
+   "reason": "人物站立而非魔法書，主體錯誤。"
+  },
+  {
+   "zh_name": "加速晶片",
+   "file": "21_icon_item_A_futuristic_microchip_w.png",
+   "seen": "The image is a pixel art of a person wearing a white shirt.",
+   "score": 1,
+   "verdict": "重製",
+   "reason": "人物圖像而非微型晶片，主體錯誤。"
+  },
+  {
+   "zh_name": "平衡天秤",
+   "file": "22_icon_item_A_balance_scale_with_per.png",
+   "seen": "The image features a blue and white character with a flowing",
+   "score": 1,
+   "verdict": "重製",
+   "reason": "類似美人魚角色而非魔法天秤，主體錯誤。"
+  },
+  {
+   "zh_name": "認知護盾",
+   "file": "23_icon_item_A_round_shield_etched_wi.png",
+   "seen": "The image is a pixel art of a person wearing a white shirt.",
+   "score": 1,
+   "verdict": "重製",
+   "reason": "人物圖像而非護盾，主體錯誤。"
+  },
+  {
+   "zh_name": "靈感火花",
+   "file": "24_icon_item_A_spark_of_inspiration_c.png",
+   "seen": "The image is a pixel art of a person wearing a red shirt.",
+   "score": 1,
+   "verdict": "重製",
+   "reason": "人物圖像而非火花石，主體錯誤。"
+  },
+  {
+   "zh_name": "入門草原",
+   "file": "25_rpg_tile_topdown_Top_down_pixel_art_grass.png",
+   "seen": "The image is a pixel art depiction of a man standing in a fi",
+   "score": 3,
+   "verdict": "通過",
+   "reason": "田野場景基本符合草原設定，雖缺少訓練石但可辨識為入門草原。"
+  },
+  {
+   "zh_name": "資料森林",
+   "file": "26_rpg_tile_topdown_Top_down_RPG_forest_tile.png",
+   "seen": "The image is a pixel art depiction of a forest with trees an",
+   "score": 4,
+   "verdict": "通過",
+   "reason": "森林與路徑明顯呈現，符合資料森林場景設計。"
+  },
+  {
+   "zh_name": "神經網路星城",
+   "file": "27_rpg_tile_topdown_Top_down_futuristic_city.png",
+   "seen": "The image is a pixel art of a green square with a yellow squ",
+   "score": 1,
+   "verdict": "重製",
+   "reason": "抽象方塊非高維度城市，主體完全錯誤。"
+  },
+  {
+   "zh_name": "數據深淵",
+   "file": "28_rpg_tile_topdown_Top_down_abyss_tiles_wit.png",
+   "seen": "The image is a pixel art game sprite of a person wearing a b",
+   "score": 1,
+   "verdict": "重製",
+   "reason": "人物角色而非深淵場景，主體完全錯誤。"
+  }
+ ]
+}
