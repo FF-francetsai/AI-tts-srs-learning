@@ -67,6 +67,7 @@
     <div class="player-cleared" id="pc-cleared">已通關：0 / 9 星域</div>
     <div class="player-cleared" id="pc-streak" style="margin-top:2px;">🔥 連勝：0 天</div>
     <button id="daily-boss-btn" onclick="openDailyBoss()" style="margin-top:8px;width:100%;padding:6px;border:1px solid rgba(251,191,36,.5);border-radius:8px;background:rgba(251,191,36,.12);color:#fbbf24;font-weight:600;cursor:pointer;">⚔️ 每日 Boss 戰</button>
+    <button id="py-tower-btn" onclick="openPyTower()" style="margin-top:6px;width:100%;padding:6px;border:1px solid rgba(74,222,128,.5);border-radius:8px;background:rgba(74,222,128,.10);color:#4ade80;font-weight:600;cursor:pointer;">🐍 Python 試煉塔</button>
     <div class="item-bar-label">道具</div>
     <div class="item-bar" id="item-bar"></div>
   </div>
@@ -82,7 +83,59 @@
     <button onclick="document.getElementById('boss-overlay').style.display='none'" style="margin-top:12px;width:100%;padding:8px;border:none;border-radius:8px;background:#1e293b;color:#e2e8f0;cursor:pointer;">關閉</button>
   </div>
 </div>
+<!-- Python 試煉塔 overlay（python-tower.js 模組） -->
+<div id="pytower-overlay" style="display:none;position:fixed;inset:0;background:rgba(2,6,23,.88);z-index:99;align-items:center;justify-content:center;">
+  <div style="max-width:480px;width:94%;max-height:88vh;overflow-y:auto;background:#0f172a;border:1px solid rgba(74,222,128,.4);border-radius:16px;padding:20px;">
+    <div style="font-size:1.05rem;font-weight:700;color:#4ade80;" id="pt-title">🐍 Python 試煉塔</div>
+    <div style="font-size:.85rem;opacity:.8;margin:6px 0;" id="pt-floor"></div>
+    <div style="font-size:.95rem;line-height:1.6;margin:8px 0;" id="pt-question"></div>
+    <pre id="pt-code" style="display:none;background:#0b1020;border:1px solid #1e293b;border-radius:8px;padding:10px;font-size:.82rem;overflow-x:auto;white-space:pre-wrap;"></pre>
+    <div id="pt-choices"></div>
+    <div id="pt-result" style="margin-top:10px;font-size:.88rem;line-height:1.5;min-height:1.2em;"></div>
+    <div style="display:flex;gap:8px;margin-top:12px;">
+      <button onclick="pyTowerNext()" id="pt-next" style="flex:1;padding:8px;border:none;border-radius:8px;background:rgba(74,222,128,.18);color:#4ade80;cursor:pointer;font-weight:600;">下一題</button>
+      <button onclick="document.getElementById('pytower-overlay').style.display='none'" style="flex:1;padding:8px;border:none;border-radius:8px;background:#1e293b;color:#e2e8f0;cursor:pointer;">離開</button>
+    </div>
+  </div>
+</div>
 <script>
+var _ptQ = null;
+function openPyTower(){
+  if(!window.PythonTower || !window.PYTHON_QUIZ_POOL || !window.PYTHON_QUIZ_POOL.length){
+    alert('Python 題庫載入中（每日 04:10 自動更新），請稍後再試'); return;
+  }
+  document.getElementById('pytower-overlay').style.display='flex';
+  pyTowerNext();
+}
+function pyTowerNext(){
+  var T=window.PythonTower, st=T.getStatus();
+  document.getElementById('pt-result').textContent='';
+  if(st.cleared){
+    document.getElementById('pt-floor').textContent='🏆 已登頂！共答對 '+st.totalCorrect+' 題';
+    document.getElementById('pt-question').textContent='恭喜完成全部 12 層試煉，你已具備 iPAS 中級 Python 實戰力！';
+    document.getElementById('pt-code').style.display='none';
+    document.getElementById('pt-choices').innerHTML=''; return;
+  }
+  _ptQ=T.getQuestion();
+  if(!_ptQ){ document.getElementById('pt-question').textContent='本層題目暫時用完，題庫每日擴充，明天再來！'; document.getElementById('pt-choices').innerHTML=''; return; }
+  document.getElementById('pt-floor').textContent='第 '+st.floor+' 層（'+st.stage+'）｜本層連對 '+st.floorProgress+'/3｜累計答對 '+st.totalCorrect;
+  document.getElementById('pt-question').textContent=_ptQ.question;
+  var code=document.getElementById('pt-code');
+  if(_ptQ.code_block && _ptQ.code_block.trim()){ code.textContent=_ptQ.code_block; code.style.display='block'; } else { code.style.display='none'; }
+  document.getElementById('pt-choices').innerHTML=_ptQ.choices.map(function(c,i){
+    return '<button onclick="pyTowerAnswer('+i+')" style="display:block;width:100%;margin:6px 0;padding:8px;border:1px solid rgba(148,163,184,.35);border-radius:8px;background:#1e293b;color:#e2e8f0;cursor:pointer;text-align:left;font-size:.88rem;">'+String.fromCharCode(65+i)+'. '+c+'</button>';
+  }).join('');
+}
+function pyTowerAnswer(i){
+  var r=window.PythonTower.submitAnswer(i);
+  var el=document.getElementById('pt-result');
+  if(r.correct){
+    el.innerHTML='✅ 正確！'+(r.advanced?'🎉 <b>升上第 '+r.newFloor+' 層！</b>':'本層連對 '+r.floorProgress+'/3')+'<div style="opacity:.8;margin-top:4px;">'+(r.explanation||'')+'</div>';
+  } else {
+    el.innerHTML='❌ 答錯，本層連對歸零。<div style="opacity:.8;margin-top:4px;">'+(r.explanation||'')+'</div>';
+  }
+  document.getElementById('pt-choices').innerHTML='';
+}
 function openDailyBoss(){
   var ov=document.getElementById('boss-overlay');
   if(!window.RPGChallenge){ alert('每日挑戰模組載入中，請稍後再試'); return; }
@@ -301,6 +354,8 @@ document.addEventListener('DOMContentLoaded',function(){
 <script src="data.js"></script>
 <script src="daily_pool.js"></script>
 <script src="rpg-challenge.js"></script>
+<script src="python_quizzes.js"></script>
+<script src="python-tower.js"></script>
 <script src="rpg-maps.js"></script>
 <script src="rpg-data.js"></script>
 <script src="rpg-design.js"></script>
