@@ -87,9 +87,10 @@ class Reflection {
     };
   }
 
-  /** 組裝 LLM prompt */
+  /** 組裝 LLM prompt（有 persona 檔則帶入小金式人設，見 rpg-npc-personas.js） */
   _buildPrompt(strategy, stats) {
-    const base = `你是星際聯盟 NPC「${this.npcName}」，正在引導玩家學習。`;
+    const persona = (typeof buildNpcPersonaPrompt === 'function') ? buildNpcPersonaPrompt(this.npcName) : null;
+    const base = persona || `你是星際聯盟 NPC「${this.npcName}」，正在引導玩家學習。`;
     const statStr = `玩家目前答對 ${stats.correct} 題，答錯 ${stats.wrong} 題，正確率 ${(stats.correctRatio*100).toFixed(0)}%。`;
     const taskMap = {
       encourage: '請用一句話鼓勵玩家，並暗示可以挑戰更難的內容。',
@@ -219,7 +220,9 @@ class Planning {
 
   /** 呼叫 LLM 生成更精細的教學建議（可選） */
   async _llmEnrichPlan(plan, stats) {
-    const prompt = `你是 NPC「${this.npcName}」。玩家正確率 ${(stats.correctRatio*100).toFixed(0)}%，` +
+    const persona = (typeof buildNpcPersonaPrompt === 'function') ? buildNpcPersonaPrompt(this.npcName) : null;
+    const prompt = (persona ? persona + '\n' : '') +
+      `你是 NPC「${this.npcName}」。玩家正確率 ${(stats.correctRatio*100).toFixed(0)}%，` +
       `下一題難度「${plan.difficulty}」，知識點「${plan.topic}」。` +
       `請用一句話（30字內）建議如何引導玩家學習這個知識點。`;
     const resp = await fetch(this.llmEndpoint, {
