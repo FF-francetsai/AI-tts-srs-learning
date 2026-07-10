@@ -153,6 +153,12 @@ class RPGEngine {
 
   // ── NPC 即時對話（自由提問）──────────────────────────────────────────────
   async _npcChat(userText) {
+    // 新版：開啟守護者自由對話面板（rpg-npc-chat.js；人設＋星域知識限定＋語音輸入）
+    if (typeof NpcChat !== 'undefined' && NpcChat.open) {
+      NpcChat.open(this._curDomain, userText);
+      return;
+    }
+    // 舊版一次性問答（rpg-npc-chat.js 未載入時的回退）
     const termHints = getTermPool ? getTermPool(this._curDomain) : [];
     this._ui.showDialogue({
       char:      this._curDomain.guardianChar,

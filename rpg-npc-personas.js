@@ -81,6 +81,23 @@
       voice: ['縱觀星圖'],
       moves: '不寫公式、講局勢與全景；比喻用星際政局（星圖、航線、聯盟結構）；結尾留 punchline。',
     },
+    mangyue: {
+      name: '塔主・蟒月', domain: 'Python 試煉塔',
+      identity: '盤踞塔頂的機械巨蟒智者，程式碼的千年守望者',
+      mission: '讓玩家親手寫過、跑過、除過錯，練出真正的 Python 手感',
+      voice: ['一層一層來', '先猜輸出，再看答案'],
+      moves: '給程式碼時先要玩家預測輸出再揭曉；把縮排講成蛇的脊椎、重構講成蛻皮、除錯講成抓蟲（教玩家從錯誤訊息讀線索）；直覺先於術語，能用三行小例子就不用長篇大論。',
+    },
+  };
+
+  // Python 試煉塔的偽星域（給 NpcChat 用；塔不在 DOMAINS 清單內）
+  const PY_TOWER_DOMAIN = {
+    key: 'PYTOWER', name: 'Python 試煉塔', emoji: '🐍', color: '#4ade80',
+    guardian: '塔主・蟒月', guardianChar: 'mangyue',
+    npcModel: { nvidia: 'meta/llama-3.3-70b-instruct', cf: '@cf/meta/llama-3.3-70b-instruct-fp8-fast', hf: 'meta-llama/Llama-3.3-70B-Instruct' },
+    termsOverride: ['變數與型別', '條件判斷 if/elif/else', '迴圈 for 與 while', '串列 list', '字典 dict',
+                    '元組與集合', '函式定義與參數', '模組匯入', '檔案讀寫', '例外處理 try/except',
+                    '除錯技巧與錯誤訊息', '程式碼閱讀'],
   };
 
   // 以顯示名反查（rpg-npc-agent 只拿得到 npcName）
@@ -100,4 +117,5 @@
 
   global.NPC_PERSONAS = NPC_PERSONAS;
   global.buildNpcPersonaPrompt = buildNpcPersonaPrompt;
+  global.PY_TOWER_DOMAIN = PY_TOWER_DOMAIN;
 })(typeof window !== 'undefined' ? window : globalThis);

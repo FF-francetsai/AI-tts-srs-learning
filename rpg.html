@@ -94,6 +94,7 @@
     <div id="pt-result" style="margin-top:10px;font-size:.88rem;line-height:1.5;min-height:1.2em;"></div>
     <div style="display:flex;gap:8px;margin-top:12px;">
       <button onclick="pyTowerNext()" id="pt-next" style="flex:1;padding:8px;border:none;border-radius:8px;background:rgba(74,222,128,.18);color:#4ade80;cursor:pointer;font-weight:600;">下一題</button>
+      <button onclick="if(window.NpcChat&&window.PY_TOWER_DOMAIN)NpcChat.open(PY_TOWER_DOMAIN)" style="flex:1;padding:8px;border:1px solid rgba(74,222,128,.5);border-radius:8px;background:rgba(74,222,128,.10);color:#4ade80;cursor:pointer;font-weight:600;">💬 問塔主</button>
       <button onclick="document.getElementById('pytower-overlay').style.display='none'" style="flex:1;padding:8px;border:none;border-radius:8px;background:#1e293b;color:#e2e8f0;cursor:pointer;">離開</button>
     </div>
   </div>
@@ -1707,7 +1708,9 @@ function _typewriter(el, text, done, speed=28) {
 <!-- ════════════════════════════════════════════════
      遊戲引擎
 ════════════════════════════════════════════════ -->
+<script src="js/voice.js?v=7.0"></script>
 <script src="rpg-npc-personas.js"></script>
+<script src="rpg-npc-chat.js"></script>
 <script src="rpg-npc-agent.js"></script>
 <script src="rpg.js"></script>
 <script>
