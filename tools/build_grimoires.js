@@ -14,6 +14,9 @@ eval(dataSrc + ';globalThis.__LESSON=lessonData;');
 const LESSON = globalThis.__LESSON;
 require(path.join(ROOT, 'python_quizzes.js'));
 const PYQ = global.PYTHON_QUIZ_POOL || [];
+// 治理題庫（工作包⑥）：gov_quizzes.js 尚未產出時視為空池（各卷出佔位頁）
+let GOVQ = [];
+try { require(path.join(ROOT, 'gov_quizzes.js')); GOVQ = global.GOV_QUIZ_POOL || []; } catch (e) {}
 
 // DOMAINS：只取定義段（rpg-data.js 後半依賴瀏覽器環境）
 const rpgDataSrc = fs.readFileSync(path.join(ROOT, 'rpg-data.js'), 'utf8');
@@ -52,6 +55,13 @@ const TOWER_BOOKS = [
   { stage: 'P1', name: '《蟒月秘傳・纏繞篇》', rarity: 2, floor: 4 },
   { stage: 'P2', name: '《蟒月秘傳・毒牙篇》', rarity: 3, floor: 7 },
   { stage: 'P3', name: '《蟒月秘傳・登頂篇》', rarity: 4, floor: 10 },
+];
+// 星律寶典四卷（治理法庭，工作包⑥）：line 對應 GovQuizBank 四線；rank＝法庭該線位階解鎖門檻
+const GOV_BOOKS = [
+  { line: 'GOV', name: '《星律寶典・基本法卷》', rarity: 2, rank: 1, lineZh: '法規治理' },
+  { line: 'TAL', name: '《星律寶典・人才卷》',   rarity: 2, rank: 1, lineZh: '人才職能' },
+  { line: 'IND', name: '《星律寶典・產業卷》',   rarity: 3, rank: 1, lineZh: '產業案例' },
+  { line: 'PM',  name: '《星律寶典・專案卷》',   rarity: 3, rank: 1, lineZh: '專案規劃' },
 ];
 const MAX_PAGES = 60;
 const SUBJ_ORDER = s => (s || '').startsWith('初') ? 0 : ((s || '').startsWith('中') ? 1 : 2);
@@ -118,6 +128,36 @@ for (const tb of TOWER_BOOKS) {
         code: ex && ex.code_block ? clip(ex.code_block, 300) : '',
         ans: ex ? ('答案：' + (ex['opt_' + ex.answer] || ex.answer)) : '',
         deep: ex ? clip(ex.explanation, 200) : '',
+      };
+    }),
+  });
+}
+
+// 4 卷星律寶典：治理題庫依主題成頁（情境＋題幹＋答案＋詳解），題庫每日長、卷自動增頁
+for (const gb of GOV_BOOKS) {
+  const qs = GOVQ.filter(q => q.line === gb.line);
+  const topics = [...new Set(qs.map(q => q.topic))];
+  books.push({
+    id: 'book_gov_' + gb.line.toLowerCase(),
+    name: gb.name,
+    rarity: gb.rarity, rarityName: RARITY[gb.rarity].name, color: RARITY[gb.rarity].color,
+    emoji: '⚖️', guardian: '大法官・司律', domainKey: 'GOVCOURT',
+    unlock: { type: 'gov', line: gb.line, rank: gb.rank,
+              hint: `治理法庭「${gb.lineZh}」線晉升 ${gb.rank} 階解鎖` },
+    pages: topics.length === 0 ? [{
+      t: '卷冊擴充中',
+      def: `本卷對應「${gb.lineZh}」線題庫，每日凌晨由治理出題管線自動擴充，新判例入庫後此卷會自動增頁。先去治理法庭歷練吧！`,
+      deep: '（大法官・司律：律法如星軌，一條一條看清楚，急不得。）',
+    }] : topics.slice(0, MAX_PAGES).map(topic => {
+      const tq = qs.filter(q => q.topic === topic);
+      const ex = tq.find(q => q.q_type === 'scenario' && q.scenario) || tq[0];
+      return {
+        t: topic,
+        e: `${gb.lineZh}・${tq.length} 題判例`,
+        def: ex.scenario ? clip(ex.scenario, 140) : clip(ex.question, 140),
+        goal: ex.scenario ? clip(ex.question, 80) : '',
+        ans: '判決：' + (ex['opt_' + ex.answer] || ex.answer),
+        deep: clip(ex.explanation, 200),
       };
     }),
   });

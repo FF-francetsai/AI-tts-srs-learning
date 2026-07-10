@@ -1,4 +1,4 @@
-// rpg-grimoire.js — 秘笈背包＋隨身翻閱介面
+// rpg-grimoire.js — 秘笈背包＋隨身翻閱介面（v2：新增 ☰ 目錄＋🔍 即時搜尋）
 // 資料：grimoires.js（tools/build_grimoires.js 自動編譯）；解鎖依 RPG 進度與試煉塔層數。
 (function (global) {
   'use strict';
@@ -19,6 +19,11 @@
 
   function _unlocked(book, prog) {
     if (book.unlock.type === 'tower') return prog.floor >= book.unlock.floor;
+    if (book.unlock.type === 'gov') {
+      let gc = {};
+      try { gc = JSON.parse(localStorage.getItem('gov_court_v1')) || {}; } catch (e) {}
+      return ((gc.ranks || {})[book.unlock.line] || 0) >= book.unlock.rank;
+    }
     const d = _domains().find(x => x.key === book.unlock.key);
     if (!d) return true;
     return !d.unlockAfter || prog.cleared.includes(d.unlockAfter);
@@ -29,6 +34,10 @@
     const m = _marks(); m[bookId] = idx;
     try { localStorage.setItem(READ_KEY, JSON.stringify(m)); } catch (e) {}
   }
+
+  // 搜尋用：去 HTML 標籤取純文字／插回 HTML 前跳脫
+  function _plain(s) { return String(s || '').replace(/<[^>]*>/g, ' '); }
+  function _esc(s)   { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 
   // ── 書架 ────────────────────────────────────────────────────────────────
   let _shelf = null, _reader = null;
@@ -80,17 +89,26 @@
     wrap.id = 'grimoire-reader';
     wrap.style.cssText = 'position:fixed;inset:0;z-index:8600;background:rgba(2,6,23,.94);display:flex;align-items:center;justify-content:center;padding:10px';
     wrap.innerHTML =
-      `<div style="width:min(520px,96vw);max-height:88vh;display:flex;flex-direction:column;background:#0f172a;border:1.5px solid ${b.color};border-radius:14px;overflow:hidden">` +
+      `<div style="width:min(520px,96vw);max-height:88vh;display:flex;flex-direction:column;background:#0f172a;border:1.5px solid ${b.color};border-radius:14px;overflow:hidden;position:relative">` +
       `<div style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:#1e293b">` +
       `<span style="font-size:18px">${b.emoji || '📖'}</span>` +
       `<div style="flex:1;color:${b.color};font-weight:700;font-size:14px">${b.name}</div>` +
+      `<button id="gr-toc" title="目錄／搜尋" style="background:none;border:none;color:#94a3b8;font-size:19px;cursor:pointer;padding:0 4px">☰</button>` +
       `<button id="gr-close" style="background:none;border:none;color:#94a3b8;font-size:20px;cursor:pointer">✕</button></div>` +
       `<div id="gr-page" style="flex:1;overflow-y:auto;padding:16px;min-height:220px"></div>` +
       `<div style="display:flex;align-items:center;gap:8px;padding:10px;background:#1e293b">` +
       `<button id="gr-prev" style="padding:8px 16px;border:1px solid #334155;border-radius:8px;background:#0f172a;color:#e2e8f0;cursor:pointer">← 上頁</button>` +
       `<div id="gr-no" style="flex:1;text-align:center;color:#94a3b8;font-size:12px"></div>` +
       `<button id="gr-next" style="padding:8px 16px;border:1px solid #334155;border-radius:8px;background:#0f172a;color:#e2e8f0;cursor:pointer">下頁 →</button>` +
-      `</div></div>`;
+      `</div>` +
+      // ── v2：目錄＋搜尋面板（蓋在頁面區上方，同一面板：無關鍵字＝目錄，有關鍵字＝搜尋結果）──
+      `<div id="gr-panel" style="position:absolute;inset:0;display:none;flex-direction:column;background:rgba(15,23,42,.97);z-index:5">` +
+      `<div style="display:flex;align-items:center;gap:8px;padding:10px 12px;background:#1e293b">` +
+      `<input id="gr-q" type="search" placeholder="🔍 搜尋本卷（標題／內文／程式碼）" ` +
+      `style="flex:1;padding:8px 10px;border:1px solid #334155;border-radius:8px;background:#0b1020;color:#e2e8f0;font-size:13px;outline:none">` +
+      `<button id="gr-panel-close" style="background:none;border:none;color:#94a3b8;font-size:19px;cursor:pointer">✕</button></div>` +
+      `<div id="gr-list" style="flex:1;overflow-y:auto;padding:8px 10px"></div></div>` +
+      `</div>`;
     document.body.appendChild(wrap);
     _reader = wrap;
 
@@ -109,6 +127,51 @@
       wrap.querySelector('#gr-no').textContent = `第 ${idx + 1} / ${b.pages.length} 頁`;
       _saveMark(bookId, idx);
     };
+
+    // ── v2：目錄＋搜尋 ──
+    const panel = wrap.querySelector('#gr-panel');
+    const input = wrap.querySelector('#gr-q');
+    const listEl = wrap.querySelector('#gr-list');
+
+    const hidePanel = () => { panel.style.display = 'none'; };
+    const renderList = q => {
+      q = (q || '').trim().toLowerCase();
+      let html = '', hits = 0;
+      b.pages.forEach((p, i) => {
+        let snippet = '';
+        if (q) {
+          const hay = _plain([p.t, p.e, p.def, p.code, p.ans, p.goal, p.deep].join(' '));
+          const pos = hay.toLowerCase().indexOf(q);
+          if (pos < 0) return;
+          const s = Math.max(0, pos - 18);
+          snippet = (s > 0 ? '…' : '') + hay.slice(s, pos + q.length + 42).trim() + '…';
+        }
+        hits++;
+        const cur = i === idx;
+        html +=
+          `<div data-p="${i}"${cur ? ' data-cur="1"' : ''} style="cursor:pointer;padding:8px 10px;border-radius:8px;margin-bottom:2px;` +
+          `${cur ? `background:#1e293b;border-left:3px solid ${b.color}` : 'border-left:3px solid transparent'}">` +
+          `<div style="color:${cur ? b.color : '#e2e8f0'};font-size:13px;font-weight:${cur ? 700 : 400}">${i + 1}. ${_esc(_plain(p.t)) || '（無標題）'}${cur ? '　◀ 目前' : ''}</div>` +
+          (snippet ? `<div style="color:#94a3b8;font-size:11px;margin-top:2px;line-height:1.5">${_esc(snippet)}</div>` : '') +
+          `</div>`;
+      });
+      listEl.innerHTML = (q && !hits)
+        ? '<div style="color:#64748b;text-align:center;padding:28px 0;font-size:13px">找不到符合「' + _esc(q) + '」的內容</div>'
+        : html;
+      listEl.querySelectorAll('[data-p]').forEach(el => {
+        el.onclick = () => { idx = +el.getAttribute('data-p'); render(); hidePanel(); };
+      });
+    };
+    const showPanel = () => {
+      panel.style.display = 'flex';
+      renderList(input.value);
+      const cur = listEl.querySelector('[data-cur]');
+      if (cur && !input.value.trim()) cur.scrollIntoView({ block: 'center' });
+    };
+    wrap.querySelector('#gr-toc').onclick = showPanel;
+    wrap.querySelector('#gr-panel-close').onclick = hidePanel;
+    input.oninput = () => renderList(input.value);
+
     wrap.querySelector('#gr-close').onclick = closeReader;
     wrap.querySelector('#gr-prev').onclick = () => { if (idx > 0) { idx--; render(); } };
     wrap.querySelector('#gr-next').onclick = () => { if (idx < b.pages.length - 1) { idx++; render(); } };

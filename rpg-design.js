@@ -319,7 +319,9 @@ const _DOMAIN_GUARDIAN = {
   ADV:'council', CORE:'atlas'
 };
 
-const PLANET_TC = {};
+// 不重複宣告：rpg-maps.js 已有 const PLANET_TC（硬編碼版），這裡取得同一物件
+// 並以 SCENE_PALETTE 衍生值逐 key 覆蓋（rpg-design.js 後載入，設計版為準）。
+const _PLANET_TC_DERIVED = (typeof PLANET_TC !== 'undefined') ? PLANET_TC : (globalThis.PLANET_TC = {});
 Object.entries(SCENE_PALETTE).forEach(([dKey, pal]) => {
   const gKey = _DOMAIN_GUARDIAN[dKey];
   if (!gKey) return;
@@ -327,7 +329,7 @@ Object.entries(SCENE_PALETTE).forEach(([dKey, pal]) => {
   const t0 = ts.find(t=>t.id===0) || {};
   const t3 = ts.find(t=>t.id===3) || {};
   const t8 = ts.find(t=>t.id===8) || {};
-  PLANET_TC[gKey] = {
+  _PLANET_TC_DERIVED[gKey] = {
     0: t0.topColor   || pal.topColor,
     1: t0.leftColor  || pal.leftColor,
     2: pal.accentColor,

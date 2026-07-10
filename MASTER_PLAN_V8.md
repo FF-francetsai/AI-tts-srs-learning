@@ -78,6 +78,32 @@
 
 每包完成即 TG 回報（@AiHOClaudeCodebot），使用者確認後才進下一包。
 
+## 4-B. 工作包⑤：Python 學習線（2026-07-10 使用者新增）
+
+> 動機：iPAS 中級中科二／中科三各佔 25% Python 相關命題。要求「從新手入門如何學/寫 Python，到看懂與頂級專業辨識運用」全程覆蓋，題庫在試算表**獨立分頁**儲存/讀取。
+
+| 步驟 | 內容 | 負責 | 狀態 |
+|---|---|---|---|
+| ⑤-1 | 試算表新分頁「Python課程表」＋「PythonQuizBank」（含 schema 表頭） | Claude | ✅ 2026-07-10 |
+| ⑤-2 | 課綱設計 P0 入門→P1 讀懂→P2 資料處理/ML→P3 專業辨識與考題實戰（各 12~15 主題，對齊中科二/三） | Hermes 主腦親自 | ✅ 2026-07-10（51 主題入表；截斷 3 次靠小批＋極簡欄位收斂） |
+| ⑤-3 | Python 出題管線：依課綱每主題出題（讀code/填空/除錯/情境題）寫入 PythonQuizBank，沿用品保掃描 | 副模型批次＋host 驗證 | ✅ 2026-07-10（python_quiz_runner.py＋每日 01:00 cron；首輪 3 主題 15 題全過驗證，指揮官抽查 2 題答案正確） |
+| ⑤-4 | RPG「Python 試煉塔」：12 層爬塔（P0~P3 各 3 層、連對 3 題升層） | OpenClaw×DeepSeek＋Claude 整合 | ✅ 2026-07-10（commit 26d4997） |
+| ⑤-5 | rebuild 管線擴充：PythonQuizBank→`python_quizzes.js` 每日 04:10 自動上線 | Claude | ✅ 2026-07-10 |
+
+Schema：課程表 `no/stage/chapter/topic/zh_title/goal/difficulty/iPAS對應/status`；題庫 `no/stage/topic/q_type/question/code_block/opt_a~d/answer/explanation/difficulty/source/created`。
+
+## 4-C. 工作包⑥：法規治理學習線（2026-07-10 使用者新增，四線並行）
+
+> 需求原文：七大原則前提下的開發設計關卡——法規治理＋技術概念＋產業案例＋專案規劃四線並行；(1) 熟讀 AI 基本法七大原則與風險分類框架 (2) 理解 AI 產業人才指引三類人才差異 (3) 金融/公部門/製造業指引轉情境題判斷 (4) 專案管理邏輯說明 AI 導入流程/KPI/資料盤點/驗收/持續監控。定位為培訓遊戲的成長練習模式。
+
+| 步驟 | 內容 | 負責 | 狀態 |
+|---|---|---|---|
+| ⑥-1 | 試算表分頁「治理課程表」（line=GOV/TAL/IND/PM）＋「GovQuizBank」（含 scenario 情境欄） | Claude | ✅ 2026-07-10 |
+| ⑥-2 | 四線課綱各 10~12 主題（套用⑤截斷對策：小批＋極簡欄位＋跨嘗試救援） | Hermes 主腦親自 | ✅ 2026-07-10（42 主題：GOV10/TAL10/IND11/PM11；簡體混入已 OpenCC 全面修正） |
+| ⑥-3 | 出題管線（重情境判斷題型）每日 01:30 cron＋registry＋讀寫雙端繁化 | 副模型＋host 驗證 | ✅ 2026-07-10（首輪 10 題入庫、情境題抽查合格：人資 AI 篩選情境＋人類自主與監督原則應用正確；1 主題逾時每日自動重試） |
+| ⑥-4 | RPG「⚖️ 治理法庭」四線審判關卡（NPC 大法官・司律；答對 3 題晉階，晉階解鎖秘笈） | Claude 指揮官親自 | ✅ 2026-07-10（rpg-governance.js＋persona silu；E2E 實測晉階/解鎖通過） |
+| ⑥-5 | 呈現層自動生長：GovQuizBank→`gov_quizzes.js` 每日 04:10 上線＋《星律寶典》四卷自動增頁 | Claude | ✅ 2026-07-10（rebuild_gov_quizzes_js.py＋build_grimoires.js GOV_BOOKS；18 本秘笈） |
+
 ## 5. 里程碑
 
 - **M1（本週）**：P0 兩項修復上線；quizzes.js 自動化進 cron。
