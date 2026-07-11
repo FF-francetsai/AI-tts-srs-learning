@@ -87,19 +87,8 @@ motion:
     easing: "cubic-bezier(.4,0,.2,1)"
 
 components:
-  domain-nav-pill:
-    backgroundColor: "{colors.canvas-soft}"
-    borderColor: "{colors.hairline-soft}"
-    rounded: "{rounded.pill}"
-    padding: "10px 22px"
-    hover: "translateY(-2px) + 該分類主色 15% 透明底 + 主色邊框"
-    perCategoryColor:
-      ml: "{colors.primary-lavender}"
-      dl: "{colors.accent-amber}"
-      nn: "{colors.accent-emerald}"
-      conc: "{colors.secondary-sky}"
-      app: "{colors.accent-pink}"
-      practice: "{colors.accent-purple}"
+  # 2026-07-11：domain-nav-pill（首頁分類導覽 pill）已移除，改由
+  # stage-hub.html 的 Stage 選擇畫面承接分類/範圍導覽的角色。
 
   feature-card:
     backgroundColor: "{colors.canvas-soft}"

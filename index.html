@@ -65,45 +65,6 @@
             letter-spacing: 0.05em;
         }
 
-        /* ── 學習路徑導航 ── */
-        .domain-nav {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 14px;
-            margin-top: 48px;
-            padding: 0 20px;
-        }
-        .domain-nav a {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 10px 22px;
-            border-radius: 28px;
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 600;
-            border: 1.5px solid rgba(255,255,255,0.12);
-            background: rgba(255,255,255,0.04);
-            backdrop-filter: blur(8px);
-            transition: all 0.3s ease;
-        }
-        .domain-nav a:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(167,139,250,0.25);
-        }
-        .domain-nav a[data-cat="ml"]     { color: #a78bfa; }
-        .domain-nav a[data-cat="ml"]:hover { background: rgba(167,139,250,0.15); border-color: #a78bfa; }
-        .domain-nav a[data-cat="dl"]     { color: #fbbf24; }
-        .domain-nav a[data-cat="dl"]:hover { background: rgba(251,191,36,0.15); border-color: #fbbf24; }
-        .domain-nav a[data-cat="nn"]     { color: #34d399; }
-        .domain-nav a[data-cat="nn"]:hover { background: rgba(52,211,153,0.15); border-color: #34d399; }
-        .domain-nav a[data-cat="conc"]   { color: #7dd3fc; }
-        .domain-nav a[data-cat="conc"]:hover { background: rgba(125,211,252,0.15); border-color: #7dd3fc; }
-        .domain-nav a[data-cat="app"]    { color: #f472b6; }
-        .domain-nav a[data-cat="app"]:hover { background: rgba(244,114,182,0.15); border-color: #f472b6; }
-        .domain-nav a[data-cat="practice"] { color: #c084fc; }
-        .domain-nav a[data-cat="practice"]:hover { background: rgba(192,132,252,0.15); border-color: #c084fc; }
 
         /* ── 功能卡片 ── */
         .feature-cards {
@@ -470,16 +431,6 @@
 </div>
 </div>
 </div>
-<!-- 學習路徑導航 → 點擊跳轉至概念星圖並自動過濾 -->
-<nav class="domain-nav">
-<a data-cat="ml" href="atlas.html">🤖 機器學習</a>
-<a data-cat="dl" href="atlas.html?cat=深度學習">🔥 深度學習</a>
-<a data-cat="nn" href="atlas.html?cat=神經網路">🧩 神經網路</a>
-<a data-cat="gen" href="atlas.html?cat=生成式 AI">✨ 生成式 AI</a>
-<a data-cat="cv" href="atlas.html?cat=電腦視覺">👁️ 電腦視覺</a>
-<a data-cat="nlp" href="atlas.html?cat=NLP">💬 NLP</a>
-<a data-cat="srs" href="learn.html">📚 SRS 學習</a>
-<a data-cat="rpg" href="rpg.html">🚀 RPG 冒險</a></nav>
 </div>
 <!-- ②：今日學習目標 -->
 <div class="daily-goal-wrap">
