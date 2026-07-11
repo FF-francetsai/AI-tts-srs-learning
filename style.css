@@ -242,12 +242,12 @@
 .stage-badge-1 {
     background: linear-gradient(135deg, #34d399, #10b981);
     color: #064e3b;
-    animation: orbit-spin 4s linear infinite;
+    animation: planet-float 3.5s ease-in-out infinite;
 }
 
-@keyframes orbit-spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+@keyframes planet-float {
+    0%, 100% { transform: translateY(0); box-shadow: 0 0 0 rgba(52,211,153,0); }
+    50% { transform: translateY(-6px); box-shadow: 0 8px 18px rgba(52,211,153,.35); }
 }
 
 /* Stage 2 - Lavender Purple */
@@ -306,12 +306,12 @@
 .stage-badge-1 {
     background: linear-gradient(135deg, #34d399, #10b981);
     color: #064e3b;
-    animation: orbit-spin 4s linear infinite;
+    animation: planet-float 3.5s ease-in-out infinite;
 }
 
-@keyframes orbit-spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+@keyframes planet-float {
+    0%, 100% { transform: translateY(0); box-shadow: 0 0 0 rgba(52,211,153,0); }
+    50% { transform: translateY(-6px); box-shadow: 0 8px 18px rgba(52,211,153,.35); }
 }
 
 /* Stage 2 - Lavender Purple */

@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>iPAS AI 應用規劃師智策網學院</title>
+<title>iPAS AI 應用規劃智策網學院</title>
 <link href="style.css" rel="stylesheet"/>
 <script type="importmap">
     {
@@ -182,14 +182,25 @@
             transition: opacity 0.6s ease;
         }
         #loading-overlay.hidden { opacity: 0; pointer-events: none; }
-        #loading-overlay .spinner {
-            width: 48px; height: 48px;
-            border: 3px solid rgba(167,139,250,0.2);
-            border-top-color: #a78bfa;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+        #loading-overlay .loader {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
         }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        #loading-overlay .loader-mark {
+            font-size: 40px;
+            animation: pulse-glow 1.6s ease-in-out infinite;
+        }
+        #loading-overlay .loader-text {
+            color: #a78bfa;
+            font-size: 14px;
+            letter-spacing: 2px;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { transform: scale(1); opacity: 0.55; filter: drop-shadow(0 0 0 rgba(167,139,250,0)); }
+            50% { transform: scale(1.15); opacity: 1; filter: drop-shadow(0 0 10px rgba(167,139,250,0.7)); }
+        }
 
         /* ── V7 新增：今日目標 ── */
         .daily-goal-wrap {
@@ -391,13 +402,16 @@
 <body>
 <!-- 載入動畫 -->
 <div id="loading-overlay">
-<div class="spinner"></div>
+<div class="loader">
+<div class="loader-mark">🪐</div>
+<div class="loader-text">載入中</div>
+</div>
 </div>
 <!-- Wizard Modal（E）-->
 <div class="wizard-overlay" id="wizardModal">
 <div class="wizard-card">
 <div class="wizard-header">
-<div class="w-title">🎓 iPAS AI 應用規劃師智策網學院</div>
+<div class="w-title">🎓 iPAS AI 應用規劃智策網學院</div>
 <div class="w-sub">回答 3 個問題，找到最適合你的起點。</div>
 </div>
 <div class="wizard-progress">
@@ -417,8 +431,8 @@
 <div class="content-layer">
 <!-- 主標題 -->
 <div class="hero-title">
-<h1>🧠 iPAS AI 應用規劃師智策網學院</h1>
-<p>從新手到專業規劃師，依循漸進掌握人工智慧核心職能</p>
+<h1>🧠 iPAS AI 應用規劃智策網學院</h1>
+<p>從新手到專業規劃，依循漸進掌握人工智慧核心職能</p>
 </div>
 <!-- B：今日學習目標 -->
 <div class="daily-goal-wrap">
@@ -511,7 +525,7 @@
 </div>
 <div class="feature-card" onclick="location.href='atlas.html'">
 <span class="card-icon">🔮</span>
-<div class="card-title">知識圖譜</div>
+<div class="card-title">知識星圖</div>
 <div class="card-desc">神經網路粒子星圖，術語節點關聯視覺化，支援分類篩選與縮放</div>
 </div>
 <div class="feature-card" onclick="location.href='learn.html'">

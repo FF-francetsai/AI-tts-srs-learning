@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI 知識圖譜 · Atlas</title>
+  <title>AI 知識星圖 · Atlas</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -196,7 +196,7 @@
   <!-- Topbar -->
   <header class="v6-topbar">
     <a href="index.html">← 返回</a>
-    <span class="tb-title" id="atlas-mode-title">🌌 AI 知識圖譜</span>
+    <span class="tb-title" id="atlas-mode-title">🌌 AI 知識星圖</span>
     <div class="search-box">
       <input id="atlas-search" placeholder="搜尋術語..." autocomplete="off" />
       <button id="atlas-rotate-toggle" title="切換旋轉" style="background:none;border:1px solid rgba(125,211,252,0.25);color:#7dd3fc;padding:4px 10px;border-radius:8px;cursor:pointer;font-size:12px;">⏸ 暫停</button>
@@ -446,7 +446,7 @@
     // 🌌 全覽圖：星象圖，所有分類全顯示
     function showStar() {
       currentMode = 'star';
-      _showStarUI('🌌 AI 知識圖譜（全覽）');
+      _showStarUI('🌌 AI 知識星圖（全覽）');
       starMap.filterCategory(null);
       _setActiveTab('STAR');
     }
