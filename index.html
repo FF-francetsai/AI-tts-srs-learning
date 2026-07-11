@@ -499,8 +499,8 @@
     (function(){
         fetch('content/stage_chapter_guides.json').then(function(r){ return r.json(); }).then(function(g){
             var box = document.getElementById('stage-guides');
-            var names = {stage1:'🪐 iPAS 初級', stage2:'🧠 中級技術', stage3:'⚡ 中級數據'};
-            ['stage1','stage2','stage3'].forEach(function(k){
+            var names = {stage0:'✦ AI 入門', stage1:'🪐 iPAS 初級', stage2:'🧠 中級技術', stage3:'⚡ 中級數據'};
+            ['stage0','stage1','stage2','stage3'].forEach(function(k){
                 if (!g[k]) return;
                 var d = document.createElement('details');
                 d.style.cssText = 'margin:6px 0;padding:8px 12px;border:1px solid rgba(148,163,184,.25);border-radius:10px;';
