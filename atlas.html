@@ -389,7 +389,8 @@
             eng_name: item.eng_name || item.eng_abbr || '',
             category: rawCat,
             def:      item.def      || '',
-            key_goal: item.key_goal || ''
+            key_goal: item.key_goal || '',
+            stage:    item.stage != null ? String(item.stage) : ''
           });
         } else {
           // 舊版：section → sub_units → topics 三層結構
@@ -402,7 +403,8 @@
                 eng_name: t.eng_name || t.eng_abbr || '',
                 category: rawCat,
                 def:      t.def      || '',
-                key_goal: t.key_goal || ''
+                key_goal: t.key_goal || '',
+                stage:    t.stage != null ? String(t.stage) : ''
               });
             });
           });
@@ -551,6 +553,17 @@
         'DS':'資料科學','APP':'AI 應用'
       }).find(([,v]) => v === urlCat)?.[0] || 'ML';
       showCat(urlCat, key);
+    }
+
+    // URL 自動篩選: atlas.html?stage=0（來自 stage-hub.html，只顯示該 Stage 的術語，
+    // 未歸類/其他 Stage 節點整批隱藏，不是淡化）
+    const urlStage = new URLSearchParams(location.search).get('stage');
+    const STAGE_TITLES = { '0': '✦ AI 入門', '1': '🪐 iPAS 初級', '2': '🧠 中級技術', '3': '⚡ 中級數據' };
+    if (urlStage && STAGE_TITLES[urlStage] && typeof starMap.filterStage === 'function') {
+      currentMode = 'star';
+      _showStarUI('🌌 ' + STAGE_TITLES[urlStage]);
+      starMap.filterStage(urlStage);
+      _setActiveTab('STAGE');
     }
 
     // 搜尋框（所有模式都走 starMap.search）

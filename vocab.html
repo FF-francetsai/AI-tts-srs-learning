@@ -161,6 +161,7 @@
     <a href="index.html">← 返回</a>
     <span class="tb-title">📖 互動詞庫</span>
     <span class="spacer"></span>
+    <span class="count-badge" id="stage-badge" style="display:none;"></span>
     <span class="count-badge" id="count-badge">— 個術語</span>
   </header>
 
@@ -216,7 +217,8 @@
             cat,
             def:   item.def      || '',
             goal:  item.key_goal || '',
-            apps:  item.common_apps || ''
+            apps:  item.common_apps || '',
+            stage: item.stage != null ? String(item.stage) : ''
           });
         } else {
           // 舊版：section → sub_units → topics 三層結構
@@ -231,12 +233,25 @@
                 cat,
                 def:   t.def      || '',
                 goal:  t.key_goal || '',
-                apps:  t.common_apps || ''
+                apps:  t.common_apps || '',
+                stage: t.stage != null ? String(t.stage) : ''
               });
             });
           });
         }
       });
+    }
+
+    // ── Stage 篩選（?stage=N，來自 stage-hub.html）：整批限縮 allTerms，
+    //    非該 Stage 的術語直接隱藏，不是淡化 ──
+    const STAGE_NAMES = { '0': 'AI 入門', '1': 'iPAS 初級', '2': '中級技術', '3': '中級數據' };
+    const _stageParam = new URLSearchParams(location.search).get('stage');
+    const activeStage = STAGE_NAMES.hasOwnProperty(_stageParam) ? _stageParam : null;
+    let scopedTerms = allTerms;
+    if (activeStage) {
+      scopedTerms = allTerms.filter(t => t.stage === activeStage);
+      allTerms.length = 0;
+      allTerms.push(...scopedTerms);
     }
 
     // ── 建立分類導覽 ──
@@ -278,6 +293,11 @@
       document.getElementById('stats-bar').textContent =
         `顯示 ${terms.length} / ${allTerms.length} 個術語`;
       document.getElementById('count-badge').textContent = `${allTerms.length} 個術語`;
+      if (activeStage) {
+        const b = document.getElementById('stage-badge');
+        b.textContent = '🎯 ' + STAGE_NAMES[activeStage] + ' 範圍';
+        b.style.display = '';
+      }
 
       if (!terms.length) {
         grid.innerHTML = `<div class="empty-state"><div class="icon">🔍</div>找不到符合的術語，試試其他關鍵字</div>`;

@@ -124,6 +124,7 @@
       this._visible = false;
       this._raf     = null;
       this._byCat   = {};
+      this._byStage = {};
 
       this._calc();
       this._buildTermPools();
@@ -226,7 +227,125 @@
           def:      t.def      || '',
           key_goal: !!t.key_goal,
         });
+
+        // Stage 索引：跨分類合併同一 Stage 的術語，供 filterStage() 使用。
+        // 沒有 stage 欄位（未歸類）的術語不進索引，Stage 篩選時自然被隱藏。
+        if (t.stage) {
+          (this._byStage[t.stage] ??= []).push({
+            id:       String(t.id || ('r'+Math.random())),
+            title:    t.title    || '',
+            eng:      t.eng_name || '',
+            cat,
+            def:      t.def      || '',
+            key_goal: !!t.key_goal,
+            stage:    String(t.stage),
+          });
+        }
       });
+    }
+
+    // ── Stage 篩選（跨分類合併同一 Stage 的所有術語，其他 Stage/未歸類節點整批隱藏）──
+
+    filterStage(stageId) {
+      if (!this._clusterEls) return;
+      this._filterStage = stageId || null;
+      this._clearDetailLayer();
+
+      if (!stageId) {
+        this._clusterEls.forEach(({ cg }) =>
+          cg.attr('display', null).transition().duration(350).attr('opacity', 1));
+        this._rotG.select('.ca-crosslinks').transition().duration(350).attr('opacity', 1);
+        this._rotG.select('.ca-zodiac').transition().duration(350).attr('opacity', 0.6);
+        this._rotG.select('.ca-mansions').transition().duration(350).attr('opacity', 0.6);
+        return;
+      }
+
+      const items = this._byStage[stageId];
+      if (!items || items.length === 0) return;
+
+      this._clusterEls.forEach(({ cg }) =>
+        cg.transition().duration(280).attr('opacity', 0)
+          .on('end', function() { d3.select(this).attr('display', 'none'); }));
+      this._rotG.select('.ca-crosslinks').transition().duration(280).attr('opacity', 0);
+      this._rotG.select('.ca-zodiac').transition().duration(280).attr('opacity', 0);
+      this._rotG.select('.ca-mansions').transition().duration(280).attr('opacity', 0);
+
+      setTimeout(() => {
+        if (this._filterStage === stageId) this._buildStageDetailLayer(stageId);
+      }, 320);
+    }
+
+    _buildStageDetailLayer(stageId) {
+      const items = this._byStage[stageId] || [];
+      if (!items.length) return;
+
+      const STAGE_COLORS = { '0': '#7dd3fc', '1': '#34d399', '2': '#a78bfa', '3': '#fbbf24' };
+      const color = STAGE_COLORS[stageId] || '#a78bfa';
+
+      const n      = items.length;
+      const mobile = this._md < 768;
+      const minSep = mobile
+        ? (n > 100 ? 22 : n > 50 ? 28 : 35)
+        : (n > 150 ? 30 : n > 100 ? 38 : n > 50 ? 45 : 55);
+
+      const minStartR = this._coreR * 3.4;
+      const pos = this._concentricPos(n, minSep, minStartR);
+
+      const g = this._rotG.insert('g', '.ca-cluster')
+        .attr('class', 'ca-detail').attr('opacity', 0);
+
+      const nodes = items.map((t, i) => {
+        const p = pos[i] || { r: minStartR, th: 0 };
+        return { id:t.id, title:t.title, eng:t.eng, cat:t.cat, def:t.def,
+          key_goal:t.key_goal, color,
+          lx: p.r * Math.cos(p.th), ly: p.r * Math.sin(p.th),
+          nr: t.key_goal ? 2.5 : 1.5 };
+      });
+
+      const links = this._mstLinks(nodes, minSep * 2.3);
+
+      g.selectAll('line.cd-link').data(links).join('line').attr('class', 'cd-link')
+        .attr('x1', d => d.s.lx).attr('y1', d => d.s.ly)
+        .attr('x2', d => d.t.lx).attr('y2', d => d.t.ly)
+        .attr('stroke', color).attr('stroke-opacity', 0.22)
+        .attr('stroke-width', 0.7).attr('stroke-dasharray', '3,5');
+
+      const ns = g.selectAll('g.cd-node').data(nodes).join('g').attr('class', 'cd-node')
+        .attr('transform', d => `translate(${d.lx},${d.ly})`).style('cursor', 'pointer');
+
+      ns.append('circle').attr('class', 'cd-halo')
+        .attr('r', d => d.nr * 2.5).attr('fill', color + '20')
+        .attr('pointer-events', 'none');
+      ns.append('circle')
+        .attr('class', d => d.key_goal ? 'cd-dot is-key' : 'cd-dot')
+        .attr('r', d => d.nr).attr('fill', color).attr('fill-opacity', 0.92)
+        .style('filter', 'url(#star-glow)')
+        .style('--sd', (d, i) => d.key_goal
+          ? `${(6.0 + (i * 0.41 % 4.0)).toFixed(2)}s`
+          : `${(14.0 + (i * 0.83 % 8.0)).toFixed(2)}s`)
+        .style('animation-delay', (_, i) => `-${(i * 1.73 % 14).toFixed(2)}s`);
+
+      const self = this;
+      ns.on('mouseenter', (ev, d) => {
+          ns.filter(dd => dd.id === d.id).select('.cd-dot')
+            .transition().duration(120).attr('r', d.nr * 2.5);
+          self._tooltip(ev, d);
+        })
+        .on('mouseleave', (ev, d) => {
+          ns.filter(dd => dd.id === d.id).select('.cd-dot')
+            .transition().duration(200).attr('r', d.nr);
+          self._hideTooltip();
+        })
+        .on('click', (ev, d) => { ev.stopPropagation(); self._panel(d); })
+        .on('touchstart', (ev, d) => {
+          ev.preventDefault(); ev.stopPropagation();
+          const t = ev.touches[0];
+          self._tooltip({ clientX: t.clientX, clientY: t.clientY }, d);
+          setTimeout(() => self._hideTooltip(), 2200);
+          setTimeout(() => self._panel(d), 250);
+        }, { passive: false });
+
+      g.transition().duration(450).attr('opacity', 1);
     }
 
     _normCatByTitle(title, eng) {
