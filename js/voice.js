@@ -40,7 +40,7 @@
             const blob = new Blob(this.audioChunks, { type: 'audio/webm' });
             const form = new FormData();
             form.append('audio', blob);
-            form.append('engine', 'breeze-26');
+            form.append('engine', 'breeze-25');
             try {
               const resp = await fetch('http://localhost:8765/asr', { method: 'POST', body: form });
               if (resp.ok) {
