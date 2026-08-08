@@ -1,212 +1,212 @@
 [
  {
-  "id": "12",
-  "zh": "歐盟人工智慧法案",
-  "en": "EU AI Act",
-  "def": "全球首部AI專法，規範AI系統風險分級",
+  "id": "430",
+  "zh": "生成式預訓練變換器",
+  "en": "Generative Pre-trained Transformer",
+  "def": "Google 提出的深度學習架構，透過海量文字預訓練再微調，造就 GPT 等模型的基礎。",
   "stage": 2
  },
  {
-  "id": "18",
-  "zh": "監理沙盒",
-  "en": "Regulatory Sandbox",
-  "def": "受監管環境內測試創新AI產品",
+  "id": "248",
+  "zh": "嵌入 / 向量化",
+  "en": "Embedding",
+  "def": "將文字、圖片等資料轉為數值向量的技術，讓相似內容在向量空間裡彼此靠近。",
   "stage": 2
  },
  {
-  "id": "258",
-  "zh": "人工智慧治理",
-  "en": "AI Governance",
-  "def": "企業管理AI倫理、風險與合規框架",
+  "id": "450",
+  "zh": "遮罩自注意力機制",
+  "en": "Masked Self-Attention",
+  "def": "Transformer 架構中的核心機制，模型預測時遮住未來詞，只用已知資訊推斷下一個 token。",
   "stage": 2
  },
  {
-  "id": "116",
-  "zh": "AI 專案經理",
-  "en": "AI Project Manager",
-  "def": "統籌AI專案時程、團隊與交付成果",
-  "stage": 2
- },
- {
-  "id": "117",
-  "zh": "範圍定義",
-  "en": "Scope Definition",
-  "def": "明確專案邊界、功能與非目標項目",
-  "stage": 2
- },
- {
-  "id": "118",
-  "zh": "利害關係人分析",
-  "en": "Stakeholder Analysis",
-  "def": "識別並分類專案相關人員與影響",
-  "stage": 2
- },
- {
-  "id": "111",
-  "zh": "可行性評估",
-  "en": "Feasibility Study",
-  "def": "分析技術資料與組織面執行可能",
-  "stage": 2
- },
- {
-  "id": "127",
-  "zh": "機器學習營運",
-  "en": "Machine Learning Operations",
-  "def": "機器學習模型開發部署與維運整合",
-  "stage": 2
- },
- {
-  "id": "129",
-  "zh": "A/B 測試",
-  "en": "A/B Testing",
-  "def": "比較兩版本成效以決定採用方案",
-  "stage": 2
- },
- {
-  "id": "121",
-  "zh": "容器化",
-  "en": "Containerization",
-  "def": "將應用與相依套件打包成可攜容器",
-  "stage": 2
- },
- {
-  "id": "130",
-  "zh": "模型壓縮",
-  "en": "Model Compression",
-  "def": "縮減模型體積以加速推論並降成本",
-  "stage": 2
- },
- {
-  "id": "107",
-  "zh": "邊緣人工智慧",
-  "en": "Edge AI",
-  "def": "在終端裝置本地執行AI推論減少延遲",
-  "stage": 2
- },
- {
-  "id": "155",
-  "zh": "代理人人工智慧",
-  "en": "Agentic AI",
-  "def": "能自主規劃並執行多步驟任務的AI",
-  "stage": 2
- },
- {
-  "id": "156",
-  "zh": "多代理人系統",
-  "en": "Multi-Agent System",
-  "def": "多個AI代理人協作完成複雜任務",
-  "stage": 2
- },
- {
-  "id": "157",
-  "zh": "模型上下文協定",
-  "en": "Model Context Protocol",
-  "def": "標準化代理人與工具溝通的協定",
-  "stage": 2
- },
- {
-  "id": "158",
-  "zh": "函式調用",
-  "en": "Function Calling",
-  "def": "模型以結構化方式觸發外部工具",
-  "stage": 2
- },
- {
-  "id": "149",
-  "zh": "向量資料庫",
-  "en": "Vector Database",
-  "def": "儲存與高效搜尋高維向量嵌入",
-  "stage": 2
- },
- {
-  "id": "148",
-  "zh": "向量嵌入",
-  "en": "Vector Embedding",
-  "def": "將文字轉為語意向量以利比對",
-  "stage": 2
- },
- {
-  "id": "262",
-  "zh": "混合檢索增強生成",
-  "en": "Hybrid RAG",
-  "def": "結合多種檢索策略的擴增生成架構",
-  "stage": 2
- },
- {
-  "id": "196",
-  "zh": "預訓練",
-  "en": "Pre-training",
-  "def": "用大規模資料事先訓練模型基礎能力",
-  "stage": 2
- },
- {
-  "id": "164",
-  "zh": "指令微調",
-  "en": "Instruction Fine-tuning",
-  "def": "用指令資料讓模型學會遵循任務",
-  "stage": 2
- },
- {
-  "id": "125",
-  "zh": "推論延遲",
-  "en": "Inference Latency",
-  "def": "模型從輸入到輸出所花費的時間",
-  "stage": 2
- },
- {
-  "id": "126",
-  "zh": "吞吐量",
-  "en": "Throughput",
-  "def": "系統單位時間可處理的推論請求量",
+  "id": "489",
+  "zh": "殘差網路",
+  "en": "Residual Network",
+  "def": "引入跳躍連接緩解梯度消失，使極深網路能有效訓練的卷積網路架構。",
   "stage": 2
  },
  {
   "id": "80",
   "zh": "物件偵測",
   "en": "Object Detection",
-  "def": "影像中標出物件位置與類別的技術",
+  "def": "在影像中同時定位多個目標物並標示類別的技術，是自駕、監控的核心能力。",
+  "stage": 2
+ },
+ {
+  "id": "475",
+  "zh": "視覺變換器",
+  "en": "Vision Transformer",
+  "def": "將 Transformer 架構應用於圖像辨識，把圖片切成 patch 後以注意力機制處理。",
+  "stage": 2
+ },
+ {
+  "id": "495",
+  "zh": "萬物分割模型",
+  "en": "Segment Anything Model",
+  "def": "Meta 提出的萬用影像分割模型，可任意切割圖片中的任意物體而不需訓練。",
+  "stage": 2
+ },
+ {
+  "id": "10",
+  "zh": "多模態人工智慧",
+  "en": "Multimodal Artificial Intelligence",
+  "def": "能同時理解與生成文字、圖像、語音等多種資訊形式的 AI 系統。",
   "stage": 2
  },
  {
   "id": "451",
   "zh": "視覺語言模型",
   "en": "Vision-Language Model",
-  "def": "同時理解影像與文字的多模態模型",
+  "def": "同時理解圖片與文字的大型模型，可根據圖片內容回答問題或生成描述。",
   "stage": 2
  },
  {
-  "id": "229",
-  "zh": "影子人工智慧",
-  "en": "Shadow AI",
-  "def": "員工未經核准私下使用的AI工具",
+  "id": "596",
+  "zh": "多模態生成",
+  "en": "Multimodal Generation",
+  "def": "模型能根據一種模態的輸入（如文字）生成另一種模態輸出（如圖片）。",
+  "stage": 2
+ },
+ {
+  "id": "12",
+  "zh": "歐盟人工智慧法案",
+  "en": "EU AI Act",
+  "def": "全球首部全面監管 AI 的法規，依風險分級並對高風險應用訂定嚴格義務。",
+  "stage": 2
+ },
+ {
+  "id": "258",
+  "zh": "人工智慧治理",
+  "en": "AI Governance",
+  "def": "組織內部對 AI 系統的策略、倫理、風險與合規進行全面管理的框架。",
   "stage": 2
  },
  {
   "id": "227",
   "zh": "主權人工智慧",
   "en": "Sovereign AI",
-  "def": "由國家自主研發掌控的AI技術",
+  "def": "國家自行掌控 AI 基礎設施與數據，確保 AI 發展符合本國主權與利益。",
   "stage": 2
  },
  {
-  "id": "271",
-  "zh": "具身智能",
-  "en": "Embodied AI",
-  "def": "AI透過機器人等實體與世界互動",
+  "id": "155",
+  "zh": "代理人人工智慧",
+  "en": "Agentic AI",
+  "def": "能自主規劃行動步驟、調用工具並完成複雜目標的 AI 系統，而非只回應單次提問。",
   "stage": 2
  },
  {
-  "id": "250",
-  "zh": "幻覺偵測器",
-  "en": "Hallucination Detector",
-  "def": "辨識模型生成內容虛構錯誤的機制",
+  "id": "156",
+  "zh": "多代理人系統",
+  "en": "Multi-Agent System",
+  "def": "多個 AI 代理各自負責不同子任務，透過協作完成單一代理人無法勝任的工作。",
   "stage": 2
  },
  {
-  "id": "260",
-  "zh": "永續人工智慧",
-  "en": "Sustainable AI",
-  "def": "兼顧環保節能與社會責任的AI發展",
+  "id": "157",
+  "zh": "模型上下文協定",
+  "en": "Model Context Protocol",
+  "def": "Anthropic 提出的標準協定，讓 AI 代理能以結構化方式與外部工具和資料互動。",
+  "stage": 2
+ },
+ {
+  "id": "127",
+  "zh": "機器學習營運",
+  "en": "Machine Learning Operations",
+  "def": "涵蓋模型訓練、部署、監控與維運的完整生命週期管理實踐與工具。",
+  "stage": 2
+ },
+ {
+  "id": "121",
+  "zh": "容器化",
+  "en": "Containerization",
+  "def": "將應用程式及其依賴封裝為輕量容器，使模型在不同環境中一致運行。",
+  "stage": 2
+ },
+ {
+  "id": "314",
+  "zh": "分頁注意力",
+  "en": "PagedAttention",
+  "def": "vLLM 提出的注意力機制，將 KV cache 分頁管理，大幅提升 GPU 利用率與吞吐量。",
+  "stage": 2
+ },
+ {
+  "id": "149",
+  "zh": "向量資料庫",
+  "en": "Vector Database",
+  "def": "專門儲存與檢索高維向量的資料庫，是 RAG 系統快速比對相似內容的核心元件。",
+  "stage": 2
+ },
+ {
+  "id": "262",
+  "zh": "混合檢索增強生成",
+  "en": "Hybrid RAG",
+  "def": "結合向量相似度與關鍵詞精確匹配的檢索策略，提升生成結果的準確性與召回率。",
+  "stage": 2
+ },
+ {
+  "id": "123",
+  "zh": "推論",
+  "en": "Inference",
+  "def": "訓練好的模型接收新輸入並產生預測結果的過程，也就是模型實際提供服務的階段。",
+  "stage": 2
+ },
+ {
+  "id": "125",
+  "zh": "推論延遲",
+  "en": "Inference Latency",
+  "def": "模型從接收到輸入到輸出第一個回應的時間延遲，是評估部署效能的關鍵指標。",
+  "stage": 2
+ },
+ {
+  "id": "240",
+  "zh": "推論成本",
+  "en": "Inference Cost",
+  "def": "模型部署後每次推理所需的 GPU 運算資源與金錢成本，是商業化決策的重要考量。",
+  "stage": 2
+ },
+ {
+  "id": "854",
+  "zh": "思維鏈提示",
+  "en": "Chain-of-Thought Prompting",
+  "def": "要求模型分步驟說明推理歷程，大幅提升複雜數學與邏輯問題的解答正確率。",
+  "stage": 2
+ },
+ {
+  "id": "898",
+  "zh": "推理與行動框架",
+  "en": "ReAct (Reasoning and Acting)",
+  "def": "讓模型交替執行推理與動作，透過環境回饋動態修正策略以完成任務的框架。",
+  "stage": 2
+ },
+ {
+  "id": "111",
+  "zh": "可行性評估",
+  "en": "Feasibility Study",
+  "def": "在 AI 專案啟動前，從技術、數據、資源與組織四個維度系統性評估是否可行。",
+  "stage": 2
+ },
+ {
+  "id": "119",
+  "zh": "差異分析 / 差距分析",
+  "en": "Gap Analysis",
+  "def": "比對現有能力與目標需求之間的缺口，作為制定 AI 專案範圍與優先順序的依據。",
+  "stage": 2
+ },
+ {
+  "id": "738",
+  "zh": "資料漂移",
+  "en": "Data Drift",
+  "def": "輸入資料的分布隨時間偏離訓練數據，導致模型預測品質下降的現象。",
+  "stage": 2
+ },
+ {
+  "id": "786",
+  "zh": "模型漂移監控",
+  "en": "Model Drift Monitoring",
+  "def": "持續追蹤模型預測表現與真實標籤的偏離程度，在品質惡化前觸發重新訓練。",
   "stage": 2
  }
 ]

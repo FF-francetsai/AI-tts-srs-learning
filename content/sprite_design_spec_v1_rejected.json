@@ -1,0 +1,209 @@
+{
+ "assets": [
+  {
+   "zh_name": "玩家見習士（男）",
+   "design_note": "年輕的見習士候選人，身著銀藍色學院制服，手持全息數據板，展現探索未知的求知氣息。藍白配色象徵科技與純淨。",
+   "gen_prompt": "young male cadet in academy uniform, blue and silver trim, short hair, holding a holographic datapad, pixel RPG sprite",
+   "style_preset": "pipoya_character",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "玩家見習士（女）",
+   "design_note": "女見習士穿著鑲金邊的學院服，束著高馬尾，手持水晶杖，散發堅毅而溫和的初學者光芒。藍金配色顯出潛力與領袖氣質。",
+   "gen_prompt": "young female cadet in academy uniform, blue and gold trim, ponytail, carrying a staff with crystal tip, pixel RPG sprite",
+   "style_preset": "pipoya_character",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "Isabel（溫柔引導）",
+   "design_note": "溫柔的引導者，粉白長袍與飄逸長髮，手捧淡金光球，象徵溫暖與指引。柔和色調營造安心感。",
+   "gen_prompt": "gentle female guardian, soft pink and white robes, holding a glowing orb, kind smile, pixel RPG sprite",
+   "style_preset": "pipoya_character",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "Dada（務實）",
+   "design_note": "務實的守護者，褐色夾克與工具腰帶，手檢全息設計圖，展現踏實的工程師風格。大地色系強調可靠。",
+   "gen_prompt": "practical male guardian, brown jacket, tool belt, inspecting a holographic blueprint, pixel RPG sprite",
+   "style_preset": "pipoya_character",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "Kael（嚴格正式）",
+   "design_note": "嚴肅正式的黑衣軍官，肩章星徽與冷峻眼神，透露不可逾越的紀律。暗色金屬質感帶出權威。",
+   "gen_prompt": "strict male guardian in dark military uniform, stern expression, shoulder pads with star emblem, pixel RPG sprite",
+   "style_preset": "pipoya_character",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "Sara（理性分析）",
+   "design_note": "理性分析家，銀色緊身衣外罩實驗袍，眼鏡與腕部電腦顯示邏輯至上。銀灰主調搭配冷藍光。",
+   "gen_prompt": "rational female guardian with glasses, lab coat over silver bodysuit, analyzing data on wrist computer, pixel RPG sprite",
+   "style_preset": "pipoya_character",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "Rova（自由比喻）",
+   "design_note": "自由奔放的比喻藝術家，彩色流動長裙印有星雲圖案，手持畫筆法杖，色彩奔放象徵創造力。",
+   "gen_prompt": "free-spirited female guardian, colorful flowing dress with cosmic patterns, holding a paintbrush-like wand, pixel RPG sprite",
+   "style_preset": "pipoya_character",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "Moon（深沉哲學）",
+   "design_note": "深沉哲人，深藍長袍綴星座刺繡，兜帽遮頭，懷抱古書卷，氛圍神秘靜謐。群青色與銀星點綴。",
+   "gen_prompt": "deep philosopher male guardian, dark blue robe with star constellations, hooded, holding an ancient tome, pixel RPG sprite",
+   "style_preset": "pipoya_character",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "Aura（詩意感性）",
+   "design_note": "詩意感性的守護者，白紫漸層禮服，周圍飄浮光點，長髮如銀河傾瀉，夢幻空靈。",
+   "gen_prompt": "poetic female guardian, ethereal white and lavender dress, aura of light particles, long flowing hair, pixel RPG sprite",
+   "style_preset": "pipoya_character",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "Liyang（活力教練）",
+   "design_note": "活力教練，橙白輕甲與運動頭帶，握拳蓄能，傳遞行動與能量。暖色系展現熱血與激勵。",
+   "gen_prompt": "energetic male guardian, sporty armor in orange and white, punching pose with energy fists, pixel RPG sprite",
+   "style_preset": "pipoya_character",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "Council（博學總結）",
+   "design_note": "博學的議會智者，高大紫金長袍，周身環繞全息卷軸，多臂或光屏展示多元知識。紫金配色彰顯智慧與威嚴。",
+   "gen_prompt": "wise council guardian, tall figure in majestic gold and purple robes, multiple holographic scrolls floating around, pixel RPG sprite",
+   "style_preset": "pipoya_character",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "遺忘魔",
+   "design_note": "象徵災難性遺忘的怪物，形似半溶解的書頁怪，每當玩家學習新技能時會侵蝕舊記憶。擊敗它可獲得記憶穩定道具。",
+   "gen_prompt": "A monster made of dissolving book pages, glowing faintly with lost knowledge. Pipoya-style pixel art, sad expression, dark purple and gray palette.",
+   "style_preset": "pipoya_monster",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "過擬合怪",
+   "design_note": "外表像過度裝飾的數據雕塑，身上貼滿訓練標籤但忽略真實規律。攻擊時會複製玩家的招式但不理解弱點。",
+   "gen_prompt": "A creature covered in tangled data charts and labels, chaotic and cluttered. Pipoya monster style, messy design, bright neon green and pink.",
+   "style_preset": "pipoya_monster",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "梯度幽靈",
+   "design_note": "梯度消失的化身，半透明、幾乎隱形的霧狀幽靈，在暗處行動能讓玩家技能失效。需要高學習率道具方能偵測。",
+   "gen_prompt": "A translucent ghost fading into the background, barely visible. Pipoya monster, ethereal and spooky, pale blue and white gradient.",
+   "style_preset": "pipoya_monster",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "爆炸元素怪",
+   "design_note": "梯度爆炸的具象，不穩定且隨時可能爆發的元素生物，體表不斷閃爍高能色彩。過量攻擊會觸發自爆連鎖。",
+   "gen_prompt": "An unstable elemental creature crackling with energy, glowing in bursts. Pipoya style, explosive red and orange colors, dynamic pose.",
+   "style_preset": "pipoya_monster",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "震盪史萊姆",
+   "design_note": "學習率震盪的生物，形似彈性膠質，不停在兩個位置間來回跳動且難以擊中。擊倒後掉落學習調整藥水。",
+   "gen_prompt": "A bouncy slime monster oscillating between two positions, blur effect. Pipoya monster, jelly-like with motion lines, yellow and teal.",
+   "style_preset": "pipoya_monster",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "偏見巨像",
+   "design_note": "訓練資料偏差形成的巨石像，只暴露於部分特徵而忽略整體。攻擊選擇性極強，脆弱的反面屬性可致勝。",
+   "gen_prompt": "A massive stone golem carved with skewed data patterns, one-sided design. Pipoya monster, asymmetrical and imposing, brown and dark gray.",
+   "style_preset": "pipoya_monster",
+   "size": "96x128"
+  },
+  {
+   "zh_name": "記憶結晶",
+   "design_note": "散發柔和藍光的晶體，使用後可暫時穩固知識記憶，防止遺忘。所有冒險者背包常備之物。",
+   "gen_prompt": "A glowing blue crystal with memory runes, pixel art icon style. Simple yet elegant, sharp facets, beautiful cyan luminescence.",
+   "style_preset": "icon_item",
+   "size": "64x64"
+  },
+  {
+   "zh_name": "專注沙漏",
+   "design_note": "將注意力凝聚於沙漏之中，使用後一小時內專注力倍增，技能冷卻時間減半。",
+   "gen_prompt": "A magical hourglass with swirling golden sand that never falls, icon item style. Time-focus artifact, warm amber and gold colors.",
+   "style_preset": "icon_item",
+   "size": "64x64"
+  },
+  {
+   "zh_name": "梯度藥水",
+   "design_note": "灌入梯度流能量的玻璃瓶，喝完能重新活化神經連結，讓技能升級變得容易。",
+   "gen_prompt": "A potion bottle filled with flowing gradient liquid from blue to red. Icon item style, swirling liquid inside, glossy glass.",
+   "style_preset": "icon_item",
+   "size": "64x64"
+  },
+  {
+   "zh_name": "泛化之書",
+   "design_note": "記載泛化理論的魔法書，閱讀後能暫時降低過擬合風險，使玩家技能可以對抗未知敵人。",
+   "gen_prompt": "An open spellbook with pages showing generalizing patterns, not overfitting. Pixel art icon, tome with mystical symbols, gold trim.",
+   "style_preset": "icon_item",
+   "size": "64x64"
+  },
+  {
+   "zh_name": "加速晶片",
+   "design_note": "鑲嵌於裝備的微型晶片，注入學習動量，提升整體訓練效率。工程師的最愛。",
+   "gen_prompt": "A futuristic microchip with glowing circuits, enhancing learning speed. Icon item style, tiny but powerful, neon green traces.",
+   "style_preset": "icon_item",
+   "size": "64x64"
+  },
+  {
+   "zh_name": "平衡天秤",
+   "design_note": "校正資料偏差的魔法天秤，使用後平衡訓練集，消除偏見巨像的影響。",
+   "gen_prompt": "A balance scale with perfectly aligned data orbs on each side. Icon item style, elegant and harmonious, soft white and gold.",
+   "style_preset": "icon_item",
+   "size": "64x64"
+  },
+  {
+   "zh_name": "認知護盾",
+   "design_note": "結合記憶鞏固術式的護盾，佩戴期間免疫遺忘魔的攻擊，保持知識清晰。",
+   "gen_prompt": "A round shield etched with brainwave patterns, defensive aura. Icon item style, sturdy and reliable, silver and sapphire.",
+   "style_preset": "icon_item",
+   "size": "64x64"
+  },
+  {
+   "zh_name": "靈感火花",
+   "design_note": "封存突破性靈感的火花石，使用後可跳脫局部最優，發現新的解決路徑。",
+   "gen_prompt": "A spark of inspiration captured in a crystal, bursting with ideas. Icon item style, vibrant orange and yellow sparks, creative energy.",
+   "style_preset": "icon_item",
+   "size": "64x64"
+  },
+  {
+   "zh_name": "入門草原",
+   "design_note": "新手初始草原，遍布簡單標記的訓練石與輕柔微風。適合熟悉基本操作。",
+   "gen_prompt": "Top-down pixel art grassland tiles for RPG. Simple beginner plains with training stones, soft green grass, sunny sky vibe. 512x512.",
+   "style_preset": "rpg_tile_topdown",
+   "size": "512x512"
+  },
+  {
+   "zh_name": "資料森林",
+   "design_note": "資訊密集的迷宮森林，樹木枝葉皆記錄著資料流向，小徑充滿預處理挑戰。",
+   "gen_prompt": "Top-down RPG forest tiles with data streams flowing through trees. Pixel art, dense woods with digital patterns, mysterious atmosphere.",
+   "style_preset": "rpg_tile_topdown",
+   "size": "512x512"
+  },
+  {
+   "zh_name": "神經網路星城",
+   "design_note": "高維度城市，建築物模仿神經元結構，傳送門連結不同層級，是訓練與推理的主場。",
+   "gen_prompt": "Top-down futuristic city tiles resembling neural network nodes and connections. Sci-fi pixel art, glowing synapses, starry background.",
+   "style_preset": "rpg_tile_topdown",
+   "size": "512x512"
+  },
+  {
+   "zh_name": "數據深淵",
+   "design_note": "充滿高維度雜訊的深淵，環境不斷變形，僅有強韌模型才能抵達底層的終極考驗場。",
+   "gen_prompt": "Top-down abyss tiles with chaotic data noise, deep purple and black. Pixel art, dizzying patterns, glowing red edges, dangerous feel.",
+   "style_preset": "rpg_tile_topdown",
+   "size": "512x512"
+  }
+ ],
+ "designer": "HermesAgent 主腦親自",
+ "date": "2026-07-09"
+}
