@@ -6,6 +6,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>iPAS AI 應用規劃智策網學院</title>
 <link href="style.css" rel="stylesheet"/>
+<link href="mission-hub.css" rel="stylesheet"/>
 <script type="importmap">
     {
         "imports": {
@@ -20,7 +21,8 @@
 
         body {
             font-family: 'Segoe UI', 'Noto Sans TC', sans-serif;
-            background: #0a0a1a;
+            background: linear-gradient(rgba(10,10,26,.62), rgba(10,10,26,.82)),
+                        url('assets/backgrounds/main_hall.webp') center/cover fixed no-repeat;
             color: #e0e0f0;
             overflow-x: hidden;
             min-height: 100vh;
@@ -360,7 +362,8 @@
         .w-next-btn:hover { background: #93c5fd; }
     </style>
 </head>
-<body>
+<body class="mission-hub-page">
+<a class="skip-link" href="#main-content">跳至主要內容</a>
 <!-- 載入動畫 -->
 <div id="loading-overlay">
 <div class="loader">
@@ -390,92 +393,173 @@
 <canvas id="bg-canvas"></canvas>
 <!-- 內容層 -->
 <div class="content-layer">
-<!-- 主標題 -->
-<div class="hero-title">
-<h1>🧠 iPAS AI 應用規劃智策網學院</h1>
-<p>從新手到專業規劃，依循漸進掌握人工智慧核心職能</p>
+<header class="mission-topbar">
+<a class="mission-brand" href="index.html" aria-label="iPAS AI 任務大廳首頁">
+<span class="mission-brand-mark" aria-hidden="true">✦</span>
+<span class="mission-brand-text">iPAS AI 智策網學院</span>
+</a>
+<nav class="mission-nav" id="desktopNav" aria-label="主要導覽">
+<a aria-current="page" href="index.html">任務</a>
+<a href="learn.html">學習</a>
+<a href="rpg.html">戰鬥</a>
+<a href="atlas.html">星圖</a>
+<a href="vocab.html">詞庫</a>
+</nav>
+<div class="player-status" aria-label="學習者狀態">
+<span class="player-level" id="playerLevel">Lv.1</span>
+<div><div class="player-xp-track" aria-hidden="true"><span id="playerXpFill"></span></div><span class="player-xp" id="playerXp">0 / 500 XP</span></div>
 </div>
-<!-- ①：選擇你的學習起點（四階段 Stage 路線圖）-->
-<div class="stage-roadmap-wrap">
-<div class="stage-roadmap">
-<h3>選擇你的學習起點
-                    <span onclick="reopenWizard()" style="font-size:0.75rem;color:#475569;margin-left:10px;font-weight:400;cursor:pointer;">⟳ 重新測驗</span>
-</h3>
-<div class="stage-cards">
-<div class="stage-card stage-badge-0" id="stageCard0">
-<span class="s-icon">✦</span>
-<div class="s-name">AI 入門</div>
-<div class="s-count" id="sCount0">— 術語</div>
-<a class="s-btn" href="stage-hub.html?stage=0">開始學習</a>
+<button class="mobile-menu-button" id="mobileMenuButton" type="button" aria-controls="desktopNav" aria-expanded="false" aria-label="開啟導覽">☰</button>
+</header>
+
+<main class="mission-shell" id="main-content">
+<section class="fleet-academy-scene" aria-labelledby="fleet-academy-title">
+<div class="bridge-window" aria-hidden="true">
+<span class="bridge-nebula"></span>
+<span class="bridge-fleet bridge-fleet-one"></span>
+<span class="bridge-fleet bridge-fleet-two"></span>
 </div>
-<div class="stage-arrow">→</div>
-<div class="stage-card stage-badge-1" id="stageCard1">
-<span class="s-icon">🪐</span>
-<div class="s-name">iPAS 初級</div>
-<div class="s-count" id="sCount1">— 術語</div>
-<a class="s-btn" href="stage-hub.html?stage=1">開始學習</a>
+<header class="academy-scene-heading">
+<span class="mission-eyebrow">Fleet Academy · Main Deck</span>
+<h1 id="fleet-academy-title">艦隊學院大廳</h1>
+<p>從今日航線出發，選擇任務、領取補給，或前往共鳴峽谷與軌道演算庭園完成語言訓練。</p>
+</header>
+<div class="academy-scene-grid" aria-label="主基地互動設施">
+<a class="academy-facility academy-command" href="#side-quests-title" aria-label="前往任務指揮台">
+<span class="academy-facility-icon" aria-hidden="true">⌁</span>
+<span class="academy-facility-copy"><strong>任務指揮台</strong><small>主線、支線與限時任務</small></span>
+<span class="academy-facility-action">查看任務 →</span>
+</a>
+<article class="academy-route-table" aria-labelledby="today-route-title">
+<span class="route-orbit route-orbit-outer" aria-hidden="true"></span>
+<span class="route-orbit route-orbit-inner" aria-hidden="true"></span>
+<div class="route-core" aria-hidden="true">✦</div>
+<div class="academy-route-copy">
+<span>中央星圖 · 推薦下一步</span>
+<h2 id="today-route-title">今日航線</h2>
+<p id="sceneMissionStatus">準備讀取今日任務…</p>
+<a href="learn.html?mission=daily-supply">立即開始 <span aria-hidden="true">→</span></a>
 </div>
-<div class="stage-arrow">→</div>
-<div class="stage-card stage-badge-2" id="stageCard2">
-<span class="s-icon">🧠</span>
-<div class="s-name">中級技術</div>
-<div class="s-count" id="sCount2">— 術語</div>
-<a class="s-btn" href="stage-hub.html?stage=2">開始學習</a>
+</article>
+<a class="academy-facility academy-supply" href="#daily-supply" aria-label="前往每日補給艙">
+<span class="academy-facility-icon" aria-hidden="true">▣</span>
+<span class="academy-facility-copy"><strong>每日補給艙</strong><small><span id="sceneDueCount">0</span> 個項目等待補給</small></span>
+<span class="academy-facility-action">領取補給 →</span>
+</a>
+<a class="academy-facility academy-achievements" href="#achievement-title" aria-label="前往成就星牆">
+<span class="academy-facility-icon" aria-hidden="true">✧</span>
+<span class="academy-facility-copy"><strong>成就星牆</strong><small>徽章、完成率與特殊紀錄</small></span>
+<span class="academy-facility-action">檢視里程碑 →</span>
+</a>
+<aside class="academy-mentor" aria-label="航程官戰術提示">
+<span class="mentor-avatar" aria-hidden="true">◎</span>
+<div><strong>航程官</strong><p id="sceneTacticalHint">先完成一個短任務，建立今天的學習節奏。</p></div>
+</aside>
+<a class="academy-facility academy-portal" href="pronunciation-zone.html" aria-label="進入共鳴峽谷發音練習">
+<span class="academy-facility-icon academy-portal-core" aria-hidden="true">◉</span>
+<span class="academy-facility-copy"><strong>共鳴峽谷傳送門</strong><small>發音練習與今日待複習音節</small></span>
+<span class="academy-facility-action">進入發音區 →</span>
+</a>
 </div>
-<div class="stage-arrow">→</div>
-<div class="stage-card stage-badge-3" id="stageCard3">
-<span class="s-icon">⚡</span>
-<div class="s-name">中級數據</div>
-<div class="s-count" id="sCount3">— 術語</div>
-<a class="s-btn" href="stage-hub.html?stage=3">開始學習</a>
+</section>
+
+<section class="mission-hero" aria-labelledby="mission-title">
+<div>
+<div class="mission-heading">
+<span class="mission-eyebrow">Mission Control</span>
+<h1 id="mission-title">任務大廳</h1>
+<p>今天不用決定從哪開始。完成每日補給，讓學習、戰鬥與獎勵自然接成一條航線。</p>
 </div>
+<article class="daily-supply-card" id="daily-supply">
+<div class="mission-ring" id="missionRing" role="progressbar" aria-label="今日補給進度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+<div class="mission-ring-content"><strong id="missionPercent">0%</strong><span>今日完成</span></div>
 </div>
-</div>
-</div>
-<!-- ②：今日學習目標 -->
-<div class="daily-goal-wrap">
-<div class="daily-goal">
-<div class="goal-title">📅 今日學習目標</div>
+<div>
+<div class="mission-meta"><span class="mission-tag">每日補給</span><span class="mission-reset">每日 00:00 更新</span></div>
+<h2>SRS 記憶補給任務</h2>
+<p id="missionStatus">補給已送達，準備開始今日訓練。</p>
 <div class="goal-bar"><div class="goal-fill" id="goalFill"></div></div>
-<div class="goal-info">
-<span id="goalCount">0 / 10 個術語</span>
-<span id="streakCount">🔥 0 天連續</span>
-</div>
-<div class="goal-action">
-<a class="goal-btn" href="learn.html">開始今日學習</a>
+<div class="goal-info"><span id="goalCount">0 / 10 張卡片</span><span id="streakCount">🔥 0 天連續</span></div>
+<div class="mission-actions">
+<a class="primary-mission-button" href="learn.html?mission=daily-supply"><span id="missionActionLabel">領取補給</span>&nbsp;→</a>
+<a class="secondary-mission-button" href="stage-hub.html">選擇 Stage</a>
 </div>
 </div>
+</article>
 </div>
-<!-- ③：今日精選術語 -->
-<div class="daily-term-wrap">
-<div class="daily-term">
-<div class="dt-label">✨ 今日精選術語</div>
-<div class="dt-en" id="dtEn"></div>
-<div class="dt-zh" id="dtZh"></div>
-<div class="dt-def" id="dtDef"></div>
-<div class="dt-btns">
-<button class="dt-btn-tts" onclick="speakTerm()">🔊 朗讀</button>
-<a class="dt-btn-learn" href="learn.html">加入學習 →</a>
+<aside class="weekly-card" aria-labelledby="weekly-title">
+<div class="weekly-heading"><h2 id="weekly-title">本週遠征</h2><span>+300 XP</span></div>
+<p>本週完成 50 個不重複術語複習，建立穩定的記憶航線。</p>
+<div class="weekly-progress" id="weeklyProgress" role="progressbar" aria-label="本週遠征進度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+<div class="weekly-foot"><span id="weeklyProgressText">0 / 50</span><span>週一重置</span></div>
+<div class="mission-stat-grid">
+<div class="mission-stat"><strong id="dueCount">0</strong><span>目前到期</span></div>
+<div class="mission-stat"><strong id="correctCount">0</strong><span>今日答對</span></div>
+<div class="mission-stat"><strong id="todayXp">0</strong><span>今日 XP</span></div>
 </div>
+</aside>
+</section>
+
+<section class="mission-section" aria-labelledby="side-quests-title">
+<div class="section-heading"><div><span class="section-kicker">Side Quests</span><h2 id="side-quests-title">今日支線任務</h2><p>短任務也會累積你的學習節奏。</p></div></div>
+<div class="quest-grid">
+<article class="quest-card">
+<span class="quest-icon" aria-hidden="true">◈</span>
+<h3>今日精選術語</h3>
+<p id="dtDef">載入今日精選內容…</p>
+<div class="daily-term-inline"><div><strong id="dtEn">AI</strong><small id="dtZh">人工智慧</small></div><button class="term-speak-button" type="button" onclick="speakTerm()" aria-label="朗讀今日術語">🔊</button></div>
+</article>
+<a class="quest-card" href="learn.html">
+<span class="quest-icon" aria-hidden="true">✓</span><h3>快速知識測驗</h3><p>用 5 題確認今天的理解程度，錯題會回到補給排程。</p><span class="quest-reward">完成獎勵 +50 XP</span>
+</a>
+<article class="quest-card is-locked" aria-disabled="true">
+<span class="quest-icon" aria-hidden="true">◇</span><h3>NPC 實戰評分</h3><p>用自己的話解釋 AI 概念，由守護者從正確性、完整性與應用性評分。</p><span class="quest-reward">規格完成 · 功能即將開放</span>
+</article>
 </div>
+</section>
+
+<section class="mission-section" aria-labelledby="campaign-title">
+<div class="section-heading"><div><span class="section-kicker">Campaign</span><h2 id="campaign-title">Stage 戰役路線</h2><p>目前航線：<strong id="currentStageName">AI 入門</strong></p></div><button class="secondary-mission-button" type="button" onclick="reopenWizard()">重新定位</button></div>
+<div class="stage-roadmap-wrap"><div class="stage-roadmap"><h3>選擇下一個學習區域</h3><div class="stage-cards">
+<div class="stage-card stage-badge-0" id="stageCard0"><span class="s-icon">✦</span><div class="s-name">AI 入門</div><div class="s-count" id="sCount0">— 術語</div><a class="s-btn" href="stage-hub.html?stage=0">進入區域</a></div>
+<div class="stage-arrow">→</div>
+<div class="stage-card stage-badge-1" id="stageCard1"><span class="s-icon">🪐</span><div class="s-name">iPAS 初級</div><div class="s-count" id="sCount1">— 術語</div><a class="s-btn" href="stage-hub.html?stage=1">進入區域</a></div>
+<div class="stage-arrow">→</div>
+<div class="stage-card stage-badge-2" id="stageCard2"><span class="s-icon">🧠</span><div class="s-name">中級技術</div><div class="s-count" id="sCount2">— 術語</div><a class="s-btn" href="stage-hub.html?stage=2">進入區域</a></div>
+<div class="stage-arrow">→</div>
+<div class="stage-card stage-badge-3" id="stageCard3"><span class="s-icon">⚡</span><div class="s-name">中級數據</div><div class="s-count" id="sCount3">— 術語</div><a class="s-btn" href="stage-hub.html?stage=3">進入區域</a></div>
+</div></div></div>
+</section>
+
+<section class="mission-section" aria-labelledby="achievement-title">
+<div class="section-heading"><div><span class="section-kicker">Achievements</span><h2 id="achievement-title">成就展示</h2><p>已學習 <strong id="learnedCount">0</strong> / <span id="totalTermCount">—</span> 個術語</p></div></div>
+<div class="achievement-panel"><div class="achievement-shelf" id="achievementShelf" aria-live="polite"></div></div>
+</section>
+
+<section class="mission-section" aria-labelledby="facility-title">
+<div class="section-heading"><div><span class="section-kicker">Facilities</span><h2 id="facility-title">學院設施</h2></div></div>
+<div class="facility-grid">
+<a class="facility-card" href="rpg.html"><span class="facility-icon">⚔</span><h3>AI 星際聯盟 RPG</h3><p>在戰鬥與關卡中應用術語，挑戰每日 Boss。</p></a>
+<a class="facility-card" href="chat.html"><span class="facility-icon">✦</span><h3>AI 教練</h3><p>用繁體中文追問概念、釐清盲點與練習表達。</p></a>
+<a class="facility-card" href="atlas.html"><span class="facility-icon">◎</span><h3>知識星圖</h3><p>探索術語之間的連結與學習路徑。</p></a>
+<a class="facility-card" href="vocab.html"><span class="facility-icon">▤</span><h3>互動詞庫</h3><p>搜尋、分類與朗讀完整 AI 術語資料庫。</p></a>
+<a class="facility-card" href="grammar-zone.html"><span class="facility-icon">⌬</span><h3>軌道演算庭園</h3><p>觀察句型軌道、校準時態，修復子句與常見文法錯誤。</p></a>
+<a class="facility-card" href="vocab-zone.html"><span class="facility-icon">❈</span><h3>記憶溫室與檔案花園</h3><p>培育新單字、用間隔複習澆灌記憶，收藏已掌握的字彙。</p></a>
+<a class="facility-card" href="listening-zone.html"><span class="facility-icon">⌁</span><h3>深空訊號港</h3><p>接收星域訊號、練習聽力解碼，完成語音回傳與限時測驗。</p></a>
+<a class="facility-card" href="comprehensive-zone.html"><span class="facility-icon">✦</span><h3>異星星港市集</h3><p>整合四項技能、挑戰週任務、檢視航行成就並領取任務補給。</p></a>
 </div>
-<!-- ④⑤：AI 星際聯盟 RPG／AI 即時對話（互動詞庫／知識星圖／SRS 複習進度已移至各 Stage 的中介頁 stage-hub.html）-->
-<div class="feature-cards">
-<div class="feature-card feature-card-rpg" onclick="location.href='rpg.html'">
-<span class="card-icon">🚀</span>
-<div class="card-title">AI 星際聯盟 RPG</div>
-<div class="card-desc">角色扮演冒險學習，關卡闖關，在 AI 星際戰役中掌握術語</div>
-</div>
-<div class="feature-card" onclick="location.href='chat.html'">
-<span class="card-icon">🤖</span>
-<div class="card-title">AI 即時對話</div>
-<div class="card-desc">雲端 AI 問答，語音輸入，深度解析術語</div>
-</div>
-</div>
-<!-- 頁尾 -->
-<footer class="site-footer">
-            © 2026 iPAS AI Application Planning Specialist &amp; Strategy Training Network
-        </footer>
+</section>
+
+<footer class="site-footer">© 2026 iPAS AI Application Planning Specialist &amp; Strategy Training Network</footer>
+</main>
+
+<nav class="mobile-dock" aria-label="手機主要導覽">
+<a aria-current="page" href="index.html"><span>⌂</span><span>任務</span></a>
+<a href="learn.html"><span>◫</span><span>學習</span></a>
+<a href="rpg.html"><span>⚔</span><span>戰鬥</span></a>
+<a href="atlas.html"><span>◎</span><span>圖鑑</span></a>
+<a href="vocab.html"><span>♙</span><span>我的</span></a>
+</nav>
 </div>
 <!-- 載入術語資料庫（供 stage 計數動態更新使用）-->
 <script src="data.js"></script>
@@ -769,6 +853,10 @@
 
         updateLines();
         animate();
-    </script>
+</script>
+<script src="audio-manager.js"></script>
+<script src="audio-synth.js"></script>
+<script src="mission-progress.js"></script>
+<script src="mission-hub.js"></script>
 </body>
 </html>
