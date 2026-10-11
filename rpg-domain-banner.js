@@ -16,6 +16,7 @@
   let audio = null, curKey = null;
   function stopMusic() { if (audio) { try { audio.pause(); } catch (e) {} audio = null; curKey = null; } }
   function playMusic(name) {
+    if (window.RPG_MUSIC) return; // 配樂改由 rpg-scene-music.js 統一管理
     if (!name || !MUSIC[name]) return;
     if (curKey === name && audio) return;
     stopMusic();
