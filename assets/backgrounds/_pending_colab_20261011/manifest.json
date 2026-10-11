@@ -1,0 +1,454 @@
+{
+ "batch": "colab_20261011",
+ "note": "未被任何頁面引用；需使用者核准對應關卡後才接入",
+ "items": [
+  {
+   "file": "01_char.webp",
+   "scene_no": 1,
+   "kind": "char",
+   "size": [
+    512,
+    512
+   ],
+   "bytes": 34694,
+   "subject": "fantasy jungle ruins, ancient stone temple, moss",
+   "source": "Colab T4 / Stable Diffusion v1.5 (stable-diffusion-v1-5/stable-diffusion-v1-5, safetensors) via diffusers",
+   "seed_base": 200,
+   "license_note": "SD1.5 輸出適用 CreativeML OpenRAIL-M(須保留使用限制條款)；上線前人工確認",
+   "generated": "2026-10-11",
+   "status": "pending-approval"
+  },
+  {
+   "file": "01_hires1024.webp",
+   "scene_no": 1,
+   "kind": "hires1024",
+   "size": [
+    1024,
+    1024
+   ],
+   "bytes": 79634,
+   "subject": "fantasy jungle ruins, ancient stone temple, moss",
+   "source": "Colab T4 / Stable Diffusion v1.5 (stable-diffusion-v1-5/stable-diffusion-v1-5, safetensors) via diffusers",
+   "seed_base": 200,
+   "license_note": "SD1.5 輸出適用 CreativeML OpenRAIL-M(須保留使用限制條款)；上線前人工確認",
+   "generated": "2026-10-11",
+   "status": "pending-approval"
+  },
+  {
+   "file": "01_wide1024x512.webp",
+   "scene_no": 1,
+   "kind": "wide1024x512",
+   "size": [
+    1024,
+    512
+   ],
+   "bytes": 81622,
+   "subject": "fantasy jungle ruins, ancient stone temple, moss",
+   "source": "Colab T4 / Stable Diffusion v1.5 (stable-diffusion-v1-5/stable-diffusion-v1-5, safetensors) via diffusers",
+   "seed_base": 200,
+   "license_note": "SD1.5 輸出適用 CreativeML OpenRAIL-M(須保留使用限制條款)；上線前人工確認",
+   "generated": "2026-10-11",
+   "status": "pending-approval"
+  },
+  {
+   "file": "02_char.webp",
+   "scene_no": 2,
+   "kind": "char",
+   "size": [
+    512,
+    512
+   ],
+   "bytes": 17820,
+   "subject": "stone bridge over a misty canyon",
+   "source": "Colab T4 / Stable Diffusion v1.5 (stable-diffusion-v1-5/stable-diffusion-v1-5, safetensors) via diffusers",
+   "seed_base": 201,
+   "license_note": "SD1.5 輸出適用 CreativeML OpenRAIL-M(須保留使用限制條款)；上線前人工確認",
+   "generated": "2026-10-11",
+   "status": "pending-approval"
+  },
+  {
+   "file": "02_hires1024.webp",
+   "scene_no": 2,
+   "kind": "hires1024",
+   "size": [
+    1024,
+    1024
+   ],
+   "bytes": 39712,
+   "subject": "stone bridge over a misty canyon",
+   "source": "Colab T4 / Stable Diffusion v1.5 (stable-diffusion-v1-5/stable-diffusion-v1-5, safetensors) via diffusers",
+   "seed_base": 201,
+   "license_note": "SD1.5 輸出適用 CreativeML OpenRAIL-M(須保留使用限制條款)；上線前人工確認",
+   "generated": "2026-10-11",
+   "status": "pending-approval"
+  },
+  {
+   "file": "02_wide1024x512.webp",
+   "scene_no": 2,
+   "kind": "wide1024x512",
+   "size": [
+    1024,
+    512
+   ],
+   "bytes": 45462,
+   "subject": "stone bridge over a misty canyon",
+   "source": "Colab T4 / Stable Diffusion v1.5 (stable-diffusion-v1-5/stable-diffusion-v1-5, safetensors) via diffusers",
+   "seed_base": 201,
+   "license_note": "SD1.5 輸出適用 CreativeML OpenRAIL-M(須保留使用限制條款)；上線前人工確認",
+   "generated": "2026-10-11",
+   "status": "pending-approval"
+  },
+  {
+   "file": "03_char.webp",
+   "scene_no": 3,
+   "kind": "char",
+   "size": [
+    512,
+    512
+   ],
+   "bytes": 24986,
+   "subject": "ancient stone watchtower overgrown with vines",
+   "source": "Colab T4 / Stable Diffusion v1.5 (stable-diffusion-v1-5/stable-diffusion-v1-5, safetensors) via diffusers",
+   "seed_base": 202,
+   "license_note": "SD1.5 輸出適用 CreativeML OpenRAIL-M(須保留使用限制條款)；上線前人工確認",
+   "generated": "2026-10-11",
+   "status": "pending-approval"
+  },
+  {
+   "file": "03_hires1024.webp",
+   "scene_no": 3,
+   "kind": "hires1024",
+   "size": [
+    1024,
+    1024
+   ],
+   "bytes": 81288,
+   "subject": "ancient stone watchtower overgrown with vines",
+   "source": "Colab T4 / Stable Diffusion v1.5 (stable-diffusion-v1-5/stable-diffusion-v1-5, safetensors) via diffusers",
+   "seed_base": 202,
+   "license_note": "SD1.5 輸出適用 CreativeML OpenRAIL-M(須保留使用限制條款)；上線前人工確認",
+   "generated": "2026-10-11",
+   "status": "pending-approval"
+  },
+  {
+   "file": "03_wide1024x512.webp",
+   "scene_no": 3,
+   "kind": "wide1024x512",
+   "size": [
+    1024,
+    512
+   ],
+   "bytes": 86154,
+   "subject": "ancient stone watchtower overgrown with vines",
+   "source": "Colab T4 / Stable Diffusion v1.5 (stable-diffusion-v1-5/stable-diffusion-v1-5, safetensors) via diffusers",
+   "seed_base": 202,
+   "license_note": "SD1.5 輸出適用 CreativeML OpenRAIL-M(須保留使用限制條款)；上線前人工確認",
+   "generated": "2026-10-11",
+   "status": "pending-approval"
+  },
+  {
+   "file": "04_char.webp",
+   "scene_no": 4,
+   "kind": "char",
+   "size": [
+    512,
+    512
+   ],
+   "bytes": 42264,
+   "subject": "ruined stone gatehouse and staircase",
+   "source": "Colab T4 / Stable Diffusion v1.5 (stable-diffusion-v1-5/stable-diffusion-v1-5, safetensors) via diffusers",
+   "seed_base": 203,
+   "license_note": "SD1.5 輸出適用 CreativeML OpenRAIL-M(須保留使用限制條款)；上線前人工確認",
+   "generated": "2026-10-11",
+   "status": "pending-approval"
+  },
+  {
+   "file": "04_hires1024.webp",
+   "scene_no": 4,
+   "kind": "hires1024",
+   "size": [
+    1024,
+    1024
+   ],
+   "bytes": 77162,
+   "subject": "ruined stone gatehouse and staircase",
+   "source": "Colab T4 / Stable Diffusion v1.5 (stable-diffusion-v1-5/stable-diffusion-v1-5, safetensors) via diffusers",
+   "seed_base": 203,
+   "license_note": "SD1.5 輸出適用 CreativeML OpenRAIL-M(須保留使用限制條款)；上線前人工確認",
+   "generated": "2026-10-11",
+   "status": "pending-approval"
+  },
+  {
+   "file": "04_wide1024x512.webp",
+   "scene_no": 4,
+   "kind": "wide1024x512",
+   "size": [
+    1024,
+    512
+   ],
+   "bytes": 89092,
+   "subject": "ruined stone gatehouse and staircase",
+   "source": "Colab T4 / Stable Diffusion v1.5 (stable-diffusion-v1-5/stable-diffusion-v1-5, safetensors) via diffusers",
+   "seed_base": 203,
+   "license_note": "SD1.5 輸出適用 CreativeML OpenRAIL-M(須保留使用限制條款)；上線前人工確認",
+   "generated": "2026-10-11",
+   "status": "pending-approval"
+  },
+  {
+   "file": "06_hires1024.webp",
+   "scene_no": 6,
+   "kind": "hires1024",
+   "size": [
+    1024,
+    1024
+   ],
+   "bytes": 62874,
+   "subject": "abandoned stone village houses in a jungle clearing",
+   "source": "Colab T4 / Stable Diffusion v1.5 (stable-diffusion-v1-5/stable-diffusion-v1-5, safetensors) via diffusers",
+   "seed_base": 205,
+   "license_note": "SD1.5 輸出適用 CreativeML OpenRAIL-M(須保留使用限制條款)；上線前人工確認",
+   "generated": "2026-10-11",
+   "status": "pending-approval"
+  },
+  {
+   "file": "06_wide1024x512.webp",
+   "scene_no": 6,
+   "kind": "wide1024x512",
+   "size": [
+    1024,
+    512
+   ],
+   "bytes": 74402,
+   "subject": "abandoned stone village houses in a jungle clearing",
+   "source": "Colab T4 / Stable Diffusion v1.5 (stable-diffusion-v1-5/stable-diffusion-v1-5, safetensors) via diffusers",
+   "seed_base": 205,
+   "license_note": "SD1.5 輸出適用 CreativeML OpenRAIL-M(須保留使用限制條款)；上線前人工確認",
+   "generated": "2026-10-11",
+   "status": "pending-approval"
+  },
+  {
+   "file": "07_char.webp",
+   "scene_no": 7,
+   "kind": "char",
+   "size": [
+    512,
+    512
+   ],
+   "bytes": 36842,
+   "subject": "grand stone temple entrance with carved pillars",
+   "source": "Colab T4 / Stable Diffusion v1.5 (stable-diffusion-v1-5/stable-diffusion-v1-5, safetensors) via diffusers",
+   "seed_base": 206,
+   "license_note": "SD1.5 輸出適用 CreativeML OpenRAIL-M(須保留使用限制條款)；上線前人工確認",
+   "generated": "2026-10-11",
+   "status": "pending-approval"
+  },
+  {
+   "file": "07_hires1024.webp",
+   "scene_no": 7,
+   "kind": "hires1024",
+   "size": [
+    1024,
+    1024
+   ],
+   "bytes": 83820,
+   "subject": "grand stone temple entrance with carved pillars",
+   "source": "Colab T4 / Stable Diffusion v1.5 (stable-diffusion-v1-5/stable-diffusion-v1-5, safetensors) via diffusers",
+   "seed_base": 206,
+   "license_note": "SD1.5 輸出適用 CreativeML OpenRAIL-M(須保留使用限制條款)；上線前人工確認",
+   "generated": "2026-10-11",
+   "status": "pending-approval"
+  },
+  {
+   "file": "07_wide1024x512.webp",
+   "scene_no": 7,
+   "kind": "wide1024x512",
+   "size": [
+    1024,
+    512
+   ],
+   "bytes": 85326,
+   "subject": "grand stone temple entrance with carved pillars",
+   "source": "Colab T4 / Stable Diffusion v1.5 (stable-diffusion-v1-5/stable-diffusion-v1-5, safetensors) via diffusers",
+   "seed_base": 206,
+   "license_note": "SD1.5 輸出適用 CreativeML OpenRAIL-M(須保留使用限制條款)；上線前人工確認",
+   "generated": "2026-10-11",
+   "status": "pending-approval"
+  },
+  {
+   "file": "08_hires1024.webp",
+   "scene_no": 8,
+   "kind": "hires1024",
+   "size": [
+    1024,
+    1024
+   ],
+   "bytes": 34844,
+   "subject": "rope and stone bridge to a hilltop fortress",
+   "source": "Colab T4 / Stable Diffusion v1.5 (stable-diffusion-v1-5/stable-diffusion-v1-5, safetensors) via diffusers",
+   "seed_base": 207,
+   "license_note": "SD1.5 輸出適用 CreativeML OpenRAIL-M(須保留使用限制條款)；上線前人工確認",
+   "generated": "2026-10-11",
+   "status": "pending-approval"
+  },
+  {
+   "file": "08_wide1024x512.webp",
+   "scene_no": 8,
+   "kind": "wide1024x512",
+   "size": [
+    1024,
+    512
+   ],
+   "bytes": 40958,
+   "subject": "rope and stone bridge to a hilltop fortress",
+   "source": "Colab T4 / Stable Diffusion v1.5 (stable-diffusion-v1-5/stable-diffusion-v1-5, safetensors) via diffusers",
+   "seed_base": 207,
+   "license_note": "SD1.5 輸出適用 CreativeML OpenRAIL-M(須保留使用限制條款)；上線前人工確認",
+   "generated": "2026-10-11",
+   "status": "pending-approval"
+  },
+  {
+   "file": "09_char.webp",
+   "scene_no": 9,
+   "kind": "char",
+   "size": [
+    512,
+    512
+   ],
+   "bytes": 24978,
+   "subject": "crumbling stone castle wall by a misty river gorge",
+   "source": "Colab T4 / Stable Diffusion v1.5 (stable-diffusion-v1-5/stable-diffusion-v1-5, safetensors) via diffusers",
+   "seed_base": 208,
+   "license_note": "SD1.5 輸出適用 CreativeML OpenRAIL-M(須保留使用限制條款)；上線前人工確認",
+   "generated": "2026-10-11",
+   "status": "pending-approval"
+  },
+  {
+   "file": "09_hires1024.webp",
+   "scene_no": 9,
+   "kind": "hires1024",
+   "size": [
+    1024,
+    1024
+   ],
+   "bytes": 52666,
+   "subject": "crumbling stone castle wall by a misty river gorge",
+   "source": "Colab T4 / Stable Diffusion v1.5 (stable-diffusion-v1-5/stable-diffusion-v1-5, safetensors) via diffusers",
+   "seed_base": 208,
+   "license_note": "SD1.5 輸出適用 CreativeML OpenRAIL-M(須保留使用限制條款)；上線前人工確認",
+   "generated": "2026-10-11",
+   "status": "pending-approval"
+  },
+  {
+   "file": "09_wide1024x512.webp",
+   "scene_no": 9,
+   "kind": "wide1024x512",
+   "size": [
+    1024,
+    512
+   ],
+   "bytes": 71524,
+   "subject": "crumbling stone castle wall by a misty river gorge",
+   "source": "Colab T4 / Stable Diffusion v1.5 (stable-diffusion-v1-5/stable-diffusion-v1-5, safetensors) via diffusers",
+   "seed_base": 208,
+   "license_note": "SD1.5 輸出適用 CreativeML OpenRAIL-M(須保留使用限制條款)；上線前人工確認",
+   "generated": "2026-10-11",
+   "status": "pending-approval"
+  },
+  {
+   "file": "10_hires1024.webp",
+   "scene_no": 10,
+   "kind": "hires1024",
+   "size": [
+    1024,
+    1024
+   ],
+   "bytes": 72532,
+   "subject": "ancient shrine with stone lanterns",
+   "source": "Colab T4 / Stable Diffusion v1.5 (stable-diffusion-v1-5/stable-diffusion-v1-5, safetensors) via diffusers",
+   "seed_base": 209,
+   "license_note": "SD1.5 輸出適用 CreativeML OpenRAIL-M(須保留使用限制條款)；上線前人工確認",
+   "generated": "2026-10-11",
+   "status": "pending-approval"
+  },
+  {
+   "file": "10_wide1024x512.webp",
+   "scene_no": 10,
+   "kind": "wide1024x512",
+   "size": [
+    1024,
+    512
+   ],
+   "bytes": 76038,
+   "subject": "ancient shrine with stone lanterns",
+   "source": "Colab T4 / Stable Diffusion v1.5 (stable-diffusion-v1-5/stable-diffusion-v1-5, safetensors) via diffusers",
+   "seed_base": 209,
+   "license_note": "SD1.5 輸出適用 CreativeML OpenRAIL-M(須保留使用限制條款)；上線前人工確認",
+   "generated": "2026-10-11",
+   "status": "pending-approval"
+  },
+  {
+   "file": "11_hires1024.webp",
+   "scene_no": 11,
+   "kind": "hires1024",
+   "size": [
+    1024,
+    1024
+   ],
+   "bytes": 35418,
+   "subject": "stone aqueduct ruins in a misty valley",
+   "source": "Colab T4 / Stable Diffusion v1.5 (stable-diffusion-v1-5/stable-diffusion-v1-5, safetensors) via diffusers",
+   "seed_base": 210,
+   "license_note": "SD1.5 輸出適用 CreativeML OpenRAIL-M(須保留使用限制條款)；上線前人工確認",
+   "generated": "2026-10-11",
+   "status": "pending-approval"
+  },
+  {
+   "file": "11_wide1024x512.webp",
+   "scene_no": 11,
+   "kind": "wide1024x512",
+   "size": [
+    1024,
+    512
+   ],
+   "bytes": 48000,
+   "subject": "stone aqueduct ruins in a misty valley",
+   "source": "Colab T4 / Stable Diffusion v1.5 (stable-diffusion-v1-5/stable-diffusion-v1-5, safetensors) via diffusers",
+   "seed_base": 210,
+   "license_note": "SD1.5 輸出適用 CreativeML OpenRAIL-M(須保留使用限制條款)；上線前人工確認",
+   "generated": "2026-10-11",
+   "status": "pending-approval"
+  },
+  {
+   "file": "12_hires1024.webp",
+   "scene_no": 12,
+   "kind": "hires1024",
+   "size": [
+    1024,
+    1024
+   ],
+   "bytes": 71924,
+   "subject": "carved stone ruins with broken stairs leading to a temple",
+   "source": "Colab T4 / Stable Diffusion v1.5 (stable-diffusion-v1-5/stable-diffusion-v1-5, safetensors) via diffusers",
+   "seed_base": 211,
+   "license_note": "SD1.5 輸出適用 CreativeML OpenRAIL-M(須保留使用限制條款)；上線前人工確認",
+   "generated": "2026-10-11",
+   "status": "pending-approval"
+  },
+  {
+   "file": "12_wide1024x512.webp",
+   "scene_no": 12,
+   "kind": "wide1024x512",
+   "size": [
+    1024,
+    512
+   ],
+   "bytes": 74772,
+   "subject": "carved stone ruins with broken stairs leading to a temple",
+   "source": "Colab T4 / Stable Diffusion v1.5 (stable-diffusion-v1-5/stable-diffusion-v1-5, safetensors) via diffusers",
+   "seed_base": 211,
+   "license_note": "SD1.5 輸出適用 CreativeML OpenRAIL-M(須保留使用限制條款)；上線前人工確認",
+   "generated": "2026-10-11",
+   "status": "pending-approval"
+  }
+ ]
+}
