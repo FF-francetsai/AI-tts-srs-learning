@@ -2,8 +2,8 @@
 // 不改 rpg.js／rpg.html 既有邏輯：只包裝 RPGEngine.prototype.enterDomain，進入星域前顯示簡報卡；音樂僅在使用者點擊後播放，離開星域（回地圖）停止。
 (function () {
   const BANNERS = {
-    INTRO: { img: 'assets/domain_banners/INTRO.webp?v=2', tip: '叢林空地上的石屋聚落——每位見習士降落 AI 宇宙的第一站。', music: 'explore' },
-    DATA:  { img: 'assets/domain_banners/DATA.webp?v=2',  tip: '穿過洞穴石拱，礦脈深處埋藏著待淘洗的資料。', music: 'explore' },
+    INTRO: { img: 'assets/domain_banners/INTRO.webp?v=3', tip: '叢林空地上的石屋聚落——每位見習士降落 AI 宇宙的第一站。', music: 'explore' },
+    DATA:  { img: 'assets/domain_banners/DATA.webp?v=3',  tip: '穿過洞穴石拱，礦脈深處埋藏著待淘洗的資料。', music: 'explore' },
     SL:    { img: 'assets/domain_banners/SL.webp?v=4',    tip: '苔蘚覆蓋的古老石柱神殿，守護者在此監督每一次學習。', music: 'explore' },
     UL:    { img: 'assets/domain_banners/UL.webp?v=2',    tip: '霧中河谷的殘牆——沒有標籤、沒有答案，只有等待你發現的結構。', music: 'explore' },
     ADV:   { img: 'assets/domain_banners/ADV.webp?v=2',   tip: '懸崖石索橋通往山頂要塞，中級議會正在等你。', music: null },
