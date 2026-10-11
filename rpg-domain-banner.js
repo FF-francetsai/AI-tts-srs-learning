@@ -9,14 +9,17 @@
     ADV:   { img: 'assets/domain_banners/ADV.webp?v=2',   tip: '懸崖石索橋通往山頂要塞，中級議會正在等你。', music: null },
     RL:    { img: null, tip: '', music: 'battle' }
   };
-  const MUSIC = { explore: 'assets/music_colab/explore.ogg', battle: 'assets/music_colab/battle.ogg' };
+  const MUSIC = { explore: 'assets/music_colab/explore', battle: 'assets/music_colab/battle' };
+  // 停用旗標：window.RPG_DOMAIN_BANNER_OFF=true 或 localStorage.rpgBannerOff='1'（避免故障時影響進關）
+  function disabled() { try { return window.RPG_DOMAIN_BANNER_OFF === true || localStorage.getItem('rpgBannerOff') === '1'; } catch (e) { return window.RPG_DOMAIN_BANNER_OFF === true; } }
+  function musicSrc(base) { const a = document.createElement('audio'); return (a.canPlayType && a.canPlayType('audio/ogg; codecs="vorbis"')) ? base + '.ogg' : base + '.mp3'; }
   let audio = null, curKey = null;
   function stopMusic() { if (audio) { try { audio.pause(); } catch (e) {} audio = null; curKey = null; } }
   function playMusic(name) {
     if (!name || !MUSIC[name]) return;
     if (curKey === name && audio) return;
     stopMusic();
-    try { audio = new Audio(MUSIC[name]); audio.loop = true; audio.volume = 0.25; audio.play().catch(() => {}); curKey = name; } catch (e) {}
+    try { audio = new Audio(musicSrc(MUSIC[name])); audio.loop = true; audio.volume = 0.25; audio.play().catch(() => {}); curKey = name; } catch (e) {}
   }
   function showBanner(domain, cfg, go) {
     const ov = document.createElement('div');
@@ -40,12 +43,13 @@
     if (!window.RPGEngine || RPGEngine.prototype._bannerWrapped) return false;
     const orig = RPGEngine.prototype.enterDomain;
     RPGEngine.prototype.enterDomain = function (key) {
+      if (disabled()) return orig.call(this, key);
       const cfg = BANNERS[key];
       const domain = (typeof DOMAINS !== 'undefined') ? DOMAINS.find(d => d.key === key) : null;
       const locked = domain && domain.unlockAfter && !(this._state && this._state.cleared || []).includes(domain.unlockAfter);
       if (!cfg || !domain || locked) return orig.call(this, key);
       if (!cfg.img) { playMusic(cfg.music); return orig.call(this, key); }
-      showBanner(domain, cfg, () => orig.call(this, key));
+      try { showBanner(domain, cfg, () => orig.call(this, key)); } catch (e) { return orig.call(this, key); }
     };
     RPGEngine.prototype._bannerWrapped = true;
     if (window.RPG_UI && !RPG_UI._bannerWrapped) { const sm = RPG_UI.showMap; RPG_UI.showMap = function () { stopMusic(); return sm.apply(this, arguments); }; RPG_UI._bannerWrapped = true; }
