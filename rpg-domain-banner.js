@@ -2,13 +2,18 @@
 // 不改 rpg.js／rpg.html 既有邏輯：只包裝 RPGEngine.prototype.enterDomain，進入星域前顯示簡報卡；音樂僅在使用者點擊後播放，離開星域（回地圖）停止。
 (function () {
   const BANNERS = {
-    INTRO: { img: 'assets/domain_banners/INTRO.webp?v=3', tip: '叢林空地上的石屋聚落——每位見習士降落 AI 宇宙的第一站。', music: 'explore' },
-    DATA:  { img: 'assets/domain_banners/DATA.webp?v=3',  tip: '穿過洞穴石拱，礦脈深處埋藏著待淘洗的資料。', music: 'explore' },
-    SL:    { img: 'assets/domain_banners/SL.webp?v=4',    tip: '苔蘚覆蓋的古老石柱神殿，守護者在此監督每一次學習。', music: 'explore' },
-    UL:    { img: 'assets/domain_banners/UL.webp?v=2',    tip: '霧中河谷的殘牆——沒有標籤、沒有答案，只有等待你發現的結構。', music: 'explore' },
-    ADV:   { img: 'assets/domain_banners/ADV.webp?v=2',   tip: '懸崖石索橋通往山頂要塞，中級議會正在等你。', music: null },
-    RL:    { img: null, tip: '', music: 'battle' }
+    INTRO: { img: 'assets/domain_banners/INTRO.webp?v=5', tip: '石造聚落與發光拱門——每位見習士降落 AI 宇宙的第一站。', music: 'explore' },
+    DATA:  { img: 'assets/domain_banners/DATA.webp?v=5',  tip: '山壁中的巨型石門礦場，水晶與軌道通往待淘洗的資料。', music: 'explore' },
+    SL:    { img: 'assets/domain_banners/SL.webp?v=5',    tip: '紫白石殿與符文光幕，守護者在此監督每一次學習。', music: 'explore' },
+    DISC:  { img: 'assets/domain_banners/DISC.webp?v=5',  tip: '寬敞機庫裡停著銀色星艦，掃描光束正在辨別真偽。', music: 'explore' },
+    UL:    { img: 'assets/domain_banners/UL.webp?v=5',    tip: '霧中高地上的古城塞——沒有標籤、沒有答案，只有等待你發現的結構。', music: 'explore' },
+    DL:    { img: 'assets/domain_banners/DL.webp?v=5',    tip: '高煙囪與熔爐巨門，深度網路在此鍛造成形。', music: 'explore' },
+    GEN:   { img: 'assets/domain_banners/GEN.webp?v=5',   tip: '漂浮島上的水晶樹與涼亭，新的創造從這裡誕生。', music: 'explore' },
+    RL:    { img: 'assets/domain_banners/RL.webp?v=5',    tip: '圓形競技場與藍色能量環，在試煉中強化你的策略。', music: 'battle' },
+    ADV:   { img: 'assets/domain_banners/ADV.webp?v=5',   tip: '黃昏下的塔樓議事堂，中級議會正在等你。', music: null },
+    CORE:  { img: 'assets/domain_banners/CORE.webp?v=5',  tip: '金色巨型水晶之下的星盟核心，最終的考驗在此。', music: 'explore' }
   };
+
   const MUSIC = { explore: 'assets/music_colab/explore', battle: 'assets/music_colab/battle' };
   // 停用旗標：window.RPG_DOMAIN_BANNER_OFF=true 或 localStorage.rpgBannerOff='1'（避免故障時影響進關）
   function disabled() { try { return window.RPG_DOMAIN_BANNER_OFF === true || localStorage.getItem('rpgBannerOff') === '1'; } catch (e) { return window.RPG_DOMAIN_BANNER_OFF === true; } }
