@@ -486,30 +486,40 @@ function buildDomainMap(cleared=[]) {
   rotAnim.setAttribute('from',`0 ${cx} ${cy}`); rotAnim.setAttribute('to',`360 ${cx} ${cy}`);
   rotAnim.setAttribute('dur','18000ms'); rotAnim.setAttribute('repeatCount','indefinite');
   rayG.appendChild(rotAnim);
-  sunG.appendChild(rayG);
+  // sunG.appendChild(rayG); // 2026-10-12 改用圖像噴發層，不再畫線條光芒
 
-  // 太陽主體
-  const sun = document.createElementNS(ns,'circle');
-  sun.setAttribute('cx',cx); sun.setAttribute('cy',cy); sun.setAttribute('r','24');
-  sun.setAttribute('fill','url(#core-g)'); sun.setAttribute('filter','url(#core-glow)');
-  // 主體輕微脈動
-  const sunAnim = document.createElementNS(ns,'animate');
-  sunAnim.setAttribute('attributeName','r'); sunAnim.setAttribute('values','24;26;24');
-  sunAnim.setAttribute('dur','4200ms'); sunAnim.setAttribute('repeatCount','indefinite');
-  sun.appendChild(sunAnim);
-  sunG.appendChild(sun);
-
-  // 球體高光
-  const sunShine = document.createElementNS(ns,'ellipse');
-  sunShine.setAttribute('cx',cx-7); sunShine.setAttribute('cy',cy-7);
-  sunShine.setAttribute('rx','7'); sunShine.setAttribute('ry','5');
-  sunShine.setAttribute('fill','rgba(255,255,255,0.55)'); sunG.appendChild(sunShine);
+  // 太陽主體（2026-10-12 OpenCodexGPT 繪製：球體層慢速自轉＋外圍噴發層呼吸；螢幕混合疊在地圖上）
+  const SUN_SZ = 70, sunBox = SUN_SZ/2;
+  const mkImg = (href, sz) => {
+    const im = document.createElementNS(ns,'image');
+    im.setAttribute('href', href); im.setAttribute('width', sz); im.setAttribute('height', sz);
+    im.setAttribute('x', cx - sz/2); im.setAttribute('y', cy - sz/2);
+    im.style.pointerEvents = 'none';
+    return im;
+  };
+  const disc = mkImg('assets/sun/sun_disc.webp?v=2', SUN_SZ);
+  const spin = document.createElementNS(ns,'animateTransform');
+  spin.setAttribute('attributeName','transform'); spin.setAttribute('type','rotate');
+  spin.setAttribute('from',`0 ${cx} ${cy}`); spin.setAttribute('to',`360 ${cx} ${cy}`);
+  spin.setAttribute('dur','90000ms'); spin.setAttribute('repeatCount','indefinite');
+  disc.appendChild(spin); sunG.appendChild(disc);
+  const flares = mkImg('assets/sun/sun_flares.webp?v=2', SUN_SZ);
+  const fa = document.createElementNS(ns,'animate');
+  fa.setAttribute('attributeName','opacity'); fa.setAttribute('values','0.75;1;0.75');
+  fa.setAttribute('dur','3600ms'); fa.setAttribute('repeatCount','indefinite');
+  flares.appendChild(fa);
+  const fr = document.createElementNS(ns,'animateTransform');
+  fr.setAttribute('attributeName','transform'); fr.setAttribute('type','rotate');
+  fr.setAttribute('from',`0 ${cx} ${cy}`); fr.setAttribute('to',`-360 ${cx} ${cy}`);
+  fr.setAttribute('dur','240000ms'); fr.setAttribute('repeatCount','indefinite');
+  flares.appendChild(fr); sunG.appendChild(flares);
 
   // AI 文字
   const sunTxt = document.createElementNS(ns,'text');
   sunTxt.setAttribute('x',cx); sunTxt.setAttribute('y',cy+5);
-  sunTxt.setAttribute('text-anchor','middle'); sunTxt.setAttribute('fill','#1a0800');
-  sunTxt.setAttribute('font-size','11'); sunTxt.setAttribute('font-weight','800');
+  sunTxt.setAttribute('text-anchor','middle'); sunTxt.setAttribute('fill','#fff7e0');
+  sunTxt.setAttribute('stroke','rgba(60,20,0,.85)'); sunTxt.setAttribute('stroke-width','2.5'); sunTxt.setAttribute('paint-order','stroke');
+  sunTxt.setAttribute('font-size','12'); sunTxt.setAttribute('font-weight','800');
   sunTxt.setAttribute('letter-spacing','1');
   sunTxt.textContent='AI'; sunG.appendChild(sunTxt);
   svg.appendChild(sunG);
