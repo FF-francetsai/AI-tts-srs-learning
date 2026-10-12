@@ -43,7 +43,13 @@
     c.style.cssText = 'margin-left:10px;padding:12px 18px;border:1px solid rgba(255,255,255,.2);border-radius:12px;background:transparent;color:#94a3b8;font-size:1rem;cursor:pointer;';
     b.onclick = () => { ov.remove(); playMusic(cfg.music); go(); };
     c.onclick = () => ov.remove();
-    box.append(h, p, g, b, c); ov.appendChild(box); document.body.appendChild(ov);
+    const gk = domain.guardianChar; let im = null;
+    if (gk && gk !== 'mangyue') {
+      im = document.createElement('img'); im.src = 'assets/guardians/' + gk + '.webp?v=1'; im.alt = domain.guardian || '';
+      im.style.cssText = 'display:block;margin:0 auto 6px;height:min(44vh,400px);max-width:100%;object-fit:contain;filter:drop-shadow(0 8px 18px rgba(0,0,0,.55));';
+      im.onerror = () => im.remove();
+    }
+    box.append(...(im ? [im] : []), h, p, g, b, c); ov.appendChild(box); document.body.appendChild(ov);
   }
   function install() {
     if (!window.RPGEngine || RPGEngine.prototype._bannerWrapped) return false;
