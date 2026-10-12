@@ -46,7 +46,7 @@
     const gk = domain.guardianChar; let im = null;
     if (gk && gk !== 'mangyue') {
       im = document.createElement('img'); im.src = 'assets/guardians/' + gk + '.webp?v=1'; im.alt = domain.guardian || '';
-      im.style.cssText = 'display:block;margin:0 auto 6px;height:min(44vh,400px);max-width:100%;object-fit:contain;filter:drop-shadow(0 8px 18px rgba(0,0,0,.55));';
+      im.style.cssText = 'display:block;margin:0 auto 6px;height:min(44vh,400px);max-width:100%;object-fit:contain;-webkit-mask-image:radial-gradient(ellipse 62% 70% at 50% 46%,#000 52%,transparent 100%);mask-image:radial-gradient(ellipse 62% 70% at 50% 46%,#000 52%,transparent 100%);';
       im.onerror = () => im.remove();
     }
     box.append(...(im ? [im] : []), h, p, g, b, c); ov.appendChild(box); document.body.appendChild(ov);
