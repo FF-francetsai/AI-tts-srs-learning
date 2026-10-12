@@ -47,7 +47,11 @@
     if (gk && gk !== 'mangyue') {
       im = document.createElement('img'); im.src = 'assets/guardians/' + gk + '.webp?v=1'; im.alt = domain.guardian || '';
       im.style.cssText = 'display:block;margin:0 auto 6px;height:min(44vh,400px);max-width:100%;object-fit:contain;-webkit-mask-image:radial-gradient(ellipse 62% 70% at 50% 46%,#000 52%,transparent 100%);mask-image:radial-gradient(ellipse 62% 70% at 50% 46%,#000 52%,transparent 100%);';
-      im.onerror = () => im.remove();
+      const wrap = document.createElement('div'); wrap.style.cssText = 'position:relative;height:min(44vh,400px);margin:0 auto 6px;display:flex;justify-content:center;';
+      const sh = document.createElement('div'); sh.style.cssText = 'position:absolute;left:50%;bottom:4.5%;width:40%;height:6%;transform:translateX(-50%);background:radial-gradient(ellipse at center,rgba(0,0,0,.8) 0%,rgba(0,0,0,.5) 45%,transparent 72%);filter:blur(3px);pointer-events:none;';
+      im.style.margin = '0'; im.style.position = 'relative';
+      im.onerror = () => wrap.remove();
+      wrap.append(im, sh); im = wrap;
     }
     box.append(...(im ? [im] : []), h, p, g, b, c); ov.appendChild(box); document.body.appendChild(ov);
   }
