@@ -1,212 +1,212 @@
 [
  {
-  "id": "12",
-  "zh": "歐盟人工智慧法案",
-  "en": "EU AI Act",
-  "def": "歐盟規範 AI 系統風險分級與合規要求的法律框架。",
-  "stage": 2
- },
- {
-  "id": "13",
-  "zh": "人工智慧基本法",
-  "en": "AI Basic Act",
-  "def": "我國人工智慧基本法，規範 AI 發展與應用原則。",
-  "stage": 2
- },
- {
-  "id": "18",
-  "zh": "監理沙盒",
-  "en": "Regulatory Sandbox",
-  "def": "受監管的測試環境，允許創新 AI 產品試點運行。",
-  "stage": 2
- },
- {
-  "id": "111",
-  "zh": "可行性評估",
-  "en": "Feasibility Study",
-  "def": "評估專案在技術、成本與時程上是否可行的分析。",
-  "stage": 2
- },
- {
-  "id": "117",
-  "zh": "範圍定義",
-  "en": "Scope Definition",
-  "def": "明確界定 AI 專案目標、邊界與交付物的範圍。",
-  "stage": 2
- },
- {
-  "id": "118",
-  "zh": "利害關係人分析",
-  "en": "Stakeholder Analysis",
-  "def": "辨識並分析專案利害關係人及其影響力與需求。",
-  "stage": 2
- },
- {
-  "id": "119",
-  "zh": "差異分析/差距分析",
-  "en": "Gap Analysis",
-  "def": "比較現狀與目標差距，識別需補足的能力缺口。",
-  "stage": 2
- },
- {
-  "id": "115",
-  "zh": "變革管理",
-  "en": "Change Management",
-  "def": "引導組織順利導入 AI 並降低抗拒的變革策略。",
-  "stage": 2
- },
- {
-  "id": "778",
-  "zh": "內部教育訓練",
-  "en": "Internal Training",
-  "def": "為內部員工提供 AI 技能與素養的教育訓練計畫。",
-  "stage": 2
- },
- {
   "id": "127",
   "zh": "機器學習營運",
   "en": "Machine Learning Operations",
-  "def": "整合機器學習開發、部署與維運的工程實踐方法。",
+  "def": "整合模型開發部署與監控的工程實踐",
   "stage": 2
  },
  {
-  "id": "121",
-  "zh": "容器化",
-  "en": "Containerization",
-  "def": "將應用與依賴封裝於容器中以利跨環境部署執行。",
-  "stage": 2
- },
- {
-  "id": "122",
-  "zh": "微服務",
-  "en": "Microservices",
-  "def": "將系統拆分成多個獨立小型服務以提高彈性維運。",
-  "stage": 2
- },
- {
-  "id": "131",
-  "zh": "API 閘道",
-  "en": "API Gateway",
-  "def": "統一管理 API 請求的路由、安全與流量控制層。",
-  "stage": 2
- },
- {
-  "id": "338",
-  "zh": "藍綠部署",
-  "en": "Blue-Green Deployment",
-  "def": "透過兩套環境切換來降低部署風險的發布策略。",
-  "stage": 2
- },
- {
-  "id": "738",
-  "zh": "資料漂移",
-  "en": "Data Drift",
-  "def": "模型輸入資料分布改變導致預測失準的現象。",
-  "stage": 2
- },
- {
-  "id": "740",
-  "zh": "概念漂移",
-  "en": "Concept Drift",
-  "def": "真實世界中目標概念隨時間改變造成模型失效。",
-  "stage": 2
- },
- {
-  "id": "786",
-  "zh": "模型漂移監控",
-  "en": "Model Drift Monitoring",
-  "def": "持續監控模型預測準確度以偵測效能衰退。",
-  "stage": 2
- },
- {
-  "id": "788",
-  "zh": "效能異常警示",
-  "en": "Performance Anomaly Alerting",
-  "def": "當模型效能偏離基準時自動發出告警通知。",
-  "stage": 2
- },
- {
-  "id": "789",
-  "zh": "自動重訓",
-  "en": "Auto-retraining",
-  "def": "偵測漂移後自動以新資料重新訓練並部署模型。",
-  "stage": 2
- },
- {
-  "id": "155",
-  "zh": "代理人人工智慧",
-  "en": "Agentic AI",
-  "def": "能自主感知、規劃並執行任務的 AI 代理人系統。",
-  "stage": 2
- },
- {
-  "id": "156",
-  "zh": "多代理人系統",
-  "en": "Multi-Agent System",
-  "def": "多個 AI 代理人協作分工以完成複雜任務的架構。",
-  "stage": 2
- },
- {
-  "id": "157",
-  "zh": "模型上下文協定",
-  "en": "Model Context Protocol",
-  "def": "標準化代理人與外部工具、資料來源的溝通協定。",
-  "stage": 2
- },
- {
-  "id": "158",
-  "zh": "函式調用",
-  "en": "Function Calling",
-  "def": "模型依需求自動呼叫外部函式以擴展能力的機制。",
-  "stage": 2
- },
- {
-  "id": "149",
-  "zh": "向量資料庫",
-  "en": "Vector Database",
-  "def": "以向量相似度快速查找語意相近資料的資料庫。",
-  "stage": 2
- },
- {
-  "id": "262",
-  "zh": "混合檢索增強生成",
-  "en": "Hybrid RAG",
-  "def": "結合關鍵字與向量檢索以提升生成品質的混合架構。",
-  "stage": 2
- },
- {
-  "id": "785",
-  "zh": "風險管理計畫",
-  "en": "Risk Management Plan",
-  "def": "識別、評估並管控專案風險的整體性計畫文件。",
-  "stage": 2
- },
- {
-  "id": "735",
-  "zh": "資料品質風險",
-  "en": "Data Quality Risk",
-  "def": "因訓練資料品質不佳而導致模型表現不如預期。",
+  "id": "123",
+  "zh": "推論",
+  "en": "Inference",
+  "def": "將訓練好的模型套用於新資料產生預測",
   "stage": 2
  },
  {
   "id": "125",
   "zh": "推論延遲",
   "en": "Inference Latency",
-  "def": "模型從接收輸入到產生輸出所花費的時間長度。",
+  "def": "模型從接收輸入到產出結果所花的時間",
   "stage": 2
  },
  {
   "id": "240",
   "zh": "推論成本",
   "en": "Inference Cost",
-  "def": "模型每次推論所消耗的算力與金錢成本。",
+  "def": "模型每次推論所消耗的算力與金錢",
+  "stage": 2
+ },
+ {
+  "id": "130",
+  "zh": "模型壓縮",
+  "en": "Model Compression",
+  "def": "縮減模型大小以加快推論並降低資源需求",
+  "stage": 2
+ },
+ {
+  "id": "121",
+  "zh": "容器化",
+  "en": "Containerization",
+  "def": "將應用與相依套件打包成可攜式執行環境",
+  "stage": 2
+ },
+ {
+  "id": "116",
+  "zh": "AI 專案經理",
+  "en": "AI Project Manager",
+  "def": "統籌 AI 專案時程資源與跨團隊協作的角色",
+  "stage": 2
+ },
+ {
+  "id": "111",
+  "zh": "可行性評估",
+  "en": "Feasibility Study",
+  "def": "評估 AI 專案在技術資料與組織上的可行性",
+  "stage": 2
+ },
+ {
+  "id": "117",
+  "zh": "範圍定義",
+  "en": "Scope Definition",
+  "def": "明確劃分專案目標邊界與交付項目",
+  "stage": 2
+ },
+ {
+  "id": "118",
+  "zh": "利害關係人分析",
+  "en": "Stakeholder Analysis",
+  "def": "識別並分類專案相關人員與其影響力",
+  "stage": 2
+ },
+ {
+  "id": "115",
+  "zh": "變革管理",
+  "en": "Change Management",
+  "def": "引導組織順利導入 AI 與新流程",
+  "stage": 2
+ },
+ {
+  "id": "129",
+  "zh": "A/B 測試",
+  "en": "A/B Testing",
+  "def": "同時運行兩版本以比較實際成效差異",
   "stage": 2
  },
  {
   "id": "258",
   "zh": "人工智慧治理",
   "en": "AI Governance",
-  "def": "規範 AI 開發與使用的政策、流程與責任框架。",
+  "def": "建立 AI 開發與使用的規範與責任框架",
+  "stage": 2
+ },
+ {
+  "id": "12",
+  "zh": "歐盟人工智慧法案",
+  "en": "EU AI Act",
+  "def": "歐盟對 AI 系統風險分級與合規範的法案",
+  "stage": 2
+ },
+ {
+  "id": "13",
+  "zh": "人工智慧基本法",
+  "en": "AI Basic Act",
+  "def": "台灣 AI 應用的基本法律框架",
+  "stage": 2
+ },
+ {
+  "id": "155",
+  "zh": "代理人人工智慧",
+  "en": "Agentic AI",
+  "def": "能自主規劃與執行多步驟任務的 AI 系統",
+  "stage": 2
+ },
+ {
+  "id": "156",
+  "zh": "多代理人系統",
+  "en": "Multi-Agent System",
+  "def": "多個 AI 代理人協作完成複雜任務",
+  "stage": 2
+ },
+ {
+  "id": "158",
+  "zh": "函式調用",
+  "en": "Function Calling",
+  "def": "LLM 觸發外部工具或 API 完成特定動作",
+  "stage": 2
+ },
+ {
+  "id": "157",
+  "zh": "模型上下文協定",
+  "en": "Model Context Protocol",
+  "def": "標準化模型與外部工具資源的通訊協定",
+  "stage": 2
+ },
+ {
+  "id": "222",
+  "zh": "Auto-GPT",
+  "en": "Auto-GPT",
+  "def": "能自主設定目標並連續執行的開源 AI 代理人",
+  "stage": 2
+ },
+ {
+  "id": "148",
+  "zh": "向量嵌入",
+  "en": "Vector Embedding",
+  "def": "將文字轉為可計算相似度的數值向量",
+  "stage": 2
+ },
+ {
+  "id": "149",
+  "zh": "向量資料庫",
+  "en": "Vector Database",
+  "def": "專門儲存與搜尋高維向量的資料庫系統",
+  "stage": 2
+ },
+ {
+  "id": "262",
+  "zh": "混合檢索增強生成",
+  "en": "Hybrid RAG",
+  "def": "結合多種檢索方式強化 LLM 回覆品質",
+  "stage": 2
+ },
+ {
+  "id": "219",
+  "zh": "模型退化",
+  "en": "Model Degradation",
+  "def": "模型效能隨時間或環境變化而下降的現象",
+  "stage": 2
+ },
+ {
+  "id": "740",
+  "zh": "概念漂移",
+  "en": "Concept Drift",
+  "def": "輸入與輸出的對應關係隨時間改變的現象",
+  "stage": 2
+ },
+ {
+  "id": "738",
+  "zh": "資料漂移",
+  "en": "Data Drift",
+  "def": "生產環境資料分布與訓練資料產生偏移",
+  "stage": 2
+ },
+ {
+  "id": "785",
+  "zh": "風險管理計畫",
+  "en": "Risk Management Plan",
+  "def": "識別評估並對應處置 AI 專案風險的文件",
+  "stage": 2
+ },
+ {
+  "id": "107",
+  "zh": "邊緣人工智慧",
+  "en": "Edge AI",
+  "def": "在終端裝置本地執行 AI 推論以降低延遲",
+  "stage": 2
+ },
+ {
+  "id": "272",
+  "zh": "裝置端推論",
+  "en": "On-device Inference",
+  "def": "模型直接在終端裝置上完成預測的技術",
+  "stage": 2
+ },
+ {
+  "id": "273",
+  "zh": "長上下文處理",
+  "en": "Long Context Handling",
+  "def": "模型在極長輸入下仍維持理解與生成能力",
   "stage": 2
  }
 ]

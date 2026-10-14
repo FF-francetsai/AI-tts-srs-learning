@@ -3,210 +3,210 @@
   "id": "14",
   "zh": "負責任的人工智慧",
   "en": "Responsible AI",
-  "def": "強調AI開發需兼顧倫理與社會責任的原則框架",
-  "stage": 3
- },
- {
-  "id": "21",
-  "zh": "演算法偏見",
-  "en": "Algorithmic Bias",
-  "def": "模型因訓練資料產生對弱勢群體的系統性不公平",
+  "def": "以公平、透明、安全為核心價值的 AI 開發與治理原則",
   "stage": 3
  },
  {
   "id": "15",
   "zh": "可解釋人工智慧",
   "en": "Explainable AI",
-  "def": "讓AI決策過程可被人理解與追溯的技術方法",
+  "def": "讓 AI 決策結果能被人類理解與審視的技術",
+  "stage": 3
+ },
+ {
+  "id": "21",
+  "zh": "演算法偏見",
+  "en": "Algorithmic Bias",
+  "def": "模型對特定群體產生系統性不公平預測的現象",
   "stage": 3
  },
  {
   "id": "26",
   "zh": "差分隱私",
   "en": "Differential Privacy",
-  "def": "在資料加噪聲以保護個資的數學隱私機制",
+  "def": "在統計噪聲保護下查詢資料的隱私強化機制",
   "stage": 3
  },
  {
   "id": "27",
   "zh": "聯邦學習",
   "en": "Federated Learning",
-  "def": "資料不離地只交換模型參數的分散式機器學習",
+  "def": "資料留原地、只交換模型參數的分散式訓練法",
   "stage": 3
  },
  {
-  "id": "684",
-  "zh": "端對端加密",
-  "en": "End-to-End Encryption",
-  "def": "資料從發送端到接收端全程加密保護",
+  "id": "28",
+  "zh": "零信任架構",
+  "en": "Zero Trust Architecture",
+  "def": "預設不信任任何存取請求、須持續驗證的資安架構",
   "stage": 3
  },
  {
-  "id": "37",
-  "zh": "插補法",
-  "en": "Imputation",
-  "def": "用合理估計填補資料集中的缺失值",
+  "id": "33",
+  "zh": "擷取轉換載入",
+  "en": "Extract, Transform, Load",
+  "def": "從來源系統抽取、轉換並載入目標倉儲的資料流程",
+  "stage": 3
+ },
+ {
+  "id": "280",
+  "zh": "資料管線",
+  "en": "Data Pipeline",
+  "def": "資料從來源到消費端的有序、可監控處理流程",
   "stage": 3
  },
  {
   "id": "38",
   "zh": "特徵工程",
   "en": "Feature Engineering",
-  "def": "從原始資料萃取與轉換有效特徵的過程",
+  "def": "把原始資料轉為模型更易學習之特徵的工程方法",
   "stage": 3
  },
  {
-  "id": "296",
-  "zh": "獨熱編碼",
-  "en": "One-Hot Encoding",
-  "def": "將類別變數轉為多個二元零一向量的編碼方式",
+  "id": "295",
+  "zh": "特徵縮放",
+  "en": "Feature Scaling",
+  "def": "將不同範圍特徵統一尺度以利模型收斂的處理",
   "stage": 3
  },
  {
   "id": "49",
   "zh": "決策樹",
   "en": "Decision Tree",
-  "def": "以樹狀規則進行分類或迴歸的監督式學習模型",
+  "def": "以樹狀規則對資料進行分類或迴歸的監督式模型",
   "stage": 3
  },
  {
   "id": "50",
   "zh": "隨機森林",
   "en": "Random Forest",
-  "def": "多棵決策樹投票以提升準確率與穩定性的集成方法",
+  "def": "由多棵決策樹集成、以投票提升穩定性的模型",
+  "stage": 3
+ },
+ {
+  "id": "51",
+  "zh": "支持向量機",
+  "en": "Support Vector Machine",
+  "def": "尋找最大間隔超平面以分離資料的分類演算法",
   "stage": 3
  },
  {
   "id": "53",
   "zh": "過度擬合",
   "en": "Overfitting",
-  "def": "模型過度記憶訓練資料而對新資料表現下降的現象",
+  "def": "模型過度記憶訓練資料、泛化能力下降的現象",
   "stage": 3
  },
  {
   "id": "57",
   "zh": "交叉驗證",
   "en": "Cross-Validation",
-  "def": "將資料分多輪訓練驗證以穩健評估模型效能",
-  "stage": 3
- },
- {
-  "id": "63",
-  "zh": "梯度下降",
-  "en": "Gradient Descent",
-  "def": "沿損失函數負梯度方向迭代更新參數的最佳化法",
-  "stage": 3
- },
- {
-  "id": "55",
-  "zh": "正則化",
-  "en": "Regularization",
-  "def": "在損失函數加入懲罰項以抑制模型複雜度避免過擬合",
-  "stage": 3
- },
- {
-  "id": "242",
-  "zh": "人工神經網路",
-  "en": "Artificial Neural Network",
-  "def": "由多層神經元組成模擬人腦學習的模型架構",
-  "stage": 3
- },
- {
-  "id": "68",
-  "zh": "反向傳播",
-  "en": "Backpropagation",
-  "def": "由輸出層反向計算梯度以更新權重的關鍵機制",
-  "stage": 3
- },
- {
-  "id": "73",
-  "zh": "梯度消失",
-  "en": "Gradient Vanishing",
-  "def": "深層網路中梯度逐層變小導致難以訓練的問題",
-  "stage": 3
- },
- {
-  "id": "67",
-  "zh": "激活函數",
-  "en": "Activation Function",
-  "def": "為神經元引入非線性變換提升模型表達能力",
-  "stage": 3
- },
- {
-  "id": "89",
-  "zh": "詞嵌入",
-  "en": "Word Embedding",
-  "def": "將詞彙映射為低維稠密向量以捕捉語意關係",
-  "stage": 3
- },
- {
-  "id": "407",
-  "zh": "詞頻-逆文件頻率",
-  "en": "Term Frequency-Inverse Document Frequency",
-  "def": "衡量詞在文件中重要程度的統計加權方法",
-  "stage": 3
- },
- {
-  "id": "401",
-  "zh": "Word2Vec",
-  "en": "Word2Vec",
-  "def": "用淺層神經網路學習詞向量的經典嵌入模型",
-  "stage": 3
- },
- {
-  "id": "90",
-  "zh": "斷詞/標記化",
-  "en": "Tokenization",
-  "def": "將文本切分成最小語意單位以供模型處理",
-  "stage": 3
- },
- {
-  "id": "98",
-  "zh": "假設檢定",
-  "en": "Hypothesis Testing",
-  "def": "以樣本統計量推論母體是否符合特定假設的方法",
-  "stage": 3
- },
- {
-  "id": "291",
-  "zh": "中央極限定理",
-  "en": "Central Limit Theorem",
-  "def": "樣本均值隨樣本數增加趨近常態分佈的統計定理",
+  "def": "將資料切分輪替以穩定評估模型效能的驗證法",
   "stage": 3
  },
  {
   "id": "62",
   "zh": "混淆矩陣",
   "en": "Confusion Matrix",
-  "def": "以矩陣呈現分類模型預測與真實類別對應的表格",
+  "def": "以矩陣呈現分類預測與真實標籤對照的評估表",
   "stage": 3
  },
  {
   "id": "298",
   "zh": "均方誤差",
   "en": "Mean Squared Error",
-  "def": "預測值與真實值差平方和的平均用於迴歸評估",
+  "def": "預測值與真實值差平方之期望，用於迴歸評估",
   "stage": 3
  },
  {
-  "id": "585",
-  "zh": "線下面積",
-  "en": "Area Under Curve",
-  "def": "二元分類中衡量模型區分能力的常用評估指標",
+  "id": "63",
+  "zh": "梯度下降",
+  "en": "Gradient Descent",
+  "def": "沿著損失函數負梯度方向逐步更新參數的優化法",
+  "stage": 3
+ },
+ {
+  "id": "68",
+  "zh": "反向傳播",
+  "en": "Backpropagation",
+  "def": "由輸出誤差逆向回傳以更新權重的神經網路演算法",
+  "stage": 3
+ },
+ {
+  "id": "69",
+  "zh": "多層感知器",
+  "en": "Multi-Layer Perceptron",
+  "def": "由多層全連接神經元構成的前饋式類神經網路",
+  "stage": 3
+ },
+ {
+  "id": "98",
+  "zh": "假設檢定",
+  "en": "Hypothesis Testing",
+  "def": "依樣本證據對母體假設做統計推論與決策的方法",
+  "stage": 3
+ },
+ {
+  "id": "106",
+  "zh": "自動化機器學習",
+  "en": "Automated Machine Learning",
+  "def": "自動化完成特徵、模型與超參數選擇的機器學習流程",
+  "stage": 3
+ },
+ {
+  "id": "213",
+  "zh": "剪枝",
+  "en": "Pruning",
+  "def": "移除模型中冗餘結構以縮小體積並加速推論",
+  "stage": 3
+ },
+ {
+  "id": "214",
+  "zh": "量化",
+  "en": "Quantization",
+  "def": "降低參數精度以節省記憶體與加速推論的技術",
   "stage": 3
  },
  {
   "id": "165",
   "zh": "人類回饋強化學習",
   "en": "Reinforcement Learning from Human Feedback",
-  "def": "透過人類偏好回饋微調大型語言模型以對齊價值觀",
+  "def": "以人類偏好排序微調模型行為的強化學習方法",
   "stage": 3
  },
  {
-  "id": "128",
-  "zh": "模型漂移",
-  "en": "Model Drift",
-  "def": "模型部署後因資料分布改變導致預測效能下降的現象",
+  "id": "356",
+  "zh": "來自變換器的雙向編碼器表徵",
+  "en": "Bidirectional Encoder Representations from Transformers",
+  "def": "以遮罩語言模型預訓練的深度雙向 Transformer",
+  "stage": 3
+ },
+ {
+  "id": "908",
+  "zh": "直接偏好優化",
+  "en": "Direct Preference Optimization",
+  "def": "直接以偏好資料對齊模型、無需獎勵模型的微調法",
+  "stage": 3
+ },
+ {
+  "id": "912",
+  "zh": "混合專家模型",
+  "en": "Mixture of Experts",
+  "def": "以門控網路選擇稀疏專家子集以提升推論效率",
+  "stage": 3
+ },
+ {
+  "id": "255",
+  "zh": "幻覺率",
+  "en": "Hallucination Rate",
+  "def": "語言模型生成內容與事實不符的比例衡量指標",
+  "stage": 3
+ },
+ {
+  "id": "997",
+  "zh": "危險能力評估",
+  "en": "Dangerous Capability Evaluation",
+  "def": "評估模型是否具備危險能力以決定可否部署的程序",
   "stage": 3
  }
 ]
