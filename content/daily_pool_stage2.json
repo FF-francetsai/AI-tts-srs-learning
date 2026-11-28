@@ -1,212 +1,212 @@
 [
  {
-  "id": "127",
-  "zh": "機器學習營運",
-  "en": "Machine Learning Operations",
-  "def": "整合模型開發部署與監控的工程實踐",
-  "stage": 2
- },
- {
-  "id": "123",
-  "zh": "推論",
-  "en": "Inference",
-  "def": "將訓練好的模型套用於新資料產生預測",
-  "stage": 2
- },
- {
-  "id": "125",
-  "zh": "推論延遲",
-  "en": "Inference Latency",
-  "def": "模型從接收輸入到產出結果所花的時間",
-  "stage": 2
- },
- {
-  "id": "240",
-  "zh": "推論成本",
-  "en": "Inference Cost",
-  "def": "模型每次推論所消耗的算力與金錢",
-  "stage": 2
- },
- {
-  "id": "130",
-  "zh": "模型壓縮",
-  "en": "Model Compression",
-  "def": "縮減模型大小以加快推論並降低資源需求",
-  "stage": 2
- },
- {
-  "id": "121",
-  "zh": "容器化",
-  "en": "Containerization",
-  "def": "將應用與相依套件打包成可攜式執行環境",
-  "stage": 2
- },
- {
-  "id": "116",
-  "zh": "AI 專案經理",
-  "en": "AI Project Manager",
-  "def": "統籌 AI 專案時程資源與跨團隊協作的角色",
-  "stage": 2
- },
- {
-  "id": "111",
-  "zh": "可行性評估",
-  "en": "Feasibility Study",
-  "def": "評估 AI 專案在技術資料與組織上的可行性",
-  "stage": 2
- },
- {
-  "id": "117",
-  "zh": "範圍定義",
-  "en": "Scope Definition",
-  "def": "明確劃分專案目標邊界與交付項目",
-  "stage": 2
- },
- {
-  "id": "118",
-  "zh": "利害關係人分析",
-  "en": "Stakeholder Analysis",
-  "def": "識別並分類專案相關人員與其影響力",
-  "stage": 2
- },
- {
-  "id": "115",
-  "zh": "變革管理",
-  "en": "Change Management",
-  "def": "引導組織順利導入 AI 與新流程",
-  "stage": 2
- },
- {
-  "id": "129",
-  "zh": "A/B 測試",
-  "en": "A/B Testing",
-  "def": "同時運行兩版本以比較實際成效差異",
-  "stage": 2
- },
- {
-  "id": "258",
-  "zh": "人工智慧治理",
-  "en": "AI Governance",
-  "def": "建立 AI 開發與使用的規範與責任框架",
+  "id": "10",
+  "zh": "多模態人工智慧",
+  "en": "Multimodal Artificial Intelligence",
+  "def": "能同時理解與處理文字、影像、聲音等多種資料的 AI。",
   "stage": 2
  },
  {
   "id": "12",
   "zh": "歐盟人工智慧法案",
   "en": "EU AI Act",
-  "def": "歐盟對 AI 系統風險分級與合規範的法案",
+  "def": "歐盟依風險分級管理 AI 系統的法規，高風險應用要求最嚴。",
   "stage": 2
  },
  {
-  "id": "13",
-  "zh": "人工智慧基本法",
-  "en": "AI Basic Act",
-  "def": "台灣 AI 應用的基本法律框架",
+  "id": "18",
+  "zh": "監理沙盒",
+  "en": "Regulatory Sandbox",
+  "def": "讓創新服務在受控範圍內先試行，暫時放寬部分法規限制。",
   "stage": 2
  },
  {
-  "id": "155",
-  "zh": "代理人人工智慧",
-  "en": "Agentic AI",
-  "def": "能自主規劃與執行多步驟任務的 AI 系統",
+  "id": "72",
+  "zh": "遞歸神經網路",
+  "en": "Recurrent Neural Network",
+  "def": "能記住前面輸入、適合處理文字或時間序列的神經網路。",
   "stage": 2
  },
  {
-  "id": "156",
-  "zh": "多代理人系統",
-  "en": "Multi-Agent System",
-  "def": "多個 AI 代理人協作完成複雜任務",
+  "id": "80",
+  "zh": "物件偵測",
+  "en": "Object Detection",
+  "def": "在影像中找出物體位置並標出類別，例如框出行人與車輛。",
   "stage": 2
  },
  {
-  "id": "158",
-  "zh": "函式調用",
-  "en": "Function Calling",
-  "def": "LLM 觸發外部工具或 API 完成特定動作",
+  "id": "84",
+  "zh": "光學字元辨識",
+  "en": "Optical Character Recognition",
+  "def": "把圖片或掃描檔中的文字轉成可編輯的電子文字。",
   "stage": 2
  },
  {
-  "id": "157",
-  "zh": "模型上下文協定",
-  "en": "Model Context Protocol",
-  "def": "標準化模型與外部工具資源的通訊協定",
-  "stage": 2
- },
- {
-  "id": "222",
-  "zh": "Auto-GPT",
-  "en": "Auto-GPT",
-  "def": "能自主設定目標並連續執行的開源 AI 代理人",
-  "stage": 2
- },
- {
-  "id": "148",
-  "zh": "向量嵌入",
-  "en": "Vector Embedding",
-  "def": "將文字轉為可計算相似度的數值向量",
-  "stage": 2
- },
- {
-  "id": "149",
-  "zh": "向量資料庫",
-  "en": "Vector Database",
-  "def": "專門儲存與搜尋高維向量的資料庫系統",
-  "stage": 2
- },
- {
-  "id": "262",
-  "zh": "混合檢索增強生成",
-  "en": "Hybrid RAG",
-  "def": "結合多種檢索方式強化 LLM 回覆品質",
-  "stage": 2
- },
- {
-  "id": "219",
-  "zh": "模型退化",
-  "en": "Model Degradation",
-  "def": "模型效能隨時間或環境變化而下降的現象",
-  "stage": 2
- },
- {
-  "id": "740",
-  "zh": "概念漂移",
-  "en": "Concept Drift",
-  "def": "輸入與輸出的對應關係隨時間改變的現象",
-  "stage": 2
- },
- {
-  "id": "738",
-  "zh": "資料漂移",
-  "en": "Data Drift",
-  "def": "生產環境資料分布與訓練資料產生偏移",
-  "stage": 2
- },
- {
-  "id": "785",
-  "zh": "風險管理計畫",
-  "en": "Risk Management Plan",
-  "def": "識別評估並對應處置 AI 專案風險的文件",
+  "id": "93",
+  "zh": "命名實體識別",
+  "en": "Named Entity Recognition",
+  "def": "從文字中找出人名、地名、機構名等特定專有名詞。",
   "stage": 2
  },
  {
   "id": "107",
   "zh": "邊緣人工智慧",
   "en": "Edge AI",
-  "def": "在終端裝置本地執行 AI 推論以降低延遲",
+  "def": "在手機、感測器等裝置端直接執行 AI，不必全靠雲端。",
   "stage": 2
  },
  {
-  "id": "272",
-  "zh": "裝置端推論",
-  "en": "On-device Inference",
-  "def": "模型直接在終端裝置上完成預測的技術",
+  "id": "108",
+  "zh": "知識圖譜",
+  "en": "Knowledge Graph",
+  "def": "以節點與關係連結各種知識，讓機器能理解事物關聯。",
   "stage": 2
  },
  {
-  "id": "273",
-  "zh": "長上下文處理",
-  "en": "Long Context Handling",
-  "def": "模型在極長輸入下仍維持理解與生成能力",
+  "id": "111",
+  "zh": "可行性評估",
+  "en": "Feasibility Study",
+  "def": "在專案啟動前評估技術、資料、資源與效益是否可行。",
+  "stage": 2
+ },
+ {
+  "id": "115",
+  "zh": "變革管理",
+  "en": "Change Management",
+  "def": "協助組織與員工順利接受新流程或新系統的管理方法。",
+  "stage": 2
+ },
+ {
+  "id": "123",
+  "zh": "推論",
+  "en": "Inference",
+  "def": "用訓練好的模型對新資料做出預測或產生結果的過程。",
+  "stage": 2
+ },
+ {
+  "id": "127",
+  "zh": "機器學習營運",
+  "en": "Machine Learning Operations",
+  "def": "把模型開發、部署、監控與更新流程化的實務做法。",
+  "stage": 2
+ },
+ {
+  "id": "129",
+  "zh": "A/B 測試",
+  "en": "A/B Testing",
+  "def": "把使用者分兩組比較兩種版本，用數據判斷哪個效果較好。",
+  "stage": 2
+ },
+ {
+  "id": "130",
+  "zh": "模型壓縮",
+  "en": "Model Compression",
+  "def": "用量化、剪枝等方式縮小模型，讓它跑得更快更省資源。",
+  "stage": 2
+ },
+ {
+  "id": "148",
+  "zh": "向量嵌入",
+  "en": "Vector Embedding",
+  "def": "把文字或圖片轉成數字向量，意思相近的向量距離也相近。",
+  "stage": 2
+ },
+ {
+  "id": "149",
+  "zh": "向量資料庫",
+  "en": "Vector Database",
+  "def": "專門儲存與快速搜尋向量的資料庫，常用於 RAG 檢索。",
+  "stage": 2
+ },
+ {
+  "id": "155",
+  "zh": "代理人人工智慧",
+  "en": "Agentic AI",
+  "def": "能自行規劃步驟、使用工具並完成目標任務的 AI。",
+  "stage": 2
+ },
+ {
+  "id": "157",
+  "zh": "模型上下文協定",
+  "en": "Model Context Protocol",
+  "def": "讓 AI 模型以統一方式連接外部工具與資料來源的開放協定。",
+  "stage": 2
+ },
+ {
+  "id": "158",
+  "zh": "函式調用",
+  "en": "Function Calling",
+  "def": "讓語言模型輸出結構化指令，去呼叫程式函式或外部 API。",
+  "stage": 2
+ },
+ {
+  "id": "196",
+  "zh": "預訓練",
+  "en": "Pre-training",
+  "def": "先用大量通用資料訓練模型打底，之後再針對任務微調。",
+  "stage": 2
+ },
+ {
+  "id": "229",
+  "zh": "影子人工智慧",
+  "en": "Shadow AI",
+  "def": "員工未經公司核准私自使用的 AI 工具，可能造成資料外洩。",
+  "stage": 2
+ },
+ {
+  "id": "252",
+  "zh": "對齊",
+  "en": "Alignment",
+  "def": "讓 AI 的行為符合人類意圖與價值觀，避免有害輸出。",
+  "stage": 2
+ },
+ {
+  "id": "258",
+  "zh": "人工智慧治理",
+  "en": "AI Governance",
+  "def": "以政策、流程與責任分工，確保 AI 被安全合規地使用。",
+  "stage": 2
+ },
+ {
+  "id": "464",
+  "zh": "模型偏見",
+  "en": "Model Bias",
+  "def": "模型因訓練資料不均等，對特定族群產生不公平的判斷。",
+  "stage": 2
+ },
+ {
+  "id": "475",
+  "zh": "視覺變換器",
+  "en": "Vision Transformer",
+  "def": "把圖片切成小塊當成序列，用 Transformer 做影像辨識。",
+  "stage": 2
+ },
+ {
+  "id": "632",
+  "zh": "語音合成 (TTS)",
+  "en": "Text-to-Speech",
+  "def": "把文字轉成自然的人聲語音。",
+  "stage": 2
+ },
+ {
+  "id": "738",
+  "zh": "資料漂移",
+  "en": "Data Drift",
+  "def": "上線後輸入資料的分布和訓練時不同，導致模型變不準。",
+  "stage": 2
+ },
+ {
+  "id": "892",
+  "zh": "小語言模型",
+  "en": "Small Language Model",
+  "def": "參數較少、成本低、可在本機或裝置端執行的語言模型。",
+  "stage": 2
+ },
+ {
+  "id": "898",
+  "zh": "推理與行動框架",
+  "en": "ReAct (Reasoning and Acting)",
+  "def": "讓模型交替思考與呼叫工具，邊推理邊行動來解題。",
   "stage": 2
  }
 ]

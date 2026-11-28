@@ -3,210 +3,210 @@
   "id": "14",
   "zh": "負責任的人工智慧",
   "en": "Responsible AI",
-  "def": "以公平、透明、安全為核心價值的 AI 開發與治理原則",
+  "def": "開發與使用 AI 時兼顧安全、公平、透明與問責的原則。",
   "stage": 3
  },
  {
   "id": "15",
   "zh": "可解釋人工智慧",
   "en": "Explainable AI",
-  "def": "讓 AI 決策結果能被人類理解與審視的技術",
+  "def": "讓人看得懂 AI 為什麼做出某個判斷的技術與方法。",
   "stage": 3
  },
  {
   "id": "21",
   "zh": "演算法偏見",
   "en": "Algorithmic Bias",
-  "def": "模型對特定群體產生系統性不公平預測的現象",
+  "def": "演算法對特定族群產生系統性不公平結果的現象。",
   "stage": 3
  },
  {
   "id": "26",
   "zh": "差分隱私",
   "en": "Differential Privacy",
-  "def": "在統計噪聲保護下查詢資料的隱私強化機制",
+  "def": "在資料中加入適量雜訊，保護個人隱私又能做統計分析。",
   "stage": 3
  },
  {
   "id": "27",
   "zh": "聯邦學習",
   "en": "Federated Learning",
-  "def": "資料留原地、只交換模型參數的分散式訓練法",
-  "stage": 3
- },
- {
-  "id": "28",
-  "zh": "零信任架構",
-  "en": "Zero Trust Architecture",
-  "def": "預設不信任任何存取請求、須持續驗證的資安架構",
-  "stage": 3
- },
- {
-  "id": "33",
-  "zh": "擷取轉換載入",
-  "en": "Extract, Transform, Load",
-  "def": "從來源系統抽取、轉換並載入目標倉儲的資料流程",
-  "stage": 3
- },
- {
-  "id": "280",
-  "zh": "資料管線",
-  "en": "Data Pipeline",
-  "def": "資料從來源到消費端的有序、可監控處理流程",
+  "def": "資料留在各自裝置，只交換模型參數來共同訓練模型。",
   "stage": 3
  },
  {
   "id": "38",
   "zh": "特徵工程",
   "en": "Feature Engineering",
-  "def": "把原始資料轉為模型更易學習之特徵的工程方法",
-  "stage": 3
- },
- {
-  "id": "295",
-  "zh": "特徵縮放",
-  "en": "Feature Scaling",
-  "def": "將不同範圍特徵統一尺度以利模型收斂的處理",
-  "stage": 3
- },
- {
-  "id": "49",
-  "zh": "決策樹",
-  "en": "Decision Tree",
-  "def": "以樹狀規則對資料進行分類或迴歸的監督式模型",
+  "def": "從原始資料中挑選、轉換或創造對模型有用的特徵。",
   "stage": 3
  },
  {
   "id": "50",
   "zh": "隨機森林",
   "en": "Random Forest",
-  "def": "由多棵決策樹集成、以投票提升穩定性的模型",
+  "def": "結合多棵決策樹投票的模型，穩定又不易過度擬合。",
   "stage": 3
  },
  {
-  "id": "51",
-  "zh": "支持向量機",
-  "en": "Support Vector Machine",
-  "def": "尋找最大間隔超平面以分離資料的分類演算法",
+  "id": "52",
+  "zh": "損失函數",
+  "en": "Loss Function",
+  "def": "衡量模型預測和正確答案差距的函數，訓練時要讓它變小。",
   "stage": 3
  },
  {
   "id": "53",
   "zh": "過度擬合",
   "en": "Overfitting",
-  "def": "模型過度記憶訓練資料、泛化能力下降的現象",
+  "def": "模型把訓練資料背得太熟，遇到新資料反而表現變差。",
+  "stage": 3
+ },
+ {
+  "id": "55",
+  "zh": "正則化",
+  "en": "Regularization",
+  "def": "在訓練中加入懲罰項限制模型複雜度，降低過度擬合。",
+  "stage": 3
+ },
+ {
+  "id": "56",
+  "zh": "超參數",
+  "en": "Hyperparameter",
+  "def": "訓練前由人設定的參數，例如學習率與批次大小。",
   "stage": 3
  },
  {
   "id": "57",
   "zh": "交叉驗證",
   "en": "Cross-Validation",
-  "def": "將資料切分輪替以穩定評估模型效能的驗證法",
+  "def": "把資料輪流切成訓練與驗證組，更可靠地評估模型表現。",
   "stage": 3
  },
  {
   "id": "62",
   "zh": "混淆矩陣",
   "en": "Confusion Matrix",
-  "def": "以矩陣呈現分類預測與真實標籤對照的評估表",
-  "stage": 3
- },
- {
-  "id": "298",
-  "zh": "均方誤差",
-  "en": "Mean Squared Error",
-  "def": "預測值與真實值差平方之期望，用於迴歸評估",
+  "def": "用表格列出預測正確與錯誤的各類數量，評估分類模型。",
   "stage": 3
  },
  {
   "id": "63",
   "zh": "梯度下降",
   "en": "Gradient Descent",
-  "def": "沿著損失函數負梯度方向逐步更新參數的優化法",
+  "def": "沿著損失下降最快的方向一步步調整參數的最佳化方法。",
+  "stage": 3
+ },
+ {
+  "id": "67",
+  "zh": "激活函數",
+  "en": "Activation Function",
+  "def": "決定神經元輸出的非線性函數，例如 ReLU 或 Sigmoid。",
   "stage": 3
  },
  {
   "id": "68",
   "zh": "反向傳播",
   "en": "Backpropagation",
-  "def": "由輸出誤差逆向回傳以更新權重的神經網路演算法",
+  "def": "從輸出誤差往回計算各層梯度，用來更新神經網路權重。",
   "stage": 3
  },
  {
-  "id": "69",
-  "zh": "多層感知器",
-  "en": "Multi-Layer Perceptron",
-  "def": "由多層全連接神經元構成的前饋式類神經網路",
+  "id": "89",
+  "zh": "詞嵌入",
+  "en": "Word Embedding",
+  "def": "把詞語轉成向量，讓語意相近的詞在空間中彼此靠近。",
   "stage": 3
  },
  {
-  "id": "98",
-  "zh": "假設檢定",
-  "en": "Hypothesis Testing",
-  "def": "依樣本證據對母體假設做統計推論與決策的方法",
+  "id": "104",
+  "zh": "維度災難",
+  "en": "Curse of Dimensionality",
+  "def": "資料維度越多，資料越稀疏，模型越難學好的現象。",
   "stage": 3
  },
  {
-  "id": "106",
-  "zh": "自動化機器學習",
-  "en": "Automated Machine Learning",
-  "def": "自動化完成特徵、模型與超參數選擇的機器學習流程",
-  "stage": 3
- },
- {
-  "id": "213",
-  "zh": "剪枝",
-  "en": "Pruning",
-  "def": "移除模型中冗餘結構以縮小體積並加速推論",
-  "stage": 3
- },
- {
-  "id": "214",
-  "zh": "量化",
-  "en": "Quantization",
-  "def": "降低參數精度以節省記憶體與加速推論的技術",
+  "id": "154",
+  "zh": "低秩適配",
+  "en": "Low-Rank Adaptation",
+  "def": "只訓練少量低秩矩陣就能微調大模型，省算力又省記憶體。",
   "stage": 3
  },
  {
   "id": "165",
   "zh": "人類回饋強化學習",
   "en": "Reinforcement Learning from Human Feedback",
-  "def": "以人類偏好排序微調模型行為的強化學習方法",
+  "def": "用人類對回答的偏好打分來訓練模型，使輸出更符合人意。",
   "stage": 3
  },
  {
-  "id": "356",
-  "zh": "來自變換器的雙向編碼器表徵",
-  "en": "Bidirectional Encoder Representations from Transformers",
-  "def": "以遮罩語言模型預訓練的深度雙向 Transformer",
+  "id": "212",
+  "zh": "知識蒸餾",
+  "en": "Knowledge Distillation",
+  "def": "讓小模型學習大模型的輸出，保留能力同時縮小體積。",
+  "stage": 3
+ },
+ {
+  "id": "214",
+  "zh": "量化",
+  "en": "Quantization",
+  "def": "降低模型數值精度（如 16 位元轉 4 位元）以減少運算量。",
+  "stage": 3
+ },
+ {
+  "id": "236",
+  "zh": "困惑度",
+  "en": "Perplexity",
+  "def": "衡量語言模型預測下一個字有多困惑的指標，越低越好。",
+  "stage": 3
+ },
+ {
+  "id": "268",
+  "zh": "夏普利加性解釋",
+  "en": "Shapley Additive Explanations",
+  "def": "用賽局理論計算每個特徵對預測結果的貢獻度。",
+  "stage": 3
+ },
+ {
+  "id": "548",
+  "zh": "交併比",
+  "en": "Intersection over Union",
+  "def": "預測框和真實框重疊面積占聯集面積的比例，評估偵測準度。",
+  "stage": 3
+ },
+ {
+  "id": "686",
+  "zh": "自我監督學習",
+  "en": "Self-supervised Learning",
+  "def": "從資料本身自動產生學習目標，不需大量人工標註。",
   "stage": 3
  },
  {
   "id": "908",
   "zh": "直接偏好優化",
   "en": "Direct Preference Optimization",
-  "def": "直接以偏好資料對齊模型、無需獎勵模型的微調法",
+  "def": "直接用人類偏好的回答配對訓練模型，不必另建獎勵模型。",
   "stage": 3
  },
  {
   "id": "912",
   "zh": "混合專家模型",
   "en": "Mixture of Experts",
-  "def": "以門控網路選擇稀疏專家子集以提升推論效率",
+  "def": "由多個專家子網路組成，每次只啟用部分專家以提升效率。",
   "stage": 3
  },
  {
-  "id": "255",
-  "zh": "幻覺率",
-  "en": "Hallucination Rate",
-  "def": "語言模型生成內容與事實不符的比例衡量指標",
+  "id": "929",
+  "zh": "災難性遺忘",
+  "en": "Catastrophic Forgetting",
+  "def": "模型學新任務後，把原本學會的知識大量遺忘的現象。",
   "stage": 3
  },
  {
-  "id": "997",
-  "zh": "危險能力評估",
-  "en": "Dangerous Capability Evaluation",
-  "def": "評估模型是否具備危險能力以決定可否部署的程序",
+  "id": "1016",
+  "zh": "機器反學習",
+  "en": "Machine Unlearning",
+  "def": "讓已訓練模型「忘掉」特定資料的影響，用於隱私或刪除權。",
   "stage": 3
  }
 ]
